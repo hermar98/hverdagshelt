@@ -20,6 +20,49 @@ let app = express();
 app.use(express.static(public_path));
 app.use(express.json()); // For parsing application/json
 
+app.get('/users', (req: Request, res: response) => {
+  return Users.findAll().then(users => res.send(users));
+});
+
+app.get('/users/:id', (req: Request, res: Response) => {
+    return Users.findOne({ where: { id: Number(req.params.id) } }).then(users =>
+        user ? res.send(user) : res.sendStatus(404)
+    );
+});
+
+app.post('/users', (req: Request, res: Response) => {
+    if (!(req.body instanceof Object)) return res.sendStatus(400);
+
+    return Users.create({
+        email: req.body.email,
+        password: req.body.password,
+        salt: req.body.salt,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        rank: req.body.rank
+    }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+});
+
+app.put('/users/:id', (req: Request, res: Response) => {
+    if (!(req.body instanceof Object)) return res.sendStatus(400);
+
+    return Users.update({
+            email: req.body.email,
+            password: req.body.password,
+            salt: req.body.salt,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            rank: req.body.rank},
+        {where: { id: req.params.id }}
+    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+});
+
+app.delete('/users/:id', (req: Request, res: Response) => {
+    return Users.destroy({
+        where: {id: req.params.id}
+    }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
+});
+
 app.get('/students', (req: Request, res: Response) => {
   return Students.findAll().then(students => res.send(students));
 });
