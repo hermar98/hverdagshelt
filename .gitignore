@@ -1,4 +1,5 @@
 node_modules
 client/public/bundle.js
 .idea/misc.xml
+.idea/modules.xml
 .idea/vcs.xml
