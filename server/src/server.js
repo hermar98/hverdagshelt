@@ -47,18 +47,55 @@ app.put('/students', (req: Request, res: Response) => {
 });
 
 //Events
-
 app.get('/events', (req: Request, res: Response) => {
   return Events.findAll().then(events => res.send(events));
 });
-
 app.get('/events/:id', (req:Request,res:Response) => {
-  return Events.findOne({where:{id: Number(req.params.id)}}).then(event =>
+  return Events.findOne({where:{event_id: Number(req.params.id)}}).then(event =>
       event ? res.send(event) : res.sendStatus(404)
   );
 });
-
-
+app.put('/events/:id', (req: Request, res: Response) => {
+  if(!(req.body instanceof Object)) return res.sendStatus(400);
+  return Events.update(
+      {
+          title: req.body.title,
+          content: req.body.content,
+          image: req.body.image,
+          longitude: req.body.longitude,
+          latitude: req.body.latitude,
+          time_start: req.body.time_start,
+          time_end: req.body.time_end
+      }, {
+        where: {
+          event_id: req.params.id
+        }
+      }
+  ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
+});
+app.post('/events', (req:Request, res: Response) => {
+    if(!(req.body instanceof Object)) return res.sendStatus(400);
+    return Events.create(
+        {
+            title: req.body.title,
+            content: req.body.content,
+            image: req.body.image,
+            longitude: req.body.longitude,
+            latitude: req.body.latitude,
+            time_start: req.body.time_start,
+            time_end: req.body.time_end
+        }
+    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
+});
+app.delete('/events/:id', function (req, res) {
+    return Event.destroy(
+        {
+            where: {
+              event_id: req.params.id
+            }
+        }
+        ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+});
 // Hot reload application when not in production environment
 if (process.env.NODE_ENV !== 'production') {
   let reloadServer = reload(app);
