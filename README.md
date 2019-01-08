@@ -12,7 +12,7 @@ npm install
 npm test
 npm start
 ```
-
+asdasd
 ## Server: run tests and start
 
 Prerequisite: mysql-server installed locally
