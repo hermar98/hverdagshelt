@@ -4,7 +4,7 @@ import express from 'express';
 import path from 'path';
 import reload from 'reload';
 import fs from 'fs';
-import { Students } from './models.js';
+import { Students,Events } from './models.js';
 
 type Request = express$Request;
 type Response = express$Response;
@@ -45,6 +45,19 @@ app.put('/students', (req: Request, res: Response) => {
     { where: { id: req.body.id } }
   ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
+
+//Events
+
+app.get('/events', (req: Request, res: Response) => {
+  return Events.findAll().then(events => res.send(events));
+});
+
+app.get('/events/:id', (req:Request,res:Response) => {
+  return Events.findOne({where:{id: Number(req.params.id)}}).then(event =>
+      event ? res.send(event) : res.sendStatus(404)
+  );
+});
+
 
 // Hot reload application when not in production environment
 if (process.env.NODE_ENV !== 'production') {
