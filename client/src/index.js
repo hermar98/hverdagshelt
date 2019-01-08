@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
-import { Alert } from './widgets';
+import { Alert , NavBar} from './widgets';
 import { studentService } from './services';
 
 // Reload application when not in production environment
@@ -20,22 +20,11 @@ const history = createHashHistory(); // Use history.push(...) to programmaticall
 class Menu extends Component {
   render() {
     return (
-      <table>
-        <tbody>
-          <tr>
-            <td>
-              <NavLink activeStyle={{ color: 'darkblue' }} exact to="/">
-                React example
-              </NavLink>
-            </td>
-            <td>
-              <NavLink activeStyle={{ color: 'darkblue' }} to="/students">
-                Students
-              </NavLink>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <NavBar>
+          <NavBar.Brand image="images/Trondheim_kommune.png">Trondheim Kommune</NavBar.Brand>
+          <NavBar.Link to="/">Home</NavBar.Link>
+          <NavBar.Link to="/">Hei</NavBar.Link>
+        </NavBar>
     );
   }
 }

@@ -3,6 +3,8 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
+import { NavLink } from 'react-router-dom';
+
 
 /**
  * Renders alert messages using Bootstrap classes.
@@ -57,4 +59,45 @@ export class Alert extends Component {
       for (let instance of Alert.instances()) instance.alerts.push({ text: text, type: 'danger' });
     });
   }
+}
+
+class NavBarBrand extends Component <{ image?: React.Node, children?: React.Node }> {
+    render() {
+        if(!this.props.children) return null;
+        return(
+            <NavLink className="navbar-brand" activeClassName="active" exact to="/">
+                <a><img src={this.props.image} alt="" width="50px" height="40px"/></a>
+                {this.props.children}
+            </NavLink>
+        );
+    }
+}
+
+class NavBarLink extends Component <{ to: string, exact?: boolean, children?: React.Node}> {
+    render() {
+        if(!this.props.children) return null;
+        return(
+            <NavLink className="nav-link" activeClassName="active" exact={this.props.exact} to={this.props.to}>
+                <form className="form-inline">
+                    <button className="btn btn-sm btn-outline-light">{this.props.children}</button>
+                </form>
+            </NavLink>
+        );
+    }
+}
+
+export class NavBar extends Component<{ children: React.Element<typeof NavBarBrand | typeof NavBarLink>[] }> {
+    static Brand = NavBarBrand;
+    static Link = NavBarLink;
+
+    render(){
+        return(
+            <nav className="navbar navbar-expand-sm bg-dark navbar-dark mt-0">
+                <div className="container-fluid">
+                    {this.props.children.filter(child => child.type == NavBarBrand)}
+                    <ul className="nav navbar-nav navbar-right">{this.props.children.filter(child => child.type == NavBarLink)}</ul>
+                </div>
+            </nav>
+        );
+    }
 }
