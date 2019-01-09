@@ -3,9 +3,11 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { HashRouter, Route, NavLink } from 'react-router-dom';
-import { Alert , NavBar, Form, Card, Button} from './widgets';
-import {studentService, User, userService, Issue, issueService} from './services';
+import { BrowserRouter, Route, NavLink } from 'react-router-dom';
+import { Alert, NavBar, Form, Card, Button } from './widgets';
+import Menu from './components/menu/Menu.js';
+import RegisterPage from './components/pages/RegisterPage.js';
+import { studentService, User } from './services';
 
 // Reload application when not in production environment
 if (process.env.NODE_ENV !== 'production') {
@@ -17,147 +19,10 @@ if (process.env.NODE_ENV !== 'production') {
 import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after successfully saving a student
 
-class Menu extends Component {
-  render() {
-    return (
-        <NavBar>
-          <NavBar.Brand image="images/Trondheim_kommune.png">Trondheim Kommune</NavBar.Brand>
-          <NavBar.Link to="/registerIssue">Registrer sak</NavBar.Link>
-            <NavBar.Link to="/login">Logg inn</NavBar.Link>
-          <NavBar.Link to="/registerUser">Registrer bruker</NavBar.Link>
-        </NavBar>
-    );
-  }
-}
-
-class RegisterUser extends Component {
-    user = new User();
-
-  render() {
-    return(
-        <Card title="Registrer ny bruker">
-            <Form.Input
-                type="text"
-                onChange={event => (this.user.firstName = event.target.value)}
-                required
-                placeholder="Skriv inn fornavn"/>
-            <Form.Input
-                type="text"
-                onChange={event => (this.user.lastName = event.target.value)}
-                required
-                placeholder="Skriv inn etternavn"/>
-           <Form.Input
-               type="text"
-               onChange={event => (this.user.email = event.target.value)}
-               required
-               placeholder="Skriv inn epost"/>
-            <Form.Input
-                type="password"
-                onChange={event => (this.user.password = event.target.value)}
-                required
-                placeholder="Passord"/>
-            <Form.Input
-                type="password"
-                required
-                placeholder="Gjenta passord"/>
-            <div className="container h-100">
-                <div className="row h-100 justify-content-center align-items-center">
-                        <Button.Basic onClick={this.save}>Lag bruker</Button.Basic>
-                </div>
-            </div>
-        </Card>
-    );
-  }
-  save(){
-    userService
-        .addUser(this.user)
-        .then(() => history.push('/home'))
-        .catch((error: Error) => Alert.danger(error.message));
-  }
-}
-
-class Login extends Component{
-    render() {
-        return(
-            <Card title="Logg inn">
-                <Form.Input
-                    type="text"
-                    onChange={event => (this.user.firstName = event.target.value)}
-                    required
-                    placeholder="Skriv inn epost"/>
-                <Form.Input
-                    type="password"
-                    onChange={event => (this.user.firstName = event.target.value)}
-                    required
-                    placeholder="Skriv inn passord"/>
-                <div className="container h-100">
-                    <div className="row h-100 justify-content-center align-items-center">
-                        <Button.Basic onClick={this.save}>Logg inn</Button.Basic>
-                    </div>
-                </div>
-                <div className="container h-100">
-                    <div className="row justify-content-center align-items-center">
-                        <Button.Link onClick={this.goTo}>Glemt passord</Button.Link>
-                    </div>
-                </div>
-            </Card>
-        );
-    }
-
-    goTo() {
-        history.push('/sendEmail')
-    }
-}
-
-class RegisterIssue extends Component {
-    issue = new Issue();
-    form = null;
-
-    render() {
-        return (
-            <Card title="Registrer sak">
-                <form ref={e => (this.form = e)}>
-                    <Form.Input
-                        type="text"
-                        onChange={event => (this.issue.title = event.target.value)}
-                        required
-                        placeholder="Skriv en passende tittel"/>
-                    <Form.InputLarge
-                        type="text"
-                        onChange={event => (this.issue.content = event.target.value)}
-                        required
-                        placeholder="Skriv innholdet i saken"/>
-                    <Form.FileInput>Legg til bilde</Form.FileInput>
-                    <div className="container h-100">
-                        <div className="row h-100 justify-content-center align-items-center">
-                            <Button.Basic onClick={this.save}>Send inn</Button.Basic>
-                        </div>
-                    </div>
-                </form>
-            </Card>
-        )
-    }
-
-    save() {
-        if(!this.form || this.form.checkValidity()) return;
-
-        this.issue.latitude = 0.0;
-        this.issue.longitude = 0.0;
-        this.issue.image = "hei";
-
-        issueService
-            .addIssue(this.issue)
-            .then(() => history.push('/'))
-            .catch((error: Error) => Alert.danger(error.message));
-    }
-}
-
-
-
 const root = document.getElementById('root');
 if (root)
   ReactDOM.render(
-    <HashRouter>
+    <BrowserRouter>
       <div>
         <Alert />
         <Menu />
@@ -166,7 +31,7 @@ if (root)
         <Route exact path="/login" component={Login} />
         <Route exact path="/sendEmail" />
       </div>
-    </HashRouter>,
+    </BrowserRouter>,
     root
   );
 
