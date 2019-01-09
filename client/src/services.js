@@ -17,12 +17,12 @@ class UserService {
     return axios.get('/users');
   }
 
-  static getUser(userId: number): Promise<User[]> {
+  static getUser(userId: number): Promise<User> {
     return axios.get('/users/' + userId);
   }
 
-  static updateUser(user: User, userId: number): Promise<void> {
-    return axios.put('/users/' + userId, user);
+  static updateUser(user: User): Promise<void> {
+    return axios.put('/users', user);
   }
 
   static addUser(user: User): Promise<number>{
@@ -34,12 +34,47 @@ class UserService {
   }
 }
 
-export class Case{
-  caseId: number;
+export let userService = new UserService();
+
+export class Issue{
+  issueId: number;
   title: string;
   content: string;
   image: string;
   longitude: number;
   latitude: number;
   date: string; //Look at this later? Maybe another datatype? This works though.
+}
+
+class IssueService{
+  static getIssues(): Promise<Issue[]>{
+    return axios.get('/issues');
+  }
+
+  static getIssue(issueId: number): Promise<Issue> {
+    return axios.get('/issues/' + issueId);
+  }
+
+  static updateIssue(issue: Issue): Promise<void>{
+    return axios.put('/issues/', issue);
+  }
+
+  static addIssue(issue: Issue): Promise<number>{
+    return axios.post('/issues', issue);
+  }
+
+  static deleteIssue(issueId: number): Promise<void>{
+    return axios.delete('/issues/' + issueId);
+  }
+}
+
+export let issueService = new IssueService();
+
+export class IssueCategory{
+  categoryId: number;
+  name: number;
+}
+
+class IssueCategoryService{
+
 }
