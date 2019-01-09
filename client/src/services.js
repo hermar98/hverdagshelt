@@ -99,7 +99,7 @@ class IssueCategoryService{
 
 export let issueCategoryService = new IssueCategoryService();
 
-class Event {
+export class Event {
   event_id: number;
   title: string;
   content: string;
@@ -127,3 +127,5 @@ class EventService{
     return axios.delete('/events/' + eventId);
   }
 }
+
+export let eventService = new EventService();

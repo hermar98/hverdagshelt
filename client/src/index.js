@@ -3,14 +3,13 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { BrowserRouter, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from './widgets';
 import Menu from './components/menu/Menu.js';
 import { FileIssuePage } from "./components/pages/FileIssuePage";
 import { LoginPage } from "./components/pages/LoginPage";
 import { RegisterPage } from "./components/pages/RegisterPage";
-import { studentService, User } from './services';
-
+import {RegisterEventPage} from "./components/pages/RegisterEventPage";
 // Reload application when not in production environment
 
 if (process.env.NODE_ENV !== 'production') {
@@ -27,7 +26,7 @@ export const history = createHashHistory(); // Use history.push(...) to programm
 const root = document.getElementById('root');
 if (root)
   ReactDOM.render(
-    <BrowserRouter>
+    <HashRouter>
       <div>
         <Alert />
         <Menu />
@@ -35,8 +34,9 @@ if (root)
         <Route exact path="/registerIssue" component={FileIssuePage} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/sendEmail" />
+        <Route exact path="/event/register" component={RegisterEventPage}/>
       </div>
-    </BrowserRouter>,
+    </HashRouter>,
     root
   );
 
