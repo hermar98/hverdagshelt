@@ -106,7 +106,7 @@ app.post('/cases', (req:Request, res: Response) => {
             image: req.body.image,
             longitude: req.body.longitude,
             latitude: req.body.latitude,
-            date: Sequelize.NOW
+            date: sequelize.literal("CURRENT_TIMESTAMP")
         }
     ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
 });
