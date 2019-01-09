@@ -4,7 +4,7 @@ import express from 'express';
 import path from 'path';
 import reload from 'reload';
 import fs from 'fs';
-import { Students,Events } from './models.js';
+import { Students,Events,EventCategories } from './models.js';
 
 type Request = express$Request;
 type Response = express$Response;
@@ -88,7 +88,7 @@ app.post('/events', (req:Request, res: Response) => {
     ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
 });
 app.delete('/events/:id', function (req, res) {
-    return Event.destroy(
+    return Events.destroy(
         {
             where: {
               event_id: req.params.id
@@ -96,6 +96,86 @@ app.delete('/events/:id', function (req, res) {
         }
         ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
+
+//event_category
+app.get('/eventCat', (req: Request, res: Response) => {
+    return EventCategories.findAll().then(eventCategories => res.send(eventCategories));
+});
+app.get('/eventCat/:id', (req:Request,res:Response) => {
+    return EventCategories.findOne({where:{category_id: Number(req.params.id)}}).then(eventCategory =>
+        eventCategory ? res.send(eventCategory) : res.sendStatus(404)
+    );
+});
+app.put('/eventCat/:id', (req: Request, res: Response) => {
+    if(!(req.body instanceof Object)) return res.sendStatus(400);
+    return EventCategories.update(
+        {
+            name: req.body.name,
+        }, {
+            where: {
+                category_id: req.params.id
+            }
+        }
+    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
+});
+app.post('/eventCat', (req:Request, res: Response) => {
+    if(!(req.body instanceof Object)) return res.sendStatus(400);
+    return EventCategories.create(
+        {
+            name: req.body.name
+        }
+    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
+});
+app.delete('/eventCat/:id', function (req, res) {
+    return EventCategories.destroy(
+        {
+            where: {
+                category_id: req.params.id
+            }
+        }
+    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+});
+
+
+//issue_category
+app.get('/issueCat', (req: Request, res: Response) => {
+    return IssueCategories.findAll().then(issueCategories => res.send(issueCategories));
+});
+app.get('/issueCat/:id', (req:Request,res:Response) => {
+    return IssueCategories.findOne({where:{category_id: Number(req.params.id)}}).then(issueCategory =>
+        issueCategory ? res.send(issueCategory) : res.sendStatus(404)
+    );
+});
+app.put('/issueCat/:id', (req: Request, res: Response) => {
+    if(!(req.body instanceof Object)) return res.sendStatus(400);
+    return IssueCategories.update(
+        {
+            name: req.body.name,
+        }, {
+            where: {
+                category_id: req.params.id
+            }
+        }
+    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
+});
+app.post('/issueCat', (req:Request, res: Response) => {
+    if(!(req.body instanceof Object)) return res.sendStatus(400);
+    return IssueCategories.create(
+        {
+            name: req.body.name
+        }
+    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
+});
+app.delete('/issueCat/:id', function (req, res) {
+    return IssueCategories.destroy(
+        {
+            where: {
+                category_id: req.params.id
+            }
+        }
+    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+});
+
 // Hot reload application when not in production environment
 if (process.env.NODE_ENV !== 'production') {
   let reloadServer = reload(app);
