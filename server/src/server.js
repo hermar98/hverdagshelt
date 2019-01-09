@@ -4,7 +4,8 @@ import express from 'express';
 import path from 'path';
 import reload from 'reload';
 import fs from 'fs';
-import { Students, Events } from './models.js';
+import { Students, User, Events } from './models.js';
+import * as passwordHash from './passwordHash.js';
 
 type Request = express$Request;
 type Response = express$Response;
@@ -21,11 +22,11 @@ app.use(express.static(public_path));
 app.use(express.json()); // For parsing application/json
 
 app.get('/users', (req: Request, res: response) => {
-  return Users.findAll().then(users => res.send(users));
+  return User.findAll().then(users => res.send(users));
 });
 
 app.get('/users/:id', (req: Request, res: Response) => {
-    return Users.findOne({ where: { id: Number(req.params.id) } }).then(users =>
+    return User.findOne({ where: { user_id: Number(req.params.id) } }).then(user =>
         user ? res.send(user) : res.sendStatus(404)
     );
 });
@@ -33,13 +34,16 @@ app.get('/users/:id', (req: Request, res: Response) => {
 app.post('/users', (req: Request, res: Response) => {
     if (!(req.body instanceof Object)) return res.sendStatus(400);
 
-    return Users.create({
-        email: req.body.email,
-        password: req.body.password,
-        salt: req.body.salt,
+    var passwordSalt = passwordHash.genRandomString(16);
+    var passwordData = passwordHash.sha512(req.body.password, passwordSalt);
+
+    return User.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        rank: req.body.rank
+        email: req.body.emadkfldsjflsil,
+        rank: req.body.rank,
+        salt: passwordData.salt,
+        hash_str: passwordData.passwordHash
     }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
@@ -70,18 +74,6 @@ app.get('/students', (req: Request, res: Response) => {
 app.get('/students/:id', (req: Request, res: Response) => {
   return Students.findOne({ where: { id: Number(req.params.id) } }).then(student =>
     student ? res.send(student) : res.sendStatus(404)
-  );
-});
-
-app.get('/users/:id', (req: Request, res: Response) => {
-  return User.findAll({ where: { user_id: Number(req.params.id) } }).then(user =>
-    user ? res.send(user) : res.sendStatus(404)
-  );
-});
-
-app.get('/users/:id/issue', (req: Request, res: Response) => {
-  return Issue.findAll({ where: { user_id: Number(req.params.id) } }).then(issue =>
-    issue ? res.send(issue) : res.sendStatus(404)
   );
 });
 
