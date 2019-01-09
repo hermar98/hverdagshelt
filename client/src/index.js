@@ -2,8 +2,9 @@
 
 import ReactDOM from 'react-dom';
 import * as React from 'react';
-import { HashRouter, Route, NavLink } from 'react-router-dom';
-import { Alert, } from './widgets';
+import { Component } from 'react-simplified';
+import { BrowserRouter, HashRouter, Route, NavLink } from 'react-router-dom';
+import { Alert, NavBar, Form, Card, Button } from './widgets';
 import Menu from './components/menu/Menu.js';
 import { FileIssuePage } from "./components/pages/FileIssuePage";
 import { LoginPage } from "./components/pages/LoginPage";
@@ -36,6 +37,7 @@ if (root)
         <Route exact path="/registerIssue" component={FileIssuePage} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/sendEmail" />
+        <Route exact path="/event/register" component={RegisterEventPage}/>
       </div>
     </HashRouter>,
     root
