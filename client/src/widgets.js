@@ -238,8 +238,8 @@ class FormInputBig extends Component <{
     render() {
         return(
             <div className="form-group row">
-                <label className="col-sm-1 col-form-label">{this.props.label}</label>
-                <div className="col-sm-11">
+                <label className="col-sm-4 col-form-label">{this.props.label}</label>
+                <div className="col-sm-4">
                     <textarea rows="8" id="content"
                               className="form-control"
                               type={this.props.type}
@@ -254,7 +254,27 @@ class FormInputBig extends Component <{
     }
 }
 
+class FileInput extends Component <{
+    children?: React.Node
+}> {
+    render() {
+        return(
+            <form>
+                <div className="form-group row">
+                    <div className="col-sm-4">
+                    </div>
+                    <p>Legg til bilde</p>
+                    <div className="col-sm-4 col-form-label">
+                        <input type="file" className="form-control-file"/>
+                    </div>
+                </div>
+            </form>
+        );
+    }
+}
+
 export class Form {
     static Input = FormInput;
     static InputLarge = FormInputBig;
+    static FileInput = FileInput;
 }

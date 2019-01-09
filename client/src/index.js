@@ -5,7 +5,7 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert , NavBar, Form, Card, Button} from './widgets';
-import { studentService, User, userService} from './services';
+import { studentService, User, userService, Issue} from './services';
 
 // Reload application when not in production environment
 if (process.env.NODE_ENV !== 'production') {
@@ -22,15 +22,15 @@ class Menu extends Component {
     return (
         <NavBar>
           <NavBar.Brand image="images/Trondheim_kommune.png">Trondheim Kommune</NavBar.Brand>
-          <NavBar.Link to="/">Home</NavBar.Link>
+          <NavBar.Link to="/registerIssue">Registrer sak</NavBar.Link>
             <NavBar.Link to="/login">Logg inn</NavBar.Link>
-          <NavBar.Link to="/register">Registrer bruker</NavBar.Link>
+          <NavBar.Link to="/registerUser">Registrer bruker</NavBar.Link>
         </NavBar>
     );
   }
 }
 
-class Register extends Component {
+class RegisterUser extends Component {
     user = new User();
 
   render() {
@@ -109,6 +109,30 @@ class Login extends Component{
     }
 }
 
+class RegisterIssue extends Component {
+    issue = new Issue();
+
+    render() {
+        return (
+            <Card title="Registrer sak">
+                <Form.Input
+                    type="text"
+                    onChange={event => (this.issue.title = event.target.value)}
+                    required
+                    placeholder="Skriv en passende tittel"/>
+                <Form.InputLarge
+                    type="text"
+                    onChange={event => (this.issue.content = event.target.value)}
+                    required
+                    placeholder="Skriv innholdet i saken"/>
+                <Form.FileInput>Legg til bilde</Form.FileInput>
+            </Card>
+        )
+    }
+}
+
+
+
 const root = document.getElementById('root');
 if (root)
   ReactDOM.render(
@@ -116,7 +140,8 @@ if (root)
       <div>
         <Alert />
         <Menu />
-        <Route exact path="/register" component={Register} />
+        <Route exact path="/registerUser" component={RegisterUser} />
+        <Route exact path="/registerIssue" component={RegisterIssue} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/sendEmail" />
       </div>
