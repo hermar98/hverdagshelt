@@ -61,6 +61,32 @@ export class Alert extends Component {
   }
 }
 
+class ButtonBasic extends Component <{
+    onClick: () => mixed,
+    children: React.Node
+}> {
+    render() {
+        return(
+            <button className="btn btn-default" onClick={this.props.onClick}>
+                {this.props.children}
+            </button>
+        )
+    }
+}
+
+class ButtonLink extends Component <{
+  onClick: () => mixed,
+  children: React.Node
+}> {
+    render() {
+        return(
+            <button className="btn btn-link" onClick={this.props.onClick}>
+                {this.props.children}
+            </button>
+        )
+    }
+}
+
 class ButtonRemove extends Component <{
     onClick: () => mixed,
     children: React.Node
@@ -107,6 +133,8 @@ export class Button{
     static Success = ButtonSuccess;
     static Remove = ButtonRemove;
     static Edit = ButtonEdit;
+    static Basic = ButtonBasic;
+    static Link = ButtonLink;
 }
 
 class NavBarBrand extends Component <{ image?: React.Node, children?: React.Node }> {
@@ -127,7 +155,11 @@ export class Card extends Component<{ title: React.Node, children?: React.Node }
         return(
             <div className="card">
                 <div className="card-body">
-                    <h5 className="card-title">{this.props.title}</h5>
+                    <div className="container h-100">
+                        <div className="row h-100 justify-content-center align-items-center">
+                            <h5 className="card-title">{this.props.title}</h5>
+                        </div>
+                    </div>
                     <div className="card-text">{this.props.children}</div>
                 </div>
             </div>

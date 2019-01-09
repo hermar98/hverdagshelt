@@ -121,4 +121,3 @@ class EventService{
     return axios.put('/events', Event);
   }
 }
-export let studentService = new StudentService();
