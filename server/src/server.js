@@ -4,7 +4,19 @@ import express from 'express';
 import path from 'path';
 import reload from 'reload';
 import fs from 'fs';
-import { Students, Events } from './models.js';
+import {
+  Students,
+  Event,
+  User,
+  User_case,
+  County,
+  Municipal,
+  Status,
+  Issue_category,
+  Issue,
+  Feedback,
+  Event_category
+} from './models.js';
 
 type Request = express$Request;
 type Response = express$Response;
@@ -110,6 +122,7 @@ app.get('/events/:id', (req: Request, res: Response) => {
     event ? res.send(event) : res.sendStatus(404)
   );
 });
+
 app.put('/events/:id', (req: Request, res: Response) => {
   if (!(req.body instanceof Object)) return res.sendStatus(400);
   return Events.update(
@@ -129,6 +142,7 @@ app.put('/events/:id', (req: Request, res: Response) => {
     }
   ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
+
 app.post('/events', (req: Request, res: Response) => {
   if (!(req.body instanceof Object)) return res.sendStatus(400);
   return Events.create({
@@ -141,6 +155,7 @@ app.post('/events', (req: Request, res: Response) => {
     time_end: req.body.time_end
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
+
 app.delete('/events/:id', function(req, res) {
   return Event.destroy({
     where: {
@@ -160,6 +175,7 @@ app.post('/issues', (req: Request, res: Response) => {
     date: sequelize.literal('CURRENT_TIMESTAMP')
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
+
 app.delete('/issues/:id', function(req, res) {
   return Issue.destroy({
     where: {
