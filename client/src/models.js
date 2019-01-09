@@ -1,6 +1,5 @@
 //@flow
 
-
 export class Issue {
     title: string
     content: string
