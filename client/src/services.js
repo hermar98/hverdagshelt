@@ -45,12 +45,8 @@ class EventService{
     return axios.put('/events', Event);
   }
 }
-class Category {
-  category_id: number;
-  name: string;
-}
 
-class CategoryService{
+class IssueCategoryService{
   getCategories(): Promise<Category[]> {
     return axios.get('/categories');
   }
