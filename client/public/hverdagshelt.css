@@ -1,0 +1,6 @@
+
+
+.status-blocked {background-color: lightcoral}
+.status-pending {background-color: #f1fc5a}
+.status-finished {background-color: lightgreen}
+.issue-container {margin: 10% 20% 10% 20%}
