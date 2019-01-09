@@ -263,8 +263,8 @@ class FileInput extends Component <{
                 <div className="form-group row">
                     <div className="col-sm-4">
                     </div>
-                    <p>Legg til bilde</p>
                     <div className="col-sm-4 col-form-label">
+                        <i>{this.props.children}</i>
                         <input type="file" className="form-control-file"/>
                     </div>
                 </div>
