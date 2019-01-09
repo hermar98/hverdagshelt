@@ -3,7 +3,7 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { BrowserRouter, Route, NavLink } from 'react-router-dom';
+import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from './widgets';
 import HomePage from './components/pages/HomePage.js';
 import RegisterPage from './components/pages/RegisterPage.js';
@@ -22,12 +22,12 @@ const history = createHashHistory(); // Use history.push(...) to programmaticall
 const root = document.getElementById('root');
 if (root)
   ReactDOM.render(
-    <BrowserRouter>
+    <HashRouter>
       <div>
         <Route path="/" component={Alert} />
         <Route exact path="/" component={HomePage} />
         <Route exact path="/register" component={RegisterPage} />
       </div>
-    </BrowserRouter>,
+    </HashRouter>,
     root
   );
