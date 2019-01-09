@@ -214,7 +214,7 @@ describe('issue_cat test', () => {
 describe('event_cat test', () => {
   it('correct data', async () => {
     let event_cats = await Event_category.findAll();
-    let event_cats = event_cats.slice(0, 1);
+    let event_cat = event_cats.slice(0, 1);
     expect(
       event_cat
         .map(e => e.toJSON())
