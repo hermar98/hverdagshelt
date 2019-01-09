@@ -137,18 +137,6 @@ export class Button{
     static Link = ButtonLink;
 }
 
-class NavBarBrand extends Component <{ image?: React.Node, children?: React.Node }> {
-    render() {
-        if(!this.props.children) return null;
-        return(
-            <NavLink className="navbar-brand" activeClassName="active" exact to="/">
-                <a><img src={this.props.image} alt="" width="50px" height="40px"/></a>
-                {this.props.children}
-            </NavLink>
-        );
-    }
-}
-
 
 export class Card extends Component<{ title: React.Node, children?: React.Node }> {
     render(){
@@ -163,6 +151,18 @@ export class Card extends Component<{ title: React.Node, children?: React.Node }
                     <div className="card-text">{this.props.children}</div>
                 </div>
             </div>
+        );
+    }
+}
+
+class NavBarBrand extends Component <{ image?: React.Node, children?: React.Node }> {
+    render() {
+        if(!this.props.children) return null;
+        return(
+            <NavLink className="navbar-brand" activeClassName="active" exact to="/">
+                <a><img src={this.props.image} alt="" width="50px" height="40px"/></a>
+                {this.props.children}
+            </NavLink>
         );
     }
 }
