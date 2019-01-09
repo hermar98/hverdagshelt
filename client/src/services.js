@@ -2,81 +2,25 @@
 import axios from 'axios';
 axios.interceptors.response.use(response => response.data);
 
-export class User {
-  userId: number;
+class Student {
+  id: number;
   firstName: string;
   lastName: string;
   email: string;
-  rank: number;
-  hash: string;
-  salt: string;
 }
 
-class UserService {
-  static getUsers(): Promise<User[]> {
-    return axios.get('/users');
+class StudentService {
+  getStudents(): Promise<Student[]> {
+    return axios.get('/students');
   }
 
-  static getUser(userId: number): Promise<User> {
-    return axios.get('/users/' + userId);
+  getStudent(id: number): Promise<Student> {
+    return axios.get('/students/' + id);
   }
 
-  static updateUser(user: User): Promise<void> {
-    return axios.put('/users', user);
+  updateStudent(student: Student): Promise<void> {
+    return axios.put('/students', student);
   }
-
-  static addUser(user: User): Promise<number>{
-    return axios.post('/users', user);
-  }
-
-  static deleteUser(userId: number): Promise<void> {
-    return axios.delete('/users/' + userId);
-  }
-}
-
-export let userService = new UserService();
-
-export class Issue{
-  issueId: number;
-  title: string;
-  content: string;
-  image: string;
-  longitude: number;
-  latitude: number;
-  date: string; //Look at this later? Maybe another datatype? This works though.
-}
-
-class IssueService{
-  static getIssues(): Promise<Issue[]>{
-    return axios.get('/issues');
-  }
-
-  static getIssue(issueId: number): Promise<Issue> {
-    return axios.get('/issues/' + issueId);
-  }
-
-  static updateIssue(issue: Issue): Promise<void>{
-    return axios.put('/issues/', issue);
-  }
-
-  static addIssue(issue: Issue): Promise<number>{
-    return axios.post('/issues', issue);
-  }
-
-  static deleteIssue(issueId: number): Promise<void>{
-    return axios.delete('/issues/' + issueId);
-  }
-}
-
-export let issueService = new IssueService();
-
-export class IssueCategory{
-  categoryId: number;
-  name: number;
-}
-
-class IssueCategoryService{
-
 }
 
 class Event {
@@ -101,4 +45,17 @@ class EventService{
     return axios.put('/events', Event);
   }
 }
+
+class IssueCategoryService{
+  getCategories(): Promise<Category[]> {
+    return axios.get('/categories');
+  }
+  getCategory(category_id: number): Promise<Category> {
+    return axios.get('/categories/'+category_id);
+  }
+  updateCategory(category: Category): Promise<void> {
+    return axios.put('/categories', Category);
+  }
+}
+
 export let studentService = new StudentService();
