@@ -40,14 +40,11 @@ export let User: Class<
     hash_str: Sequelize.STRING
 });
 
-export let User_case: Class<Model<{ user_id: number, case_id: string }>> = sequelize.define('User_case', {
-  user_id: { type: Sequelize.INTEGER, primaryKey: true },
-  case_id: { type: Sequelize.INTEGER, primaryKey: true }
-});
-
-export let County: Class<Model<{ county_id?: number, name: string }>> = sequelize.define('County', {
-  county_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  name: Sequelize.STRING
+export let County: Class<
+    Model<{ county_id?: number, name: string}>
+    > = sequelize.define('County', {
+    county_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+    name: Sequelize.STRING
 });
 
 export let Municipal: Class<Model<{ mun_id?: number, name: string }>> = sequelize.define('Municipal', {
@@ -120,10 +117,23 @@ export let Event: Class<
   date: Sequelize.DATE
 });
 
-County.hasMany(Municipal, { foreignKey: 'county_id' });
-Municipal.hasMany(User, { foreignKey: 'municipal_id' });
-Municipal.hasMany(Issue, { foreignKey: 'municipal_id' });
-Municipal.belongsToMany(User, { through: 'UserMunicipal' });
+County.hasMany(Municipal, {foreignKey: 'county_id'});
+Municipal.hasMany(User, {foreignKey: 'municipal_id'});
+Municipal.hasMany(Issue, {foreignKey: 'municipal_id'});
+
+Municipal.belongsToMany(User, {through: 'User_municipal', foreignKey: 'mun_id'});
+User.belongsToMany(Municipal, {through: 'User_municipal', foreignKey: 'user_id'});
+
+User.belongsToMany(Issue, {through: 'User_issue', foreignKey: 'user_id'});
+Issue.belongsToMany(User, {through: 'User_issue', foreignKey: 'issue_id'});
+
+User.hasMany(Issue, {foreignKey: 'user_id'});
+User.hasMany(Event, {foreignKey: 'user_id'});
+User.hasMany(Feedback, {foreignKey: 'user_id'});
+
+Issue.belongsTo(Issue_category, {foreignKey: 'category_id}'});
+Issue.belongsTo(Status, {foreignKey: 'status_id'});
+Feedback.hasMany(Issue, {foreignKey: 'feedback_id'});
 
 User.hasMany(Issue, { foreignKey: 'user_id' });
 User.belongsToMany(Issue, { through: 'UserIssue' });
