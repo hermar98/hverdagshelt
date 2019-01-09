@@ -6,7 +6,10 @@ import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert } from './widgets';
 import { studentService } from './services';
+import { IssueLarge } from './widgetsCase';
 
+
+/*
 // Reload application when not in production environment
 if (process.env.NODE_ENV !== 'production') {
   let script = document.createElement('script');
@@ -166,18 +169,15 @@ class StudentEdit extends Component<{ match: { params: { id: number } } }> {
       .catch((error: Error) => Alert.danger(error.message));
   }
 }
+*/
+
 
 const root = document.getElementById('root');
 if (root)
   ReactDOM.render(
     <HashRouter>
       <div>
-        <Alert />
-        <Menu />
-        <Route exact path="/" component={Home} />
-        <Route path="/students" component={StudentList} />
-        <Route exact path="/students/:id" component={StudentDetails} />
-        <Route exact path="/students/:id/edit" component={StudentEdit} />
+        <Route exact path="/" component={} />
       </div>
     </HashRouter>,
     root
