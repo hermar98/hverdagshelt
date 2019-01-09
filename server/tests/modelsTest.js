@@ -1,6 +1,17 @@
 // @flow
 
-import { User, Municipal, County, Status, Issue_category, sync } from '../src/models.js';
+import {
+  User,
+  Municipal,
+  County,
+  Status,
+  Issue_category,
+  Issue,
+  Feedback,
+  Event,
+  Event_category,
+  sync
+} from '../src/models.js';
 
 beforeAll(async () => {
   await sync;
@@ -111,6 +122,130 @@ describe('status test', () => {
       {
         status_id: 1,
         name: 'Completed'
+      }
+    ]);
+  });
+});
+
+describe('issue test', () => {
+  it('correct data', async () => {
+    let issue = await Issue.findAll();
+    issue.slice(0, 1);
+    expect(
+      issue
+        .map(e => e.toJSON())
+        .map(e => ({
+          issue_id: e.issue_id,
+          title: e.title,
+          content: e.content,
+          image: e.image,
+          longitude: e.longitude,
+          latitude: e.latitude,
+          date: e.date
+        }))
+    ).toEqual([
+      {
+        issue_id: 1,
+        title: '',
+        content: '',
+        image: '',
+        longitude: 0,
+        latitude: 0,
+        date: 'dd.mm.yyyyy'
+      }
+    ]);
+  });
+});
+
+describe('feedback test', () => {
+  it('correct data', async () => {
+    let feedback = await Feedback.findAll();
+    feedback.slice(0, 1);
+    expect(
+      feedback
+        .map(e => e.toJSON())
+        .map(e => ({
+          feedback_id: e.feedback_id,
+          name: e.name,
+          content: e.content,
+          date: e.date
+        }))
+    ).toEqual([
+      {
+        feedback_id: 1,
+        name: '',
+        content: '',
+        date: 'ddmmyyyy'
+      }
+    ]);
+  });
+});
+
+describe('event test', () => {
+  it('correct data', async () => {
+    let event = await Event.findAll();
+    event.slice(0, 1);
+    expect(
+      event
+        .map(e => e.toJSON())
+        .map(e => ({
+          event_id: e.event_id,
+          title: e.title,
+          content: e.content,
+          image: e.image,
+          longitude: e.longitude,
+          latitude: e.latitude,
+          date: e.data
+        }))
+    ).toEqual([
+      {
+        event_id: 1,
+        title: '',
+        content: '',
+        image: '',
+        longitude: '',
+        latitude: '',
+        date: 'ddmmyyyy'
+      }
+    ]);
+  });
+});
+
+describe('issue_cat test', () => {
+  it('correct data', async () => {
+    let issue_cat = await Issue_category.findAll();
+    issue_cat.slice(0, 1);
+    expect(
+      issue_cat
+        .map(e => e.toJSON())
+        .map(e => ({
+          category_id: e.category_id,
+          name: e.name
+        }))
+    ).toEqual([
+      {
+        category_id: 1,
+        name: 'Road'
+      }
+    ]);
+  });
+});
+
+describe('event_cat test', () => {
+  it('correct data', async () => {
+    let event_cat = await Event_category.findAll();
+    event_cat.slice(0, 1);
+    expect(
+      event_cat
+        .map(e => e.toJSON())
+        .map(e => ({
+          event_id: e.event_id,
+          name: e.name
+        }))
+    ).toEqual([
+      {
+        event_id: 1,
+        name: 'Road'
       }
     ]);
   });
