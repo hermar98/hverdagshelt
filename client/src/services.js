@@ -127,4 +127,3 @@ class EventService{
     return axios.delete('/events/' + eventId);
   }
 }
-export let studentService = new StudentService();
