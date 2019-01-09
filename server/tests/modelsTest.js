@@ -61,7 +61,7 @@ describe('county test', () => {
     ).toEqual([
       {
         county_id: 1,
-        name: 'Trøndelag'
+        name: 'Trønderlag'
       }
     ]);
   });
@@ -76,12 +76,14 @@ describe('municipal test', () => {
         .map(e => e.toJSON())
         .map(e => ({
           mun_id: e.mun_id,
-          name: e.name
+          name: e.name,
+          county_id: e.county_id
         }))
     ).toEqual([
       {
         mun_id: 1,
-        name: 'Trondheim'
+        name: 'Freia',
+        county_id: 1
       }
     ]);
   });
@@ -101,7 +103,7 @@ describe('status test', () => {
     ).toEqual([
       {
         status_id: 1,
-        name: 'Completed'
+        name: 'Situation Normal, All fucked upp'
       }
     ]);
   });
@@ -121,17 +123,23 @@ describe('issue test', () => {
           image: e.image,
           longitude: e.longitude,
           latitude: e.latitude,
-          date: e.date
+          mun_id: e.mun_id,
+          user_id: e.user_id,
+          category_id: e.category_id,
+          status_id: e.status_id
         }))
     ).toEqual([
       {
         issue_id: 1,
-        title: '',
-        content: '',
-        image: '',
-        longitude: 0,
-        latitude: 0,
-        date: 'dd.mm.yyyyy'
+        title: 'Dumme folk ødeleger lømp',
+        content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
+        image: 'null',
+        longitude: 123123,
+        latitude: 123123,
+        mun_id: 1,
+        user_id: 1,
+        category_id: 1,
+        status_id: 1
       }
     ]);
   });
@@ -148,14 +156,16 @@ describe('feedback test', () => {
           feedback_id: e.feedback_id,
           name: e.name,
           content: e.content,
-          date: e.date
+          user_id: e.user_id,
+          issue_id: e.issue_id
         }))
     ).toEqual([
       {
         feedback_id: 1,
-        name: '',
-        content: '',
-        date: 'ddmmyyyy'
+        name: 'Dumme folk er dumme',
+        content: 'Vi skal fikse dette!',
+        user_id: 2,
+        issue_id: 1
       }
     ]);
   });
@@ -175,17 +185,19 @@ describe('event test', () => {
           image: e.image,
           longitude: e.longitude,
           latitude: e.latitude,
-          date: e.data
+          user_id: e.user_id,
+          category_id: e.category_id
         }))
     ).toEqual([
       {
         event_id: 1,
-        title: '',
-        content: '',
-        image: '',
-        longitude: '',
-        latitude: '',
-        date: 'ddmmyyyy'
+        title: 'party at the house man!',
+        content: 'Det skal være party at the house!',
+        image: 'notin',
+        longitude: 123123,
+        latitude: 123123,
+        user_id: 2,
+        category_id: 1
       }
     ]);
   });
@@ -205,7 +217,7 @@ describe('issue_cat test', () => {
     ).toEqual([
       {
         category_id: 1,
-        name: 'Road'
+        name: 'Fyllikere på gata som ødeleger lamper'
       }
     ]);
   });
@@ -225,7 +237,7 @@ describe('event_cat test', () => {
     ).toEqual([
       {
         event_id: 1,
-        name: 'Road'
+        name: 'PARTY'
       }
     ]);
   });

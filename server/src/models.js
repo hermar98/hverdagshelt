@@ -128,7 +128,7 @@ User.hasMany(Issue, { foreignKey: 'user_id' });
 User.hasMany(Event, { foreignKey: 'user_id' });
 User.hasMany(Feedback, { foreignKey: 'user_id' });
 
-Issue.belongsTo(Issue_category, { foreignKey: 'category_id}' });
+Issue.belongsTo(Issue_category, { foreignKey: 'category_id' });
 Issue.belongsTo(Status, { foreignKey: 'status_id' });
 Issue.hasMany(Feedback, { foreignKey: 'issue_id' });
 
@@ -136,8 +136,6 @@ User.hasMany(Issue, { foreignKey: 'user_id' });
 User.hasMany(Event, { foreignKey: 'user_id' });
 User.hasMany(Feedback, { foreignKey: 'user_id' });
 
-Issue.belongsTo(Issue_category, { foreignKey: 'category_id}' });
-Issue.belongsTo(Status, { foreignKey: 'status_id' });
 Event.belongsTo(Event_category, { foreignKey: 'category_id' });
 
 //Municipal.belongsTo(County, {foreignKey: 'fk_companyname', targetKey: 'name'});
@@ -204,7 +202,6 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
       )
       .then(() =>
         Issue_category.create({
-          category_id: '1',
           name: 'Fyllikere på gata som ødeleger lamper'
         })
       )
@@ -219,7 +216,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           date: new Date(Date.now()),
           mun_id: 1,
           user_id: 1,
-          category_id: 1,
+          category_id: '1',
           status_id: 1
         })
       )
