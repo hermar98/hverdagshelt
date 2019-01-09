@@ -29,13 +29,15 @@ export let Students: Class<
 });
 
 export let User: Class<
-    Model<{ user_id?: number, firstName: string, lastName: string, email: string, rank: number }>
+    Model<{ user_id?: number, firstName: string, lastName: string, email: string, rank: number, salt: string, hash_str: string }>
     > = sequelize.define('User', {
     user_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
     firstName: Sequelize.STRING,
     lastName: Sequelize.STRING,
     email: Sequelize.STRING,
-    number: Sequelize.INTEGER
+    rank: Sequelize.INTEGER,
+    salt: Sequelize.STRING,
+    hash_str: Sequelize.STRING
 });
 
 export let User_case: Class<
@@ -136,23 +138,119 @@ Event.belongsTo(Event_category, {foreignKey: 'category_id}'});
 //belongsTO, source model is the foreign key
 //hasMany
 
-
-
-
 // Drop tables and create test data when not in production environment
 let production = process.env.NODE_ENV === 'production';
 // The sync promise can be used to wait for the database to be ready (for instance in your tests)
 export let sync = sequelize.sync({ force: production ? false : true }).then(() => {
   if (!production)
-    return Students.create({
-      firstName: 'Ola',
-      lastName: 'Jensen',
-      email: 'ola.jensen@ntnu.no'
+    return User.create({
+        firstName: 'Vegard',
+        lastName: 'Andersson',
+        email: 'vegaande@ntnu.stud.no',
+        rank: 1,
+        salt: 'b79ryp97',
+        hash_str: '897dfjsodif5vx24c5vsldfskdclz97cyw7e3o2inJKHaospk902'
     }).then(() =>
       Students.create({
         firstName: 'Kari',
         lastName: 'Larsen',
         email: 'kari.larsen@ntnu.no'
       })
+    ).then(() =>
+        Students.create({
+            firstName: 'Kari',
+            lastName: 'Larsen',
+            email: 'kari.larsen@ntnu.no'
+        })
+    ).then(() =>
+        Students.create({
+            firstName: 'Kari',
+            lastName: 'Larsen',
+            email: 'kari.larsen@ntnu.no'
+        })
+    ).then(() =>
+        Students.create({
+            firstName: 'Kari',
+            lastName: 'Larsen',
+            email: 'kari.larsen@ntnu.no'
+        })
+    ).then(() =>
+        Students.create({
+            firstName: 'Kari',
+            lastName: 'Larsen',
+            email: 'kari.larsen@ntnu.no'
+        })
+    ).then(() =>
+        Students.create({
+            firstName: 'Kari',
+            lastName: 'Larsen',
+            email: 'kari.larsen@ntnu.no'
+        })
+    ).then(() =>
+        Students.create({
+            firstName: 'Kari',
+            lastName: 'Larsen',
+            email: 'kari.larsen@ntnu.no'
+        })
+    ).then(() =>
+        Students.create({
+            firstName: 'Kari',
+            lastName: 'Larsen',
+            email: 'kari.larsen@ntnu.no'
+        })
+    ).then(() =>
+        Students.create({
+            firstName: 'Kari',
+            lastName: 'Larsen',
+            email: 'kari.larsen@ntnu.no'
+        })
+    ).then(() =>
+        Students.create({
+            firstName: 'Kari',
+            lastName: 'Larsen',
+            email: 'kari.larsen@ntnu.no'
+        })
+    ).then(() =>
+        Students.create({
+            firstName: 'Kari',
+            lastName: 'Larsen',
+            email: 'kari.larsen@ntnu.no'
+        })
+    ).then(() =>
+        Students.create({
+            firstName: 'Kari',
+            lastName: 'Larsen',
+            email: 'kari.larsen@ntnu.no'
+        })
+    ).then(() =>
+        Students.create({
+            firstName: 'Kari',
+            lastName: 'Larsen',
+            email: 'kari.larsen@ntnu.no'
+        })
+    ).then(() =>
+        Students.create({
+            firstName: 'Kari',
+            lastName: 'Larsen',
+            email: 'kari.larsen@ntnu.no'
+        })
+    ).then(() =>
+        Students.create({
+            firstName: 'Kari',
+            lastName: 'Larsen',
+            email: 'kari.larsen@ntnu.no'
+        })
+    ).then(() =>
+        Students.create({
+            firstName: 'Kari',
+            lastName: 'Larsen',
+            email: 'kari.larsen@ntnu.no'
+        })
+    ).then(() =>
+        Students.create({
+            firstName: 'Kari',
+            lastName: 'Larsen',
+            email: 'kari.larsen@ntnu.no'
+        })
     );
 });
