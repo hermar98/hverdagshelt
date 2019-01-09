@@ -19,8 +19,8 @@ beforeAll(async () => {
 
 describe('user test', () => {
   it('correct data', async () => {
-    let user = await User.findAll();
-    user.slice(0, 1);
+    let users = await User.findAll();
+    let user = users.slice(0, 1);
     expect(
       user
         .map(e => e.toJSON())
@@ -49,8 +49,8 @@ describe('user test', () => {
 
 describe('county test', () => {
   it('correct data', async () => {
-    let county = await County.findAll();
-    county.slice(0, 1);
+    let countys = await County.findAll();
+    let county = countys.slice(0, 1);
     expect(
       county
         .map(e => e.toJSON())
@@ -69,28 +69,8 @@ describe('county test', () => {
 
 describe('municipal test', () => {
   it('correct data', async () => {
-    let municipal = await Municipal.findAll();
-    municipal.slice(0, 1);
-    expect(
-      municipal
-        .map(e => e.toJSON())
-        .map(e => ({
-          mun_id: e.mun_id,
-          name: e.name
-        }))
-    ).toEqual([
-      {
-        mun_id: 1,
-        name: 'Trondheim'
-      }
-    ]);
-  });
-});
-
-describe('municipal test', () => {
-  it('correct data', async () => {
-    let municipal = await Municipal.findAll();
-    municipal.slice(0, 1);
+    let municipals = await Municipal.findAll();
+    let municipal = municipals.slice(0, 1);
     expect(
       municipal
         .map(e => e.toJSON())
@@ -110,9 +90,9 @@ describe('municipal test', () => {
 describe('status test', () => {
   it('correct data', async () => {
     let status = await Status.findAll();
-    status.slice(0, 1);
+    let stat = status.slice(0, 1);
     expect(
-      status
+      stat
         .map(e => e.toJSON())
         .map(e => ({
           status_id: e.status_id,
@@ -129,8 +109,8 @@ describe('status test', () => {
 
 describe('issue test', () => {
   it('correct data', async () => {
-    let issue = await Issue.findAll();
-    issue.slice(0, 1);
+    let issues = await Issue.findAll();
+    let issue = issues.slice(0, 1);
     expect(
       issue
         .map(e => e.toJSON())
@@ -159,8 +139,8 @@ describe('issue test', () => {
 
 describe('feedback test', () => {
   it('correct data', async () => {
-    let feedback = await Feedback.findAll();
-    feedback.slice(0, 1);
+    let feedbacks = await Feedback.findAll();
+    let feedback = feedbacks.slice(0, 1);
     expect(
       feedback
         .map(e => e.toJSON())
@@ -183,8 +163,8 @@ describe('feedback test', () => {
 
 describe('event test', () => {
   it('correct data', async () => {
-    let event = await Event.findAll();
-    event.slice(0, 1);
+    let events = await Event.findAll();
+    let event = events.slice(0, 1);
     expect(
       event
         .map(e => e.toJSON())
@@ -213,8 +193,8 @@ describe('event test', () => {
 
 describe('issue_cat test', () => {
   it('correct data', async () => {
-    let issue_cat = await Issue_category.findAll();
-    issue_cat.slice(0, 1);
+    let issue_cats = await Issue_category.findAll();
+    let issue_cat = issue_cats.slice(0, 1);
     expect(
       issue_cat
         .map(e => e.toJSON())
@@ -233,8 +213,8 @@ describe('issue_cat test', () => {
 
 describe('event_cat test', () => {
   it('correct data', async () => {
-    let event_cat = await Event_category.findAll();
-    event_cat.slice(0, 1);
+    let event_cats = await Event_category.findAll();
+    let event_cats = event_cats.slice(0, 1);
     expect(
       event_cat
         .map(e => e.toJSON())
