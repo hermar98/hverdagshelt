@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { studentService, User } from '../../services';
+import { User } from '../../services';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
 
 export default class RegistrationForm extends Component {
