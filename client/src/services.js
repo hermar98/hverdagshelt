@@ -78,3 +78,27 @@ export class IssueCategory{
 class IssueCategoryService{
 
 }
+
+class Event {
+  event_id: number;
+  title: string;
+  content: string;
+  image: string;
+  longitude: number;
+  latitude: number;
+  time_start: string;
+  time_end: string;
+}
+
+class EventService{
+  getEvents(): Promise<Event[]> {
+    return axios.get('/events');
+  }
+  getEvent(event_id: number): Promise<Event> {
+    return axios.get('/events/'+event_id);
+  }
+  updateEvent(event: Event): Promise<void> {
+    return axios.put('/events', Event);
+  }
+}
+export let studentService = new StudentService();
