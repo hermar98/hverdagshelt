@@ -103,9 +103,9 @@ app.delete('/events/:id', function (req, res) {
         ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
-app.post('/cases', (req:Request, res: Response) => {
+app.post('/issues', (req:Request, res: Response) => {
     if(!(req.body instanceof Object)) return res.sendStatus(400);
-    return Case.create(
+    return Issue.create(
         {
             title: req.body.title,
             content: req.body.content,
@@ -116,8 +116,8 @@ app.post('/cases', (req:Request, res: Response) => {
         }
     ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
 });
-app.delete('/cases/:id', function (req, res) {
-    return Case.destroy(
+app.delete('/issues/:id', function (req, res) {
+    return Issue.destroy(
         {
             where: {
               case_id: req.params.id
