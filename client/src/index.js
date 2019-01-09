@@ -10,6 +10,7 @@ import { FileIssuePage } from "./components/pages/FileIssuePage";
 import { LoginPage } from "./components/pages/LoginPage";
 import { RegisterPage } from "./components/pages/RegisterPage";
 import { ChooseMunicipalPage } from "./components/pages/ChooseMunicipalPage";
+import {RegisterEventPage} from "./components/pages/RegisterEventPage";
 
 // Reload application when not in production environment
 
