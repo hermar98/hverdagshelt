@@ -177,7 +177,7 @@ var issuesTest = [
     new Issue("Herverk på husveggen min" ,"", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg", 2,""),
     new Issue("Søppeltømmingsplanene fungerer ikke bra" ,"", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg", 2,""),
     new Issue("Hull i veien ved Gate 7" ,"", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg", 3,""),
-    new Issue("Ødelagt bom ved broa" ,"", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg", 3,""),
+    new Issue("Ødelagt bom ved broa" ,"", "https://i.imgur.com/nqTGipe.jpg", 3,""),
     new Issue("Herverk på husveggen min" ,"", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg", 2,""),
     new Issue("Søppeltømmingsplanene fungerer ikke bra" ,"", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg", 1,"")
     ]
@@ -186,7 +186,7 @@ class IssuePage extends Component {
     render () {
         return (
             <div className="issue-container">
-                <IssueLarge issue={issueTest}/>
+                <IssueOverviewNormal issues={issuesTest}/>
             </div>
         )
     }

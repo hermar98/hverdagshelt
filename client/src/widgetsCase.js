@@ -48,7 +48,7 @@ export class IssueNormal extends Component<{issue: Issue}>{
                     <div className="p-2">
                         <img className="card-img issue-image" src={this.props.issue.image}/>
                     </div>
-                    <div className="p-2">{this.props.issue.title}</div>
+                    <div className="p-2"><h1>{this.props.issue.title}</h1></div>
                 </div>
             </div>
         )
