@@ -43,7 +43,7 @@ export class Issue{
   image: string;
   longitude: number;
   latitude: number;
-  date: string; //Look at this later? Maybe another datatype? This works though.
+  date: Date; //Works with string, unsure about date convertion
 }
 
 class IssueService{
@@ -72,20 +72,32 @@ export let issueService = new IssueService();
 
 export class IssueCategory{
   categoryId: number;
-  name: number;
+  name: string;
 }
 
 class IssueCategoryService{
-  getCategories(): Promise<Category[]> {
-    return axios.get('/categories');
+  static getCategories(): Promise<IssueCategory[]>{
+    return axios.get('/issuecategories');
   }
-  getCategory(category_id: number): Promise<Category> {
-    return axios.get('/categories/'+category_id);
+
+  static getCategory(categoryId: number): Promise<IssueCategory> {
+    return axios.get('/issuecategories/' + categoryId);
   }
-  updateCategory(category: Category): Promise<void> {
-    return axios.put('/categories', Category);
+
+  static updateCategory(category: IssueCategory): Promise<void>{
+    return axios.put('/issuecategories/', category);
+  }
+
+  static addCategory(category: IssueCategory): Promise<number>{
+    return axios.post('/issuecategories', category);
+  }
+
+  static deleteCategory(categoryId: number): Promise<void>{
+    return axios.delete('/issuecategories/' + categoryId);
   }
 }
+
+export let issueCategoryService = new IssueCategoryService();
 
 class Event {
   event_id: number;
