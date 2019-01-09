@@ -19,89 +19,84 @@ let sequelize = new Sequelize(
   }
 );
 
-
 export let Feedback: Class<Model<{ feedback_id?: number, content: string, date: date }>> = sequelize.define(
-    'Feedback',
-    {
-        feedback_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-        name: Sequelize.STRING,
-        content: Sequelize.STRING,
-        date: Sequelize.DATE
-    }
+  'Feedback',
+  {
+    feedback_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+    name: Sequelize.STRING,
+    content: Sequelize.STRING,
+    date: Sequelize.DATE
+  }
 );
 
 export let Issue: Class<
-    Model<{
-        issue_id?: number,
-        title: string,
-        content: string,
-        image: string,
-        longitude: number,
-        latitude: number,
-        date: date
-    }>
-    > = sequelize.define('Issue', {
-    issue_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    title: Sequelize.STRING,
-    content: Sequelize.STRING,
-    image: Sequelize.STRING,
-    longitude: Sequelize.DOUBLE,
-    latitude: Sequelize.DOUBLE,
-    date: Sequelize.DATE
+  Model<{
+    issue_id?: number,
+    title: string,
+    content: string,
+    image: string,
+    longitude: number,
+    latitude: number,
+    date: date
+  }>
+> = sequelize.define('Issue', {
+  issue_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+  title: Sequelize.STRING,
+  content: Sequelize.STRING,
+  image: Sequelize.STRING,
+  longitude: Sequelize.DOUBLE,
+  latitude: Sequelize.DOUBLE,
+  date: Sequelize.DATE
 });
 
 export let Event: Class<
-    Model<{
-        event_id?: number,
-        title: string,
-        content: string,
-        image: string,
-        longitude: number,
-        latitude: number,
-        date: date
-    }>
-    > = sequelize.define('Event', {
-    event_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    title: Sequelize.STRING,
-    content: Sequelize.STRING,
-    image: Sequelize.STRING,
-    longitude: Sequelize.DOUBLE,
-    latitude: Sequelize.DOUBLE,
-    date: Sequelize.DATE
+  Model<{
+    event_id?: number,
+    title: string,
+    content: string,
+    image: string,
+    longitude: number,
+    latitude: number,
+    date: date
+  }>
+> = sequelize.define('Event', {
+  event_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+  title: Sequelize.STRING,
+  content: Sequelize.STRING,
+  image: Sequelize.STRING,
+  longitude: Sequelize.DOUBLE,
+  latitude: Sequelize.DOUBLE,
+  date: Sequelize.DATE
 });
 
 export let User: Class<
-    Model<{ user_id?: number, firstName: string, lastName: string, email: string, rank: number, salt: string, hash_str: string }>
-    > = sequelize.define('User', {
-    user_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    firstName: Sequelize.STRING,
-    lastName: Sequelize.STRING,
-    email: Sequelize.STRING,
-    rank: Sequelize.INTEGER,
-    salt: Sequelize.STRING,
-    hash_str: Sequelize.STRING
-});
-
-export let Students: Class<
-  Model<{ id?: number, firstName: string, lastName: string, email: string }>
-> = sequelize.define('Students', {
-  id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+  Model<{
+    user_id?: number,
+    firstName: string,
+    lastName: string,
+    email: string,
+    rank: number,
+    salt: string,
+    hash_str: string
+  }>
+> = sequelize.define('User', {
+  user_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
   firstName: Sequelize.STRING,
   lastName: Sequelize.STRING,
-  email: Sequelize.STRING
+  email: Sequelize.STRING,
+  rank: Sequelize.INTEGER,
+  salt: Sequelize.STRING,
+  hash_str: Sequelize.STRING
 });
-
 
 export let Municipal: Class<Model<{ mun_id?: number, name: string }>> = sequelize.define('Municipal', {
-    mun_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    name: Sequelize.STRING
+  mun_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+  name: Sequelize.STRING
 });
 
-export let County: Class<
-    Model<{ county_id?: number, name: string}>
-    > = sequelize.define('County', {
-    county_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    name: Sequelize.STRING
+export let County: Class<Model<{ county_id?: number, name: string }>> = sequelize.define('County', {
+  county_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+  name: Sequelize.STRING
 });
 
 export let Status: Class<Model<{ status_id?: number, name: string }>> = sequelize.define('Status', {
@@ -119,9 +114,9 @@ export let Event_category: Class<Model<{ event_id?: number, name: string }>> = s
   name: Sequelize.STRING
 });
 
-County.hasMany(Municipal, {foreignKey: 'county_id'});
-Municipal.hasMany(User, {foreignKey: 'mun_id'});
-Municipal.hasMany(Issue, {foreignKey: 'mun_id'});
+County.hasMany(Municipal, { foreignKey: 'county_id' });
+Municipal.hasMany(User, { foreignKey: 'mun_id' });
+Municipal.hasMany(Issue, { foreignKey: 'mun_id' });
 
 Municipal.belongsToMany(User, { through: 'User_municipal', foreignKey: 'mun_id' });
 User.belongsToMany(Municipal, { through: 'User_municipal', foreignKey: 'user_id' });
@@ -133,9 +128,9 @@ User.hasMany(Issue, { foreignKey: 'user_id' });
 User.hasMany(Event, { foreignKey: 'user_id' });
 User.hasMany(Feedback, { foreignKey: 'user_id' });
 
-Issue.belongsTo(Issue_category, {foreignKey: 'category_id}'});
-Issue.belongsTo(Status, {foreignKey: 'status_id'});
-Issue.hasMany(Feedback, {foreignKey: 'issue_id'});
+Issue.belongsTo(Issue_category, { foreignKey: 'category_id}' });
+Issue.belongsTo(Status, { foreignKey: 'status_id' });
+Issue.hasMany(Feedback, { foreignKey: 'issue_id' });
 
 User.hasMany(Issue, { foreignKey: 'user_id' });
 User.hasMany(Event, { foreignKey: 'user_id' });
@@ -156,112 +151,103 @@ let production = process.env.NODE_ENV === 'production';
 export let sync = sequelize.sync({ force: production ? false : true }).then(() => {
   if (!production)
     return County.create({
-        county_id: '1',
-        name: 'Trønderlag'
-    }).then(() =>
+      county_id: '1',
+      name: 'Trønderlag'
+    })
+      .then(() =>
         Municipal.create({
-            mun_id: '1',
-            name: 'Freia',
-            county_id: '1'
-      })
-    ).then(() =>
-        User.create({
-            firstName: 'Vegard',
-            lastName: 'Andersson',
-            email: 'vegaande@ntnu.stud.no',
-            rank: '1',
-            salt: 'b79ryp97',
-            hash_str: '897dfjsodif5vx24c5vsldfskdclz97cyw7e3o2inJKHaospk902',
-            mun_id: '1',
-
+          mun_id: '1',
+          name: 'Freia',
+          county_id: '1'
         })
-    ).then(() =>
+      )
+      .then(() =>
+        User.create({
+          firstName: 'Vegard',
+          lastName: 'Andersson',
+          email: 'vegaande@ntnu.stud.no',
+          rank: '1',
+          salt: 'b79ryp97',
+          hash_str: '897dfjsodif5vx24c5vsldfskdclz97cyw7e3o2inJKHaospk902',
+          mun_id: '1'
+        })
+      )
+      .then(() =>
         County.create({
-            county_id: '2',
-            name: 'Vestfold'
+          county_id: '2',
+          name: 'Vestfold'
         })
-    ).then(() =>
+      )
+      .then(() =>
         Municipal.create({
-            mun_id: '2',
-            name: 'Larvik',
-            county_id: '2'
+          mun_id: '2',
+          name: 'Larvik',
+          county_id: '2'
         })
-    ).then(() =>
+      )
+      .then(() =>
         User.create({
-            firstName: 'Christian',
-            lastName: 'Axell',
-            email: 'cdaxell@ntnu.stud.no',
-            rank: '3',
-            salt: 'b79ryp98',
-            hash_str: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
-            mun_id: '2',
+          firstName: 'Christian',
+          lastName: 'Axell',
+          email: 'cdaxell@ntnu.stud.no',
+          rank: '3',
+          salt: 'b79ryp98',
+          hash_str: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
+          mun_id: '2'
         })
-    ).then(() =>
+      )
+      .then(() =>
         Status.create({
-            status_id: '1',
-            name: 'Situation Normal, All fucked upp'
+          status_id: '1',
+          name: 'Situation Normal, All fucked upp'
         })
-    ).then(() =>
+      )
+      .then(() =>
         Issue_category.create({
-            category_id: '1',
-            name: 'Fyllikere på gata som ødeleger lamper'
+          category_id: '1',
+          name: 'Fyllikere på gata som ødeleger lamper'
         })
-    ).then(() =>
+      )
+      .then(() =>
         Issue.create({
-            issue_id: '1',
-            title: 'Dumme folk ødeleger lømp',
-            content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
-            image: 'null',
-            longitude: '123123',
-            latitude: '123123',
-            date: new Date(Date.now()),
-            mun_id: 1,
-            user_id: 1,
-            category_id: 1,
-            status_id: 1
+          issue_id: '1',
+          title: 'Dumme folk ødeleger lømp',
+          content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
+          image: 'null',
+          longitude: '123123',
+          latitude: '123123',
+          date: new Date(Date.now()),
+          mun_id: 1,
+          user_id: 1,
+          category_id: 1,
+          status_id: 1
         })
-    ).then(() =>
+      )
+      .then(() =>
         Feedback.create({
-            name: 'Dumme folk er dumme',
-            content: 'Vi skal fikse dette!',
-            date: new Date(Date.now()),
-            user_id: '2',
-            issue_id: '1'
+          name: 'Dumme folk er dumme',
+          content: 'Vi skal fikse dette!',
+          date: new Date(Date.now()),
+          user_id: '2',
+          issue_id: '1'
         })
-    ).then(() =>
+      )
+      .then(() =>
         Event_category.create({
-            category_id: 1,
-            name: 'PARTY'
+          category_id: 1,
+          name: 'PARTY'
         })
-    ).then(() =>
+      )
+      .then(() =>
         Event.create({
-            title: 'party at the house man!',
-            content: 'Det skal være party at the house!',
-            image: 'notin',
-            longitude: '123123',
-            latitude: '123123',
-            date: new Date(Date.now()),
-            user_id: '2',
-            category_id: 1
-
+          title: 'party at the house man!',
+          content: 'Det skal være party at the house!',
+          image: 'notin',
+          longitude: '123123',
+          latitude: '123123',
+          date: new Date(Date.now()),
+          user_id: '2',
+          category_id: 1
         })
-    ).then(() =>
-        Students.create({
-        })
-    ).then(() =>
-        Students.create({
-        })
-    ).then(() =>
-        Students.create({
-        })
-    ).then(() =>
-        Students.create({
-        })
-    ).then(() =>
-        Students.create({
-        })
-    ).then(() =>
-        Students.create({
-        })
-    );
+      );
 });
