@@ -1,20 +1,17 @@
-// @flow
-
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { User } from '../../services';
+import { studentService, User } from '../../services';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
-import RegistrationForm from '../../components/forms/RegistrationForm';
+import EventForm from '../../components/forms/EventForm';
 import Menu from '../../components/menu/Menu.js';
 
-export class RegisterPage extends Component {
-  user = new User();
+export class RegisterEventPage extends Component {
 
   render() {
     return (
       <div>
-        <RegistrationForm />
+        <EventForm />
       </div>
     );
   }

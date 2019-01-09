@@ -3,13 +3,15 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { HashRouter, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from './widgets';
-import HomePage from './components/pages/HomePage.js';
-import RegisterPage from './components/pages/RegisterPage.js';
-import { studentService, User } from './services';
-
+import Menu from './components/menu/Menu.js';
+import { FileIssuePage } from "./components/pages/FileIssuePage";
+import { LoginPage } from "./components/pages/LoginPage";
+import { RegisterPage } from "./components/pages/RegisterPage";
+import {RegisterEventPage} from "./components/pages/RegisterEventPage";
 // Reload application when not in production environment
+
 if (process.env.NODE_ENV !== 'production') {
   let script = document.createElement('script');
   script.src = '/reload/reload.js';
@@ -17,17 +19,25 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 import createHashHistory from 'history/createHashHistory';
-const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after successfully saving a student
+export const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after
+// successfully saving a student
+
 
 const root = document.getElementById('root');
 if (root)
   ReactDOM.render(
     <HashRouter>
       <div>
-        <Route path="/" component={Alert} />
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/register" component={RegisterPage} />
+        <Alert />
+        <Menu />
+        <Route exact path="/registerUser" component={RegisterPage} />
+        <Route exact path="/registerIssue" component={FileIssuePage} />
+        <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/sendEmail" />
+        <Route exact path="/event/register" component={RegisterEventPage}/>
       </div>
     </HashRouter>,
     root
   );
+
+

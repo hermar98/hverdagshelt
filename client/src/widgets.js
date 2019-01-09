@@ -61,6 +61,32 @@ export class Alert extends Component {
   }
 }
 
+class ButtonBasic extends Component <{
+    onClick: () => mixed,
+    children: React.Node
+}> {
+    render() {
+        return(
+            <button className="btn btn-default" onClick={this.props.onClick}>
+                {this.props.children}
+            </button>
+        )
+    }
+}
+
+class ButtonLink extends Component <{
+  onClick: () => mixed,
+  children: React.Node
+}> {
+    render() {
+        return(
+            <button className="btn btn-link" onClick={this.props.onClick}>
+                {this.props.children}
+            </button>
+        )
+    }
+}
+
 class ButtonRemove extends Component <{
     onClick: () => mixed,
     children: React.Node
@@ -107,6 +133,26 @@ export class Button{
     static Success = ButtonSuccess;
     static Remove = ButtonRemove;
     static Edit = ButtonEdit;
+    static Basic = ButtonBasic;
+    static Link = ButtonLink;
+}
+
+
+export class Card extends Component<{ title: React.Node, children?: React.Node }> {
+    render(){
+        return(
+            <div className="card">
+                <div className="card-body">
+                    <div className="container h-100">
+                        <div className="row h-100 justify-content-center align-items-center">
+                            <h5 className="card-title">{this.props.title}</h5>
+                        </div>
+                    </div>
+                    <div className="card-text">{this.props.children}</div>
+                </div>
+            </div>
+        );
+    }
 }
 
 class NavBarBrand extends Component <{ image?: React.Node, children?: React.Node }> {
@@ -117,20 +163,6 @@ class NavBarBrand extends Component <{ image?: React.Node, children?: React.Node
                 <a><img src={this.props.image} alt="" width="50px" height="40px"/></a>
                 {this.props.children}
             </NavLink>
-        );
-    }
-}
-
-
-export class Card extends Component<{ title: React.Node, children?: React.Node }> {
-    render(){
-        return(
-            <div className="card">
-                <div className="card-body">
-                    <h5 className="card-title">{this.props.title}</h5>
-                    <div className="card-text">{this.props.children}</div>
-                </div>
-            </div>
         );
     }
 }
@@ -206,8 +238,8 @@ class FormInputBig extends Component <{
     render() {
         return(
             <div className="form-group row">
-                <label className="col-sm-1 col-form-label">{this.props.label}</label>
-                <div className="col-sm-11">
+                <label className="col-sm-4 col-form-label">{this.props.label}</label>
+                <div className="col-sm-4">
                     <textarea rows="8" id="content"
                               className="form-control"
                               type={this.props.type}
@@ -222,7 +254,27 @@ class FormInputBig extends Component <{
     }
 }
 
+class FileInput extends Component <{
+    children?: React.Node
+}> {
+    render() {
+        return(
+            <form>
+                <div className="form-group row">
+                    <div className="col-sm-4">
+                    </div>
+                    <div className="col-sm-4 col-form-label">
+                        <i>{this.props.children}</i>
+                        <input type="file" className="form-control-file"/>
+                    </div>
+                </div>
+            </form>
+        );
+    }
+}
+
 export class Form {
     static Input = FormInput;
     static InputLarge = FormInputBig;
+    static FileInput = FileInput;
 }
