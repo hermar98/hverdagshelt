@@ -29,5 +29,3 @@ npm start
 ## Open application
 
 http://localhost:3000
-
-daniel i smash xD
