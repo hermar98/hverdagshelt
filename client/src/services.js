@@ -123,7 +123,7 @@ class EventService{
   static addEvent(event: Event): Promise<number>{
     return axios.post('/events', event);
   }
-  static deleteCategory(eventId: number): Promise<void>{
+  static deleteEvent(eventId: number): Promise<void>{
     return axios.delete('/events/' + eventId);
   }
 }
