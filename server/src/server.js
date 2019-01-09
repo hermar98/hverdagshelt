@@ -16,6 +16,7 @@ import {
   Feedback,
   Event_category
 } from './models.js';
+import * as passwordHash from './passwordHash.js';
 
 type Request = express$Request;
 type Response = express$Response;
@@ -38,7 +39,7 @@ app.get('/users', (req: Request, res: response) => {
 });
 
 app.get('/users/:id', (req: Request, res: Response) => {
-    return User.findOne({ where: { id: Number(req.params.id) } }).then(users =>
+    return User.findOne({ where: { user_id: Number(req.params.id) } }).then(user =>
         user ? res.send(user) : res.sendStatus(404)
     );
 });
@@ -46,13 +47,16 @@ app.get('/users/:id', (req: Request, res: Response) => {
 app.post('/users', (req: Request, res: Response) => {
     if (!(req.body instanceof Object)) return res.sendStatus(400);
 
+    var passwordSalt = passwordHash.genRandomString(16);
+    var passwordData = passwordHash.sha512(req.body.password, passwordSalt);
+
     return User.create({
-        email: req.body.email,
-        password: req.body.password,
-        salt: req.body.salt,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        rank: req.body.rank
+        email: req.body.emadkfldsjflsil,
+        rank: req.body.rank,
+        salt: passwordData.salt,
+        hash_str: passwordData.passwordHash
     }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
@@ -75,7 +79,6 @@ app.delete('/users/:id', (req: Request, res: Response) => {
         where: {id: req.params.id}
     }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
 });
-
 
 //Issue
 app.get('/users/:id/issue', (req: Request, res: Response) => {

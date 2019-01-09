@@ -123,15 +123,15 @@ County.hasMany(Municipal, {foreignKey: 'county_id'});
 Municipal.hasMany(User, {foreignKey: 'mun_id'});
 Municipal.hasMany(Issue, {foreignKey: 'mun_id'});
 
-Municipal.belongsToMany(User, {through: 'User_municipal', foreignKey: 'mun_id'});
-User.belongsToMany(Municipal, {through: 'User_municipal', foreignKey: 'user_id'});
+Municipal.belongsToMany(User, { through: 'User_municipal', foreignKey: 'mun_id' });
+User.belongsToMany(Municipal, { through: 'User_municipal', foreignKey: 'user_id' });
 
-User.belongsToMany(Issue, {through: 'User_issue', foreignKey: 'user_id'});
-Issue.belongsToMany(User, {through: 'User_issue', foreignKey: 'issue_id'});
+User.belongsToMany(Issue, { through: 'User_issue', foreignKey: 'user_id' });
+Issue.belongsToMany(User, { through: 'User_issue', foreignKey: 'issue_id' });
 
-User.hasMany(Issue, {foreignKey: 'user_id'});
-User.hasMany(Event, {foreignKey: 'user_id'});
-User.hasMany(Feedback, {foreignKey: 'user_id'});
+User.hasMany(Issue, { foreignKey: 'user_id' });
+User.hasMany(Event, { foreignKey: 'user_id' });
+User.hasMany(Feedback, { foreignKey: 'user_id' });
 
 Issue.belongsTo(Issue_category, {foreignKey: 'category_id}'});
 Issue.belongsTo(Status, {foreignKey: 'status_id'});
