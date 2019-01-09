@@ -56,16 +56,19 @@ class Register extends Component {
             <Form.Input
                 type="password"
                 label="Passord: "
-                onChange={} //TODO
+                onChange={this.save} //TODO
                 required
                 placeholder="Passord"/>
             <Form.Input
                 type="password"
                 required
                 placeholder="Gjenta passord"/>
-            <Button.Success onClick={this.save}>Create user</Button.Success>
+            <div class="container h-100">
+                <div class="row h-100 justify-content-center align-items-center">
+                        <Button.Success onClick={this.save}>Create user</Button.Success>
+                </div>
+            </div>
         </Card>
-
     );
   }
   save(){
