@@ -76,7 +76,15 @@ export class IssueCategory{
 }
 
 class IssueCategoryService{
-
+  getCategories(): Promise<Category[]> {
+    return axios.get('/categories');
+  }
+  getCategory(category_id: number): Promise<Category> {
+    return axios.get('/categories/'+category_id);
+  }
+  updateCategory(category: Category): Promise<void> {
+    return axios.put('/categories', Category);
+  }
 }
 
 class Event {
