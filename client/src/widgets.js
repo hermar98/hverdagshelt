@@ -61,6 +61,54 @@ export class Alert extends Component {
   }
 }
 
+class ButtonRemove extends Component <{
+    onClick: () => mixed,
+    children: React.Node
+}> {
+    render() {
+        return(
+            <button className="btn btn-danger" onClick={this.props.onClick}>
+                {this.props.children}
+            </button>
+        );
+    }
+}
+
+class ButtonSuccess extends Component <{
+    onClick: () => mixed, //Any function
+    children: React.Node
+}> {
+    render(){
+        return(
+            <button className="btn btn-success" onClick={this.props.onClick}>
+                {this.props.children}
+            </button>
+        );
+    }
+}
+
+class ButtonEdit extends Component <{
+    to: React.Node,
+    children: React.Node
+}>{
+    render() {
+        return(
+            <a href={this.props.to}>
+                <button className="btn btn-info">
+                    {this.props.children}
+                </button>
+            </a>
+        );
+    }
+}
+
+
+export class Button{
+    static Success = ButtonSuccess;
+    static Remove = ButtonRemove;
+    static Edit = ButtonEdit;
+}
+
 class NavBarBrand extends Component <{ image?: React.Node, children?: React.Node }> {
     render() {
         if(!this.props.children) return null;
@@ -73,13 +121,27 @@ class NavBarBrand extends Component <{ image?: React.Node, children?: React.Node
     }
 }
 
+
+export class Card extends Component<{ title: React.Node, children?: React.Node }> {
+    render(){
+        return(
+            <div className="card">
+                <div className="card-body">
+                    <h5 className="card-title">{this.props.title}</h5>
+                    <div className="card-text">{this.props.children}</div>
+                </div>
+            </div>
+        );
+    }
+}
+
 class NavBarLink extends Component <{ to: string, exact?: boolean, children?: React.Node}> {
     render() {
         if(!this.props.children) return null;
         return(
             <NavLink className="nav-link" activeClassName="active" exact={this.props.exact} to={this.props.to}>
                 <form className="form-inline">
-                    <button className="btn btn-sm btn-outline-light">{this.props.children}</button>
+                    <button className="btn btn btn-outline-light">{this.props.children}</button>
                 </form>
             </NavLink>
         );
@@ -100,4 +162,67 @@ export class NavBar extends Component<{ children: React.Element<typeof NavBarBra
             </nav>
         );
     }
+}
+
+
+class FormInput extends Component<{
+    type: string,
+    label?: React.Node,
+    value?: mixed,
+    onChange?: (event: SyntheticInputEvent<HTMLInputElement>) => mixed,
+    required?: boolean,
+    pattern?: string,
+    placeholder?: string
+}> {
+    render() {
+        return (
+            <div className="form-group row">
+                <label className="col-sm-1 col-form-label">{this.props.label}</label>
+                <div className="col-sm-11">
+                    <input
+                        className="form-control"
+                        type={this.props.type}
+                        value={this.props.value}
+                        onChange={this.props.onChange}
+                        required={this.props.required}
+                        pattern={this.props.pattern}
+                        placeholder={this.props.placeholder}
+                    />
+                </div>
+            </div>
+        );
+    }
+}
+
+class FormInputBig extends Component <{
+    type: string,
+    label: React.Node,
+    value: mixed,
+    onChange: (event: SyntheticInputEvent<HTMLInputElement>) => mixed,
+    required?: boolean,
+    pattern?: string,
+    placeholder?: string
+}> {
+    render() {
+        return(
+            <div className="form-group row">
+                <label className="col-sm-1 col-form-label">{this.props.label}</label>
+                <div className="col-sm-11">
+                    <textarea rows="8" id="content"
+                              className="form-control"
+                              type={this.props.type}
+                              value={this.props.value}
+                              onChange={this.props.onChange}
+                              required={this.props.required}
+                              pattern={this.props.pattern}
+                              placeholder={this.props.placeholder}/>
+                </div>
+            </div>
+        );
+    }
+}
+
+export class Form {
+    static Input = FormInput;
+    static InputLarge = FormInputBig;
 }
