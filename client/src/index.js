@@ -9,7 +9,8 @@ import Menu from './components/menu/Menu.js';
 import { FileIssuePage } from "./components/pages/FileIssuePage";
 import { LoginPage } from "./components/pages/LoginPage";
 import { RegisterPage } from "./components/pages/RegisterPage";
-import {RegisterEventPage} from "./components/pages/RegisterEventPage";
+import { ChooseMunicipalPage } from "./components/pages/ChooseMunicipalPage";
+
 // Reload application when not in production environment
 
 if (process.env.NODE_ENV !== 'production') {
@@ -19,6 +20,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 import createHashHistory from 'history/createHashHistory';
+
 export const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after
 // successfully saving a student
 
@@ -30,6 +32,7 @@ if (root)
       <div>
         <Alert />
         <Menu />
+        <Route exact path="/" component={ChooseMunicipalPage} />
         <Route exact path="/registerUser" component={RegisterPage} />
         <Route exact path="/registerIssue" component={FileIssuePage} />
         <Route exact path="/login" component={LoginPage} />
