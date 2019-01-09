@@ -1,3 +1,5 @@
+// @flow
+
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
@@ -9,9 +11,10 @@ export default class Menu extends Component {
     return (
       <div>
         <NavBar>
-          <NavBar.Brand image="images/Trondheim_kommune.png">Trondheim Kommune</NavBar.Brand>
-          <NavBar.Link to="/">Home</NavBar.Link>
-          <NavBar.Link to="/register">Registrer bruker</NavBar.Link>
+            <NavBar.Brand image="images/Trondheim_kommune.png">Trondheim Kommune</NavBar.Brand>
+            <NavBar.Link to="/registerIssue">Registrer sak</NavBar.Link>
+            <NavBar.Link to="/login">Logg inn</NavBar.Link>
+            <NavBar.Link to="/registerUser">Registrer bruker</NavBar.Link>
         </NavBar>
       </div>
     );
