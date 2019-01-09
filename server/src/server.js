@@ -30,6 +30,12 @@ app.get('/students/:id', (req: Request, res: Response) => {
   );
 });
 
+app.get('/users/:id', (req: Request, res: Response) => {
+  return Case.findAll({ where: { user_id: Number(req.params.id) } }).then(student =>
+    student ? res.send(student) : res.sendStatus(404)
+  );
+});
+
 app.put('/students', (req: Request, res: Response) => {
   if (
     !req.body ||
