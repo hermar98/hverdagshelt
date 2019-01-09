@@ -1,33 +1,32 @@
 // @flow
 
-import { Students, sync } from '../src/models.js';
+import { User, sync } from '../src/models.js';
 
 beforeAll(async () => {
   await sync;
 });
 
-describe('Students test', () => {
+describe('user test', () => {
   it('correct data', async () => {
-    let students = await Students.findAll();
+    let user = await User.findAll();
+    user.slice(0, 1);
     expect(
-      students.map(student => student.toJSON()).map(student => ({
-        id: student.id,
-        firstName: student.firstName,
-        lastName: student.lastName,
-        email: student.email
-      }))
+      user
+        .map(e => e.toJSON())
+        .map(e => ({
+          user_id: e.user_id,
+          firstName: e.firstName,
+          lastName: e.lastName,
+          email: e.email,
+          rank: e.rank
+        }))
     ).toEqual([
       {
-        id: 1,
-        firstName: 'Ola',
-        lastName: 'Jensen',
-        email: 'ola.jensen@ntnu.no'
-      },
-      {
-        id: 2,
-        firstName: 'Kari',
-        lastName: 'Larsen',
-        email: 'kari.larsen@ntnu.no'
+        user_id: 1,
+        firstName: 'Rolf',
+        lastName: 'Roarson',
+        email: 'email@adress.com',
+        rank: 1
       }
     ]);
   });
