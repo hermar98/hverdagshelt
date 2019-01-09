@@ -111,14 +111,20 @@ class Event {
 }
 
 class EventService{
-  getEvents(): Promise<Event[]> {
+  static getEvents(): Promise<Event[]> {
     return axios.get('/events');
   }
-  getEvent(event_id: number): Promise<Event> {
-    return axios.get('/events/'+event_id);
+  static getEvent(eventId: number): Promise<Event> {
+    return axios.get('/events/'+eventId);
   }
-  updateEvent(event: Event): Promise<void> {
+  static updateEvent(event: Event): Promise<void> {
     return axios.put('/events', Event);
+  }
+  static addEvent(event: Event): Promise<number>{
+    return axios.post('/events', event);
+  }
+  static deleteCategory(eventId: number): Promise<void>{
+    return axios.delete('/events/' + eventId);
   }
 }
 export let studentService = new StudentService();
