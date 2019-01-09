@@ -20,12 +20,12 @@ let sequelize = new Sequelize(
 );
 
 export let Students: Class<
-    Model<{ id?: number, firstName: string, lastName: string, email: string }>
-    >= sequelize.define('Students', {
-    id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    firstName: Sequelize.STRING,
-    lastName: Sequelize.STRING,
-    email: Sequelize.STRING
+  Model<{ id?: number, firstName: string, lastName: string, email: string }>
+> = sequelize.define('Students', {
+  id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+  firstName: Sequelize.STRING,
+  lastName: Sequelize.STRING,
+  email: Sequelize.STRING
 });
 
 export let User: Class<
@@ -40,13 +40,6 @@ export let User: Class<
     hash_str: Sequelize.STRING
 });
 
-export let User_case: Class<
-    Model<{ user_id: number, case_id: string}>
-    > = sequelize.define('User_case', {
-    user_id: { type: Sequelize.INTEGER, primaryKey: true},
-    case_id: { type: Sequelize.INTEGER, primaryKey: true}
-});
-
 export let County: Class<
     Model<{ county_id?: number, name: string}>
     > = sequelize.define('County', {
@@ -54,74 +47,87 @@ export let County: Class<
     name: Sequelize.STRING
 });
 
-export let Municipal: Class<
-    Model<{ mun_id?: number, name: string}>
-    > = sequelize.define('Municipal', {
-    mun_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    name: Sequelize.STRING
+export let Municipal: Class<Model<{ mun_id?: number, name: string }>> = sequelize.define('Municipal', {
+  mun_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+  name: Sequelize.STRING
 });
 
-export let Status: Class<
-    Model<{ status_id?: number, name: string}>
-    > = sequelize.define('Status', {
-    status_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    name: Sequelize.STRING
+export let Status: Class<Model<{ status_id?: number, name: string }>> = sequelize.define('Status', {
+  status_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+  name: Sequelize.STRING
 });
 
-export let Issue_category: Class<
-    Model<{ category_id?: number, name: string}>
-    > = sequelize.define('Issue_category', {
-    category_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    name: Sequelize.STRING
+export let Issue_category: Class<Model<{ category_id?: number, name: string }>> = sequelize.define('Issue_category', {
+  category_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+  name: Sequelize.STRING
 });
 
 export let Issue: Class<
-    Model<{ issue_id?: number, title: string, content: string, image: string, longitude: number, latitude: number, date: date}>
-    > = sequelize.define('Issue', {
-    issue_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    title: Sequelize.STRING,
-    content: Sequelize.STRING,
-    image: Sequelize.STRING,
-    longitude: Sequelize.BIGINT,
-    latitude: Sequelize.BIGINT,
-    date: Sequelize.DATE
+  Model<{
+    issue_id?: number,
+    title: string,
+    content: string,
+    image: string,
+    longitude: number,
+    latitude: number,
+    date: date
+  }>
+> = sequelize.define('Issue', {
+  issue_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+  title: Sequelize.STRING,
+  content: Sequelize.STRING,
+  image: Sequelize.STRING,
+  longitude: Sequelize.BIGINT,
+  latitude: Sequelize.BIGINT,
+  date: Sequelize.DATE
 });
 
-export let Feedback: Class<
-    Model<{ feedback_id?: number, content: string, date: date}>
-    > = sequelize.define('Feedback', {
+export let Feedback: Class<Model<{ feedback_id?: number, content: string, date: date }>> = sequelize.define(
+  'Feedback',
+  {
     category_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
     name: Sequelize.STRING,
     content: Sequelize.STRING,
-    date: Sequelize.DATE,
-});
+    date: Sequelize.DATE
+  }
+);
 
-export let Event_category: Class<
-    Model<{ event_id?: number, name: string}>
-    > = sequelize.define('Event_category', {
-    event_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    name: Sequelize.STRING
+export let Event_category: Class<Model<{ event_id?: number, name: string }>> = sequelize.define('Event_category', {
+  event_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+  name: Sequelize.STRING
 });
 
 export let Event: Class<
-    Model<{ event_id?: number, title: string, content: string, image: string, longitude: number, latitude: number, date: date}>
-    > = sequelize.define('Event', {
-    event_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    title: Sequelize.STRING,
-    content: Sequelize.STRING,
-    image: Sequelize.STRING,
-    longitude: Sequelize.BIGINT,
-    latitude: Sequelize.BIGINT,
-    date: Sequelize.DATE
+  Model<{
+    event_id?: number,
+    title: string,
+    content: string,
+    image: string,
+    longitude: number,
+    latitude: number,
+    date: date
+  }>
+> = sequelize.define('Event', {
+  event_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+  title: Sequelize.STRING,
+  content: Sequelize.STRING,
+  image: Sequelize.STRING,
+  longitude: Sequelize.BIGINT,
+  latitude: Sequelize.BIGINT,
+  date: Sequelize.DATE
 });
 
 County.hasMany(Municipal, {foreignKey: 'county_id'});
 Municipal.hasMany(User, {foreignKey: 'municipal_id'});
 Municipal.hasMany(Issue, {foreignKey: 'municipal_id'});
-Municipal.belongsToMany(User, {through: 'UserMunicipal'});
+
+Municipal.belongsToMany(User, {through: 'User_municipal', foreignKey: 'mun_id'});
+User.belongsToMany(Municipal, {through: 'User_municipal', foreignKey: 'user_id'});
+
+User.belongsToMany(Issue, {through: 'User_issue', foreignKey: 'user_id'});
+Issue.belongsToMany(User, {through: 'User_issue', foreignKey: 'issue_id'});
 
 User.hasMany(Issue, {foreignKey: 'user_id'});
-User.belongsToMany(Issue, {through: 'UserIssue'});
 User.hasMany(Event, {foreignKey: 'user_id'});
 User.hasMany(Feedback, {foreignKey: 'user_id'});
 
@@ -129,9 +135,16 @@ Issue.belongsTo(Issue_category, {foreignKey: 'category_id}'});
 Issue.belongsTo(Status, {foreignKey: 'status_id'});
 Feedback.hasMany(Issue, {foreignKey: 'feedback_id'});
 
-Event.belongsTo(Event_category, {foreignKey: 'category_id}'});
+User.hasMany(Issue, { foreignKey: 'user_id' });
+User.belongsToMany(Issue, { through: 'UserIssue' });
+User.hasMany(Event, { foreignKey: 'user_id' });
+User.hasMany(Feedback, { foreignKey: 'user_id' });
 
+Issue.belongsTo(Issue_category, { foreignKey: 'category_id}' });
+Issue.belongsTo(Status, { foreignKey: 'status_id' });
+Feedback.hasMany(Issue, { foreignKey: 'feedback_id' });
 
+Event.belongsTo(Event_category, { foreignKey: 'category_id}' });
 
 //Municipal.belongsTo(County, {foreignKey: 'fk_companyname', targetKey: 'name'});
 //hasOne, target model is the foreign key
