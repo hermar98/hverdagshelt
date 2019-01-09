@@ -5,7 +5,7 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { BrowserRouter, Route, NavLink } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from './widgets';
-import Menu from './components/menu/Menu.js';
+import HomePage from './components/pages/HomePage.js';
 import RegisterPage from './components/pages/RegisterPage.js';
 import { studentService, User } from './services';
 
@@ -25,7 +25,7 @@ if (root)
     <BrowserRouter>
       <div>
         <Route path="/" component={Alert} />
-        <Route exact path="/" component={Menu} />
+        <Route exact path="/" component={HomePage} />
         <Route exact path="/register" component={RegisterPage} />
       </div>
     </BrowserRouter>,
