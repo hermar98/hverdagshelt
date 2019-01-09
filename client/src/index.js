@@ -4,9 +4,8 @@ import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
-import { Alert } from './widgets';
-import { studentService } from './services';
 import { IssueLarge } from './widgetsCase';
+import {Issue} from "./models";
 
 
 /*
@@ -171,13 +170,21 @@ class StudentEdit extends Component<{ match: { params: { id: number } } }> {
 }
 */
 
+var issueTest = new Issue("Hull i veien ved Gate 7", "Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg", "04-02-2018");
+
+class IssuePage extends Component {
+    render () {
+        return <IssueLarge issue={issueTest}/>
+    }
+}
+
 
 const root = document.getElementById('root');
 if (root)
   ReactDOM.render(
     <HashRouter>
       <div>
-        <Route exact path="/" component={} />
+        <Route exact path="/" component={IssuePage} />
       </div>
     </HashRouter>,
     root
