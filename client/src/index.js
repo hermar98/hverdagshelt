@@ -11,9 +11,9 @@ import { studentService, User } from './services';
 
 // Reload application when not in production environment
 if (process.env.NODE_ENV !== 'production') {
-    let script = document.createElement('script');
-    script.src = '/reload/reload.js';
-    if (document.body) document.body.appendChild(script);
+  let script = document.createElement('script');
+  script.src = '/reload/reload.js';
+  if (document.body) document.body.appendChild(script);
 }
 
 import createHashHistory from 'history/createHashHistory';
@@ -21,13 +21,13 @@ const history = createHashHistory(); // Use history.push(...) to programmaticall
 
 const root = document.getElementById('root');
 if (root)
-    ReactDOM.render(
-        <HashRouter>
-            <div>
-                <Route path="/" component={Alert} />
-                <Route exact path="/" component={HomePage} />
-                <Route exact path="/register" component={RegisterPage} />
-            </div>
-        </HashRouter>,
-        root
-    );
+  ReactDOM.render(
+    <HashRouter>
+      <div>
+        <Route path="/" component={Alert} />
+        <Route exact path="/" component={HomePage} />
+        <Route exact path="/register" component={RegisterPage} />
+      </div>
+    </HashRouter>,
+    root
+  );
