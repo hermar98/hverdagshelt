@@ -1,0 +1,21 @@
+
+
+.status-blocked {background-color: lightcoral}
+.status-pending {background-color: #f1fc5a}
+.status-finished {background-color: lightgreen}
+.status { align-self: center}
+.issue-container {margin: 5% 10% 5% 10%; padding-bottom: 5%}
+.issue-image:hover {
+    background-color: #b9bbbe;
+}
+.issue-image {
+    width: auto;
+    height: 200px;
+    padding: 1% 1% 1% 1%;
+}
+
+.flex-container {
+    display: flex;
+    overflow: auto;
+    align-items: start;
+}
