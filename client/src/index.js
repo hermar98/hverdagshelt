@@ -7,7 +7,7 @@ import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from './widgets';
 import HomePage from './components/pages/HomePage.js';
 import RegisterPage from './components/pages/RegisterPage.js';
-import { studentService, User } from './services';
+import { User } from './services';
 
 // Reload application when not in production environment
 if (process.env.NODE_ENV !== 'production') {
