@@ -34,7 +34,7 @@ app.post('/users', (req: Request, res: Response) => {
   return User.create({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
-    email: req.body.emadkfldsjflsil,
+    email: req.body.email,
     rank: req.body.rank,
     salt: passwordData.salt,
     hash_str: passwordData.passwordHash
@@ -75,7 +75,7 @@ app.get('/municipal/:id', (req: Request, res: Response) => {
 });
 
 //County
-app.get('/county', (req: Request, res: response) => {
+app.get('/county', (req: Request, res: Response) => {
   return County.findAll().then(users => res.send(users));
 });
 
@@ -132,7 +132,7 @@ app.post('/events', (req: Request, res: Response) => {
     time_end: req.body.time_end
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
-app.delete('/events/:id', function(req, res) {
+app.delete('/events/:id', (req: Request, res: Response) => {
   return Event.destroy({
     where: {
       event_id: req.params.id
@@ -168,7 +168,7 @@ app.post('/eventCat', (req: Request, res: Response) => {
     name: req.body.name
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
-app.delete('/eventCat/:id', function(req, res) {
+app.delete('/eventCat/:id', (req: Request, res: Response) => {
   return Event_category.destroy({
     where: {
       category_id: req.params.id
@@ -204,7 +204,8 @@ app.post('/issueCat', (req: Request, res: Response) => {
     name: req.body.name
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
-app.delete('/issueCat/:id', function(req, res) {
+
+app.delete('/issueCat/:id', (req: Request, res: Response) => {
   return Issue_category.destroy({
     where: {
       category_id: req.params.id

@@ -19,15 +19,14 @@ let sequelize = new Sequelize(
   }
 );
 
-export let Feedback: Class<Model<{ feedback_id?: number, content: string, date: Date }>> = sequelize.define(
-  'Feedback',
-  {
-    feedback_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    name: Sequelize.STRING,
-    content: Sequelize.STRING,
-    date: Sequelize.DATE
-  }
-);
+export let Feedback: Class<
+  Model<{ feedback_id?: number, name: string, content: string, date: Date }>
+> = sequelize.define('Feedback', {
+  feedback_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+  name: Sequelize.STRING,
+  content: Sequelize.STRING,
+  date: Sequelize.DATE
+});
 
 export let Issue: Class<
   Model<{
