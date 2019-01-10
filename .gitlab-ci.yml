@@ -1,7 +1,7 @@
 variables:
-  MYSQL_DATABASE: sebasman
-  MYSQL_USER: sebasman
-  MYSQL_ROOT_PASSWORD: "GSBLuzbB"
+  MYSQL_DATABASE: cdaxell
+  MYSQL_USER: cdaxell
+  MYSQL_ROOT_PASSWORD: "yAmB12A4"
   MYSQL_ALLOW_EMPTY_PASSWORD: 1
 
 test:
