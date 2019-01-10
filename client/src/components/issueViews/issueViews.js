@@ -139,19 +139,19 @@ export class Status extends Component<{status: number}> {
             case 1: return (
 
                     <div className="status status-blocked">
-                        <h3>Ikke behandlet</h3>
+                        <h4>Ikke behandlet</h4>
                     </div>
                 )
                 break;
             case 2: return (
                     <div className="status status-pending">
-                        <h3>Under behandling</h3>
+                        <h4>Under behandling</h4>
                     </div>
             )
                 break;
             case 3: return (
                     <div className="status status-finished">
-                        <h3>Behandlet</h3>
+                        <h4>Behandlet</h4>
                     </div>
             )
                 break;
