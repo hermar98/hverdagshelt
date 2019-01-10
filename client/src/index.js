@@ -11,7 +11,7 @@ import { LoginPage } from "./components/pages/LoginPage";
 import { RegisterPage } from "./components/pages/RegisterPage";
 import { ChooseMunicipalPage } from "./components/pages/ChooseMunicipalPage";
 import {RegisterEventPage} from "./components/pages/RegisterEventPage";
-import {IssueLarge, IssueOverviewSmall} from "./components/issueViews/issueViews";
+import {IssueLarge, IssueOverviewSmall, IssueFeedback} from "./components/issueViews/issueViews";
 import {Issue} from "./models.js";
 
 // Reload application when not in production environment

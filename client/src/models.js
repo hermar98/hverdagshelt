@@ -73,3 +73,10 @@ export class Event {
         this.time_end = time_end
     }*/
 }
+
+export class Feedback {
+    feedback_id: number
+    name: string
+    content: string
+
+}

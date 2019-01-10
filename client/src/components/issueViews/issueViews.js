@@ -111,6 +111,19 @@ export class IssueOverviewSmall extends Component {
     }
 }
 
+export class IssueFeedback extends Component {
+    render() {
+        return (
+            <div className="issue-container card">
+                <div className="card-body">
+                    <div className="card-text">
+                    </div>
+                </div>
+            </div>
+        )
+    }
+}
+
 /*
 A list of issues in normal view
  */
