@@ -25,44 +25,6 @@ sharedFeedback.feedback = [
     new Feedback("Vi har gjort noe med dette og det er mulig at det blir fikset snart", Date.now()),
 ]
 
-export class IssueLargeEditable extends Component<{match: {params: {issueId: number}}}> {
-
-    issue = sharedIssues.issues.find(issue => issue.issueId == this.props.match.params.issueId)
-
-    render() {
-        return (
-            <div className="issue-container" issue={this.issue}>
-                <div className="issue-large">
-                    <Status status={this.issue.status}/>
-                    <div className="card">
-                        <div className="card-body">
-                            <p className="date">14:52 - 05/07/2018</p>
-                            <div className="card-title">
-                                <h2>{this.issue.title}</h2>
-                            </div>
-                            <div className="card-text">
-                                <p>{this.issue.content}</p>
-                            </div>
-                        </div>
-                        <div className="card-footer">
-                            <h4>Bilder</h4>
-                            <div className="flex-container">
-                                <img className="issue-image" src="https://www.naf.no/globalassets/tips-rad/vei-trafikk/hull_i_veien_bil2.jpg?width=980&height=550&mode=max&anchor=middlecenter&scale=both&quality=85"/>
-                                <img className="issue-image" src={this.issue.image}/>
-                                <img className="issue-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Pothole.jpg/250px-Pothole.jpg"/>
-                                <img className="issue-image" src="https://www.pengenytt.no/wp-content/uploads/2017/03/Hull-i-vei-Foto-Wikimedia-Commons-Editor5807.jpg"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <h2 className="feedback-title">Feedback</h2>
-                <IssueFeedback/>
-            </div>
-        )
-    }
-}
-
-
 /*
 Large view of an issue, which includes the title, content, image and status.
  */
