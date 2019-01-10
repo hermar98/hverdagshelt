@@ -57,7 +57,8 @@ export let Event: Class<
     image: string,
     longitude: number,
     latitude: number,
-    date: Date
+    time_start: Date,
+    time_end: Date,
   }>
 > = sequelize.define('Event', {
   event_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
@@ -66,7 +67,8 @@ export let Event: Class<
   image: Sequelize.STRING,
   longitude: Sequelize.DOUBLE,
   latitude: Sequelize.DOUBLE,
-  date: Sequelize.DATE
+  time_start: Sequelize.DATE,
+  time_end: Sequelize.DATE
 });
 
 export let User: Class<
