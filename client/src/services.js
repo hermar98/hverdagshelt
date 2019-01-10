@@ -1,6 +1,6 @@
 // @flow
 import axios from 'axios';
-import { User, Issue, IssueCategory, Event} from "./models.js";
+import { User, Issue, IssueCategory, Event, Municipal} from "./models.js";
 
 axios.interceptors.response.use(response => response.data);
 
@@ -84,7 +84,7 @@ class EventService{
     return axios.get('/events/'+eventId);
   }
   static updateEvent(event: Event): Promise<void> {
-    return axios.put('/events', Event);
+    return axios.put('/events', event);
   }
   static addEvent(event: Event): Promise<number>{
     return axios.post('/events', event);
@@ -95,3 +95,16 @@ class EventService{
 }
 
 export let eventService = new EventService();
+
+class MunicipalService{
+
+    getMunicipals(): Promise<Municipal[]>{
+        return axios.get('/municipal');
+    }
+
+    getMunicipal(mun_id: number): Promise<Municipal> {
+        return axios.get('/municipal/' + mun_id);
+    }
+}
+
+export let municipalService = new MunicipalService();

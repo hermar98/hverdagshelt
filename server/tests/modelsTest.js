@@ -59,10 +59,10 @@ describe('county test', () => {
           name: e.name
         }))
     ).toEqual([
-      {
-        county_id: 1,
-        name: 'Trønderlag'
-      }
+        {
+            county_id: 1,
+            name: 'Østfold'
+        },
     ]);
   });
 });
@@ -80,11 +80,11 @@ describe('municipal test', () => {
           county_id: e.county_id
         }))
     ).toEqual([
-      {
-        mun_id: 1,
-        name: 'Freia',
-        county_id: 1
-      }
+
+        {   mun_id: 101,
+            name: 'Halden',
+            county_id: 1
+        },
     ]);
   });
 });
@@ -136,7 +136,7 @@ describe('issue test', () => {
         image: 'null',
         longitude: 123123,
         latitude: 123123,
-        mun_id: 1,
+        mun_id: 2012,
         user_id: 1,
         category_id: 1,
         status_id: 1
