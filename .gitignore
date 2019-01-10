@@ -2,5 +2,4 @@ node_modules
 client/public/bundle.js
 DS_Store
 client/.DS_Store
-client/package-lock.json
 .idea
