@@ -1,16 +1,8 @@
 // @flow
 import axios from 'axios';
-axios.interceptors.response.use(response => response.data);
+import { User, Issue, IssueCategory, Event} from "models.js";
 
-export class User {
-  userId: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  rank: number;
-  hash: string;
-  salt: string;
-}
+axios.interceptors.response.use(response => response.data);
 
 class UserService {
   static getUsers(): Promise<User[]> {
@@ -36,16 +28,6 @@ class UserService {
 
 export let userService = new UserService();
 
-export class Issue{
-  issueId: number;
-  title: string;
-  content: string;
-  image: string;
-  longitude: number;
-  latitude: number;
-  date: Date; //Works with string, unsure about date convertion
-}
-
 class IssueService{
   static getIssues(): Promise<Issue[]>{
     return axios.get('/issues');
@@ -70,11 +52,6 @@ class IssueService{
 
 export let issueService = new IssueService();
 
-export class IssueCategory{
-  categoryId: number;
-  name: string;
-}
-
 class IssueCategoryService{
   static getCategories(): Promise<IssueCategory[]>{
     return axios.get('/issuecategories');
@@ -98,17 +75,6 @@ class IssueCategoryService{
 }
 
 export let issueCategoryService = new IssueCategoryService();
-
-export class Event {
-  event_id: number;
-  title: string;
-  content: string;
-  image: string;
-  longitude: number;
-  latitude: number;
-  time_start: string;
-  time_end: string;
-}
 
 class EventService{
   static getEvents(): Promise<Event[]> {

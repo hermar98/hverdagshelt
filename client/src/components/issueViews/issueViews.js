@@ -1,7 +1,7 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Issue } from './models';
+import { Issue } from '../../models';
 
 
 /*

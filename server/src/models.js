@@ -19,7 +19,7 @@ let sequelize = new Sequelize(
   }
 );
 
-export let Feedback: Class<Model<{ feedback_id?: number, content: string, date: date }>> = sequelize.define(
+export let Feedback: Class<Model<{ feedback_id?: number, content: string, date: Date }>> = sequelize.define(
   'Feedback',
   {
     feedback_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
@@ -37,7 +37,7 @@ export let Issue: Class<
     image: string,
     longitude: number,
     latitude: number,
-    date: date
+    date: Date
   }>
 > = sequelize.define('Issue', {
   issue_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
@@ -57,7 +57,7 @@ export let Event: Class<
     image: string,
     longitude: number,
     latitude: number,
-    date: date
+    date: Date
   }>
 > = sequelize.define('Event', {
   event_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
@@ -149,12 +149,12 @@ let production = process.env.NODE_ENV === 'production';
 export let sync = sequelize.sync({ force: production ? false : true }).then(() => {
   if (!production)
     return County.create({
-      county_id: '1',
+      county_id: 1,
       name: 'Trønderlag'
     })
       .then(() =>
         Municipal.create({
-          mun_id: '1',
+          mun_id: 1,
           name: 'Freia',
           county_id: '1'
         })
@@ -164,7 +164,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           firstName: 'Vegard',
           lastName: 'Andersson',
           email: 'vegaande@ntnu.stud.no',
-          rank: '1',
+          rank: 1,
           salt: 'b79ryp97',
           hash_str: '897dfjsodif5vx24c5vsldfskdclz97cyw7e3o2inJKHaospk902',
           mun_id: '1'
@@ -172,13 +172,13 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
       )
       .then(() =>
         County.create({
-          county_id: '2',
+          county_id: 2,
           name: 'Vestfold'
         })
       )
       .then(() =>
         Municipal.create({
-          mun_id: '2',
+          mun_id: 2,
           name: 'Larvik',
           county_id: '2'
         })
@@ -188,7 +188,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           firstName: 'Christian',
           lastName: 'Axell',
           email: 'cdaxell@ntnu.stud.no',
-          rank: '3',
+          rank: 3,
           salt: 'b79ryp98',
           hash_str: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
           mun_id: '2'
@@ -196,7 +196,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
       )
       .then(() =>
         Status.create({
-          status_id: '1',
+          status_id: 1,
           name: 'Situation Normal, All fucked upp'
         })
       )
@@ -207,12 +207,12 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
       )
       .then(() =>
         Issue.create({
-          issue_id: '1',
+          issue_id: 1,
           title: 'Dumme folk ødeleger lømp',
           content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
           image: 'null',
-          longitude: '123123',
-          latitude: '123123',
+          longitude: 123123,
+          latitude: 123123,
           date: new Date(Date.now()),
           mun_id: 1,
           user_id: 1,
@@ -240,8 +240,8 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           title: 'party at the house man!',
           content: 'Det skal være party at the house!',
           image: 'notin',
-          longitude: '123123',
-          latitude: '123123',
+          longitude: 123123,
+          latitude: 123123,
           date: new Date(Date.now()),
           user_id: '2',
           category_id: 1
