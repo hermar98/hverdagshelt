@@ -14,6 +14,8 @@ import {
 import * as passwordHash from './passwordHash.js';
 import express from "express";
 import path from "path";
+import fs from 'fs';
+import jwt from 'jsonwebtoken';
 type Request = express$Request;
 type Response = express$Response;
 
@@ -23,6 +25,23 @@ let app = express();
 app.use(express.static(public_path));
 app.use(express.json()); // For parsing application/json
 
+let privateKey = fs.readFileSync('./private.key', 'utf8');
+let publicKey = fs.readFileSync('./public.key', 'utf8');
+
+app.post('/login', (req: Request, res: Response) => {
+    User.findOne({where: {email: req.body.email}}).then(user => {
+        let passwordData = passwordHash.sha512(req.body.password, user.salt);
+        if (passwordData.passwordHash === user.hash_str) {
+            let token = jwt.sign({ email: req.body.email }, privateKey, {
+                expiresIn: 60
+            });
+            res.json({ jwt: token });
+        } else {
+            res.status(401);
+            res.json({ error: "Not authorized" });
+        }
+    })
+});
 
 //User
 app.get('/users', (req: Request, res: response) => {
@@ -44,7 +63,7 @@ app.post('/users', (req: Request, res: Response) => {
     return User.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        email: req.body.emadkfldsjflsil,
+        email: req.body.email,
         rank: req.body.rank,
         salt: passwordData.salt,
         hash_str: passwordData.passwordHash
