@@ -1,5 +1,5 @@
 variables:
-  MYSQL_DATABASE: articles
+  MYSQL_DATABASE: database
   MYSQL_USER: root
   MYSQL_ROOT_PASSWORD: ""
   MYSQL_ALLOW_EMPTY_PASSWORD: 1
