@@ -4,6 +4,7 @@ import express from 'express';
 import path from 'path';
 import reload from 'reload';
 import fs from 'fs';
+import jwt from 'jsonwebtoken';
 import {
   Event,
   User,
@@ -32,6 +33,27 @@ let app = express();
 app.use(express.static(public_path));
 app.use(express.json()); // For parsing application/json
 
+let privateKey = fs.readFileSync('./private.key', 'utf8');
+let publicKey = fs.readFileSync('./public.key', 'utf8');
+
+let loginOk = function(email, password) {
+    User.findOne({ where: { email: email } }).then(user => {
+        let passwordData = passwordHash.sha512(password, user.salt);
+        return (passwordData.passwordHash === user.hash_str);
+    })
+};
+
+app.post('/login', (req: Request, res: Response) => {
+    if (loginOk(req.body.email, req.body.password)) {
+        let token = jwt.sign({ email: req.body.email }, privateKey, {
+            expiresIn: 60
+        });
+        res.json({ jwt: token });
+    } else {
+        res.status(401);
+        res.json({ error: "Not authorized" });
+    }
+});
 
 //User
 app.get('/users', (req: Request, res: response) => {
@@ -47,8 +69,8 @@ app.get('/users/:id', (req: Request, res: Response) => {
 app.post('/users', (req: Request, res: Response) => {
     if (!(req.body instanceof Object)) return res.sendStatus(400);
 
-    var passwordSalt = passwordHash.genRandomString(16);
-    var passwordData = passwordHash.sha512(req.body.password, passwordSalt);
+    let passwordSalt = passwordHash.genRandomString(16);
+    let passwordData = passwordHash.sha512(req.body.password, passwordSalt);
 
     return User.create({
         firstName: req.body.firstName,
