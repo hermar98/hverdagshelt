@@ -2,10 +2,9 @@
 import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 import {NavLink} from 'react-router-dom'
-import { Issue, Feedback } from '../../models';
+import { Issue} from '../../models';
 
 let sharedIssues = sharedComponentData({issues: []})
-let sharedFeedback = sharedComponentData({feedback: []})
 
 var issueTest = new Issue(0, "Hull i veien ved Gate 7", "Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg",1, 1,  3, new Date());
 sharedIssues.issues =  [
@@ -17,12 +16,6 @@ sharedIssues.issues =  [
     new Issue(6, "Ødelagt bom ved broa" ,"Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien", "https://i.imgur.com/nqTGipe.jpg",1, 1, 3,Date.now()),
     new Issue(7, "Herverk på husveggen min" ,"Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg",1, 1, 2,Date.now()),
     new Issue(8, "Søppeltømmingsplanene fungerer ikke bra" ,"Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg",1, 1,  1,Date.now())
-]
-
-sharedFeedback.feedback = [
-    new Feedback("Vi har gjort noe med dette og det er mulig at det blir fikset snart", Date.now()),
-    new Feedback("Vi har gjort noe med dette og det er mulig at det blir fikset snart", Date.now()),
-    new Feedback("Vi har gjort noe med dette og det er mulig at det blir fikset snart", Date.now()),
 ]
 
 /*
@@ -144,7 +137,7 @@ export class IssueOverviewSmall extends Component {
     }
 }
 
-export class IssueFeedback extends Component<{feedback: Feedback}> {
+export class IssueFeedback extends Component {
     render() {
         return (
             <div>

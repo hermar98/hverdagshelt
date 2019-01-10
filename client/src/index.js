@@ -36,7 +36,7 @@ if (root)
         <Menu />
         <Route exact path="/" component={ChooseMunicipalPage} />
         <Route exact path="/issues" component={IssueOverviewSmall} />
-        <Route exact path="/issues/:issueId" component={IssueLarge} />
+        <Route path="/issues/:issueId" component={IssueLarge} />
         <Route exact path="/registerUser" component={RegisterPage} />
         <Route exact path="/registerIssue" component={FileIssuePage} />
         <Route exact path="/login" component={LoginPage} />
