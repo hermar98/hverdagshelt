@@ -5,8 +5,8 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert , NavBar, Form, Card, Button} from '../../widgets';
-import {studentService, User, userService, Issue, issueService} from '../../services';
-
+import { User, Issue} from '../../models.js';
+import { userService, issueService } from "../../services.js"
 
 export default class Login extends Component{
     render() {
