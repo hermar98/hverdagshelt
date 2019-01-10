@@ -17,3 +17,19 @@ describe('GET /users', () => {
     expect(response.type).toEqual('application/json');
   });
 });
+
+describe('GET /county', () => {
+  test('It should response the GET method', async () => {
+    const response = await request(app).get('/county');
+    expect(response.statusCode).toBe(200);
+    expect(response.type).toEqual('application/json');
+  });
+});
+
+describe('GET /municipal', () => {
+  test('It should response the GET method', async () => {
+    const response = await request(app).get('/municipal');
+    expect(response.statusCode).toBe(200);
+    expect(response.type).toEqual('application/json');
+  });
+});
