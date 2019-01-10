@@ -2,11 +2,12 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Button } from '../../widgets';
-import { history } from '../../index';
 import { autocomplete } from '../../../public/autocomplete';
+import { municipalService } from '../../services';
+import { Alert } from '../../widgets';
 
 export class ChooseMunicipalPage extends Component {
+
     render() {
         return (
             <div className="img-container">
@@ -21,8 +22,23 @@ export class ChooseMunicipalPage extends Component {
         );
     }
     mounted() {
-        var municipals = ["Trondheim", "Tromsø", "Meråker", "Stjørdal"]
+        async function f () {
 
-        autocomplete(document.getElementById("municipalInput"), municipals)
+            let municipalObjects = [];
+            let promise = new Promise((resolve, reject) => {
+                resolve(municipalService
+                    .getMunicipals()
+                    .then(municipals => municipalObjects = municipals));
+            });
+
+            let result = await promise;
+            let municipals = result.map(e => e.name)
+
+            autocomplete(document.getElementById("municipalInput"), municipals);
+        }
+
+        f();
     }
+
+
 }
