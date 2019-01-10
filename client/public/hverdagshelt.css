@@ -1,13 +1,13 @@
 
 
-.status-blocked {background-color: lightcoral}
-.status-pending {background-color: #f1fc5a}
-.status-finished {background-color: lightgreen}
+.status-blocked {background-color: #ff726b}
+.status-pending {background-color: #ffee75}
+.status-finished {background-color: #72ff68}
 .status { align-self: center}
 div.status > h4 {
-    font-size: 4vh;
+    font-size: 3vh;
 }
-.issue-container {margin: 5% 10% 5% 10%; padding-bottom: 5%}
+.issue-container {margin: 5% 15% 5% 15%; padding-bottom: 5%}
 .issue-image:hover {
     background-color: #b9bbbe;
 }
@@ -24,6 +24,6 @@ div.status > h4 {
 }
 
 .navlink-large {
-    font-size: 5vh;
+    font-size: 4vh;
 }
 
