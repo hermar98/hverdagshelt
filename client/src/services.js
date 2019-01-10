@@ -1,6 +1,6 @@
 // @flow
 import axios from 'axios';
-import { User, Issue, IssueCategory, Event} from "models.js";
+import { User, Issue, IssueCategory, Event} from "./models.js";
 
 axios.interceptors.response.use(response => response.data);
 

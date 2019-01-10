@@ -3,7 +3,8 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Issue, issueService } from '../../services';
+import { Issue} from '../../models.js';
+import { issueService } from "../../services.js"
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
 
 export default class RegisterIssue extends Component {
