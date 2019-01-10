@@ -76,8 +76,7 @@ describe('municipal test', () => {
         .map(e => e.toJSON())
         .map(e => ({
           mun_id: e.mun_id,
-          name: e.name,
-          county_id: e.county_id
+          name: e.name
         }))
     ).toEqual([
 
@@ -122,11 +121,7 @@ describe('issue test', () => {
           content: e.content,
           image: e.image,
           longitude: e.longitude,
-          latitude: e.latitude,
-          mun_id: e.mun_id,
-          user_id: e.user_id,
-          category_id: e.category_id,
-          status_id: e.status_id
+          latitude: e.latitude
         }))
     ).toEqual([
       {
@@ -155,17 +150,13 @@ describe('feedback test', () => {
         .map(e => ({
           feedback_id: e.feedback_id,
           name: e.name,
-          content: e.content,
-          user_id: e.user_id,
-          issue_id: e.issue_id
+          content: e.content
         }))
     ).toEqual([
       {
         feedback_id: 1,
         name: 'Dumme folk er dumme',
-        content: 'Vi skal fikse dette!',
-        user_id: 2,
-        issue_id: 1
+        content: 'Vi skal fikse dette!'
       }
     ]);
   });
@@ -184,9 +175,7 @@ describe('event test', () => {
           content: e.content,
           image: e.image,
           longitude: e.longitude,
-          latitude: e.latitude,
-          user_id: e.user_id,
-          category_id: e.category_id
+          latitude: e.latitude
         }))
     ).toEqual([
       {
@@ -195,9 +184,7 @@ describe('event test', () => {
         content: 'Det skal være party at the house!',
         image: 'notin',
         longitude: 123123,
-        latitude: 123123,
-        user_id: 2,
-        category_id: 1
+        latitude: 123123
       }
     ]);
   });
