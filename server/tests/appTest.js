@@ -1,5 +1,5 @@
 // @flow
-import {Event,Issue,County,Municipal,User,sync} from '../src/models';
+import {Issue_category, Event_category, Event,Issue,County,Municipal,User,sync} from '../src/models';
 
 const request = require('supertest');
 const app = require('../src/app');
@@ -222,7 +222,7 @@ describe('Event Category Test', () => {
 //Create one event_category
 
 //Issue_category
-describe('Event Category Test', () => {
+describe('Issue Category Test', () => {
   test('GET all issue category', async () => {
     const response = await request(app).get('/issueCat');
     expect(response.statusCode).toBe(200);
