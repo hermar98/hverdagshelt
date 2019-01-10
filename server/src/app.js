@@ -25,36 +25,52 @@ let app = express();
 app.use(express.static(public_path));
 app.use(express.json()); // For parsing application/json
 
-let privateKey = fs.readFileSync('./private.key', 'utf8');
-let publicKey = fs.readFileSync('./public.key', 'utf8');
+let secretKey = fs.readFileSync('./secret.key', 'utf8');
+
+app.use('/secure', (req, res, next) => {
+    let token = req.headers['x-access-token'];
+    jwt.verify(token, secretKey, err => {
+        if (err) {
+            res.sendStatus(401);
+        } else {
+            next();
+        }
+    });
+});
 
 app.post('/login', (req: Request, res: Response) => {
     User.findOne({where: {email: req.body.email}}).then(user => {
-        let passwordData = passwordHash.sha512(req.body.password, user.salt);
-        if (passwordData.passwordHash === user.hash_str) {
-            let token = jwt.sign({ email: req.body.email }, privateKey, {
-                expiresIn: 60
-            });
-            res.json({ jwt: token });
+        if (user) {
+            let passwordData = passwordHash.sha512(req.body.password, user.salt);
+            if (passwordData.passwordHash === user.hash_str) {
+                let token = jwt.sign({ email: req.body.email }, secretKey, {
+                    expiresIn: 600
+                });
+                res.json({ jwt: token });
+            } else {
+                res.sendStatus(401);
+            }
         } else {
-            res.status(401);
-            res.json({ error: "Not authorized" });
+            res.sendStatus(401);
         }
     })
 });
 
-//User
-app.get('/users', (req: Request, res: response) => {
-    return User.findAll().then(users => res.send(users));
+app.get("/token", (req, res) => {
+    let token = req.headers["x-access-token"];
+    jwt.verify(token, secretKey, (err, decoded) => {
+        if (err) {
+            res.sendStatus(401);
+        } else {
+            token = jwt.sign({ email: decoded.email }, secretKey, {
+                expiresIn: 600
+            });
+            res.json({ jwt: token });
+        }
+    })
 });
 
-app.get('/users/:id', (req: Request, res: Response) => {
-    return User.findOne({ where: { user_id: Number(req.params.id) } }).then(user =>
-        user ? res.send(user) : res.sendStatus(404)
-    );
-});
-
-app.post('/users', (req: Request, res: Response) => {
+app.post('/register', (req: Request, res: Response) => {
     if (!(req.body instanceof Object)) return res.sendStatus(400);
 
     var passwordSalt = passwordHash.genRandomString(16);
@@ -70,7 +86,18 @@ app.post('/users', (req: Request, res: Response) => {
     }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
-app.put('/users/:id', (req: Request, res: Response) => {
+//User
+app.get('/secure/users', (req: Request, res: response) => {
+    return User.findAll().then(users => res.send(users));
+});
+
+app.get('/secure/users/:id', (req: Request, res: Response) => {
+    return User.findOne({ where: { user_id: Number(req.params.id) } }).then(user =>
+        user ? res.send(user) : res.sendStatus(404)
+    );
+});
+
+app.put('/secure/users/:id', (req: Request, res: Response) => {
     if (!(req.body instanceof Object)) return res.sendStatus(400);
 
     return User.update({
@@ -84,29 +111,29 @@ app.put('/users/:id', (req: Request, res: Response) => {
     ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
-app.delete('/users/:id', (req: Request, res: Response) => {
+app.delete('/secure/users/:id', (req: Request, res: Response) => {
     return User.destroy({
         where: {id: req.params.id}
     }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
 });
 
 //Issue
-app.get('/users/:id/issue', (req: Request, res: Response) => {
+app.get('/secure/users/:id/issue', (req: Request, res: Response) => {
     return Issue.findAll({ where: { user_id: Number(req.params.id) } }).then(issue =>
         issue ? res.send(issue) : res.sendStatus(404)
     );
 });
 
 //Event
-app.get('/events', (req: Request, res: Response) => {
+app.get('/secure/events', (req: Request, res: Response) => {
     return Event.findAll().then(events => res.send(events));
 });
-app.get('/events/:id', (req:Request,res:Response) => {
+app.get('/secure/events/:id', (req:Request,res:Response) => {
     return Event.findOne({where:{event_id: Number(req.params.id)}}).then(event =>
         event ? res.send(event) : res.sendStatus(404)
     );
 });
-app.put('/events/:id', (req: Request, res: Response) => {
+app.put('/secure/events/:id', (req: Request, res: Response) => {
     if(!(req.body instanceof Object)) return res.sendStatus(400);
     return Event.update(
         {
@@ -124,7 +151,7 @@ app.put('/events/:id', (req: Request, res: Response) => {
         }
     ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
 });
-app.post('/events', (req:Request, res: Response) => {
+app.post('/secure/events', (req:Request, res: Response) => {
     if(!(req.body instanceof Object)) return res.sendStatus(400);
     return Event.create(
         {
@@ -138,7 +165,7 @@ app.post('/events', (req:Request, res: Response) => {
         }
     ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
 });
-app.delete('/events/:id', function (req, res) {
+app.delete('/secure/events/:id', function (req, res) {
     return Event.destroy(
         {
             where: {
@@ -149,15 +176,15 @@ app.delete('/events/:id', function (req, res) {
 });
 
 //Event_category
-app.get('/eventCat', (req: Request, res: Response) => {
+app.get('/secure/eventCat', (req: Request, res: Response) => {
     return Event_category.findAll().then(eventCategories => res.send(eventCategories));
 });
-app.get('/eventCat/:id', (req:Request,res:Response) => {
+app.get('/secure/eventCat/:id', (req:Request,res:Response) => {
     return Event_category.findOne({where:{category_id: Number(req.params.id)}}).then(eventCategory =>
         eventCategory ? res.send(eventCategory) : res.sendStatus(404)
     );
 });
-app.put('/eventCat/:id', (req: Request, res: Response) => {
+app.put('/secure/eventCat/:id', (req: Request, res: Response) => {
     if(!(req.body instanceof Object)) return res.sendStatus(400);
     return Event_category.update(
         {
@@ -169,7 +196,7 @@ app.put('/eventCat/:id', (req: Request, res: Response) => {
         }
     ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
 });
-app.post('/eventCat', (req:Request, res: Response) => {
+app.post('/secure/eventCat', (req:Request, res: Response) => {
     if(!(req.body instanceof Object)) return res.sendStatus(400);
     return Event_category.create(
         {
@@ -177,7 +204,7 @@ app.post('/eventCat', (req:Request, res: Response) => {
         }
     ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
 });
-app.delete('/eventCat/:id', function (req, res) {
+app.delete('/secure/eventCat/:id', function (req, res) {
     return Event_category.destroy(
         {
             where: {
@@ -189,15 +216,15 @@ app.delete('/eventCat/:id', function (req, res) {
 
 
 //Issue_category
-app.get('/issueCat', (req: Request, res: Response) => {
+app.get('/secure/issueCat', (req: Request, res: Response) => {
     return Issue_category.findAll().then(issueCategories => res.send(issueCategories));
 });
-app.get('/issueCat/:id', (req:Request,res:Response) => {
+app.get('/secure/issueCat/:id', (req:Request,res:Response) => {
     return Issue_category.findOne({where:{category_id: Number(req.params.id)}}).then(issueCategory =>
         issueCategory ? res.send(issueCategory) : res.sendStatus(404)
     );
 });
-app.put('/issueCat/:id', (req: Request, res: Response) => {
+app.put('/secure/issueCat/:id', (req: Request, res: Response) => {
     if(!(req.body instanceof Object)) return res.sendStatus(400);
     return Issue_category.update(
         {
@@ -209,7 +236,7 @@ app.put('/issueCat/:id', (req: Request, res: Response) => {
         }
     ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
 });
-app.post('/issueCat', (req:Request, res: Response) => {
+app.post('/secure/issueCat', (req:Request, res: Response) => {
     if(!(req.body instanceof Object)) return res.sendStatus(400);
     return Issue_category.create(
         {
@@ -217,7 +244,7 @@ app.post('/issueCat', (req:Request, res: Response) => {
         }
     ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
 });
-app.delete('/issueCat/:id', function (req, res) {
+app.delete('/secure/issueCat/:id', function (req, res) {
     return Issue_category.destroy(
         {
             where: {
