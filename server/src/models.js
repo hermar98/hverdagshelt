@@ -58,7 +58,7 @@ export let Event: Class<
     longitude: number,
     latitude: number,
     time_start: Date,
-    time_end: Date,
+    time_end: Date
   }>
 > = sequelize.define('Event', {
   event_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
