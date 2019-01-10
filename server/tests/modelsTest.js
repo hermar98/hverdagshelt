@@ -81,8 +81,7 @@ describe('municipal test', () => {
     ).toEqual([
 
         {   mun_id: 101,
-            name: 'Halden',
-            county_id: 1
+            name: 'Halden'
         },
     ]);
   });
@@ -130,11 +129,7 @@ describe('issue test', () => {
         content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
         image: 'null',
         longitude: 123123,
-        latitude: 123123,
-        mun_id: 2012,
-        user_id: 1,
-        category_id: 1,
-        status_id: 1
+        latitude: 123123
       }
     ]);
   });

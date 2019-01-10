@@ -104,13 +104,13 @@ describe('Municipality tests', () => {
     });
   //Get one Municipal with id
     test('GET /municipal/:id', async () => {
-        const response = await request(app).get('/municipal/1');
+        const response = await request(app).get('/municipal/5016');
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
 
-        expect(response.body.mun_id).toBe(1);
-        expect(response.body.name).toBe('Freia');
-        expect(response.body.county_id).toBe(1);
+        expect(response.body.mun_id).toBe(5016);
+        expect(response.body.name).toBe('Agdenes');
+        expect(response.body.county_id).toBe(50);
 
 
     });
@@ -136,7 +136,7 @@ describe('County tests', () => {
         expect(response.type).toEqual('application/json');
 
         expect(response.body.county_id).toBe(1);
-        expect(response.body.name).toBe('Trønderlag');
+        expect(response.body.name).toBe('Østfold');
 
 
     });
