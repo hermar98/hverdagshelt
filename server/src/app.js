@@ -1,15 +1,6 @@
-import {
-  Event,
-  User,
-  User_case,
-  County,
-  Municipal,
-  Status,
-  Issue_category,
-  Issue,
-  Feedback,
-  Event_category
-} from './models.js';
+// @flow
+
+import { Event, User, County, Municipal, Status, Issue_category, Issue, Feedback, Event_category } from './models.js';
 
 import * as passwordHash from './passwordHash.js';
 import express from 'express';
@@ -24,7 +15,7 @@ app.use(express.static(public_path));
 app.use(express.json()); // For parsing application/json
 
 //User
-app.get('/users', (req: Request, res: response) => {
+app.get('/users', (req: Request, res: Response) => {
   return User.findAll().then(users => res.send(users));
 });
 
@@ -73,7 +64,7 @@ app.delete('/users/:id', (req: Request, res: Response) => {
 });
 
 //Municipal
-app.get('/municipal', (req: Request, res: response) => {
+app.get('/municipal', (req: Request, res: Response) => {
   return Municipal.findAll().then(users => res.send(users));
 });
 

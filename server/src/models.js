@@ -244,7 +244,8 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           image: 'notin',
           longitude: 123123,
           latitude: 123123,
-          date: new Date(Date.now()),
+          time_start: new Date(Date.now()),
+          time_end: new Date(Date.now()),
           user_id: '2',
           category_id: 1
         })
