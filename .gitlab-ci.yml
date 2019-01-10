@@ -3,6 +3,7 @@ variables:
   MYSQL_USER: root
   MYSQL_ROOT_PASSWORD: ""
   MYSQL_ALLOW_EMPTY_PASSWORD: 1
+  NODE_ENV: "development"
 
 test:
   image: node:latest
