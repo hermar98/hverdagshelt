@@ -62,11 +62,11 @@ app.delete('/users/:id', (req: Request, res: Response) => {
 });
 
 //Municipal
-app.get('/municipal', (req: Request, res: Response) => {
+app.get('/municipals', (req: Request, res: Response) => {
   return Municipal.findAll().then(users => res.send(users));
 });
 
-app.get('/municipal/:id', (req: Request, res: Response) => {
+app.get('/municipals/:id', (req: Request, res: Response) => {
   return Municipal.findOne({ where: { mun_id: Number(req.params.id) } }).then(user =>
     user ? res.send(user) : res.sendStatus(404)
   );
@@ -176,6 +176,54 @@ app.delete('/eventCat/:id', (req: Request, res: Response) => {
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
+//Issue
+app.get('/issues', (req: Request, res: Response) => {
+  return Issue.findAll().then(issues => res.send(issues));
+});
+app.get('/issues/:id', (req: Request, res: Response) => {
+  return Issue.findOne({ where: { issue_id: Number(req.params.id) } }).then(issue =>
+    issue ? res.send(issue) : res.sendStatus(404)
+  );
+});
+app.put('/issues/:id', (req: Request, res: Response) => {
+  if (!(req.body instanceof Object)) return res.sendStatus(400);
+  return Issue.update(
+    {
+      title: req.body.title,
+      content: req.body.content,
+      image: req.body.image,
+      longitude: req.body.longitude,
+      latitude: req.body.latitude,
+      status: req.body.status,
+      date: req.body.date
+    },
+    {
+      where: {
+        issue_id: req.params.id
+      }
+    }
+  ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+});
+app.post('/issues', (req: Request, res: Response) => {
+  if (!(req.body instanceof Object)) return res.sendStatus(400);
+  return Issue.create({
+    title: req.body.title,
+    content: req.body.content,
+    image: req.body.image,
+    longitude: req.body.longitude,
+    latitude: req.body.latitude,
+    status: req.body.status,
+    date: req.body.date
+  }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+});
+
+app.delete('/issues/:id', (req: Request, res: Response) => {
+  return Issue.destroy({
+    where: {
+      issue_id: req.params.id
+    }
+  }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+});
 //Issue_category
 app.get('/issueCat', (req: Request, res: Response) => {
   return Issue_category.findAll().then(issueCategories => res.send(issueCategories));
