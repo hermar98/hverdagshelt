@@ -75,9 +75,13 @@ export class Event {
 }
 
 export class Municipal {
-  mun_id: number;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-  county_id: number;
+    mun_id: number;
+    name: string;
+
+    /*
+    constructor( mun_id: number, title: string){
+        this.mun_id = mun_id;
+        this.title = title;
+    }
+     */
 }
