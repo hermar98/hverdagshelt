@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@google/maps": "^0.5.5",
+    "crypto": "^1.0.1",
     "express": "^4.16.4",
     "mysql2": "^1.6.1",
     "reload": "^2.3.1",
@@ -25,7 +26,12 @@
     "@babel/preset-flow": "^7.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
+<<<<<<< HEAD
     "chai": "^4.2.0",
+=======
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+>>>>>>> 614e7942a146345b24a254a4567a5a72d4231878
     "cross-env": "^5.2.0",
     "jest": "^23.6.0",
     "mocha": "^5.2.0",
