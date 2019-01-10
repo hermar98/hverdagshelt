@@ -10,7 +10,7 @@
 }
 .issue-image {
     width: auto;
-    height: 200px;
+    height: 40vh;
     padding: 1% 1% 1% 1%;
 }
 
@@ -19,3 +19,8 @@
     overflow: auto;
     align-items: start;
 }
+
+.navlink-large {
+    font-size: 10%;
+}
+
