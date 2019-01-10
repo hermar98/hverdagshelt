@@ -4,7 +4,7 @@
 .status-pending {background-color: #ffee75}
 .status-finished {background-color: #72ff68}
 .status {
-    padding: .5% .5% .5% .5%;
+    padding: 0 .25% 0 .25%;
 }
 
 .card-title h2 {
@@ -23,6 +23,16 @@ div.status > h4 {
 .issue-image:hover {
     background-color: #b9bbbe;
 }
+.issue-image-normal {
+    width: 15vw;
+    height: auto;
+}
+
+.issue-title-normal {
+    font-size: 3vw;
+    align-self: center;
+}
+
 .issue-image {
     width: auto;
     height: 30vh;
@@ -36,7 +46,7 @@ div.status > h4 {
 }
 
 .navlink-large {
-    font-size: 4vh;
+    font-size: 2.5vw;
 }
 
 .submitter-info {
@@ -49,8 +59,18 @@ div.status > h4 {
 }
 
 .date {
-    font-size: 2.5vh;
+    font-size: 2.6vh;
     color: grey;
+}
+
+.date-small {
+    font-size: 2.2vh;
+    color: grey;
+}
+
+.list-group-item {
+    padding: 0 0 0 0;
+    margin-bottom: 1vw;
 }
 
 .profile-image {
@@ -67,5 +87,9 @@ div.status > h4 {
 .feedback-title {
     margin-bottom: 5vh;
     border-bottom: gray solid 1px;
+}
+
+.status-small {
+    text-align: center;
 }
 

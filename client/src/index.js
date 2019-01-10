@@ -11,7 +11,7 @@ import { LoginPage } from "./components/pages/LoginPage";
 import { RegisterPage } from "./components/pages/RegisterPage";
 import { ChooseMunicipalPage } from "./components/pages/ChooseMunicipalPage";
 import {RegisterEventPage} from "./components/pages/RegisterEventPage";
-import {IssueLarge, IssueOverviewSmall, IssueFeedback} from "./components/issueViews/issueViews";
+import {IssueLarge, IssueOverviewSmall, IssueOverviewNormal, IssueFeedback} from "./components/issueViews/issueViews";
 import {Issue} from "./models.js";
 
 // Reload application when not in production environment
@@ -35,7 +35,7 @@ if (root)
         <Alert />
         <Menu />
         <Route exact path="/" component={ChooseMunicipalPage} />
-        <Route exact path="/issues" component={IssueOverviewSmall} />
+        <Route exact path="/issues" component={IssueOverviewNormal} />
         <Route path="/issues/:issueId" component={IssueLarge} />
         <Route exact path="/registerUser" component={RegisterPage} />
         <Route exact path="/registerIssue" component={FileIssuePage} />
