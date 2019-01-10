@@ -71,13 +71,13 @@ app.put('/users/:id', (req: Request, res: Response) => {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             rank: req.body.rank},
-        {where: { id: req.params.id }}
+        {where: { user_id: req.params.id }}
     ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
 app.delete('/users/:id', (req: Request, res: Response) => {
   return User.destroy({
-    where: { id: req.params.id }
+    where: { user_id: req.params.id }
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
