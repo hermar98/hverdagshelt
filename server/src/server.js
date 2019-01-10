@@ -5,7 +5,7 @@ import fs from 'fs';
 
 const public_path = path.join(__dirname, '/../../client/public');
 
-const app = require('./app')
+const app = require('./app');
 
 const googleMapsClient = require('@google/maps').createClient({
   key: 'AIzaSyA1yYbq9zX4FeY6oCLLASJEkqjvL9Rakok'
