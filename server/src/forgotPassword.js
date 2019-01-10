@@ -21,11 +21,13 @@ module.exports = app => {
                 console.log('email not in database');
                 res.json('email er ikke i databasen');
             } else {
+                let t = new Date();
+                t.setMinutes(t.getMinutes() + 15);
 
                 const token = crypto.randomBytes(20).toString('hex');
                 user.update({
                     resetPasswordToken: token,
-                    resetPasswordExpires: Date.now() + 90000
+                    resetPasswordExpires: t
                 });
 
                 /*let emailUser = process.env.EMAIL_ADDRESS;

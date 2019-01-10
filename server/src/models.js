@@ -48,6 +48,18 @@ export let Issue: Class<
   date: Sequelize.DATE
 });
 
+export let IssuePicture: Class<
+    Model<{
+        picture_id?: number,
+        title: string,
+        imageSource: string,
+    }>
+    > = sequelize.define('Issue', {
+    issue_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+    title: Sequelize.STRING,
+    imageSource: Sequelize.STRING
+});
+
 export let Event: Class<
   Model<{
     event_id?: number,
@@ -77,17 +89,24 @@ export let User: Class<
     lastName: string,
     email: string,
     rank: number,
-    salt: string,
-    hash_str: string
+    salt?: string,
+    hash_str?: string,
+      profilePicture?: string,
+      resetPasswordToken?: string,
+      resetPasswordExpires?: Date
   }>
 > = sequelize.define('User', {
   user_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
   firstName: Sequelize.STRING,
   lastName: Sequelize.STRING,
-  email: Sequelize.STRING,
+  email: {type: Sequelize.STRING, unique: true},
   rank: Sequelize.INTEGER,
   salt: Sequelize.STRING,
-  hash_str: Sequelize.STRING
+  hash_str: Sequelize.STRING,
+    profilePicture: Sequelize.STRING,
+    resetPasswordToken: {type: Sequelize.STRING, notNull: false},
+    resetPasswordExpires: {type: Sequelize.DATE, notNull: false}
+
 });
 
 export let Municipal: Class<Model<{ mun_id?: number, name: string }>> = sequelize.define('Municipal', {
@@ -132,6 +151,7 @@ User.hasMany(Feedback, { foreignKey: 'user_id' });
 Issue.belongsTo(Issue_category, { foreignKey: 'category_id' });
 Issue.belongsTo(Status, { foreignKey: 'status_id' });
 Issue.hasMany(Feedback, { foreignKey: 'issue_id' });
+Issue.hasMany(IssuePicture, {foreignKey: 'issue_id'});
 
 User.hasMany(Issue, { foreignKey: 'user_id' });
 User.hasMany(Event, { foreignKey: 'user_id' });
@@ -164,7 +184,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
         User.create({
           firstName: 'Vegard',
           lastName: 'Andersson',
-          email: 'vegaande@ntnu.stud.no',
+          email: 'vegaande@stud.ntnu.no',
           rank: 1,
           salt: 'b79ryp97',
           hash_str: '897dfjsodif5vx24c5vsldfskdclz97cyw7e3o2inJKHaospk902',
@@ -188,7 +208,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
         User.create({
           firstName: 'Christian',
           lastName: 'Axell',
-          email: 'cdaxell@ntnu.stud.no',
+          email: 'cdaxell@stud.ntnu.no',
           rank: 3,
           salt: 'b79ryp98',
           hash_str: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
