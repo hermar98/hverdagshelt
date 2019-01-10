@@ -93,8 +93,8 @@ describe('User tests', () => {
 describe('Municipality tests', () => {
     //Get all Municipalities
 
-    test('GET /municipal', async () => {
-        const response = await request(app).get('/municipal');
+    test('GET /municipals', async () => {
+        const response = await request(app).get('/municipals');
 
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
@@ -103,8 +103,8 @@ describe('Municipality tests', () => {
 
     });
   //Get one Municipal with id
-    test('GET /municipal/:id', async () => {
-        const response = await request(app).get('/municipal/5016');
+    test('GET /municipals/:id', async () => {
+        const response = await request(app).get('/municipals/5016');
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
 
