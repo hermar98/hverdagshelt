@@ -57,8 +57,9 @@ export class ProfilePage extends Component {
           <br />
           <label>Endre Hjemkommune</label>
           <select className="custom-select custom-select-lg mb-3" id="sel1" value={this.municipal.name}>
-            <option>Freia</option>
-            <option>Larvik</option>
+            {this.municipals.map((municipal, index) => (
+              <option key={index}>{municipal.name}</option>
+            ))}
           </select>
           <ChangePasswordForm />
         </Card>
