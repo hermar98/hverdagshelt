@@ -54,8 +54,8 @@ export let IssuePicture: Class<
         title: string,
         imageSource: string,
     }>
-    > = sequelize.define('Issue', {
-    issue_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+    > = sequelize.define('IssuePicture', {
+    picture_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
     title: Sequelize.STRING,
     imageSource: Sequelize.STRING
 });
@@ -143,10 +143,6 @@ User.belongsToMany(Municipal, { through: 'User_municipal', foreignKey: 'user_id'
 
 User.belongsToMany(Issue, { through: 'User_issue', foreignKey: 'user_id' });
 Issue.belongsToMany(User, { through: 'User_issue', foreignKey: 'issue_id' });
-
-User.hasMany(Issue, { foreignKey: 'user_id' });
-User.hasMany(Event, { foreignKey: 'user_id' });
-User.hasMany(Feedback, { foreignKey: 'user_id' });
 
 Issue.belongsTo(Issue_category, { foreignKey: 'category_id' });
 Issue.belongsTo(Status, { foreignKey: 'status_id' });
