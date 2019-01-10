@@ -73,15 +73,15 @@ app.get("/token", (req, res) => {
 app.post('/register', (req: Request, res: Response) => {
     if (!(req.body instanceof Object)) return res.sendStatus(400);
 
-    var passwordSalt = passwordHash.genRandomString(16);
-    var passwordData = passwordHash.sha512(req.body.password, passwordSalt);
+    let passwordSalt = passwordHash.genRandomString(16);
+    let passwordData = passwordHash.sha512(req.body.password, passwordSalt);
 
     return User.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         rank: req.body.rank,
-        salt: passwordData.salt,
+        salt: passwordSalt,
         hash_str: passwordData.passwordHash
     }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
@@ -97,23 +97,51 @@ app.get('/secure/users/:id', (req: Request, res: Response) => {
     );
 });
 
+app.post('/secure/users', (req: Request, res: Response) => {
+    if (!(req.body instanceof Object)) return res.sendStatus(400);
+
+    return User.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        rank: req.body.rank,
+        salt: req.body.salt,
+        hash_str: req.body.hash_str
+    }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+});
+
 app.put('/secure/users/:id', (req: Request, res: Response) => {
     if (!(req.body instanceof Object)) return res.sendStatus(400);
 
+    if (req.body.password) {
+        let passwordSalt = passwordHash.genRandomString(16);
+        let passwordData = passwordHash.sha512(req.body.password, passwordSalt);
+
+        return User.update({
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                email: req.body.email,
+                rank: req.body.rank,
+                salt: passwordSalt,
+                hash_str: passwordData.passwordHash},
+            {where: { user_id: req.params.id }}
+        ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+    }
+
     return User.update({
-            email: req.body.email,
-            password: req.body.password,
-            salt: req.body.salt,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
-            rank: req.body.rank},
-        {where: { id: req.params.id }}
+            email: req.body.email,
+            rank: req.body.rank,
+            salt: req.body.salt,
+            hash_str: req.body.hash_str},
+        {where: { user_id: req.params.id }}
     ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
 app.delete('/secure/users/:id', (req: Request, res: Response) => {
     return User.destroy({
-        where: {id: req.params.id}
+        where: {user_id: req.params.id}
     }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
 });
 
