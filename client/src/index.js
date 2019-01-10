@@ -8,7 +8,7 @@ import { Alert, NavBar, Form, Card, Button } from './widgets';
 import Menu from './components/menu/Menu.js';
 import { FileIssuePage } from './components/pages/FileIssuePage';
 import { LoginPage } from './components/pages/LoginPage';
-import { ProfilePage } from './components/pages/ProfilePage';
+import { ProfilePage } from './components/pages/ProfilePage/ProfilePage.js';
 import { RegisterPage } from './components/pages/RegisterPage';
 import { ChooseMunicipalPage } from './components/pages/ChooseMunicipalPage';
 import { RegisterEventPage } from './components/pages/RegisterEventPage';
