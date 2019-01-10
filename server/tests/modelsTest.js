@@ -59,10 +59,10 @@ describe('county test', () => {
           name: e.name
         }))
     ).toEqual([
-      {
-        county_id: 1,
-        name: 'Trønderlag'
-      }
+        {
+            county_id: 1,
+            name: 'Østfold'
+        },
     ]);
   });
 });
@@ -79,10 +79,10 @@ describe('municipal test', () => {
           name: e.name
         }))
     ).toEqual([
-      {
-        mun_id: 1,
-        name: 'Freia'
-      }
+
+        {   mun_id: 101,
+            name: 'Halden'
+        },
     ]);
   });
 });

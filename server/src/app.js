@@ -5,8 +5,6 @@ import { Event, User, County, Municipal, Status, Issue_category, Issue, Feedback
 import * as passwordHash from './passwordHash.js';
 import express from 'express';
 import path from 'path';
-import fs from 'fs';
-import jwt from 'jsonwebtoken';
 type Request = express$Request;
 type Response = express$Response;
 
@@ -15,24 +13,6 @@ const public_path = path.join(__dirname, '/../../client/public');
 let app = express();
 app.use(express.static(public_path));
 app.use(express.json()); // For parsing application/json
-
-let privateKey = fs.readFileSync('./private.key', 'utf8');
-let publicKey = fs.readFileSync('./public.key', 'utf8');
-
-app.post('/login', (req: Request, res: Response) => {
-  User.findOne({ where: { email: req.body.email } }).then(user => {
-    let passwordData = passwordHash.sha512(req.body.password, user.salt);
-    if (passwordData.passwordHash === user.hash_str) {
-      let token = jwt.sign({ email: req.body.email }, privateKey, {
-        expiresIn: 60
-      });
-      res.json({ jwt: token });
-    } else {
-      res.status(401);
-      res.json({ error: 'Not authorized' });
-    }
-  });
-});
 
 //User
 app.get('/users', (req: Request, res: Response) => {
@@ -64,22 +44,20 @@ app.post('/users', (req: Request, res: Response) => {
 app.put('/users/:id', (req: Request, res: Response) => {
   if (!(req.body instanceof Object)) return res.sendStatus(400);
 
-  return User.update(
-    {
-      email: req.body.email,
-      password: req.body.password,
-      salt: req.body.salt,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      rank: req.body.rank
-    },
-    { where: { id: req.params.id } }
-  ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+    return User.update({
+            email: req.body.email,
+            password: req.body.password,
+            salt: req.body.salt,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            rank: req.body.rank},
+        {where: { user_id: req.params.id }}
+    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
 app.delete('/users/:id', (req: Request, res: Response) => {
   return User.destroy({
-    where: { id: req.params.id }
+    where: { user_id: req.params.id }
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
@@ -164,11 +142,13 @@ app.delete('/events/:id', (req: Request, res: Response) => {
 app.get('/eventCat', (req: Request, res: Response) => {
   return Event_category.findAll().then(eventCategories => res.send(eventCategories));
 });
+
 app.get('/eventCat/:id', (req: Request, res: Response) => {
-  return Event_category.findOne({ where: { category_id: Number(req.params.id) } }).then(eventCategory =>
+  return Event_category.findOne({ where: { event_id: Number(req.params.id) } }).then(eventCategory =>
     eventCategory ? res.send(eventCategory) : res.sendStatus(404)
   );
 });
+
 app.put('/eventCat/:id', (req: Request, res: Response) => {
   if (!(req.body instanceof Object)) return res.sendStatus(400);
   return Event_category.update(
@@ -177,7 +157,7 @@ app.put('/eventCat/:id', (req: Request, res: Response) => {
     },
     {
       where: {
-        category_id: req.params.id
+        event_id: req.params.id
       }
     }
   ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
@@ -191,7 +171,7 @@ app.post('/eventCat', (req: Request, res: Response) => {
 app.delete('/eventCat/:id', (req: Request, res: Response) => {
   return Event_category.destroy({
     where: {
-      category_id: req.params.id
+      event_id: req.params.id
     }
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });

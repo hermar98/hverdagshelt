@@ -1,6 +1,6 @@
 // @flow
 import axios from 'axios';
-import { User, Issue, IssueCategory, Event } from './models.js';
+import { User, Issue, IssueCategory, Event, Municipal} from "./models.js";
 
 axios.interceptors.response.use(response => response.data);
 
@@ -95,21 +95,15 @@ class EventService {
 }
 export let eventService = new EventService();
 
-class MunicipalService {
-  getMunicipals(): Promise<Municipal[]> {
-    return axios.get('/municipals');
-  }
-  getMunicipal(municipalId: number): Promise<Municipal> {
-    return axios.get('/municipals/' + municipalId);
-  }
-  updateMunicipal(event: Municipal): Promise<void> {
-    return axios.put('/municipals', municipal);
-  }
-  addMunicipal(event: Municipal): Promise<number> {
-    return axios.post('/municipals', municipal);
-  }
-  deleteMunicipal(municipalId: number): Promise<void> {
-    return axios.delete('/municipals/' + municipalId);
-  }
+class MunicipalService{
+
+    getMunicipals(): Promise<Municipal[]>{
+        return axios.get('/municipal');
+    }
+
+    getMunicipal(mun_id: number): Promise<Municipal> {
+        return axios.get('/municipal/' + mun_id);
+    }
 }
+
 export let municipalService = new MunicipalService();
