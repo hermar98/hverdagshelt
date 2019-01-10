@@ -3,8 +3,8 @@
 import { Event, User, County, Municipal, Status, Issue_category, Issue, Feedback, Event_category } from './models.js';
 
 import * as passwordHash from './passwordHash.js';
-import express from "express";
-import path from "path";
+import express from 'express';
+import path from 'path';
 import fs from 'fs';
 import jwt from 'jsonwebtoken';
 type Request = express$Request;
@@ -20,18 +20,18 @@ let privateKey = fs.readFileSync('./private.key', 'utf8');
 let publicKey = fs.readFileSync('./public.key', 'utf8');
 
 app.post('/login', (req: Request, res: Response) => {
-    User.findOne({where: {email: req.body.email}}).then(user => {
-        let passwordData = passwordHash.sha512(req.body.password, user.salt);
-        if (passwordData.passwordHash === user.hash_str) {
-            let token = jwt.sign({ email: req.body.email }, privateKey, {
-                expiresIn: 60
-            });
-            res.json({ jwt: token });
-        } else {
-            res.status(401);
-            res.json({ error: "Not authorized" });
-        }
-    })
+  User.findOne({ where: { email: req.body.email } }).then(user => {
+    let passwordData = passwordHash.sha512(req.body.password, user.salt);
+    if (passwordData.passwordHash === user.hash_str) {
+      let token = jwt.sign({ email: req.body.email }, privateKey, {
+        expiresIn: 60
+      });
+      res.json({ jwt: token });
+    } else {
+      res.status(401);
+      res.json({ error: 'Not authorized' });
+    }
+  });
 });
 
 //User
@@ -40,16 +40,16 @@ app.get('/users', (req: Request, res: Response) => {
 });
 
 app.get('/users/:id', (req: Request, res: Response) => {
-    return User.findOne({ where: { user_id: Number(req.params.id) } }).then(user =>
-        user ? res.send(user) : res.sendStatus(404)
-    );
+  return User.findOne({ where: { user_id: Number(req.params.id) } }).then(user =>
+    user ? res.send(user) : res.sendStatus(404)
+  );
 });
 
 app.post('/users', (req: Request, res: Response) => {
-    if (!(req.body instanceof Object)) return res.sendStatus(400);
+  if (!(req.body instanceof Object)) return res.sendStatus(400);
 
-    var passwordSalt = passwordHash.genRandomString(16);
-    var passwordData = passwordHash.sha512(req.body.password, passwordSalt);
+  var passwordSalt = passwordHash.genRandomString(16);
+  var passwordData = passwordHash.sha512(req.body.password, passwordSalt);
 
   return User.create({
     firstName: req.body.firstName,
@@ -62,17 +62,19 @@ app.post('/users', (req: Request, res: Response) => {
 });
 
 app.put('/users/:id', (req: Request, res: Response) => {
-    if (!(req.body instanceof Object)) return res.sendStatus(400);
+  if (!(req.body instanceof Object)) return res.sendStatus(400);
 
-    return User.update({
-            email: req.body.email,
-            password: req.body.password,
-            salt: req.body.salt,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            rank: req.body.rank},
-        {where: { id: req.params.id }}
-    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+  return User.update(
+    {
+      email: req.body.email,
+      password: req.body.password,
+      salt: req.body.salt,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      rank: req.body.rank
+    },
+    { where: { id: req.params.id } }
+  ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
 app.delete('/users/:id', (req: Request, res: Response) => {
@@ -82,11 +84,11 @@ app.delete('/users/:id', (req: Request, res: Response) => {
 });
 
 //Municipal
-app.get('/municipal', (req: Request, res: Response) => {
+app.get('/municipals', (req: Request, res: Response) => {
   return Municipal.findAll().then(users => res.send(users));
 });
 
-app.get('/municipal/:id', (req: Request, res: Response) => {
+app.get('/municipals/:id', (req: Request, res: Response) => {
   return Municipal.findOne({ where: { mun_id: Number(req.params.id) } }).then(user =>
     user ? res.send(user) : res.sendStatus(404)
   );
@@ -105,19 +107,19 @@ app.get('/county/:id', (req: Request, res: Response) => {
 
 //Issue
 app.get('/users/:id/issue', (req: Request, res: Response) => {
-    return Issue.findAll({ where: { user_id: Number(req.params.id) } }).then(issue =>
-        issue ? res.send(issue) : res.sendStatus(404)
-    );
+  return Issue.findAll({ where: { user_id: Number(req.params.id) } }).then(issue =>
+    issue ? res.send(issue) : res.sendStatus(404)
+  );
 });
 
 //Event
 app.get('/events', (req: Request, res: Response) => {
-    return Event.findAll().then(events => res.send(events));
+  return Event.findAll().then(events => res.send(events));
 });
-app.get('/events/:id', (req:Request,res:Response) => {
-    return Event.findOne({where:{event_id: Number(req.params.id)}}).then(event =>
-        event ? res.send(event) : res.sendStatus(404)
-    );
+app.get('/events/:id', (req: Request, res: Response) => {
+  return Event.findOne({ where: { event_id: Number(req.params.id) } }).then(event =>
+    event ? res.send(event) : res.sendStatus(404)
+  );
 });
 app.put('/events/:id', (req: Request, res: Response) => {
   if (!(req.body instanceof Object)) return res.sendStatus(400);
@@ -160,12 +162,12 @@ app.delete('/events/:id', (req: Request, res: Response) => {
 
 //Event_category
 app.get('/eventCat', (req: Request, res: Response) => {
-    return Event_category.findAll().then(eventCategories => res.send(eventCategories));
+  return Event_category.findAll().then(eventCategories => res.send(eventCategories));
 });
-app.get('/eventCat/:id', (req:Request,res:Response) => {
-    return Event_category.findOne({where:{category_id: Number(req.params.id)}}).then(eventCategory =>
-        eventCategory ? res.send(eventCategory) : res.sendStatus(404)
-    );
+app.get('/eventCat/:id', (req: Request, res: Response) => {
+  return Event_category.findOne({ where: { category_id: Number(req.params.id) } }).then(eventCategory =>
+    eventCategory ? res.send(eventCategory) : res.sendStatus(404)
+  );
 });
 app.put('/eventCat/:id', (req: Request, res: Response) => {
   if (!(req.body instanceof Object)) return res.sendStatus(400);
@@ -194,15 +196,62 @@ app.delete('/eventCat/:id', (req: Request, res: Response) => {
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
+//Issue
+app.get('/issues', (req: Request, res: Response) => {
+  return Issue.findAll().then(issues => res.send(issues));
+});
+app.get('/issues/:id', (req: Request, res: Response) => {
+  return Issue.findOne({ where: { issue_id: Number(req.params.id) } }).then(issue =>
+    issue ? res.send(issue) : res.sendStatus(404)
+  );
+});
+app.put('/issues/:id', (req: Request, res: Response) => {
+  if (!(req.body instanceof Object)) return res.sendStatus(400);
+  return Issue.update(
+    {
+      title: req.body.title,
+      content: req.body.content,
+      image: req.body.image,
+      longitude: req.body.longitude,
+      latitude: req.body.latitude,
+      status: req.body.status,
+      date: req.body.date
+    },
+    {
+      where: {
+        issue_id: req.params.id
+      }
+    }
+  ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+});
+app.post('/issues', (req: Request, res: Response) => {
+  if (!(req.body instanceof Object)) return res.sendStatus(400);
+  return Issue.create({
+    title: req.body.title,
+    content: req.body.content,
+    image: req.body.image,
+    longitude: req.body.longitude,
+    latitude: req.body.latitude,
+    status: req.body.status,
+    date: req.body.date
+  }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+});
 
+app.delete('/issues/:id', (req: Request, res: Response) => {
+  return Issue.destroy({
+    where: {
+      issue_id: req.params.id
+    }
+  }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+});
 //Issue_category
 app.get('/issueCat', (req: Request, res: Response) => {
-    return Issue_category.findAll().then(issueCategories => res.send(issueCategories));
+  return Issue_category.findAll().then(issueCategories => res.send(issueCategories));
 });
-app.get('/issueCat/:id', (req:Request,res:Response) => {
-    return Issue_category.findOne({where:{category_id: Number(req.params.id)}}).then(issueCategory =>
-        issueCategory ? res.send(issueCategory) : res.sendStatus(404)
-    );
+app.get('/issueCat/:id', (req: Request, res: Response) => {
+  return Issue_category.findOne({ where: { category_id: Number(req.params.id) } }).then(issueCategory =>
+    issueCategory ? res.send(issueCategory) : res.sendStatus(404)
+  );
 });
 app.put('/issueCat/:id', (req: Request, res: Response) => {
   if (!(req.body instanceof Object)) return res.sendStatus(400);

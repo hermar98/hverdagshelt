@@ -11,7 +11,7 @@ import { userService, issueService } from '../../services.js';
 export default class ChangePasswordForm extends Component {
   render() {
     return (
-      <Card title="Endre passord">
+      <div>
         <div>
           <Form.Input
             type="password"
@@ -33,7 +33,7 @@ export default class ChangePasswordForm extends Component {
             <Button.Basic onClick={this.save}>Endre Passord</Button.Basic>
           </div>
         </div>
-      </Card>
+      </div>
     );
   }
 

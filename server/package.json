@@ -13,7 +13,7 @@
   "dependencies": {
     "@google/maps": "^0.5.5",
     "express": "^4.16.4",
-    "jsonwebtoken": "^8.3.0",
+    "jsonwebtoken": "^8.4.0",
     "mysql2": "^1.6.1",
     "reload": "^2.3.1",
     "sequelize": "^4.41.0"
