@@ -1,7 +1,7 @@
 variables:
-  MYSQL_DATABASE: cdaxell
-  MYSQL_USER: cdaxell
-  MYSQL_ROOT_PASSWORD: "yAmB12A4"
+  MYSQL_DATABASE: database
+  MYSQL_USER: root
+  MYSQL_ROOT_PASSWORD: ""
   MYSQL_ALLOW_EMPTY_PASSWORD: 1
 
 test:
@@ -9,6 +9,6 @@ test:
   services:
     - mysql:5 # The JS mysql-library does not yet support the newest mysql protocol
   script:
-    - npm install -g flow-bin
-    - cd server && npm install && npm test && flow check src
-    - cd ../client && npm install && npm test && flow check src
+    # - npm install -g flow-bin
+    - cd server && npm install && npm test
+    - cd ../client && npm install && npm test
