@@ -32,7 +32,10 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
                     <Status status={this.issue.status}/>
                     <div className="card">
                         <div className="card-body">
-                            <p className="date">14:52 - 05/07/2018</p>
+                            <div className="d-flex flex-row issue-flex justify-content-between">
+                                <p className="date">14:52 - 05/07/2018</p>
+                                <DeleteButton onclick={null}/>
+                            </div>
                             <div className="card-title">
                                 <h2>{this.issue.title}</h2>
                             </div>
@@ -89,17 +92,15 @@ export class IssueSmall extends Component<{issue: Issue}> {
     render() {
         return (
             <div className="issue-small" issue={this.props.issue}>
-                <Status className="status-small" status={this.props.issue.status} />
                 <div className="d-flex flex-row issue-flex justify-content-between">
-                    <div className="p-2">
+                    <div>
                         <NavLink className="navlink-large" to={"/issues/" + this.props.issue.issueId}>
                         {this.props.issue.title}
                         </NavLink>
                         <p className="date">14:52 - 05/07/2018</p>
                     </div>
-                    <div className="p-2">
-                    </div>
                 </div>
+                <Status className="status-small" status={this.props.issue.status} />
             </div>
         )
     }
@@ -126,9 +127,11 @@ export class IssueOverviewSmall extends Component {
                 <ul className="list-group">
                     {sharedIssues.issues.map(issue => {
                         if (this.status == issue.status || this.status == 0) {
-                            return(<li className="list-group-item">
-                                <IssueSmall issue={issue}/>
-                            </li>)
+                            return(
+                                <li className="list-group-item">
+                                    <IssueSmall issue={issue}/>
+                                </li>
+                            )
                         }
                     })}
                 </ul>
@@ -203,7 +206,17 @@ export class Status extends Component<{status: number}> {
                     </div>
             )
                 break;
-            default: break;
+            default: return null; break;
         }
+    }
+}
+
+export class DeleteButton extends Component<{onclick: function}> {
+    render (){
+        return (
+            <button className="btn delete-button" id="deleteButton" type="button" onClick={this.props.onclick}>
+                Slett
+            </button>
+        )
     }
 }
