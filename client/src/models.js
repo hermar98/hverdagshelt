@@ -30,7 +30,7 @@ export class Issue{
     status: number;
     date: Date; //Works with string, unsure about date convertion
 
-    constructor(issueId: number, title: string, content: string, image: string, longitude: number, latitude: number, status: number, date: Date){
+    /*constructor(issueId: number, title: string, content: string, image: string, longitude: number, latitude: number, status: number, date: Date){
         this.issueId = issueId
         this.title = title
         this.content = content
@@ -39,7 +39,7 @@ export class Issue{
         this.latitude = latitude
         this.status = status
         this.date = date
-    }
+    }*/
 }
 
 export class IssueCategory{
@@ -72,18 +72,4 @@ export class Event {
         this.time_start = time_start
         this.time_end = time_end
     }*/
-}
-
-export class Feedback {
-    feedback_id: number
-    name: string
-    content: string
-    date: Date
-    user_id: number
-    issueId: number
-
-    constructor(content: string, date: Date){
-        this.content = content
-        this.date = date
-    }
 }
