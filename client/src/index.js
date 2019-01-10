@@ -12,7 +12,7 @@ import { RegisterPage } from "./components/pages/RegisterPage";
 import { ChooseMunicipalPage } from "./components/pages/ChooseMunicipalPage";
 import {RegisterEventPage} from "./components/pages/RegisterEventPage";
 import {IssueLarge} from "./components/issueViews/issueViews";
-import {Issue} from "models.js";
+import {Issue} from "./models.js";
 
 // Reload application when not in production environment
 
@@ -27,16 +27,16 @@ import createHashHistory from 'history/createHashHistory';
 export const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after
 // successfully saving a student
 
-var issueTest = new Issue("Hull i veien ved Gate 7", "Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg", 3, "04-02-2018");
+var issueTest = new Issue(0, "Hull i veien ved Gate 7", "Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg",1, 1,  3, new Date());
 var issuesTest = [
-    new Issue("Hull i veien ved Gate 7" ,"", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg", 1,""),
-    new Issue("Ødelagt bom ved broa" ,"", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg", 3,""),
-    new Issue("Herverk på husveggen min" ,"", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg", 2,""),
-    new Issue("Søppeltømmingsplanene fungerer ikke bra" ,"", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg", 2,""),
-    new Issue("Hull i veien ved Gate 7" ,"", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg", 3,""),
-    new Issue("Ødelagt bom ved broa" ,"", "https://i.imgur.com/nqTGipe.jpg", 3,""),
-    new Issue("Herverk på husveggen min" ,"", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg", 2,""),
-    new Issue("Søppeltømmingsplanene fungerer ikke bra" ,"", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg", 1,"")
+    new Issue(1, "Hull i veien ved Gate 7" ,"", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg",1, 1,  1, new Date()),
+    new Issue(2, "Ødelagt bom ved broa" ,"", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg",1, 1,  3,new Date()),
+    new Issue(3, "Herverk på husveggen min" ,"", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg",1, 1,  2,new Date()),
+    new Issue(4, "Søppeltømmingsplanene fungerer ikke bra" ,"", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg",1, 1 , 2,new Date()),
+    new Issue(5, "Hull i veien ved Gate 7" ,"", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg",1, 1,  3,new Date()),
+    new Issue(6, "Ødelagt bom ved broa" ,"", "https://i.imgur.com/nqTGipe.jpg",1, 1, 3,new Date()),
+    new Issue(7, "Herverk på husveggen min" ,"", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg",1, 1, 2,new Date()),
+    new Issue(8, "Søppeltømmingsplanene fungerer ikke bra" ,"", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg",1, 1,  1,new Date())
 ]
 
 class issueView extends Component {
