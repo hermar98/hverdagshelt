@@ -1,7 +1,12 @@
 // @flow
+import { sync } from '../src/models.js';
 
 const request = require('supertest');
 const app = require('../src/app');
+
+beforeAll(async () => {
+  await sync;
+});
 
 describe('Test the root path', () => {
   test('It should response the GET method', async () => {

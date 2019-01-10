@@ -1,15 +1,6 @@
-import {
-    Event,
-    User,
-    User_case,
-    County,
-    Municipal,
-    Status,
-    Issue_category,
-    Issue,
-    Feedback,
-    Event_category
-} from './models.js';
+// @flow
+
+import { Event, User, County, Municipal, Status, Issue_category, Issue, Feedback, Event_category } from './models.js';
 
 import * as passwordHash from './passwordHash.js';
 import express from "express";
@@ -44,8 +35,8 @@ app.post('/login', (req: Request, res: Response) => {
 });
 
 //User
-app.get('/users', (req: Request, res: response) => {
-    return User.findAll().then(users => res.send(users));
+app.get('/users', (req: Request, res: Response) => {
+  return User.findAll().then(users => res.send(users));
 });
 
 app.get('/users/:id', (req: Request, res: Response) => {
@@ -60,14 +51,14 @@ app.post('/users', (req: Request, res: Response) => {
     var passwordSalt = passwordHash.genRandomString(16);
     var passwordData = passwordHash.sha512(req.body.password, passwordSalt);
 
-    return User.create({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        rank: req.body.rank,
-        salt: passwordData.salt,
-        hash_str: passwordData.passwordHash
-    }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+  return User.create({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    rank: req.body.rank,
+    salt: passwordData.salt,
+    hash_str: passwordData.passwordHash
+  }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
 app.put('/users/:id', (req: Request, res: Response) => {
@@ -85,9 +76,31 @@ app.put('/users/:id', (req: Request, res: Response) => {
 });
 
 app.delete('/users/:id', (req: Request, res: Response) => {
-    return User.destroy({
-        where: {id: req.params.id}
-    }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
+  return User.destroy({
+    where: { id: req.params.id }
+  }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+});
+
+//Municipal
+app.get('/municipal', (req: Request, res: Response) => {
+  return Municipal.findAll().then(users => res.send(users));
+});
+
+app.get('/municipal/:id', (req: Request, res: Response) => {
+  return Municipal.findOne({ where: { mun_id: Number(req.params.id) } }).then(user =>
+    user ? res.send(user) : res.sendStatus(404)
+  );
+});
+
+//County
+app.get('/county', (req: Request, res: Response) => {
+  return County.findAll().then(users => res.send(users));
+});
+
+app.get('/county/:id', (req: Request, res: Response) => {
+  return County.findOne({ where: { county_id: Number(req.params.id) } }).then(user =>
+    user ? res.send(user) : res.sendStatus(404)
+  );
 });
 
 //Issue
@@ -107,45 +120,42 @@ app.get('/events/:id', (req:Request,res:Response) => {
     );
 });
 app.put('/events/:id', (req: Request, res: Response) => {
-    if(!(req.body instanceof Object)) return res.sendStatus(400);
-    return Event.update(
-        {
-            title: req.body.title,
-            content: req.body.content,
-            image: req.body.image,
-            longitude: req.body.longitude,
-            latitude: req.body.latitude,
-            time_start: req.body.time_start,
-            time_end: req.body.time_end
-        }, {
-            where: {
-                event_id: req.params.id
-            }
-        }
-    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
+  if (!(req.body instanceof Object)) return res.sendStatus(400);
+  return Event.update(
+    {
+      title: req.body.title,
+      content: req.body.content,
+      image: req.body.image,
+      longitude: req.body.longitude,
+      latitude: req.body.latitude,
+      time_start: req.body.time_start,
+      time_end: req.body.time_end
+    },
+    {
+      where: {
+        event_id: req.params.id
+      }
+    }
+  ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
-app.post('/events', (req:Request, res: Response) => {
-    if(!(req.body instanceof Object)) return res.sendStatus(400);
-    return Event.create(
-        {
-            title: req.body.title,
-            content: req.body.content,
-            image: req.body.image,
-            longitude: req.body.longitude,
-            latitude: req.body.latitude,
-            time_start: req.body.time_start,
-            time_end: req.body.time_end
-        }
-    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
+app.post('/events', (req: Request, res: Response) => {
+  if (!(req.body instanceof Object)) return res.sendStatus(400);
+  return Event.create({
+    title: req.body.title,
+    content: req.body.content,
+    image: req.body.image,
+    longitude: req.body.longitude,
+    latitude: req.body.latitude,
+    time_start: req.body.time_start,
+    time_end: req.body.time_end
+  }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
-app.delete('/events/:id', function (req, res) {
-    return Event.destroy(
-        {
-            where: {
-                event_id: req.params.id
-            }
-        }
-    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+app.delete('/events/:id', (req: Request, res: Response) => {
+  return Event.destroy({
+    where: {
+      event_id: req.params.id
+    }
+  }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
 //Event_category
@@ -158,33 +168,30 @@ app.get('/eventCat/:id', (req:Request,res:Response) => {
     );
 });
 app.put('/eventCat/:id', (req: Request, res: Response) => {
-    if(!(req.body instanceof Object)) return res.sendStatus(400);
-    return Event_category.update(
-        {
-            name: req.body.name,
-        }, {
-            where: {
-                category_id: req.params.id
-            }
-        }
-    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
+  if (!(req.body instanceof Object)) return res.sendStatus(400);
+  return Event_category.update(
+    {
+      name: req.body.name
+    },
+    {
+      where: {
+        category_id: req.params.id
+      }
+    }
+  ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
-app.post('/eventCat', (req:Request, res: Response) => {
-    if(!(req.body instanceof Object)) return res.sendStatus(400);
-    return Event_category.create(
-        {
-            name: req.body.name
-        }
-    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
+app.post('/eventCat', (req: Request, res: Response) => {
+  if (!(req.body instanceof Object)) return res.sendStatus(400);
+  return Event_category.create({
+    name: req.body.name
+  }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
-app.delete('/eventCat/:id', function (req, res) {
-    return Event_category.destroy(
-        {
-            where: {
-                category_id: req.params.id
-            }
-        }
-    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+app.delete('/eventCat/:id', (req: Request, res: Response) => {
+  return Event_category.destroy({
+    where: {
+      category_id: req.params.id
+    }
+  }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
 
@@ -198,33 +205,31 @@ app.get('/issueCat/:id', (req:Request,res:Response) => {
     );
 });
 app.put('/issueCat/:id', (req: Request, res: Response) => {
-    if(!(req.body instanceof Object)) return res.sendStatus(400);
-    return Issue_category.update(
-        {
-            name: req.body.name,
-        }, {
-            where: {
-                category_id: req.params.id
-            }
-        }
-    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
+  if (!(req.body instanceof Object)) return res.sendStatus(400);
+  return Issue_category.update(
+    {
+      name: req.body.name
+    },
+    {
+      where: {
+        category_id: req.params.id
+      }
+    }
+  ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
-app.post('/issueCat', (req:Request, res: Response) => {
-    if(!(req.body instanceof Object)) return res.sendStatus(400);
-    return Issue_category.create(
-        {
-            name: req.body.name
-        }
-    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
+app.post('/issueCat', (req: Request, res: Response) => {
+  if (!(req.body instanceof Object)) return res.sendStatus(400);
+  return Issue_category.create({
+    name: req.body.name
+  }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
-app.delete('/issueCat/:id', function (req, res) {
-    return Issue_category.destroy(
-        {
-            where: {
-                category_id: req.params.id
-            }
-        }
-    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+
+app.delete('/issueCat/:id', (req: Request, res: Response) => {
+  return Issue_category.destroy({
+    where: {
+      category_id: req.params.id
+    }
+  }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
 module.exports = app;

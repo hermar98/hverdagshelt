@@ -4,9 +4,9 @@ import Sequelize from 'sequelize';
 import type { Model } from 'sequelize';
 
 let sequelize = new Sequelize(
-  process.env.CI ? 'articles' : 'hermanrm',
-  process.env.CI ? 'root' : 'hermanrm',
-  process.env.CI ? '' : 'C1Yd62a1',
+  process.env.CI ? 'database' : 'cdaxell',
+  process.env.CI ? 'root' : 'cdaxell',
+  process.env.CI ? '' : 'yAmB12A4',
   {
     host: process.env.CI ? 'mysql' : 'mysql.stud.iie.ntnu.no',
     dialect: 'mysql',
@@ -19,15 +19,14 @@ let sequelize = new Sequelize(
   }
 );
 
-export let Feedback: Class<Model<{ feedback_id?: number, content: string, date: Date }>> = sequelize.define(
-  'Feedback',
-  {
-    feedback_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    name: Sequelize.STRING,
-    content: Sequelize.STRING,
-    date: Sequelize.DATE
-  }
-);
+export let Feedback: Class<
+  Model<{ feedback_id?: number, name: string, content: string, date: Date }>
+> = sequelize.define('Feedback', {
+  feedback_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+  name: Sequelize.STRING,
+  content: Sequelize.STRING,
+  date: Sequelize.DATE
+});
 
 export let Issue: Class<
   Model<{
@@ -58,7 +57,7 @@ export let Event: Class<
     longitude: number,
     latitude: number,
     time_start: Date,
-    time_end: Date,
+    time_end: Date
   }>
 > = sequelize.define('Event', {
   event_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
@@ -244,7 +243,8 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           image: 'notin',
           longitude: 123123,
           latitude: 123123,
-          date: new Date(Date.now()),
+          time_start: new Date(Date.now()),
+          time_end: new Date(Date.now()),
           user_id: '2',
           category_id: 1
         })
