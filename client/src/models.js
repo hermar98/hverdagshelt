@@ -78,5 +78,12 @@ export class Feedback {
     feedback_id: number
     name: string
     content: string
+    date: Date
+    user_id: number
+    issueId: number
 
+    constructor(content: string, date: Date){
+        this.content = content
+        this.date = date
+    }
 }
