@@ -1,7 +1,9 @@
-import User from '../sequelize';
-import crypto from 'crypto';
+// @flow
+
+import { User } from '../src/models';
 require('dotenv').config();
 
+const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
 module.exports = app => {
@@ -19,17 +21,26 @@ module.exports = app => {
                 console.log('email not in database');
                 res.json('email er ikke i databasen');
             } else {
+
                 const token = crypto.randomBytes(20).toString('hex');
                 user.update({
                     resetPasswordToken: token,
-                    resetPasswordExpires: Date.now() + 90000,
+                    resetPasswordExpires: Date.now() + 90000
                 });
+
+                /*let emailUser = process.env.EMAIL_ADDRESS;
+                let passUser = process.env.EMAIL_PASSWORD;
+
+                if (!emailUser) { throw new Error('Email Adress is not defined as local variable'); }
+                if (!passUser) { throw new Error('Password is not defined as local variable'); }*/
 
                 const transporter = nodemailer.createTransport({
                     service: 'gmail',
                     auth: {
-                        user: `${process.env.EMAIL_ADDRESS}`,
-                        pass: `${process.env.EMAIL_PASSWORD}`,
+                        //user: `${emailUser}`,
+                        //pass: `${passUser}`,
+                        user: `HverdagsHeltAS@gmail.com`,
+                        pass: `hverdag123`
                     },
                 });
 
