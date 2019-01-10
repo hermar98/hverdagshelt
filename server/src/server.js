@@ -53,7 +53,7 @@ app.post('/users', (req: Request, res: Response) => {
     return User.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        email: req.body.emadkfldsjflsil,
+        email: req.body.email,
         rank: req.body.rank,
         salt: passwordData.salt,
         hash_str: passwordData.passwordHash
