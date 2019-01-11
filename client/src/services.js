@@ -9,7 +9,7 @@ class UserService {
   getUsers(): Promise<User[]> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.get('/users', {
+    return axios.get('/secure/users', {
       headers: {'x-access-token': token}
     });
   }
@@ -17,7 +17,7 @@ class UserService {
   getUser(userId: number): Promise<User> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.get('/users/' + userId, {
+    return axios.get('/secure/users/' + userId, {
       headers: {'x-access-token': token}
     });
   }
@@ -25,7 +25,7 @@ class UserService {
   updateUser(user: User): Promise<void> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.put('/users/' + user.userId, user, {
+    return axios.put('/secure/users/' + user.userId, user, {
         headers: {'x-access-token': token}
     });
   }
@@ -37,7 +37,7 @@ class UserService {
   deleteUser(userId: number): Promise<void> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.delete('/users/' + userId, {
+    return axios.delete('/secure/users/' + userId, {
       headers: {'x-access-token': token}
     });
   }
@@ -61,7 +61,7 @@ class IssueService {
   getIssues(): Promise<Issue[]> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.get('/issues', {
+    return axios.get('/secure/issues', {
       headers: {'x-access-token': token}
     });
   }
@@ -69,7 +69,7 @@ class IssueService {
   getIssue(issueId: number): Promise<Issue> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.get('/issues/' + issueId, {
+    return axios.get('/secure/issues/' + issueId, {
       headers: {'x-access-token': token}
     });
   }
@@ -77,7 +77,7 @@ class IssueService {
   updateIssue(issue: Issue): Promise<void> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.put('/issues/' + issue.issueId, issue, {
+    return axios.put('/secure/issues/' + issue.issueId, issue, {
       headers: {'x-access-token': token}
     });
   }
@@ -85,7 +85,7 @@ class IssueService {
   addIssue(issue: Issue): Promise<number> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.post('/issues', issue, {
+    return axios.post('/secure/issues', issue, {
         headers: {'x-access-token': token}
     });
   }
@@ -93,7 +93,7 @@ class IssueService {
   deleteIssue(issueId: number): Promise<void> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.delete('/issues/' + issueId, {
+    return axios.delete('/secure/issues/' + issueId, {
       headers: {'x-access-token': token}
     });
   }
@@ -103,23 +103,23 @@ export let issueService = new IssueService();
 
 class IssueCategoryService {
   getCategories(): Promise<IssueCategory[]> {
-    return axios.get('/issueCat');
+    return axios.get('/secure/issueCat');
   }
 
   getCategory(categoryId: number): Promise<IssueCategory> {
-    return axios.get('/issueCat/' + categoryId);
+    return axios.get('/secure/issueCat/' + categoryId);
   }
 
   updateCategory(category: IssueCategory): Promise<void> {
-    return axios.put('/issueCat/' + category.categoryId, category);
+    return axios.put('/secure/issueCat/' + category.categoryId, category);
   }
 
   addCategory(category: IssueCategory): Promise<number> {
-    return axios.post('/issueCat', category);
+    return axios.post('/secure/issueCat', category);
   }
 
   deleteCategory(categoryId: number): Promise<void> {
-    return axios.delete('/issueCat/' + categoryId);
+    return axios.delete('/secure/issueCat/' + categoryId);
   }
 }
 
@@ -144,7 +144,7 @@ class EventService {
     if (token) {
       token = JSON.parse(token).jwt
     }
-    return axios.get('/events/' + eventId, {
+    return axios.get('/secure/events/' + eventId, {
       headers: {
         'x-access-token': token
       }
@@ -156,7 +156,7 @@ class EventService {
     if (token) {
         token = JSON.parse(token).jwt
     }
-    return axios.put('/events/' + event.eventId, event, {
+    return axios.put('/secure/events/' + event.eventId, event, {
       headers: {
         'x-access-token': token
       }
@@ -167,7 +167,7 @@ class EventService {
     if (token) {
       token = JSON.parse(token).jwt
     }
-    return axios.post('/events', event, {
+    return axios.post('/secure/events', event, {
       headers: {
         'x-access-token': token
       }
@@ -178,7 +178,7 @@ class EventService {
     if (token) {
       token = JSON.parse(token).jwt
     }
-    return axios.delete('/events/' + eventId, {
+    return axios.delete('/secure/events/' + eventId, {
       headers: {
         'x-access-token': token
       }
@@ -205,23 +205,23 @@ export let municipalService = new MunicipalService();
 
 class EventCategoryService {
   getCategories(): Promise<EventCategory[]> {
-    return axios.get('/eventCat');
+    return axios.get('/secure/eventCat');
   }
 
   getCategory(categoryId: number): Promise<EventCategory> {
-    return axios.get('/eventCat/' + categoryId);
+    return axios.get('/secure/eventCat/' + categoryId);
   }
 
   updateCategory(category: EventCategory): Promise<void> {
-    return axios.put('/eventCat/' + category.categoryId, category);
+    return axios.put('/secure/eventCat/' + category.categoryId, category);
   }
 
   addCategory(category: EventCategory): Promise<number> {
-    return axios.post('/eventCat', category);
+    return axios.post('/secure/eventCat', category);
   }
 
   deleteCategory(categoryId: number): Promise<void> {
-    return axios.delete('/eventCat/' + categoryId);
+    return axios.delete('/secure/eventCat/' + categoryId);
   }
 }
 
