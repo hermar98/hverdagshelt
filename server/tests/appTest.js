@@ -206,17 +206,30 @@ describe('Event tests', () => {
     expect(response.body.category_id).toBe(1);
   });
   //Update one event with id
+  test('PUT /secure/events/:id', async () => {
+    const updateEventResponse = await request(app)
+      .put('/secure/events/1')
+      .send({ title: 'No bear left' })
+      .set({ 'x-access-token': token });
+
+    expect(updateEventResponse.statusCode).toBe(200);
+
+    const response = await request(app)
+      .get('/secure/events/1')
+      .set({ 'x-access-token': token });
+
+    expect(response.body.title).toBe('No bear left');
+  });
   //Create one event
   test('POST /secure/events', async () => {
-    let totalUsers = await User.count(); // entries in database
-    console.log(totalUsers);
-    let user = { title: 'Gratis Øl for studenter', content: ':O', image: null, longitude: 63.1, latitude: 10.4 };
+    let count = await Event.count(); // entries in database
+    let event = { title: 'Gratis Øl for studenter', content: ':O', image: null, longitude: 63.1, latitude: 10.4 };
     const response = await request(app)
-      .post('/secure/users')
-      .send(user)
+      .post('/secure/events')
+      .send(event)
       .set({ 'x-access-token': token });
     expect(response.statusCode).toBe(200);
-    expect(await User.count()).toEqual(totalUsers + 1);
+    expect(await Event.count()).toEqual(count + 1);
   });
   //Delete one event with id
   test('DELETE /secure/events/:id', async () => {
@@ -249,7 +262,35 @@ describe('Event Category Test', () => {
     expect(response.statusCode).toBe(200);
     expect(response.type).toEqual('application/json');
   });
+  //Update one event_category with id
+  test('PUT /secure/eventCat/:id', async () => {
+    const updateEventResponse = await request(app)
+      .put('/secure/eventCat/1')
+      .send({ name: 'Poker' })
+      .set({ 'x-access-token': token });
 
+    expect(updateEventResponse.statusCode).toBe(200);
+
+    const response = await request(app)
+      .get('/secure/eventCat/1')
+      .set({ 'x-access-token': token });
+
+    expect(response.body.name).toBe('Poker');
+  });
+
+  //Create one event_category
+  test('POST /secure/eventCat', async () => {
+    let count = await Event_category.count(); // entries in database
+    let event = { name: 'Konsert' };
+    const response = await request(app)
+      .post('/secure/eventCat')
+      .send(event)
+      .set({ 'x-access-token': token });
+    expect(response.statusCode).toBe(200);
+    expect(await Event_category.count()).toEqual(count + 1);
+  });
+
+  //Delete Event category
   test('DELETE Event category with id = 1', async () => {
     let n = await Event_category.count();
     const response = await request(app)
@@ -259,11 +300,10 @@ describe('Event Category Test', () => {
     expect(await Event_category.count()).toBe(n - 1);
   });
 });
-//Update one event_category with id
-//Create one event_category
 
 //Issue_category
 describe('Issue Category Test', () => {
+  //GET all issue categories
   test('GET all issue category', async () => {
     const response = await request(app)
       .get('/secure/issueCat')
@@ -272,6 +312,7 @@ describe('Issue Category Test', () => {
     expect(response.type).toEqual('application/json');
     expect(response.body.length).toEqual(await Issue_category.count());
   });
+  //Get one issue category
   test('GET Issue Category with id = 1', async () => {
     const response = await request(app)
       .get('/secure/issueCat/1')
@@ -280,6 +321,34 @@ describe('Issue Category Test', () => {
     expect(response.type).toEqual('application/json');
   });
 
+  //Update one issue_category with id
+  test('PUT /secure/issueCat/:id', async () => {
+    const updateEventResponse = await request(app)
+      .put('/secure/issueCat/1')
+      .send({ name: 'Poker' })
+      .set({ 'x-access-token': token });
+
+    expect(updateEventResponse.statusCode).toBe(200);
+
+    const response = await request(app)
+      .get('/secure/issueCat/1')
+      .set({ 'x-access-token': token });
+
+    expect(response.body.name).toBe('Poker');
+  });
+
+  //Create one issue_category
+  test('POST /secure/issueCat', async () => {
+    let count = await Issue_category.count(); // entries in database
+    let event = { name: 'Konsert' };
+    const response = await request(app)
+      .post('/secure/issueCat')
+      .send(event)
+      .set({ 'x-access-token': token });
+    expect(response.statusCode).toBe(200);
+    expect(await Issue_category.count()).toEqual(count + 1);
+  });
+  //Delete isse category
   test('DELETE Issue category with id = 1', async () => {
     let n = await Issue_category.count();
     const response = await request(app)
@@ -289,5 +358,3 @@ describe('Issue Category Test', () => {
     expect(await Issue_category.count()).toBe(n - 1);
   });
 });
-//Update one issue_category with id
-//Create one issue_category
