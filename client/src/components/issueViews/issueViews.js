@@ -34,7 +34,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
                         <div className="card-body">
                             <div className="d-flex flex-row issue-flex justify-content-between">
                                 <p className="date">14:52 - 05/07/2018</p>
-                                <DeleteButton onclick={null}/>
+                                <HoverButton onclick={null} title="Slett"/>
                             </div>
                             <div className="card-title">
                                 <h2>{this.issue.title}</h2>
@@ -54,8 +54,12 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
                         </div>
                     </div>
                 </div>
-                <h2 className="feedback-title">Feedback</h2>
+                <h2 className="feedback-title">Oppdateringer</h2>
                 <IssueFeedback/>
+                <p id="feedbackFill"/>
+                <div className="feedback-button">
+                    <HoverButton onclick={null} title="Legg inn oppdatering" />
+                </div>
             </div>
         )
     }
@@ -95,7 +99,7 @@ export class IssueSmall extends Component<{issue: Issue}> {
                 <div className="d-flex flex-row issue-flex justify-content-between">
                     <div>
                         <NavLink className="navlink-large" to={"/issues/" + this.props.issue.issueId}>
-                        {this.props.issue.title}
+                            {this.props.issue.title}
                         </NavLink>
                         <p className="date">14:52 - 05/07/2018</p>
                     </div>
@@ -112,17 +116,27 @@ A list of issues in small view
 export class IssueOverviewSmall extends Component {
 
     status: number = 0;
+    timesort: string = "Nyeste";
 
     render () {
         return (
             <div className="issue-overview-small issue-container">
-                <div className="form-group">
-                    <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
-                        <option>Nyeste</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                    </select>
+                <div className="d-flex flex-row justify-content-between">
+                    <div className="form-group">
+                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
+                        <option value={0}>Alle</option>
+                        <option value={1}>Ikke behandlet</option>
+                        <option value={2}>Under behandling</option>
+                        <option value={3}>Behandlet</option>
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.timesort = event.target.value)}>
+                            <option>Nyeste</option>
+                            <option>Eldste</option>
+                        </select>
+                    </div>
+
                 </div>
                 <ul className="list-group">
                     {sharedIssues.issues.map(issue => {
@@ -211,11 +225,11 @@ export class Status extends Component<{status: number}> {
     }
 }
 
-export class DeleteButton extends Component<{onclick: function}> {
+export class HoverButton extends Component<{onclick: function, title: string}> {
     render (){
         return (
-            <button className="btn delete-button" id="deleteButton" type="button" onClick={this.props.onclick}>
-                Slett
+            <button className="btn hover-button" id="hover-Button" type="button" onClick={this.props.onclick} title={this.props.title}>
+                {this.props.title}
             </button>
         )
     }
