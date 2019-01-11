@@ -43,7 +43,6 @@ export default class EventForm extends Component {
             required
             placeholder="Adresse"/>
           <Form.FileInput>Legg til bilde (valgfritt) </Form.FileInput>
-
         <div className="container h-100">
           <div className="row h-100 justify-content-center align-items-center">
             <Button.Basic type="submit" onClick={this.save}>Registrer event</Button.Basic>
@@ -71,5 +70,9 @@ export default class EventForm extends Component {
       .addEvent(this.event)
       .then(history.push('/'))
       .catch((error: Error) => Alert.danger(error.message));
+  }
+
+  mounted(){
+
   }
 }
