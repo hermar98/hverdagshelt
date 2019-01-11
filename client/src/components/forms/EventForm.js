@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Event } from "../../models.js"
-import { eventService} from '../../services';
+import { Event, EventCategory } from "../../models.js"
+import {eventCategoryService, eventService} from '../../services';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
 import {history} from '../../index';
 
@@ -10,6 +10,7 @@ import {history} from '../../index';
 export default class EventForm extends Component {
   event = new Event();
   form = null;
+  categories = [];
 
   render() {
     return(
@@ -20,6 +21,15 @@ export default class EventForm extends Component {
             onChange={e => (this.event.title = e.target.value)}
             required
             placeholder="Tittel"/>
+          <div className="input-group">
+            <div className="input-group-prepend">
+              <button className="btn btn-outline-secondary" type="button" onClick={this.newCategory}>Legg til kategori</button>
+            </div>
+            <select className="form-control" value={this.event.categoryId || ''}
+                    onChange={e => (this.event.categoryId = parseInt(e.target.value))}>
+              {this.categories.map(cat => <option value ={cat.categoryId}>{cat.name}</option>)}
+            </select>
+          </div>
           <Form.InputLarge
             type="text"
             onChange={e => (this.event.content = e.target.value)}
@@ -72,6 +82,20 @@ export default class EventForm extends Component {
       .catch((error: Error) => Alert.danger(error.message));
   }
 
+  newCategory(){
+    return(
+        <Form.Input
+          type="text"
+          onChange={e => (this.event.title = e.target.value)}
+          required
+          placeholder="Tittel"/>
+    )
+  }
+
   mounted(){
+    eventCategoryService
+      .getCategories()
+      .then(e => this.categories = e)
+      .catch((error: Error) => Alert.danger(error.message));
   }
 }
