@@ -229,7 +229,6 @@ describe('Issue tests', () => {
     expect(response.body.content).toBe(
       'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt'
     );
-    expect(response.body.image).toBe('null');
     expect(response.body.longitude).toBe(60.656877);
     expect(response.body.latitude).toBe(10.824107);
     //expect(response.body.mun_id).toBe(2012);
@@ -330,7 +329,6 @@ describe('Event tests', () => {
 
     expect(response.body.title).toBe('party at the house man!');
     expect(response.body.content).toBe('Det skal være party at the house!');
-    expect(response.body.image).toBe('notin');
     expect(response.body.longitude).toBe(60.652168);
     expect(response.body.latitude).toBe(10.822102);
     expect(response.body.user_id).toBe(1);
