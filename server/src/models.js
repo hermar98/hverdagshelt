@@ -5,12 +5,9 @@ import type { Model } from 'sequelize';
 require('dotenv').config();
 
 let sequelize = new Sequelize(
-    // process.env.CI ? 'database' : 'cdaxell',
-    // process.env.CI ? 'root' : 'cdaxell',
-    // process.env.CI ? '' : 'yAmB12A4',
-    process.env.CI ? 'database' : 'sebasman',
-    process.env.CI ? 'root' : 'sebasman',
-    process.env.CI ? '' : 'GSBLuzbB',
+  process.env.CI ? 'database' : 'sandern',
+  process.env.CI ? 'root' : 'sandern',
+  process.env.CI ? '' : 'KcL5ZgzU',
     {
         host: process.env.CI ? 'mysql' : 'mysql.stud.iie.ntnu.no',
         dialect: 'mysql',

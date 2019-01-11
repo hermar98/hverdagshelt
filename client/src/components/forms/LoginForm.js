@@ -17,7 +17,7 @@ export default class Login extends Component {
     render() {
         return(
             <Card title="Logg inn">
-                <form ref={e => (this.form = e)}>
+                <form ref={e => (this.form = e)} onSubmit={e => e.preventDefault()}>
                     <Form.Input
                         type="email"
                         onChange={event => (this.email = event.target.value)}
@@ -55,7 +55,7 @@ export default class Login extends Component {
                 history.push('/issues');
                 console.log('Login ok');
             })
-            .catch((error: Error) => Alert.danger(error.message));
+            .catch((error: Error) => Alert.danger('Feil brukernavn eller passord'));
     }
 
     goTo() {
