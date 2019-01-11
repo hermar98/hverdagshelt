@@ -1,16 +1,41 @@
 
 
-.status-blocked {background-color: lightcoral}
-.status-pending {background-color: #f1fc5a}
-.status-finished {background-color: lightgreen}
-.status { align-self: center}
-.issue-container {margin: 5% 10% 5% 10%; padding-bottom: 5%}
+.status-blocked {background-color: #ffa191}
+.status-pending {background-color: #fdff91}
+.status-finished {background-color: #acff91}
+.status {
+    padding: 0 .25% 0 .25%;
+}
+
+.card-title h2 {
+    font-size: 4vh;
+    border-bottom: grey solid 1px;
+}
+
+.issue-overview-small-item {
+    margin-bottom: 5px;
+}
+
+div.status > h4 {
+    font-size: 3vh;
+}
+.issue-container {margin: 5% 15% 5% 15%; padding-bottom: 5%}
 .issue-image:hover {
     background-color: #b9bbbe;
 }
+.issue-image-normal {
+    width: 15vw;
+    height: auto;
+}
+
+.issue-title-normal {
+    font-size: 3vw;
+    align-self: center;
+}
+
 .issue-image {
     width: auto;
-    height: 200px;
+    height: 30vh;
     padding: 1% 1% 1% 1%;
 }
 
@@ -20,19 +45,61 @@
     align-items: start;
 }
 
-.event-image{
-    margin-left: 10px;
-    margin-right: 10px;
+.navlink-large {
+    font-size: 140%;
+}
+
+.submitter-info {
+    text-align: left;
+    align-self: center;
+}
+
+.date {
+    color: grey;
+}
+
+.date-small {
+    font-size: 90%;
+    color: grey;
+}
+
+.list-group-item {
+    margin-bottom: 10px;
+}
+
+.profile-image {
+    border: gray solid 1px;
+    border-radius: 50%;
+    height: 12vh;
     width: auto;
-    height: 200px;
-    align-items: center;
+    margin: 1vh 1vh 1vh 1vh;
 }
 
-.text-muted-left{
-    display: flex;
-    justify-content: left;
+.issue-large {
+    margin-bottom: 10vh;
 }
 
-.text-muted-right{
-    justify-content: right;
+.feedback-title {
+    margin-bottom: 5vh;
+    border-bottom: gray solid 1px;
+}
+
+.hover-button:hover {
+    color: black;
+    background-color: white;
+}
+
+.hover-button {
+    border: #4e555b 1px solid;
+    background-color: #4e555b;
+    height: 90%;
+}
+
+div.feedback-button {
+    display: grid;
+    grid-template-columns: 40% 20% 40%;
+}
+
+div.feedback-button button {
+    grid-column: 2;
 }
