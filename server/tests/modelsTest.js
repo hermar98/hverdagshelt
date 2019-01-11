@@ -38,10 +38,10 @@ describe('user test', () => {
         user_id: 1,
         firstName: 'Vegard',
         lastName: 'Andersson',
-        email: 'vegaande@stud.ntnu.no',
+        email: 'test@test.no',
         rank: 1,
-        salt: 'b79ryp97',
-        hash_str: '897dfjsodif5vx24c5vsldfskdclz97cyw7e3o2inJKHaospk902'
+        salt: 'a83f4da094cc247b',
+        hash_str: '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722'
       }
     ]);
   });
