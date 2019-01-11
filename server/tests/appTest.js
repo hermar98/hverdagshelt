@@ -59,7 +59,7 @@ describe('User tests', () => {
 
         expect(response.body.firstName).toBe('Vegard');
         expect(response.body.lastName).toBe('Andersson');
-        expect(response.body.email).toBe('vegaande@ntnu.stud.no');
+        expect(response.body.email).toBe('vegaande@stud.ntnu.no');
         expect(response.body.rank).toBe(1);
         expect(response.body.salt).toBe('b79ryp97');
         expect(response.body.hash_str).toBe('897dfjsodif5vx24c5vsldfskdclz97cyw7e3o2inJKHaospk902');

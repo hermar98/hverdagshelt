@@ -4,6 +4,8 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { NavLink } from 'react-router-dom';
+import moment from 'moment';
+
 
 
 /**
@@ -277,4 +279,16 @@ export class Form {
     static Input = FormInput;
     static InputLarge = FormInputBig;
     static FileInput = FileInput;
+}
+
+export class DisplayEvent extends Component<{title: string, content: string,  image: string, longitude: number, latitude: number, time_start: string, time_end: string}> {
+  render() {
+    return (
+      <Card title={this.props.title}>
+        <img src={this.props.image} alt="Bilde kan ikke vises"/>
+          {this.props.content.split(/\n/).map(paragraph => <p>{paragraph}</p>)}
+        <div className="card-footer text-muted">{"Starter: " + moment(this.props.time_start).format("DD.MM.YYYY HH:mm") + ". Slutter: " + moment(this.props.time_end).format("DD.MM.YYYY HH:mm")}</div>
+      </Card>
+    );
+  }
 }
