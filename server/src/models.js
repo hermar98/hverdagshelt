@@ -8,14 +8,15 @@ let sequelize = new Sequelize(
   process.env.CI ? 'database' : 'sandern',
   process.env.CI ? 'root' : 'sandern',
   process.env.CI ? '' : 'KcL5ZgzU',
-  {
-    host: process.env.CI ? 'mysql' : 'mysql.stud.iie.ntnu.no',
-    dialect: 'mysql',
-    pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000
+    {
+        host: process.env.CI ? 'mysql' : 'mysql.stud.iie.ntnu.no',
+        dialect: 'mysql',
+        pool: {
+            max: 5,
+            min: 0,
+            acquire: 30000,
+            idle: 10000
+        }
     }
 );
 
