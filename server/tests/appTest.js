@@ -107,6 +107,11 @@ describe('User tests', () => {
     expect(await User.count()).toBe(totalUsers - 1);
   });
 });
+
+
+
+
+
 //Municipal
 describe('Municipality tests', () => {
   //Get all Municipalities
