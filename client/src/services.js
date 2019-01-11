@@ -195,6 +195,10 @@ class MunicipalService {
   getMunicipal(mun_id: number): Promise<Municipal> {
     return axios.get('/municipals/' + mun_id);
   }
+
+  getIssuesByMunicipals(mun_id: number): Promise<Municipal[]>{
+    return axios.get('/municipals/' + mun_id +'/issues');
+  }
 }
 
 export let municipalService = new MunicipalService();
