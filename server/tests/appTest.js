@@ -1,5 +1,5 @@
 // @flow
-import { Issue_category, Event_category, Event, Issue, County, Municipal, User, sync } from '../src/models';
+import { Feedback,Issue_category, Event_category, Event, Issue, County, Municipal, User, sync } from '../src/models';
 
 const request = require('supertest');
 const app = require('../src/app');
@@ -34,7 +34,7 @@ describe('User tests', () => {
     //console.log(token);
     const response = await request(app)
       .get('/secure/users')
-      .set({ 'x-access-token': token }); //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5ubyIsImlhdCI6MTU0NzE5NTI3MSwiZXhwIjoxNTQ3MTk1ODcxfQ.Ts9I661ladKyOKk-ONlcz810X0eGtdjVZgN-X4Mfop0'
+      .set({ 'x-access-token': token });
     //console.log(token);
     expect(response.statusCode).toBe(200);
     expect(response.type).toEqual('application/json');
@@ -99,7 +99,7 @@ describe('User tests', () => {
     let totalUsers = await User.count();
 
     const response = await request(app)
-      .delete('/secure/users/1')
+      .delete('/secure/users/2')
       .set({ 'x-access-token': token });
 
     expect(response.statusCode).toBe(200);
@@ -107,6 +107,8 @@ describe('User tests', () => {
     expect(await User.count()).toBe(totalUsers - 1);
   });
 });
+
+
 //Municipal
 describe('Municipality tests', () => {
   //Get all Municipalities
@@ -163,19 +165,109 @@ describe('County tests', () => {
 });
 
 //Issue
-/*describe('Issue tests', () => {
-    //Get one Issue with user id
-
-    test('GET /issues', async () => {
-        const response = await request(app).get('/issues');
+describe('Issue tests', () => {
+    //Get All Issues
+    test('GET /secure/issues', async () => {
+        const response = await request(app)
+            .get('/secure/issues')
+            .set({ 'x-access-token': token });
 
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
 
         expect(response.body.length).toEqual(await Issue.count());
-
     });
-});*/
+    //Get one Issue with id
+    test('GET /secure/issues/:id', async () => {
+        const response = await request(app)
+            .get('/secure/issues/1')
+            .set({ 'x-access-token': token });
+        expect(response.statusCode).toBe(200);
+        expect(response.type).toEqual('application/json');
+
+        expect(response.body.issue_id).toBe(1);
+        expect(response.body.title).toBe('Dumme folk ødeleger lømp');
+        expect(response.body.content).toBe('Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt');
+        expect(response.body.image).toBe('null');
+        expect(response.body.longitude).toBe(60.656877);
+        expect(response.body.latitude).toBe(10.824107);
+        //expect(response.body.mun_id).toBe(2012);
+        //expect(response.body.user_id).toBe(1);
+        //expect(response.body.category_id).toBe(1);
+        //expect(response.body.status_id).toBe(1);
+    });
+    //Get all feedback for Issue with id
+    test('GET /secure/issues/:id/feedback',async  () => {
+      const response = await request(app)
+          .get('/secure/issues/1/feedback')
+          .set({ 'x-access-token': token });
+
+      expect(response.statusCode).toBe(200);
+      expect(response.type).toEqual('application/json');
+
+      expect(response.body.length).toEqual(1);
+    });
+    //Get all issues for a user with id
+    test('GET /secure/users/:id/issues',async  () => {
+        const response = await request(app)
+            .get('/secure/users/1/issues')
+            .set({ 'x-access-token': token });
+
+        expect(response.statusCode).toBe(200);
+        expect(response.type).toEqual('application/json');
+
+        expect(response.body.length).toEqual(1);
+    });
+    //Update issue with id
+    test('PUT /secure/issues/:id', async () => {
+        const updateEventResponse = await request(app)
+            .put('/secure/issues/1')
+            .send({ title: 'No bear left' })
+            .set({ 'x-access-token': token });
+
+        expect(updateEventResponse.statusCode).toBe(200);
+
+        const response = await request(app)
+            .get('/secure/issues/1')
+            .set({ 'x-access-token': token });
+
+        expect(response.body.title).toBe('No bear left');
+    });
+    //Create issue
+    test('POST /secure/issues', async () => {
+        let count = await Issue.count(); // entries in database
+        let issue = {
+          title: 'Gratis Øl for studenter',
+            content: ':O',
+            image: null,
+            longitude: 63.1,
+            latitude: 10.4 };
+
+        const response = await request(app)
+            .post('/secure/issues')
+            .send(issue)
+            .set({ 'x-access-token': token });
+
+        expect(response.statusCode).toBe(200);
+        expect(await Issue.count()).toEqual(count + 1);
+    });
+    //Delete issue
+    test('DELETE /secure/issues/:id', async () => {
+        let totalIssues = await Issue.count();
+
+        const response = await request(app)
+            .delete('/secure/issues/1')
+            .set({ 'x-access-token': token });
+
+        expect(response.statusCode).toBe(200);
+
+        expect(await Issue.count()).toBe(totalIssues - 1);
+    });
+});
+
+
+
+
 //Event
 describe('Event tests', () => {
   //Get all Events
@@ -200,13 +292,37 @@ describe('Event tests', () => {
     expect(response.body.title).toBe('party at the house man!');
     expect(response.body.content).toBe('Det skal være party at the house!');
     expect(response.body.image).toBe('notin');
-    expect(response.body.longitude).toBe(123123);
-    expect(response.body.latitude).toBe(123123);
-    expect(response.body.user_id).toBe(2);
+    expect(response.body.longitude).toBe(60.652168);
+    expect(response.body.latitude).toBe(10.822102);
+    expect(response.body.user_id).toBe(1);
     expect(response.body.category_id).toBe(1);
   });
   //Update one event with id
+  test('PUT /secure/events/:id', async () => {
+    const updateEventResponse = await request(app)
+      .put('/secure/events/1')
+      .send({ title: 'No bear left' })
+      .set({ 'x-access-token': token });
+
+    expect(updateEventResponse.statusCode).toBe(200);
+
+    const response = await request(app)
+      .get('/secure/events/1')
+      .set({ 'x-access-token': token });
+
+    expect(response.body.title).toBe('No bear left');
+  });
   //Create one event
+  test('POST /secure/events', async () => {
+    let count = await Event.count(); // entries in database
+    let event = { title: 'Gratis Øl for studenter', content: ':O', image: null, longitude: 63.1, latitude: 10.4 };
+    const response = await request(app)
+      .post('/secure/events')
+      .send(event)
+      .set({ 'x-access-token': token });
+    expect(response.statusCode).toBe(200);
+    expect(await Event.count()).toEqual(count + 1);
+  });
   //Delete one event with id
   test('DELETE /secure/events/:id', async () => {
     let totalEvents = await Event.count();
@@ -238,7 +354,35 @@ describe('Event Category Test', () => {
     expect(response.statusCode).toBe(200);
     expect(response.type).toEqual('application/json');
   });
+  //Update one event_category with id
+  test('PUT /secure/eventCat/:id', async () => {
+    const updateEventResponse = await request(app)
+      .put('/secure/eventCat/1')
+      .send({ name: 'Poker' })
+      .set({ 'x-access-token': token });
 
+    expect(updateEventResponse.statusCode).toBe(200);
+
+    const response = await request(app)
+      .get('/secure/eventCat/1')
+      .set({ 'x-access-token': token });
+
+    expect(response.body.name).toBe('Poker');
+  });
+
+  //Create one event_category
+  test('POST /secure/eventCat', async () => {
+    let count = await Event_category.count(); // entries in database
+    let event = { name: 'Konsert' };
+    const response = await request(app)
+      .post('/secure/eventCat')
+      .send(event)
+      .set({ 'x-access-token': token });
+    expect(response.statusCode).toBe(200);
+    expect(await Event_category.count()).toEqual(count + 1);
+  });
+
+  //Delete Event category
   test('DELETE Event category with id = 1', async () => {
     let n = await Event_category.count();
     const response = await request(app)
@@ -248,11 +392,10 @@ describe('Event Category Test', () => {
     expect(await Event_category.count()).toBe(n - 1);
   });
 });
-//Update one event_category with id
-//Create one event_category
 
 //Issue_category
 describe('Issue Category Test', () => {
+  //GET all issue categories
   test('GET all issue category', async () => {
     const response = await request(app)
       .get('/secure/issueCat')
@@ -261,6 +404,7 @@ describe('Issue Category Test', () => {
     expect(response.type).toEqual('application/json');
     expect(response.body.length).toEqual(await Issue_category.count());
   });
+  //Get one issue category
   test('GET Issue Category with id = 1', async () => {
     const response = await request(app)
       .get('/secure/issueCat/1')
@@ -269,6 +413,34 @@ describe('Issue Category Test', () => {
     expect(response.type).toEqual('application/json');
   });
 
+  //Update one issue_category with id
+  test('PUT /secure/issueCat/:id', async () => {
+    const updateEventResponse = await request(app)
+      .put('/secure/issueCat/1')
+      .send({ name: 'Poker' })
+      .set({ 'x-access-token': token });
+
+    expect(updateEventResponse.statusCode).toBe(200);
+
+    const response = await request(app)
+      .get('/secure/issueCat/1')
+      .set({ 'x-access-token': token });
+
+    expect(response.body.name).toBe('Poker');
+  });
+
+  //Create one issue_category
+  test('POST /secure/issueCat', async () => {
+    let count = await Issue_category.count(); // entries in database
+    let event = { name: 'Konsert' };
+    const response = await request(app)
+      .post('/secure/issueCat')
+      .send(event)
+      .set({ 'x-access-token': token });
+    expect(response.statusCode).toBe(200);
+    expect(await Issue_category.count()).toEqual(count + 1);
+  });
+  //Delete isse category
   test('DELETE Issue category with id = 1', async () => {
     let n = await Issue_category.count();
     const response = await request(app)
@@ -278,5 +450,3 @@ describe('Issue Category Test', () => {
     expect(await Issue_category.count()).toBe(n - 1);
   });
 });
-//Update one issue_category with id
-//Create one issue_category
