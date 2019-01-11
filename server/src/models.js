@@ -4,12 +4,9 @@ import Sequelize from 'sequelize';
 import type { Model } from 'sequelize';
 
 let sequelize = new Sequelize(
-  // process.env.CI ? 'database' : 'cdaxell',
-  // process.env.CI ? 'root' : 'cdaxell',
-  // process.env.CI ? '' : 'yAmB12A4',
-  process.env.CI ? 'database' : 'sebasman',
-  process.env.CI ? 'root' : 'sebasman',
-  process.env.CI ? '' : 'GSBLuzbB',
+  process.env.CI ? 'database' : 'sandern',
+  process.env.CI ? 'root' : 'sandern',
+  process.env.CI ? '' : 'KcL5ZgzU',
   {
     host: process.env.CI ? 'mysql' : 'mysql.stud.iie.ntnu.no',
     dialect: 'mysql',
@@ -39,7 +36,8 @@ export let Issue: Class<
     image: string,
     longitude: number,
     latitude: number,
-    date: Date
+    date: Date,
+      status_id: number
   }>
 > = sequelize.define('Issue', {
   issue_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
@@ -48,7 +46,8 @@ export let Issue: Class<
   image: Sequelize.STRING,
   longitude: Sequelize.DOUBLE,
   latitude: Sequelize.DOUBLE,
-  date: Sequelize.DATE
+  date: Sequelize.DATE,
+    status_id: {type: Sequelize.INTEGER, defaultValue: 1}
 });
 
 export let IssuePicture: Class<

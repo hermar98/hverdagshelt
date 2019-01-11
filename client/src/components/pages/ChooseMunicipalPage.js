@@ -2,9 +2,11 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { autocomplete } from '../../../public/autocomplete';
+import { autocomplete, glob } from '../../../public/autocomplete';
 import { municipalService } from '../../services';
-import { Alert } from '../../widgets';
+import { history } from '../../index';
+
+let municipalObjects;
 
 export class ChooseMunicipalPage extends Component {
 
@@ -14,7 +16,7 @@ export class ChooseMunicipalPage extends Component {
                 <form autoComplete="off">
                     <div className="autocomplete">
                         <input id="municipalInput" type="text" name="municipal" placeholder="Velg kommune"/>
-                        <button value="" type="submit">Gå</button>
+                        <button value="" type="button" onClick={this.go}>Gå</button>
                     </div>
                 </form>
                 <img className="bg-image" src={"../../images/Trolltunga.jpg"} alt="Trolltunga"/>
@@ -22,9 +24,10 @@ export class ChooseMunicipalPage extends Component {
         );
     }
     mounted() {
+
         async function f () {
 
-            let municipalObjects = [];
+            municipalObjects = [];
             let promise = new Promise((resolve, reject) => {
                 resolve(municipalService
                     .getMunicipals()
@@ -32,13 +35,19 @@ export class ChooseMunicipalPage extends Component {
             });
 
             let result = await promise;
-            let municipals = result.map(e => e.name)
+            let municipals = result.map(e => e.name);
 
             autocomplete(document.getElementById("municipalInput"), municipals);
         }
 
         f();
+
     }
 
+    async go() {
+        let municipal = municipalObjects.find(e => e.name == glob);
+        console.log(municipal);
 
+        history.push('/municipal/' + municipal.mun_id);
+    }
 }

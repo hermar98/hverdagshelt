@@ -187,15 +187,18 @@ class EventService {
 }
 export let eventService = new EventService();
 
-class MunicipalService{
+class MunicipalService {
+  getMunicipals(): Promise<Municipal[]> {
+    return axios.get('/municipals');
+  }
 
-    getMunicipals(): Promise<Municipal[]>{
-        return axios.get('/municipal');
-    }
+  getMunicipal(mun_id: number): Promise<Municipal> {
+    return axios.get('/municipals/' + mun_id);
+  }
 
-    getMunicipal(mun_id: number): Promise<Municipal> {
-        return axios.get('/municipal/' + mun_id);
-    }
+  getIssuesByMunicipals(mun_id: number): Promise<Municipal[]>{
+    return axios.get('/municipals/' + mun_id +'/issues');
+  }
 }
 
 export let municipalService = new MunicipalService();
