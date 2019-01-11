@@ -10,6 +10,7 @@ import { FileIssuePage } from './components/pages/FileIssuePage';
 import { LoginPage } from './components/pages/LoginPage';
 import { ProfilePage } from './components/pages/ProfilePage/ProfilePage';
 import { RegisterPage } from './components/pages/RegisterPage';
+import { EventPage } from './components/pages/EventPage';
 import { ChooseMunicipalPage } from './components/pages/ChooseMunicipalPage';
 import { RegisterEventPage } from './components/pages/RegisterEventPage';
 import { IssueLarge, IssueOverviewSmall } from './components/issueViews/issueViews';
@@ -43,10 +44,9 @@ if (root)
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/profile" component={ProfilePage} />
         <Route exact path="/sendEmail" />
-        <Route exact path="/event/register" component={RegisterEventPage}/>
-        <Route exact path="/events/" component={EventPage}/>
+        <Route exact path="/event/register" component={RegisterEventPage} />
+        <Route exact path="/events/" component={EventPage} />
       </div>
     </HashRouter>,
     root
   );
-
