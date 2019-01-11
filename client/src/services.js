@@ -1,6 +1,7 @@
 // @flow
 import axios from 'axios';
 import { User, Issue, IssueCategory, Event, Municipal} from "./models.js";
+import {EventCategory} from "./models";
 
 axios.interceptors.response.use(response => response.data);
 
@@ -54,11 +55,11 @@ export let issueService = new IssueService();
 
 class IssueCategoryService {
   getCategories(): Promise<IssueCategory[]> {
-    return axios.get('/issuecategories');
+    return axios.get('/issueCat');
   }
 
   getCategory(categoryId: number): Promise<IssueCategory> {
-    return axios.get('/issuecategories/' + categoryId);
+    return axios.get('/issueCat/' + categoryId);
   }
 
   updateCategory(category: IssueCategory): Promise<void> {
@@ -107,3 +108,27 @@ class MunicipalService{
 }
 
 export let municipalService = new MunicipalService();
+
+class EventCategoryService {
+  getCategories(): Promise<EventCategory[]> {
+    return axios.get('/eventCat');
+  }
+
+  getCategory(categoryId: number): Promise<EventCategory> {
+    return axios.get('/eventCat/' + categoryId);
+  }
+
+  updateCategory(category: EventCategory): Promise<void> {
+    return axios.put('/eventCat/' + category.categoryId, category);
+  }
+
+  addCategory(category: EventCategory): Promise<number> {
+    return axios.post('/eventCat', category);
+  }
+
+  deleteCategory(categoryId: number): Promise<void> {
+    return axios.delete('/eventCat/' + categoryId);
+  }
+}
+
+export let eventCategoryService = new EventCategoryService();
