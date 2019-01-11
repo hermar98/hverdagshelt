@@ -28,13 +28,13 @@ export default class EventForm extends Component {
           <Form.Input
             //label="Start"
             type="datetime-local"
-            onChange={e => (this.event.time_start = e.target.value)}
+            onChange={e => (this.event.timeStart = e.target.value)}
             required
             placeholder="Fra dato & tidspunkt"/>
           <Form.Input
             //label="Slutt"
             type="datetime-local"
-            onChange={e => this.event.time_end = e.target.value} //TODO
+            onChange={e => this.event.timeEnd = e.target.value} //TODO
             required
             placeholder="Til date & tidspunkt"/>
           <Form.Input
@@ -62,9 +62,9 @@ export default class EventForm extends Component {
     this.event.longitude = 1234;
     this.event.latitude = 5678;
     //let now = new Date();
-    //this.event.time_start = now;
+    //this.event.timeStart = now;
     //now.setHours(now.getHours() + 4);
-    //this.event.time_end = now.setHours(now);
+    //this.event.timeEnd = now.setHours(now);
 
     eventService
       .addEvent(this.event)
