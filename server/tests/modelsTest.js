@@ -124,8 +124,8 @@ describe('Issue tests', () => {
         title: 'Dumme folk ødeleger lømp',
         content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
         image: 'null',
-        longitude: 123123,
-        latitude: 123123
+          latitude: 10.824107,
+          longitude: 60.656877
       }
     ]);
   });
@@ -174,8 +174,8 @@ describe('Event tests', () => {
         title: 'party at the house man!',
         content: 'Det skal være party at the house!',
         image: 'notin',
-        longitude: 123123,
-        latitude: 123123
+        longitude: 60.652168,
+        latitude: 10.822102
       }
     ]);
   });

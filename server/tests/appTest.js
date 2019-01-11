@@ -34,7 +34,7 @@ describe('User tests', () => {
     //console.log(token);
     const response = await request(app)
       .get('/secure/users')
-      .set({ 'x-access-token': token }); //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5ubyIsImlhdCI6MTU0NzE5NTI3MSwiZXhwIjoxNTQ3MTk1ODcxfQ.Ts9I661ladKyOKk-ONlcz810X0eGtdjVZgN-X4Mfop0'
+      .set({ 'x-access-token': token });
     //console.log(token);
     expect(response.statusCode).toBe(200);
     expect(response.type).toEqual('application/json');
@@ -99,7 +99,7 @@ describe('User tests', () => {
     let totalUsers = await User.count();
 
     const response = await request(app)
-      .delete('/secure/users/1')
+      .delete('/secure/users/2')
       .set({ 'x-access-token': token });
 
     expect(response.statusCode).toBe(200);
@@ -107,6 +107,8 @@ describe('User tests', () => {
     expect(await User.count()).toBe(totalUsers - 1);
   });
 });
+
+
 //Municipal
 describe('Municipality tests', () => {
   //Get all Municipalities
@@ -187,8 +189,8 @@ describe('Issue tests', () => {
         expect(response.body.title).toBe('Dumme folk ødeleger lømp');
         expect(response.body.content).toBe('Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt');
         expect(response.body.image).toBe('null');
-        expect(response.body.longitude).toBe(123123);
-        expect(response.body.latitude).toBe(123123);
+        expect(response.body.longitude).toBe(60.656877);
+        expect(response.body.latitude).toBe(10.824107);
         //expect(response.body.mun_id).toBe(2012);
         //expect(response.body.user_id).toBe(1);
         //expect(response.body.category_id).toBe(1);
@@ -203,10 +205,10 @@ describe('Issue tests', () => {
       expect(response.statusCode).toBe(200);
       expect(response.type).toEqual('application/json');
 
-      expect(response.body.length).toEqual(await Feedback.count());
+      expect(response.body.length).toEqual(1);
     });
     //Get all issues for a user with id
-   /* test('GET /secure/users/:id/issues',async  () => {
+    test('GET /secure/users/:id/issues',async  () => {
         const response = await request(app)
             .get('/secure/users/1/issues')
             .set({ 'x-access-token': token });
@@ -215,7 +217,7 @@ describe('Issue tests', () => {
         expect(response.type).toEqual('application/json');
 
         expect(response.body.length).toEqual(1);
-    });*/
+    });
     //Update issue with id
     test('PUT /secure/issues/:id', async () => {
         const updateEventResponse = await request(app)
@@ -290,9 +292,9 @@ describe('Event tests', () => {
     expect(response.body.title).toBe('party at the house man!');
     expect(response.body.content).toBe('Det skal være party at the house!');
     expect(response.body.image).toBe('notin');
-    expect(response.body.longitude).toBe(123123);
-    expect(response.body.latitude).toBe(123123);
-    expect(response.body.user_id).toBe(2);
+    expect(response.body.longitude).toBe(60.652168);
+    expect(response.body.latitude).toBe(10.822102);
+    expect(response.body.user_id).toBe(1);
     expect(response.body.category_id).toBe(1);
   });
   //Update one event with id
