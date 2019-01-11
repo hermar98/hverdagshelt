@@ -207,6 +207,17 @@ describe('Event tests', () => {
   });
   //Update one event with id
   //Create one event
+  test('POST /secure/events', async () => {
+    let totalUsers = await User.count(); // entries in database
+    console.log(totalUsers);
+    let user = { title: 'Gratis Øl for studenter', content: ':O', image: null, longitude: 63.1, latitude: 10.4 };
+    const response = await request(app)
+      .post('/secure/users')
+      .send(user)
+      .set({ 'x-access-token': token });
+    expect(response.statusCode).toBe(200);
+    expect(await User.count()).toEqual(totalUsers + 1);
+  });
   //Delete one event with id
   test('DELETE /secure/events/:id', async () => {
     let totalEvents = await Event.count();
