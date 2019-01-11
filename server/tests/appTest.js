@@ -99,7 +99,7 @@ describe('User tests', () => {
     let totalUsers = await User.count();
 
     const response = await request(app)
-      .delete('/secure/users/1')
+      .delete('/secure/users/2')
       .set({ 'x-access-token': token });
 
     expect(response.statusCode).toBe(200);
@@ -294,7 +294,7 @@ describe('Event tests', () => {
     expect(response.body.image).toBe('notin');
     expect(response.body.longitude).toBe(123123);
     expect(response.body.latitude).toBe(123123);
-    expect(response.body.user_id).toBe(2);
+    expect(response.body.user_id).toBe(1);
     expect(response.body.category_id).toBe(1);
   });
   //Update one event with id
