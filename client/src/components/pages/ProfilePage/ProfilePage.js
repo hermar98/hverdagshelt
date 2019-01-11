@@ -10,10 +10,11 @@ import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
 import { userService } from '../../../services';
 import { issueService } from '../../../services';
 import { municipalService } from '../../../services';
+import { autocomplete } from '../../../../public/autocomplete';
 import { User } from '../../../models';
 import { Issue } from '../../../models';
 import { Municipal } from '../../../models';
-//import './ProfilePage.css';
+//import styles from './ProfilePage.css';
 
 export class ProfilePage extends Component {
   state = {
@@ -26,6 +27,20 @@ export class ProfilePage extends Component {
   municipals: Municipal[] = [];
 
   mounted() {
+    async function f() {
+      let municipalObjects = [];
+      let promise = new Promise((resolve, reject) => {
+        resolve(municipalService.getMunicipals().then(municipals => (municipalObjects = municipals)));
+      });
+
+      let result = await promise;
+      let municipals = result.map(e => e.name);
+
+      autocomplete(document.getElementById('municipalInput'), municipals);
+    }
+
+    f();
+
     userService
       .getUser(1)
       .then(rows => {
@@ -45,22 +60,41 @@ export class ProfilePage extends Component {
       .catch(error => console.log(error));
   }
 
+  handleChangeMunicipal(e: Object) {
+    e.preventDefault();
+
+    let json = {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      rank: user.rank,
+      salt: passwordData.salt,
+      hash_str: passwordData.passwordHash
+    };
+
+    userService.updateUser(json);
+  }
+
   render() {
     return (
       <div>
-        <Card className="infoCard" title="Min Profil">
+        <Card title="Min Profil">
           <p>
             Navn: {this.state.isLoaded && this.user.firstName} {this.state.isLoaded && this.user.lastName}
           </p>
           <p>Email: {this.state.isLoaded && this.user.email}</p>
           <p>Hjemkommune: {this.state.isLoaded && this.municipal.name}</p>
           <br />
-          <label>Endre Hjemkommune</label>
-          <select className="custom-select custom-select-lg mb-3" id="sel1" value={this.municipal.name}>
-            {this.municipals.map((municipal, index) => (
-              <option key={index}>{municipal.name}</option>
-            ))}
-          </select>
+          <form autoComplete="off">
+            <div className="autocomplete">
+              <input id="municipalInput" type="text" name="municipal" />
+              <button value="" type="submit">
+                Endre Kommune
+              </button>
+            </div>
+          </form>
+        </Card>
+        <Card>
           <ChangePasswordForm />
         </Card>
         <Card className="issues" title="Mine Saker">
