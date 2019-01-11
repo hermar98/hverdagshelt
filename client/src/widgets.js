@@ -182,16 +182,30 @@ class NavBarLink extends Component <{ to: string, exact?: boolean, children?: Re
     }
 }
 
-export class NavBar extends Component<{ children: React.Element<typeof NavBarBrand | typeof NavBarLink>[] }> {
+class NavBarLogout extends Component <{ to: string, exact?: boolean, children?: React.Node} >{
+    render() {
+        if(!this.props.children) return null;
+        return(
+          <NavLink className="nav-link" activeClassName="active" exact={this.props.exact} to={this.props.to}>
+            <form className="form-inline">
+                <button className="btn btn-outline-danger">{this.props.children}</button>
+            </form>
+          </NavLink>
+        );
+    }
+}
+
+export class NavBar extends Component<{ children: React.Element<typeof NavBarBrand | typeof NavBarLink | typeof NavBarLogout>[] }> {
     static Brand = NavBarBrand;
     static Link = NavBarLink;
+    static Logout = NavBarLogout;
 
     render(){
         return(
             <nav className="navbar navbar-expand-sm bg-dark navbar-dark mt-0">
                 <div className="container-fluid">
                     {this.props.children.filter(child => child.type == NavBarBrand)}
-                    <ul className="nav navbar-nav navbar-right">{this.props.children.filter(child => child.type == NavBarLink)}</ul>
+                    <ul className="nav navbar-nav navbar-right">{this.props.children.filter(child => (child.type == NavBarLink || child.type == NavBarLogout))}</ul>
                 </div>
             </nav>
         );
