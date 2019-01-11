@@ -93,6 +93,7 @@ export let User: Class<
     rank: number,
     salt?: string,
     hash_str?: string,
+    mun_id: number,
     profilePicture?: string,
     resetPasswordToken?: string,
     resetPasswordExpires?: Date
@@ -382,7 +383,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           latitude: 123123,
           time_start: new Date(Date.now()),
           time_end: new Date(Date.now()),
-          user_id: '2',
+          user_id: '1',
           category_id: 1
         })
       );

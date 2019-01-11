@@ -56,7 +56,7 @@ export class ProfilePage extends Component {
 
     municipalService
       .getMunicipals()
-      .then(rows => ((this.municipal = rows[0]), (this.municipals = rows)))
+      .then(rows => ((this.municipals = rows), (this.municipal = rows.find(mun => (mun.mun_id = this.user.mun_id)))))
       .catch(error => console.log(error));
   }
 
@@ -69,7 +69,8 @@ export class ProfilePage extends Component {
       email: user.email,
       rank: user.rank,
       salt: passwordData.salt,
-      hash_str: passwordData.passwordHash
+      hash_str: passwordData.passwordHash,
+      mun_id: user.mun_id
     };
 
     userService.updateUser(json);
@@ -87,7 +88,12 @@ export class ProfilePage extends Component {
           <br />
           <form autoComplete="off">
             <div className="autocomplete">
-              <input id="municipalInput" type="text" name="municipal" />
+              <input
+                id="municipalInput"
+                type="text"
+                name="municipal"
+                onChange={event => (this.mun_id = event.target.value)}
+              />
               <button value="" type="submit">
                 Endre Kommune
               </button>
