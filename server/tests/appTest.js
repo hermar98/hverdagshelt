@@ -4,11 +4,29 @@ import {Issue_category, Event_category, Event,Issue,County,Municipal,User,sync} 
 const request = require('supertest');
 const app = require('../src/app');
 
+let useremail = "test@test.no";
+let pw = "1";
+let token;
+
 beforeAll(async () => {
-  await sync;
+    await sync; // Sync database
+    //gå til /login
+
+
 });
 beforeEach(async () => {
-
+    request(app)
+        .post('/login')
+        .send({
+            email: useremail,
+            password: pw,
+        })
+        .end((err, response) => {
+            if (response.body.jwt) {
+                console.log('token');// + stringify(response.body.jwt));
+            }
+            token = response.body.jwt; // save the token! Yes sir
+        });
 });
 
 describe('Test the root path', () => {
@@ -23,7 +41,8 @@ describe('User tests', () => {
     //Get all users
 
     test('GET /users', async () => {
-        const response = await request(app).get('/users');
+        console.log(token);
+        const response = await request(app).get('/secure/users').set('x-access-token', `${token}`);
 
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
