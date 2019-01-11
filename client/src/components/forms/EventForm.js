@@ -73,6 +73,5 @@ export default class EventForm extends Component {
   }
 
   mounted(){
-
   }
 }
