@@ -38,7 +38,7 @@ describe('user test', () => {
         user_id: 1,
         firstName: 'Vegard',
         lastName: 'Andersson',
-        email: 'vegaande@ntnu.stud.no',
+        email: 'vegaande@stud.ntnu.no',
         rank: 1,
         salt: 'b79ryp97',
         hash_str: '897dfjsodif5vx24c5vsldfskdclz97cyw7e3o2inJKHaospk902'
