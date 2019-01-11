@@ -7,7 +7,6 @@ import { User } from '../../models.js';
 import LoginForm from '../../components/forms/LoginForm';
 
 export class LoginPage extends Component {
-    user = new User();
 
     render() {
         return (
