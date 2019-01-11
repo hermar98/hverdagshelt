@@ -96,6 +96,7 @@ export let User: Class<
     rank: number,
     salt?: string,
     hash_str?: string,
+    mun_id: number,
     profilePicture?: string,
     resetPasswordToken?: string,
     resetPasswordExpires?: Date
