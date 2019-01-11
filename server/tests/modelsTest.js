@@ -165,7 +165,7 @@ describe('event test', () => {
       event
         .map(e => e.toJSON())
         .map(e => ({
-          event_id: e.event_id,
+          event_id: e.eventId,
           title: e.title,
           content: e.content,
           image: e.image,
@@ -213,7 +213,7 @@ describe('event_cat test', () => {
       event_cat
         .map(e => e.toJSON())
         .map(e => ({
-          event_id: e.event_id,
+          event_id: e.eventId,
           name: e.name
         }))
     ).toEqual([

@@ -73,7 +73,7 @@ export class EventLarge extends Component<{ event: Event }> {
       <div className="event-large" event={this.props.event}>
         <div className="card">
           <div className="card-body">
-            <div className="card-title">
+            <div className="card-title-event">
               <h2>{this.props.event.title}</h2>
             </div>
             <div className="card-text">
@@ -82,10 +82,8 @@ export class EventLarge extends Component<{ event: Event }> {
           </div>
             <img className="event-image" src="https://www.naf.no/globalassets/tips-rad/vei-trafikk/hull_i_veien_bil2.jpg?width=980&height=550&mode=max&anchor=middlecenter&scale=both&quality=85"/>
           <div className="card-footer">
-            <div className="row">
-            <small class="text-muted-left">{"Starter: " + moment(this.props.event.time_start).format("DD.MM.YYYY HH:mm")}</small>
-            <small class="text-muted-right">{"Slutter: " + moment(this.props.event.time_end).format("DD.MM.YYYY HH:mm")}</small>
-            </div>
+            <small className="text-muted-left">{"Fra: " + moment(this.props.event.timeStart).format("DD.MM HH:mm")}</small>
+            <small className="text-muted-right">{"Til: " + moment(this.props.event.timeEnd).format("DD.MM HH:mm")}</small>
           </div>
         </div>
       </div>

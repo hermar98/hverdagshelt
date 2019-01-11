@@ -15,7 +15,7 @@ class UserService {
   }
 
   updateUser(user: User): Promise<void> {
-    return axios.put('/users', user);
+    return axios.put('/users/' + user.userId, user);
   }
 
   addUser(user: User): Promise<number> {
@@ -39,7 +39,7 @@ class IssueService {
   }
 
   updateIssue(issue: Issue): Promise<void> {
-    return axios.put('/issues/', issue);
+    return axios.put('/issues/' + issue.issueId, issue);
   }
 
   addIssue(issue: Issue): Promise<number> {
@@ -63,15 +63,15 @@ class IssueCategoryService {
   }
 
   updateCategory(category: IssueCategory): Promise<void> {
-    return axios.put('/issuecategories/', category);
+    return axios.put('/issueCat/' + category.categoryId, category);
   }
 
   addCategory(category: IssueCategory): Promise<number> {
-    return axios.post('/issuecategories', category);
+    return axios.post('/issueCat', category);
   }
 
   deleteCategory(categoryId: number): Promise<void> {
-    return axios.delete('/issuecategories/' + categoryId);
+    return axios.delete('/issueCat/' + categoryId);
   }
 }
 
@@ -85,7 +85,7 @@ class EventService {
     return axios.get('/events/' + eventId);
   }
   updateEvent(event: Event): Promise<void> {
-    return axios.put('/events', event);
+    return axios.put('/events/' + event.eventId, event);
   }
   addEvent(event: Event): Promise<number> {
     return axios.post('/events', event);

@@ -11,6 +11,7 @@ import { LoginPage } from "./components/pages/LoginPage";
 import { RegisterPage } from "./components/pages/RegisterPage";
 import { ChooseMunicipalPage } from "./components/pages/ChooseMunicipalPage";
 import {RegisterEventPage} from "./components/pages/RegisterEventPage";
+import {EventPage} from "./components/pages/EventPage";
 import {IssueLarge, IssueOverviewSmall} from "./components/issueViews/issueViews";
 import {Issue} from "./models.js";
 
@@ -42,9 +43,9 @@ if (root)
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/sendEmail" />
         <Route exact path="/event/register" component={RegisterEventPage}/>
+        <Route exact path="/events/" component={EventPage}/>
       </div>
     </HashRouter>,
     root
   );
-
 

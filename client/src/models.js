@@ -6,8 +6,7 @@ export class User {
   lastName: string;
   email: string;
   rank: number;
-  hash: string;
-  salt: string;
+  password: string;
 
   /*constructor (userId: number, firstName: string, lastName: string, email: string, rank: number, hash: string, salt: string) {
         this.userId = userId
@@ -53,24 +52,24 @@ export class IssueCategory {
 }
 
 export class Event {
-  event_id: number;
+  eventId: number;
   title: string;
   content: string;
   image: string;
   longitude: number;
   latitude: number;
-  time_start: string;
-  time_end: string;
+  timeStart: string;
+  timeEnd: string;
 
-  /*constructor (    event_id: number, title: string, content: string, image: string, longitude: number, latitude: number, time_start: string, time_end: string) {
-        this.event_id = event_id
+  /*constructor (    eventId: number, title: string, content: string, image: string, longitude: number, latitude: number, timeStart: string, timeEnd: string) {
+        this.eventId = eventId
         this.title = title
         this.content = content
         this.image = image
         this.longitude = longitude
         this.latitude = latitude
-        this.time_start = time_start
-        this.time_end = time_end
+        this.timeStart = timeStart
+        this.timeEnd = timeEnd
     }*/
 }
 

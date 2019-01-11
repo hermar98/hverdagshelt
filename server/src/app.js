@@ -108,8 +108,8 @@ app.put('/events/:id', (req: Request, res: Response) => {
       image: req.body.image,
       longitude: req.body.longitude,
       latitude: req.body.latitude,
-      time_start: req.body.time_start,
-      time_end: req.body.time_end
+      time_start: req.body.timeStart,
+      time_end: req.body.timeEnd
     },
     {
       where: {
@@ -126,8 +126,8 @@ app.post('/events', (req: Request, res: Response) => {
     image: req.body.image,
     longitude: req.body.longitude,
     latitude: req.body.latitude,
-    time_start: req.body.time_start,
-    time_end: req.body.time_end
+    time_start: req.body.timeStart,
+    time_end: req.body.timeEnd
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 app.delete('/events/:id', (req: Request, res: Response) => {
