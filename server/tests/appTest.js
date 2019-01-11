@@ -109,9 +109,6 @@ describe('User tests', () => {
 });
 
 
-
-
-
 //Municipal
 describe('Municipality tests', () => {
   //Get all Municipalities
