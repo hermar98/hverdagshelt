@@ -4,9 +4,9 @@ import Sequelize from 'sequelize';
 import type { Model } from 'sequelize';
 
 let sequelize = new Sequelize(
-  process.env.CI ? 'database' : 'cdaxell',
-  process.env.CI ? 'root' : 'cdaxell',
-  process.env.CI ? '' : 'yAmB12A4',
+  process.env.CI ? 'database' : 'sandern',
+  process.env.CI ? 'root' : 'sandern',
+  process.env.CI ? '' : 'KcL5ZgzU',
   {
     host: process.env.CI ? 'mysql' : 'mysql.stud.iie.ntnu.no',
     dialect: 'mysql',

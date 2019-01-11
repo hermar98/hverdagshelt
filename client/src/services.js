@@ -98,11 +98,11 @@ export let eventService = new EventService();
 class MunicipalService{
 
     getMunicipals(): Promise<Municipal[]>{
-        return axios.get('/municipal');
+        return axios.get('/municipals');
     }
 
     getMunicipal(mun_id: number): Promise<Municipal> {
-        return axios.get('/municipal/' + mun_id);
+        return axios.get('/municipals/' + mun_id);
     }
 }
 

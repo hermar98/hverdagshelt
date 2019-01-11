@@ -30,7 +30,7 @@ input{
 }
 
 input[type=text]{
-    background-color: #f1f1f1;
+    background-color: white;
 }
 
 input[type=submit]{
