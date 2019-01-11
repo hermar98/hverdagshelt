@@ -26,10 +26,22 @@ export default class EventForm extends Component {
             <div className="input-group-prepend">
               <button className="btn btn-outline-secondary" type="button" onClick={this.newCategory}>Velg kategori</button>
             </div>
-            <select className="form-control col-sm-3 justify-content-center" value={this.event.categoryId || 0}
-                    onChange={e => (this.event.categoryId = parseInt(e.target.value))}>
-              {this.categories.map(cat => <option value={1}>{cat.name}</option>)}
+            <select className="form-control col-sm-3 justify-content-center" value={this.event.categoryId || ''}
+                    onChange={(e: SyntheticInputEvent<HTMLInputElement>) => {if(this.event) this.event.categoryId = parseInt(e.target.value)}}>
+              <option selected value={2}>Velg kategori..</option>
+              <option value={1}>Dab </option>
+              {this.categories.map(cat => <option key={cat.categoryId} value={cat.categoryId}>{cat.name}</option>)}
             </select>
+          </div>
+          <div className="form-row">
+            <div className="form-group col-md-6">
+              <label htmlFor="sel1">Select category</label>
+              <select className="form-control" id="sel2" value={this.event.categoryId || ''}
+                      onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
+                        if (this.event) this.event.categoryId = parseInt(event.target.value);}}>
+                {this.categories.map(cat => <option key={cat.categoryId} value={cat.categoriId}>{cat.name}</option>)}
+              </select>
+            </div>
           </div>
           <Form.InputLarge
             type="text"
@@ -79,12 +91,16 @@ export default class EventForm extends Component {
 
     eventService
       .addEvent(this.event)
+      .then(history.push('/'))
+      .catch((error: Error) => Alert.danger(error.message));
+
   }
 
   mounted(){
     eventCategoryService
       .getCategories()
       .then(e => this.categories = e)
+      .then(e => console.log(this.categories.map(es => es.categoryId)))
       .catch((error: Error) => Alert.danger(error.message));
   }
 }
