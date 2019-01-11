@@ -70,6 +70,7 @@ class ForgotPassword extends Component {
 
         return (
             <div>
+                <Menu/>
                 <HeaderBar title={title} />
                 <form className="profile-form" onSubmit={this.sendEmail}>
                     <TextField
