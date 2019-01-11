@@ -113,9 +113,9 @@ describe('User tests', () => {
 describe('Municipality tests', () => {
   //Get all Municipalities
 
-  test('GET /secure/municipals', async () => {
+  test('GET /municipals', async () => {
     const response = await request(app)
-      .get('/secure/municipals')
+      .get('/municipals')
       .set({ 'x-access-token': token });
 
     expect(response.statusCode).toBe(200);
@@ -124,9 +124,9 @@ describe('Municipality tests', () => {
     expect(response.body.length).toEqual(await Municipal.count());
   });
   //Get one Municipal with id
-  test('GET /secure/municipals/:id', async () => {
+  test('GET /municipals/:id', async () => {
     const response = await request(app)
-      .get('/secure/municipals/5016')
+      .get('/municipals/5016')
       .set({ 'x-access-token': token });
     expect(response.statusCode).toBe(200);
     expect(response.type).toEqual('application/json');
