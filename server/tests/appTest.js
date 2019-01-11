@@ -32,7 +32,7 @@ describe('Test the root path', () => {
 describe('User tests', () => {
     //Get all users
 
-    test('GET /users', async () => {
+    test('GET /secure/users', async () => {
         //console.log(token);
         const response = await request(app).get('/secure/users').set({'x-access-token': token});//'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5ubyIsImlhdCI6MTU0NzE5NTI3MSwiZXhwIjoxNTQ3MTk1ODcxfQ.Ts9I661ladKyOKk-ONlcz810X0eGtdjVZgN-X4Mfop0'
         //console.log(token);
@@ -44,17 +44,17 @@ describe('User tests', () => {
     });
 
   //Get one user  with id
-    test('GET /users/:id', async () => {
+    test('GET /secure/users/:id', async () => {
         const response = await request(app).get('/secure/users/1').set({'x-access-token': token});
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
 
         expect(response.body.firstName).toBe('Vegard');
         expect(response.body.lastName).toBe('Andersson');
-        expect(response.body.email).toBe('vegaande@stud.ntnu.no');
+        expect(response.body.email).toBe('test@test.no');
         expect(response.body.rank).toBe(1);
-        expect(response.body.salt).toBe('b79ryp97');
-        expect(response.body.hash_str).toBe('897dfjsodif5vx24c5vsldfskdclz97cyw7e3o2inJKHaospk902');
+        expect(response.body.salt).toBe('a83f4da094cc247b');
+        expect(response.body.hash_str).toBe('30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722');
     });
   //Post user
 /*
@@ -90,10 +90,10 @@ describe('User tests', () => {
     });
 */
   //Delete user
-    test('DELETE /users/:id', async () => {
+    test('DELETE /secure/users/:id', async () => {
         let totalUsers = await User.count();
 
-        const response = await request(app).delete('/users/1');
+        const response = await request(app).delete('/secure/users/1').set({'x-access-token': token});
 
         expect(response.statusCode).toBe(200);
 
@@ -104,8 +104,8 @@ describe('User tests', () => {
 describe('Municipality tests', () => {
     //Get all Municipalities
 
-    test('GET /municipals', async () => {
-        const response = await request(app).get('/municipals');
+    test('GET /secure/municipals', async () => {
+        const response = await request(app).get('/secure/municipals').set({'x-access-token': token});
 
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
@@ -114,8 +114,8 @@ describe('Municipality tests', () => {
 
     });
   //Get one Municipal with id
-    test('GET /municipals/:id', async () => {
-        const response = await request(app).get('/municipals/5016');
+    test('GET /secure/municipals/:id', async () => {
+        const response = await request(app).get('/secure/municipals/5016').set({'x-access-token': token});
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
 
@@ -129,8 +129,8 @@ describe('Municipality tests', () => {
 //County
 describe('County tests', () => {
     //Get All Counties
-    test('GET /county', async () => {
-        const response = await request(app).get('/county');
+    test('GET /secure/county', async () => {
+        const response = await request(app).get('/secure/county').set({'x-access-token': token});
 
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
@@ -141,8 +141,8 @@ describe('County tests', () => {
 
   //Get One County with id
 
-    test('GET /county/:id', async () => {
-        const response = await request(app).get('/county/1');
+    test('GET /secure/county/:id', async () => {
+        const response = await request(app).get('/secure/county/1').set({'x-access-token': token});
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
 
@@ -170,8 +170,8 @@ describe('County tests', () => {
 //Event
 describe('Event tests', () => {
     //Get all Events
-    test('GET /events', async () => {
-        const response = await request(app).get('/events');
+    test('GET /secure/events', async () => {
+        const response = await request(app).get('/secure/events').set({'x-access-token': token});
 
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
@@ -180,8 +180,8 @@ describe('Event tests', () => {
 
     });
   //Get one event  with id
-    test('GET /events/:id', async () => {
-        const response = await request(app).get('/events/1');
+    test('GET /secure/events/:id', async () => {
+        const response = await request(app).get('/secure/events/1').set({'x-access-token': token});
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
 
@@ -196,10 +196,10 @@ describe('Event tests', () => {
   //Update one event with id
   //Create one event
   //Delete one event with id
-    test('DELETE /events/:id', async () => {
+    test('DELETE /secure/events/:id', async () => {
         let totalEvents = await Event.count();
 
-        const response = await request(app).delete('/events/1');
+        const response = await request(app).delete('/secure/events/1').set({'x-access-token': token});
 
         expect(response.statusCode).toBe(200);
 
@@ -209,22 +209,22 @@ describe('Event tests', () => {
 });
 //Event_category
 describe('Event Category Test', () => {
-  test('GET all event categorys', async () => {
-    const response = await request(app).get('/eventCat');
+  test('GET all event categories', async () => {
+    const response = await request(app).get('/secure/eventCat').set({'x-access-token': token});
     expect(response.statusCode).toBe(200);
     expect(response.type).toEqual('application/json');
     expect(response.body.length).toEqual(await Event_category.count());
   });
 
   test('GET Event Category with id = 1', async () => {
-    const response = await request(app).get('/eventCat/1');
+    const response = await request(app).get('/secure/eventCat/1').set({'x-access-token': token});
     expect(response.statusCode).toBe(200);
     expect(response.type).toEqual('application/json');
   });
 
   test('DELETE Event category with id = 1', async () => {
     let n = await Event_category.count();
-    const response = await request(app).delete('/eventCat/1');
+    const response = await request(app).delete('/secure/eventCat/1').set({'x-access-token': token});
     expect(response.statusCode).toBe(200);
     expect(await Event_category.count()).toBe(n - 1);
   });
@@ -235,20 +235,20 @@ describe('Event Category Test', () => {
 //Issue_category
 describe('Issue Category Test', () => {
   test('GET all issue category', async () => {
-    const response = await request(app).get('/issueCat');
+    const response = await request(app).get('/secure/issueCat').set({'x-access-token': token});
     expect(response.statusCode).toBe(200);
     expect(response.type).toEqual('application/json');
     expect(response.body.length).toEqual(await Issue_category.count());
   });
   test('GET Issue Category with id = 1', async () => {
-    const response = await request(app).get('/issueCat/1');
+    const response = await request(app).get('/secure/issueCat/1').set({'x-access-token': token});
     expect(response.statusCode).toBe(200);
     expect(response.type).toEqual('application/json');
   });
 
   test('DELETE Issue category with id = 1', async () => {
     let n = await Issue_category.count();
-    const response = await request(app).delete('/issueCat/1');
+    const response = await request(app).delete('/secure/issueCat/1').set({'x-access-token': token});
     expect(response.statusCode).toBe(200);
     expect(await Issue_category.count()).toBe(n - 1);
   });
