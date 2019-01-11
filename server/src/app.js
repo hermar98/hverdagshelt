@@ -14,43 +14,116 @@ let app = express();
 app.use(express.static(public_path));
 app.use(express.json()); // For parsing application/json
 
+let secretKey = fs.readFileSync('./secret.key', 'utf8');
+
+app.use('/secure', (req, res, next) => {
+    let token = req.headers['x-access-token'];
+    jwt.verify(token, secretKey, err => {
+        if (err) {
+            res.sendStatus(401);
+        } else {
+            next();
+        }
+    });
+});
+
+app.post('/login', (req: Request, res: Response) => {
+    User.findOne({where: {email: req.body.email}}).then(user => {
+        if (user) {
+            let passwordData = passwordHash.sha512(req.body.password, user.salt);
+            if (passwordData.passwordHash === user.hash_str) {
+                let token = jwt.sign({ email: req.body.email }, secretKey, {
+                    expiresIn: 600
+                });
+                res.json({ jwt: token });
+            } else {
+                res.sendStatus(401);
+            }
+        } else {
+            res.sendStatus(401);
+        }
+    })
+});
+
+app.get("/token", (req, res) => {
+    let token = req.headers["x-access-token"];
+    jwt.verify(token, secretKey, (err, decoded) => {
+        if (err) {
+            res.sendStatus(401);
+        } else {
+            token = jwt.sign({ email: decoded.email }, secretKey, {
+                expiresIn: 600
+            });
+            res.json({ jwt: token });
+        }
+    })
+});
+
+app.post('/register', (req: Request, res: Response) => {
+    if (!(req.body instanceof Object)) return res.sendStatus(400);
+
+    let passwordSalt = passwordHash.genRandomString(16);
+    let passwordData = passwordHash.sha512(req.body.password, passwordSalt);
+
+    return User.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        rank: req.body.rank,
+        salt: passwordSalt,
+        hash_str: passwordData.passwordHash
+    }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+});
+
 //User
-app.get('/users', (req: Request, res: Response) => {
-  return User.findAll().then(users => res.send(users));
+app.get('/secure/users', (req: Request, res: response) => {
+    return User.findAll().then(users => res.send(users));
 });
 
-app.get('/users/:id', (req: Request, res: Response) => {
-  return User.findOne({ where: { user_id: Number(req.params.id) } }).then(user =>
-    user ? res.send(user) : res.sendStatus(404)
-  );
+app.get('/secure/users/:id', (req: Request, res: Response) => {
+    return User.findOne({ where: { user_id: Number(req.params.id) } }).then(user =>
+        user ? res.send(user) : res.sendStatus(404)
+    );
 });
 
-app.post('/users', (req: Request, res: Response) => {
-  if (!(req.body instanceof Object)) return res.sendStatus(400);
+app.post('/secure/users', (req: Request, res: Response) => {
+    if (!(req.body instanceof Object)) return res.sendStatus(400);
 
-  var passwordSalt = passwordHash.genRandomString(16);
-  var passwordData = passwordHash.sha512(req.body.password, passwordSalt);
-
-  return User.create({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    rank: req.body.rank,
-    salt: passwordData.salt,
-    hash_str: passwordData.passwordHash
-  }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+    return User.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        rank: req.body.rank,
+        salt: req.body.salt,
+        hash_str: req.body.hash_str
+    }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
-app.put('/users/:id', (req: Request, res: Response) => {
-  if (!(req.body instanceof Object)) return res.sendStatus(400);
+app.put('/secure/users/:id', (req: Request, res: Response) => {
+    if (!(req.body instanceof Object)) return res.sendStatus(400);
+
+    if (req.body.password) {
+        let passwordSalt = passwordHash.genRandomString(16);
+        let passwordData = passwordHash.sha512(req.body.password, passwordSalt);
+
+        return User.update({
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                email: req.body.email,
+                rank: req.body.rank,
+                salt: passwordSalt,
+                hash_str: passwordData.passwordHash},
+            {where: { user_id: req.params.id }}
+        ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+    }
 
     return User.update({
-            email: req.body.email,
-            password: req.body.password,
-            salt: req.body.salt,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
-            rank: req.body.rank},
+            email: req.body.email,
+            rank: req.body.rank,
+            salt: req.body.salt,
+            hash_str: req.body.hash_str},
         {where: { user_id: req.params.id }}
     ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
@@ -225,40 +298,42 @@ app.delete('/issues/:id', (req: Request, res: Response) => {
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 //Issue_category
-app.get('/issueCat', (req: Request, res: Response) => {
-  return Issue_category.findAll().then(issueCategories => res.send(issueCategories));
+app.get('/secure/issueCat', (req: Request, res: Response) => {
+    return Issue_category.findAll().then(issueCategories => res.send(issueCategories));
 });
-app.get('/issueCat/:id', (req: Request, res: Response) => {
-  return Issue_category.findOne({ where: { category_id: Number(req.params.id) } }).then(issueCategory =>
-    issueCategory ? res.send(issueCategory) : res.sendStatus(404)
-  );
+app.get('/secure/issueCat/:id', (req:Request,res:Response) => {
+    return Issue_category.findOne({where:{category_id: Number(req.params.id)}}).then(issueCategory =>
+        issueCategory ? res.send(issueCategory) : res.sendStatus(404)
+    );
 });
-app.put('/issueCat/:id', (req: Request, res: Response) => {
-  if (!(req.body instanceof Object)) return res.sendStatus(400);
-  return Issue_category.update(
-    {
-      name: req.body.name
-    },
-    {
-      where: {
-        category_id: req.params.id
-      }
-    }
-  ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+app.put('/secure/issueCat/:id', (req: Request, res: Response) => {
+    if(!(req.body instanceof Object)) return res.sendStatus(400);
+    return Issue_category.update(
+        {
+            name: req.body.name,
+        }, {
+            where: {
+                category_id: req.params.id
+            }
+        }
+    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
 });
-app.post('/issueCat', (req: Request, res: Response) => {
-  if (!(req.body instanceof Object)) return res.sendStatus(400);
-  return Issue_category.create({
-    name: req.body.name
-  }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+app.post('/secure/issueCat', (req:Request, res: Response) => {
+    if(!(req.body instanceof Object)) return res.sendStatus(400);
+    return Issue_category.create(
+        {
+            name: req.body.name
+        }
+    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
 });
-
-app.delete('/issueCat/:id', (req: Request, res: Response) => {
-  return Issue_category.destroy({
-    where: {
-      category_id: req.params.id
-    }
-  }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+app.delete('/secure/issueCat/:id', function (req, res) {
+    return Issue_category.destroy(
+        {
+            where: {
+                category_id: req.params.id
+            }
+        }
+    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
 module.exports = app;
