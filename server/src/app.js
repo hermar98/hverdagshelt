@@ -44,15 +44,18 @@ app.post('/users', (req: Request, res: Response) => {
 app.put('/users/:id', (req: Request, res: Response) => {
   if (!(req.body instanceof Object)) return res.sendStatus(400);
 
-    return User.update({
-            email: req.body.email,
-            password: req.body.password,
-            salt: req.body.salt,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            rank: req.body.rank},
-        {where: { user_id: req.params.id }}
-    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+  return User.update(
+    {
+      email: req.body.email,
+      password: req.body.password,
+      salt: req.body.salt,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      rank: req.body.rank,
+      mun_id: req.body.mun_id
+    },
+    { where: { user_id: req.params.id } }
+  ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
 app.delete('/users/:id', (req: Request, res: Response) => {
