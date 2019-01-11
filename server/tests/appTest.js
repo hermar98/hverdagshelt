@@ -6,27 +6,19 @@ const app = require('../src/app');
 
 let useremail = "test@test.no";
 let pw = "1";
-let token;
+let token = 'noe';
 
 beforeAll(async () => {
-    await sync; // Sync database
+    await sync;
+    const response = await request(app).post('/login').send({email: useremail, password: pw,});
+    token = response.body.jwt;
+     // Sync database
     //gå til /login
 
 
 });
 beforeEach(async () => {
-    request(app)
-        .post('/login')
-        .send({
-            email: useremail,
-            password: pw,
-        })
-        .end((err, response) => {
-            if (response.body.jwt) {
-                console.log('token');// + stringify(response.body.jwt));
-            }
-            token = response.body.jwt; // save the token! Yes sir
-        });
+
 });
 
 describe('Test the root path', () => {
@@ -41,9 +33,9 @@ describe('User tests', () => {
     //Get all users
 
     test('GET /users', async () => {
-        console.log(token);
-        const response = await request(app).get('/secure/users').set('x-access-token', `${token}`);
-
+        //console.log(token);
+        const response = await request(app).get('/secure/users').set({'x-access-token': token});//'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5ubyIsImlhdCI6MTU0NzE5NTI3MSwiZXhwIjoxNTQ3MTk1ODcxfQ.Ts9I661ladKyOKk-ONlcz810X0eGtdjVZgN-X4Mfop0'
+        //console.log(token);
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
 
@@ -53,7 +45,7 @@ describe('User tests', () => {
 
   //Get one user  with id
     test('GET /users/:id', async () => {
-        const response = await request(app).get('/users/1');
+        const response = await request(app).get('/secure/users/1').set({'x-access-token': token});
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
 
