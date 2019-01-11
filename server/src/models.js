@@ -4,9 +4,12 @@ import Sequelize from 'sequelize';
 import type { Model } from 'sequelize';
 
 let sequelize = new Sequelize(
-  process.env.CI ? 'database' : 'cdaxell',
-  process.env.CI ? 'root' : 'cdaxell',
-  process.env.CI ? '' : 'yAmB12A4',
+  // process.env.CI ? 'database' : 'cdaxell',
+  // process.env.CI ? 'root' : 'cdaxell',
+  // process.env.CI ? '' : 'yAmB12A4',
+  process.env.CI ? 'database' : 'sebasman',
+  process.env.CI ? 'root' : 'sebasman',
+  process.env.CI ? '' : 'GSBLuzbB',
   {
     host: process.env.CI ? 'mysql' : 'mysql.stud.iie.ntnu.no',
     dialect: 'mysql',
@@ -36,7 +39,8 @@ export let Issue: Class<
     image: string,
     longitude: number,
     latitude: number,
-    date: Date
+    date: Date,
+      status_id: number
   }>
 > = sequelize.define('Issue', {
   issue_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
@@ -45,7 +49,8 @@ export let Issue: Class<
   image: Sequelize.STRING,
   longitude: Sequelize.DOUBLE,
   latitude: Sequelize.DOUBLE,
-  date: Sequelize.DATE
+  date: Sequelize.DATE,
+    status_id: {type: Sequelize.INTEGER, defaultValue: 1}
 });
 
 export let IssuePicture: Class<
@@ -312,10 +317,11 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
         User.create({
           firstName: 'Vegard',
           lastName: 'Andersson',
-          email: 'vegaande@stud.ntnu.no',
+          email: 'test@test.no',
           rank: 1,
-          salt: 'b79ryp97',
-          hash_str: '897dfjsodif5vx24c5vsldfskdclz97cyw7e3o2inJKHaospk902',
+          salt: 'a83f4da094cc247b',
+          hash_str:
+            '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
           mun_id: '5016'
         })
       )

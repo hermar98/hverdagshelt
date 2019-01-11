@@ -17,8 +17,8 @@ beforeAll(async () => {
   await sync;
 });
 
-describe('user test', () => {
-  it('correct data', async () => {
+describe('User tests', () => {
+  it('User.findAll() and check if first has correct data', async () => {
     let users = await User.findAll();
     let user = users.slice(0, 1);
     expect(
@@ -38,17 +38,18 @@ describe('user test', () => {
         user_id: 1,
         firstName: 'Vegard',
         lastName: 'Andersson',
-        email: 'vegaande@stud.ntnu.no',
+        email: 'test@test.no',
         rank: 1,
-        salt: 'b79ryp97',
-        hash_str: '897dfjsodif5vx24c5vsldfskdclz97cyw7e3o2inJKHaospk902'
+        salt: 'a83f4da094cc247b',
+        hash_str:
+          '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722'
       }
     ]);
   });
 });
 
-describe('county test', () => {
-  it('correct data', async () => {
+describe('County tests', () => {
+  it('County.findAll() and check if first has correct data', async () => {
     let countys = await County.findAll();
     let county = countys.slice(0, 1);
     expect(
@@ -59,16 +60,16 @@ describe('county test', () => {
           name: e.name
         }))
     ).toEqual([
-        {
-            county_id: 1,
-            name: 'Østfold'
-        },
+      {
+        county_id: 1,
+        name: 'Østfold'
+      }
     ]);
   });
 });
 
-describe('municipal test', () => {
-  it('correct data', async () => {
+describe('Municipal tests', () => {
+  it('Municipal.findAll() and check if first has correct data', async () => {
     let municipals = await Municipal.findAll();
     let municipal = municipals.slice(0, 1);
     expect(
@@ -78,17 +79,12 @@ describe('municipal test', () => {
           mun_id: e.mun_id,
           name: e.name
         }))
-    ).toEqual([
-
-        {   mun_id: 101,
-            name: 'Halden'
-        },
-    ]);
+    ).toEqual([{ mun_id: 101, name: 'Halden' }]);
   });
 });
 
-describe('status test', () => {
-  it('correct data', async () => {
+describe('Status tests', () => {
+  it('Status.findAll() and check if first has correct data', async () => {
     let status = await Status.findAll();
     let stat = status.slice(0, 1);
     expect(
@@ -107,8 +103,8 @@ describe('status test', () => {
   });
 });
 
-describe('issue test', () => {
-  it('correct data', async () => {
+describe('Issue tests', () => {
+  it('Issue.findAll() and check if first has correct data', async () => {
     let issues = await Issue.findAll();
     let issue = issues.slice(0, 1);
     expect(
@@ -135,8 +131,8 @@ describe('issue test', () => {
   });
 });
 
-describe('feedback test', () => {
-  it('correct data', async () => {
+describe('Feedback tests', () => {
+  it('Feedback.findAll() and check if first has correct data', async () => {
     let feedbacks = await Feedback.findAll();
     let feedback = feedbacks.slice(0, 1);
     expect(
@@ -157,8 +153,8 @@ describe('feedback test', () => {
   });
 });
 
-describe('event test', () => {
-  it('correct data', async () => {
+describe('Event tests', () => {
+  it('Event.findAll() and check if first has correct data', async () => {
     let events = await Event.findAll();
     let event = events.slice(0, 1);
     expect(
@@ -185,8 +181,8 @@ describe('event test', () => {
   });
 });
 
-describe('issue_cat test', () => {
-  it('correct data', async () => {
+describe('Issue_category tests', () => {
+  it('Issue_category.findAll() and check if first has correct data', async () => {
     let issue_cats = await Issue_category.findAll();
     let issue_cat = issue_cats.slice(0, 1);
     expect(
@@ -205,8 +201,8 @@ describe('issue_cat test', () => {
   });
 });
 
-describe('event_cat test', () => {
-  it('correct data', async () => {
+describe('Event_category', () => {
+  it('Event_category.findAll() and check if first has correct data', async () => {
     let event_cats = await Event_category.findAll();
     let event_cat = event_cats.slice(0, 1);
     expect(

@@ -1,6 +1,7 @@
 // @flow
 import axios from 'axios';
-import { User, Issue, IssueCategory, Event, Municipal } from './models.js';
+import { User, Issue, IssueCategory, Event, Municipal} from "./models.js";
+import {EventCategory} from "./models";
 
 axios.interceptors.response.use(response => response.data);
 
@@ -14,7 +15,7 @@ class UserService {
   }
 
   updateUser(user: User): Promise<void> {
-    return axios.put('/users', user);
+    return axios.put('/users/' + user.userId, user);
   }
 
   addUser(user: User): Promise<number> {
@@ -38,7 +39,7 @@ class IssueService {
   }
 
   updateIssue(issue: Issue): Promise<void> {
-    return axios.put('/issues/', issue);
+    return axios.put('/issues/' + issue.issueId, issue);
   }
 
   addIssue(issue: Issue): Promise<number> {
@@ -54,23 +55,23 @@ export let issueService = new IssueService();
 
 class IssueCategoryService {
   getCategories(): Promise<IssueCategory[]> {
-    return axios.get('/issuecategories');
+    return axios.get('/issueCat');
   }
 
   getCategory(categoryId: number): Promise<IssueCategory> {
-    return axios.get('/issuecategories/' + categoryId);
+    return axios.get('/issueCat/' + categoryId);
   }
 
   updateCategory(category: IssueCategory): Promise<void> {
-    return axios.put('/issuecategories/', category);
+    return axios.put('/issueCat/' + category.categoryId, category);
   }
 
   addCategory(category: IssueCategory): Promise<number> {
-    return axios.post('/issuecategories', category);
+    return axios.post('/issueCat', category);
   }
 
   deleteCategory(categoryId: number): Promise<void> {
-    return axios.delete('/issuecategories/' + categoryId);
+    return axios.delete('/issueCat/' + categoryId);
   }
 }
 
@@ -84,7 +85,7 @@ class EventService {
     return axios.get('/events/' + eventId);
   }
   updateEvent(event: Event): Promise<void> {
-    return axios.put('/events', event);
+    return axios.put('/events/' + event.eventId, event);
   }
   addEvent(event: Event): Promise<number> {
     return axios.post('/events', event);
@@ -106,3 +107,27 @@ class MunicipalService {
 }
 
 export let municipalService = new MunicipalService();
+
+class EventCategoryService {
+  getCategories(): Promise<EventCategory[]> {
+    return axios.get('/eventCat');
+  }
+
+  getCategory(categoryId: number): Promise<EventCategory> {
+    return axios.get('/eventCat/' + categoryId);
+  }
+
+  updateCategory(category: EventCategory): Promise<void> {
+    return axios.put('/eventCat/' + category.categoryId, category);
+  }
+
+  addCategory(category: EventCategory): Promise<number> {
+    return axios.post('/eventCat', category);
+  }
+
+  deleteCategory(categoryId: number): Promise<void> {
+    return axios.delete('/eventCat/' + categoryId);
+  }
+}
+
+export let eventCategoryService = new EventCategoryService();
