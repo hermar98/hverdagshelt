@@ -1,10 +1,8 @@
 // @flow
 
-import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
-import { BrowserRouter, Route, NavLink } from 'react-router-dom';
 
 export default class Menu extends Component {
   render() {
