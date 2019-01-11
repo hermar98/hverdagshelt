@@ -1,6 +1,5 @@
 // @flow
 
-import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { User } from '../../models.js';
@@ -18,4 +17,5 @@ export class FileIssuePage extends Component {
             </div>
         );
     }
+
 }
