@@ -162,12 +162,7 @@ app.get('/secure/county/:id', (req: Request, res: Response) => {
   );
 });
 
-//Issue
-app.get('/secure/users/:id/issue', (req: Request, res: Response) => {
-  return Issue.findAll({ where: { user_id: Number(req.params.id) } }).then(issue =>
-    issue ? res.send(issue) : res.sendStatus(404)
-  );
-});
+
 
 //Event
 app.get('/secure/events', (req: Request, res: Response) => {
@@ -256,6 +251,7 @@ app.delete('/secure/eventCat/:id', (req: Request, res: Response) => {
 });
 
 //Issue
+
 app.get('/secure/issues', (req: Request, res: Response) => {
   return Issue.findAll().then(issues => res.send(issues));
 });
@@ -269,6 +265,12 @@ app.get('/secure/issues/:id/feedback', (req: Request, res: Response) => {
     issue ? res.send(issue) : res.sendStatus(404)
   );
 });
+app.get('/secure/users/:id/issues', (req: Request, res: Response) => {
+    return Issue.findAll({ where: { user_id: Number(req.params.id) } }).then(issue =>
+        issue ? res.send(issue) : res.sendStatus(404)
+    );
+});
+
 app.put('/secure/issues/:id', (req: Request, res: Response) => {
   if (!(req.body instanceof Object)) return res.sendStatus(400);
   return Issue.update(

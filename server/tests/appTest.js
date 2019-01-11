@@ -1,5 +1,5 @@
 // @flow
-import { Issue_category, Event_category, Event, Issue, County, Municipal, User, sync } from '../src/models';
+import { Feedback,Issue_category, Event_category, Event, Issue, County, Municipal, User, sync } from '../src/models';
 
 const request = require('supertest');
 const app = require('../src/app');
@@ -163,19 +163,109 @@ describe('County tests', () => {
 });
 
 //Issue
-/*describe('Issue tests', () => {
-    //Get one Issue with user id
-
-    test('GET /issues', async () => {
-        const response = await request(app).get('/issues');
+describe('Issue tests', () => {
+    //Get All Issues
+    test('GET /secure/issues', async () => {
+        const response = await request(app)
+            .get('/secure/issues')
+            .set({ 'x-access-token': token });
 
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
 
         expect(response.body.length).toEqual(await Issue.count());
-
     });
-});*/
+    //Get one Issue with id
+    test('GET /secure/issues/:id', async () => {
+        const response = await request(app)
+            .get('/secure/issues/1')
+            .set({ 'x-access-token': token });
+        expect(response.statusCode).toBe(200);
+        expect(response.type).toEqual('application/json');
+
+        expect(response.body.issue_id).toBe(1);
+        expect(response.body.title).toBe('Dumme folk ødeleger lømp');
+        expect(response.body.content).toBe('Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt');
+        expect(response.body.image).toBe('null');
+        expect(response.body.longitude).toBe(123123);
+        expect(response.body.latitude).toBe(123123);
+        //expect(response.body.mun_id).toBe(2012);
+        //expect(response.body.user_id).toBe(1);
+        //expect(response.body.category_id).toBe(1);
+        //expect(response.body.status_id).toBe(1);
+    });
+    //Get all feedback for Issue with id
+    test('GET /secure/issues/:id/feedback',async  () => {
+      const response = await request(app)
+          .get('/secure/issues/1/feedback')
+          .set({ 'x-access-token': token });
+
+      expect(response.statusCode).toBe(200);
+      expect(response.type).toEqual('application/json');
+
+      expect(response.body.length).toEqual(await Feedback.count());
+    });
+    //Get all issues for a user with id
+   /* test('GET /secure/users/:id/issues',async  () => {
+        const response = await request(app)
+            .get('/secure/users/1/issues')
+            .set({ 'x-access-token': token });
+
+        expect(response.statusCode).toBe(200);
+        expect(response.type).toEqual('application/json');
+
+        expect(response.body.length).toEqual(1);
+    });*/
+    //Update issue with id
+    test('PUT /secure/issues/:id', async () => {
+        const updateEventResponse = await request(app)
+            .put('/secure/issues/1')
+            .send({ title: 'No bear left' })
+            .set({ 'x-access-token': token });
+
+        expect(updateEventResponse.statusCode).toBe(200);
+
+        const response = await request(app)
+            .get('/secure/issues/1')
+            .set({ 'x-access-token': token });
+
+        expect(response.body.title).toBe('No bear left');
+    });
+    //Create issue
+    test('POST /secure/issues', async () => {
+        let count = await Issue.count(); // entries in database
+        let issue = {
+          title: 'Gratis Øl for studenter',
+            content: ':O',
+            image: null,
+            longitude: 63.1,
+            latitude: 10.4 };
+
+        const response = await request(app)
+            .post('/secure/issues')
+            .send(issue)
+            .set({ 'x-access-token': token });
+
+        expect(response.statusCode).toBe(200);
+        expect(await Issue.count()).toEqual(count + 1);
+    });
+    //Delete issue
+    test('DELETE /secure/issues/:id', async () => {
+        let totalIssues = await Issue.count();
+
+        const response = await request(app)
+            .delete('/secure/issues/1')
+            .set({ 'x-access-token': token });
+
+        expect(response.statusCode).toBe(200);
+
+        expect(await Issue.count()).toBe(totalIssues - 1);
+    });
+});
+
+
+
+
 //Event
 describe('Event tests', () => {
   //Get all Events
