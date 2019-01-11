@@ -46,7 +46,7 @@ class UserService {
     return axios.post('/login', {email: email, password: password});
   }
 
-  getToken(): Promise<string> {
+  getToken(): Promise<JSON> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
     return axios.get('/token', {

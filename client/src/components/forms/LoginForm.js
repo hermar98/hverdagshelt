@@ -29,7 +29,7 @@ export default class Login extends Component {
                     placeholder="Skriv inn passord"/>
                 <div className="container h-100">
                     <div className="row h-100 justify-content-center align-items-center">
-                        <Button.Basic onClick={this.save}>Logg inn</Button.Basic>
+                        <Button.Basic onClick={this.login}>Logg inn</Button.Basic>
                     </div>
                 </div>
                 <div className="container h-100">
@@ -41,13 +41,14 @@ export default class Login extends Component {
         );
     }
 
-    save() {
+    login() {
+        if (this.)
         userService
             .login(this.email, this.password)
             .then(token => {
                 localStorage.setItem('token', JSON.stringify(token));
                 history.push('/issues');
-                console.log('Login ok')
+                console.log('Login ok');
             })
             .catch((error: Error) => Alert.danger(error.message));
     }
