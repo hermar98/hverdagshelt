@@ -14,6 +14,8 @@ import { ChooseMunicipalPage } from './components/pages/ChooseMunicipalPage';
 import { RegisterEventPage } from './components/pages/RegisterEventPage';
 import { IssueLarge, IssueOverviewSmall } from './components/issueViews/issueViews';
 import { Issue } from './models.js';
+import {EventPage} from "./components/pages/EventPage";
+
 
 // Reload application when not in production environment
 

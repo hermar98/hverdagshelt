@@ -7,9 +7,9 @@ let sequelize = new Sequelize(
   // process.env.CI ? 'database' : 'cdaxell',
   // process.env.CI ? 'root' : 'cdaxell',
   // process.env.CI ? '' : 'yAmB12A4',
-  process.env.CI ? 'database' : 'sebasman',
-  process.env.CI ? 'root' : 'sebasman',
-  process.env.CI ? '' : 'GSBLuzbB',
+  process.env.CI ? 'database' : 'jorgaas',
+  process.env.CI ? 'root' : 'jorgaas',
+  process.env.CI ? '' : 'sPrzGgz9',
   {
     host: process.env.CI ? 'mysql' : 'mysql.stud.iie.ntnu.no',
     dialect: 'mysql',

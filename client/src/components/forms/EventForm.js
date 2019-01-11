@@ -11,6 +11,7 @@ export default class EventForm extends Component {
   event = new Event();
   form = null;
   categories = [];
+  category = new EventCategory();
 
   render() {
     return(
@@ -21,13 +22,13 @@ export default class EventForm extends Component {
             onChange={e => (this.event.title = e.target.value)}
             required
             placeholder="Tittel"/>
-          <div className="input-group">
+          <div className="form-group form-inline col-sm-12 justify-content-center">
             <div className="input-group-prepend">
-              <button className="btn btn-outline-secondary" type="button" onClick={this.newCategory}>Legg til kategori</button>
+              <button className="btn btn-outline-secondary" type="button" onClick={this.newCategory}>Velg kategori</button>
             </div>
-            <select className="form-control" value={this.event.categoryId || ''}
+            <select className="form-control col-sm-3 justify-content-center" value={this.event.categoryId || 0}
                     onChange={e => (this.event.categoryId = parseInt(e.target.value))}>
-              {this.categories.map(cat => <option value ={cat.categoryId}>{cat.name}</option>)}
+              {this.categories.map(cat => <option value={1}>{cat.name}</option>)}
             </select>
           </div>
           <Form.InputLarge
@@ -78,18 +79,6 @@ export default class EventForm extends Component {
 
     eventService
       .addEvent(this.event)
-      .then(history.push('/'))
-      .catch((error: Error) => Alert.danger(error.message));
-  }
-
-  newCategory(){
-    return(
-        <Form.Input
-          type="text"
-          onChange={e => (this.event.title = e.target.value)}
-          required
-          placeholder="Tittel"/>
-    )
   }
 
   mounted(){
