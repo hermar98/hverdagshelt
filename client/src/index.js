@@ -17,7 +17,6 @@ import { RegisterEventPage } from './components/pages/RegisterEventPage';
 import { EventPage } from './components/pages/EventPage';
 import { IssueLarge, IssueNormal, IssueOverviewSmall } from './components/issueViews/issueViews';
 import { Issue } from './models.js';
-import {EventPage} from "./components/pages/EventPage";
 
 
 // Reload application when not in production environment
