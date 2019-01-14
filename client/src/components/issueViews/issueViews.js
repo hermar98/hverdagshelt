@@ -126,7 +126,9 @@ export class IssueSmall extends Component<{issue: Issue}> {
     render() {
         return (
             <div className="issue-small issue-hover" issue={this.props.issue}>
-                <a href={"#issues/" + this.props.issue.issue_id} />
+                <a id="a-hover" href={"#issues/" + this.props.issue.issue_id}>
+                    <img src="../../images/arrowRightTrans.png" />
+                </a>
                 <div className="d-flex flex-row justify-content-between">
                     <div>
                         <p className="date">{this.props.issue.date}</p>
@@ -134,8 +136,8 @@ export class IssueSmall extends Component<{issue: Issue}> {
                             {this.props.issue.title}
                         </h5>
                     </div>
+                    <StatusImage status={this.props.issue.status_id} />
                 </div>
-                <Status className="status-small" status={this.props.issue.status_id} />
             </div>
         )
     }
