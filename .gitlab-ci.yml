@@ -5,7 +5,7 @@ variables:
   MYSQL_ALLOW_EMPTY_PASSWORD: 1
 
 test:
-  image: node:alpine
+  image: node:latests
   services:
     - mysql:5 # The JS mysql-library does not yet support the newest mysql protocol
   script:
