@@ -62,6 +62,7 @@ export class Event {
   latitude: number;
   timeStart: string;
   timeEnd: string;
+  categoryId: number;
 
   /*constructor (    eventId: number, title: string, content: string, image: string, longitude: number, latitude: number, timeStart: string, timeEnd: string) {
         this.eventId = eventId
