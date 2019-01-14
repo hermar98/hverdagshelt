@@ -7,7 +7,7 @@ import { BrowserRouter, HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from './widgets';
 import { MenuLoggedIn } from './components/menu/MenuLoggedIn';
 import { MenuMunicipalWorker } from './components/menu/MenuMunicipalWorker';
-import Menu from "./components/menu/Menu";
+import Menu from './components/menu/Menu';
 import { FileIssuePage } from './components/pages/FileIssuePage';
 import { LoginPage } from './components/pages/LoginPage';
 import { UserProfilePage } from './components/pages/ProfilePage/UserProfilePage';
@@ -15,13 +15,9 @@ import { RegisterPage } from './components/pages/RegisterPage';
 import { EventPage } from './components/pages/EventPage';
 import { ChooseMunicipalPage } from './components/pages/ChooseMunicipalPage';
 import { RegisterEventPage } from './components/pages/RegisterEventPage';
-import { EventPage } from './components/pages/EventPage';
-import { IssueLarge, IssueOverviewNormal, IssueOverviewSmall } from './components/issueViews/issueViews';
+import { IssueLarge, IssueOverviewNormal, IssueNormal, IssueOverviewSmall } from './components/issueViews/issueViews';
 import { ForgotPassword } from './components/pages/ForgotPassword.js';
-
-import { IssueLarge, IssueNormal, IssueOverviewSmall } from './components/issueViews/issueViews';
 import { Issue } from './models.js';
-
 
 // Reload application when not in production environment
 
@@ -42,7 +38,7 @@ if (root)
     <HashRouter>
       <div>
         <Alert />
-        <Menu/>
+        <Menu />
         <Route exact path="/" component={ChooseMunicipalPage} />
         <Route exact path="/issues" component={IssueOverviewNormal} />
         <Route path="/issues/:issue_id" component={IssueLarge} />
@@ -60,5 +56,3 @@ if (root)
     </HashRouter>,
     root
   );
-
-

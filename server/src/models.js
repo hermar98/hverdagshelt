@@ -14,7 +14,7 @@ let sequelize = new Sequelize(
   // process.env.CI ? 'database' : 'sebasman',
   // process.env.CI ? 'root' : 'sebasman',
   // process.env.CI ? '' : 'GSBLuzbB',
-  process.env.CI ? 'database' : 'trondjro',
+  process.env.CI ? 'database' : 'everydayhero',
   process.env.CI ? 'root' : 'user',
   process.env.CI ? '' : 'password',
   {
@@ -39,25 +39,25 @@ export let Feedback: Class<
 });
 
 export let Issue: Class<
-    Model<{
-        issue_id?: number,
-        title: string,
-        content: string,
-        image: string,
-        longitude: number,
-        latitude: number,
-        status_id: number,
-        category_id: number
-    }>
-    > = sequelize.define('Issue', {
-    issue_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    title: Sequelize.STRING,
-    content: Sequelize.STRING,
-    image: Sequelize.STRING,
-    longitude: Sequelize.DOUBLE,
-    latitude: Sequelize.DOUBLE,
-    status_id: { type: Sequelize.INTEGER, defaultValue: 1 },
-    category_id: Sequelize.INTEGER
+  Model<{
+    issue_id?: number,
+    title: string,
+    content: string,
+    image: string,
+    longitude: number,
+    latitude: number,
+    status_id: number,
+    category_id: number
+  }>
+> = sequelize.define('Issue', {
+  issue_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+  title: Sequelize.STRING,
+  content: Sequelize.STRING,
+  image: Sequelize.STRING,
+  longitude: Sequelize.DOUBLE,
+  latitude: Sequelize.DOUBLE,
+  status_id: { type: Sequelize.INTEGER, defaultValue: 1 },
+  category_id: Sequelize.INTEGER
 });
 
 export let IssuePicture: Class<
