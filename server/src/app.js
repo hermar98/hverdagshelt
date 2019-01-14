@@ -141,14 +141,20 @@ app.delete('/secure/users/:id', (req: Request, res: Response) => {
 });
 
 //Municipal
-app.get('/secure/municipals', (req: Request, res: Response) => {
-  return Municipal.findAll().then(users => res.send(users));
+app.get('/municipals', (req: Request, res: Response) => {
+  return Municipal.findAll().then(muns => res.send(muns));
 });
 
-app.get('/secure/municipals/:id', (req: Request, res: Response) => {
-  return Municipal.findOne({ where: { mun_id: Number(req.params.id) } }).then(user =>
-    user ? res.send(user) : res.sendStatus(404)
+app.get('/municipals/:id', (req: Request, res: Response) => {
+  return Municipal.findOne({ where: { mun_id: Number(req.params.id) } }).then(mun =>
+    mun ? res.send(mun) : res.sendStatus(404)
   );
+});
+
+app.get('/municipals/:id/issues', (req: Request, res: Response) => {
+    return Municipal.findAll({where: {mun_id: Number(req.params.id) } }).then(muns =>
+    muns ? res.send(muns) : res.sendStatus(404)
+    );
 });
 
 //County
@@ -201,7 +207,8 @@ app.post('/secure/events', (req: Request, res: Response) => {
     longitude: req.body.longitude,
     latitude: req.body.latitude,
     time_start: req.body.timeStart,
-    time_end: req.body.timeEnd
+    time_end: req.body.timeEnd,
+    category_id: req.body.categoryId
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 app.delete('/secure/events/:id', (req: Request, res: Response) => {

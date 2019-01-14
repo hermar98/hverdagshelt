@@ -5,21 +5,27 @@ import type { Model } from 'sequelize';
 require('dotenv').config();
 
 let sequelize = new Sequelize(
-  // process.env.CI ? 'database' : 'cdaxell',
-  // process.env.CI ? 'root' : 'cdaxell',
-  // process.env.CI ? '' : 'yAmB12A4',
-  process.env.CI ? 'database' : 'everydayhero',
-  process.env.CI ? 'root' : 'user',
-  process.env.CI ? '' : 'password',
-  {
-    // host: process.env.CI ? 'mysql' : 'mysql.stud.iie.ntnu.no',
-    host: process.env.CI ? 'mysql' : 'localhost',
-    dialect: 'mysql',
-    pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000
+    // process.env.CI ? 'database' : 'cdaxell',
+    // process.env.CI ? 'root' : 'cdaxell',
+    // process.env.CI ? '' : 'yAmB12A4',
+    // process.env.CI ? 'database' : 'sandern',
+    // process.env.CI ? 'root' : 'sandern',
+    // process.env.CI ? '' : 'KcL5ZgzU',
+    // process.env.CI ? 'database' : 'sebasman',
+    // process.env.CI ? 'root' : 'sebasman',
+    // process.env.CI ? '' : 'GSBLuzbB',
+    process.env.CI ? 'database' : 'jorgaas',
+    process.env.CI ? 'root' : 'jorgaas',
+    process.env.CI ? '' : 'sPrzGgz9',
+    {
+        host: process.env.CI ? 'mysql' : 'mysql.stud.iie.ntnu.no',
+        dialect: 'mysql',
+        pool: {
+            max: 5,
+            min: 0,
+            acquire: 30000,
+            idle: 10000
+        }
     }
   }
 );
