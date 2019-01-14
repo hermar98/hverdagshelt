@@ -55,7 +55,7 @@ export default class Login extends Component {
                 history.push('/issues');
                 console.log('Login ok');
             })
-            .catch((error: Error) => Alert.danger(error.message));
+            .catch((error: Error) => Alert.danger('Feil brukernavn eller passord'));
     }
 
     goTo() {
