@@ -34,8 +34,12 @@ export class IssueLarge extends Component<{match: {params: {issue_id: number}}}>
                     <Status status={this.issue.status_id}/>
                     <div className="card">
                         <div className="card-body">
-                            <div className="d-flex flex-row justify-content-between">
+                            <div className="d-flex flex-row">
                                 <p className="date">{this.issue.date}</p>
+                                <div className="options">
+                                    <ImageButton source="../../images/cog.png" onclick="Edited" />
+                                    <ImageButton source="../../images/trashcan.png" onclick="Deleted" />
+                                </div>
                                 <StatusImage status={this.issue.status_id} />
                             </div>
                             <div className="card-text">
@@ -201,6 +205,8 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
                         <img className="card-img profile-image" src={this.user.profilePicture}/>
                     </div>
                     <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{this.props.feedback.date}</p></div>
+                    <ImageButton source="../../images/cog.png" onclick="Edited" />
+                    <ImageButton source="../../images/trashcan.png" onclick="Deleted" />
                 </div>
                 <div className="card feedback">
                     <div className="card-body">
@@ -341,6 +347,16 @@ export class HoverButton extends Component<{onclick: function, title: string}> {
         return (
             <button className="btn hover-button" id="hover-Button" type="button" onClick={this.props.onclick} title={this.props.title}>
                 {this.props.title}
+            </button>
+        )
+    }
+}
+
+export class ImageButton extends Component<{source: string, onclick: function}> {
+    render() {
+        return(
+            <button className="btn image-button" type="button" onClick={this.props.onclick} >
+                <img id="image-button-image" src={this.props.source} />
             </button>
         )
     }

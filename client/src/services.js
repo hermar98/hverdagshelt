@@ -1,7 +1,7 @@
 // @flow
 import axios from 'axios';
 import { User, Issue, IssueCategory, Event, Municipal} from "./models.js";
-import {EventCategory} from "./models";
+import {EventCategory, Feedback} from "./models";
 
 axios.interceptors.response.use(response => response.data);
 
@@ -230,3 +230,15 @@ class EventCategoryService {
 }
 
 export let eventCategoryService = new EventCategoryService();
+
+class FeedbackService {
+  getFeedbacks(issueId: number): Promise<Feedback[]> {
+      let token = localStorage.getItem('token');
+      if (token) token = JSON.parse(token).jwt;
+      return axios.get("/secure/issues/" + issueId + "/feedback", {
+          headers: {'x-access-token': token}
+      });
+  }
+}
+
+export let feedbackService = new FeedbackService()
