@@ -114,6 +114,7 @@ app.put('/secure/users/:id', (req: Request, res: Response) => {
         lastName: req.body.lastName,
         email: req.body.email,
         rank: req.body.rank,
+        mun_id: req.body.mun_id,
         salt: passwordSalt,
         hash_str: passwordData.passwordHash
       },
@@ -127,6 +128,7 @@ app.put('/secure/users/:id', (req: Request, res: Response) => {
       lastName: req.body.lastName,
       email: req.body.email,
       rank: req.body.rank,
+      mun_id: req.body.mun_id,
       salt: req.body.salt,
       hash_str: req.body.hash_str
     },

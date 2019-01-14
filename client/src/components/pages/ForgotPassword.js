@@ -7,10 +7,6 @@ import ForgotPasswordForm from '../../components/forms/ForgotPasswordForm';
 import Menu from '../../components/menu/Menu.js';
 import axios from 'axios';
 
-const title = {
-  pageTitle: 'Forgot Password Screen'
-};
-
 export class ForgotPassword extends Component {
   render() {
     return (
