@@ -10,6 +10,7 @@ import { history } from "../../index";
 
 export default class RegisterIssue extends Component {
   issue = new Issue();
+  categories = [];
   form = null;
 
   render() {
@@ -22,7 +23,15 @@ export default class RegisterIssue extends Component {
             required
             placeholder="Skriv en passende tittel"
           />
-          <Form.IssueCatDropdown onChange={event => this.issue.categoryId = parseInt(event.target.value)}/>
+          <div className="form-group row justify-content-center">
+            <div className="col-sm-10 col-lg-4 justify-content-center">
+                  <select required className="form-control" value={this.issue.category_id || ''}
+                          onChange={(e: SyntheticInputEvent<HTMLInputElement>) => {if(this.issue) this.issue.category_id = parseInt(e.target.value)}}>
+                      <option disabled selected value=''>Velg kategori..</option>
+                      {this.categories.map(cat => <option key={cat.category_id} value={cat.category_id}>{cat.name}</option>)}
+                  </select>
+            </div>
+        </div>
           <Form.InputLarge
             type="text"
             onChange={event => (this.issue.content = event.target.value)}
@@ -43,7 +52,6 @@ export default class RegisterIssue extends Component {
   save() {
     if (!this.form || !this.form.checkValidity()) return;
 
-    if(this.issue.categoryId == null) this.issue.categoryId = 1;
 
     this.issue.latitude = 0.1;
     this.issue.longitude = 0.2;
@@ -56,4 +64,13 @@ export default class RegisterIssue extends Component {
 
     console.log(this.issue);
   }
+
+    mounted() {
+        issueCategoryService
+            .getCategories()
+            .then(issueCategories => (this.categories = issueCategories))
+            .then(() => console.log(this.categories))
+            .catch((error: Error) => Alert.danger(error.message));
+
+    }
 }

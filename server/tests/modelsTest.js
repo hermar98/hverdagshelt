@@ -205,12 +205,12 @@ describe('Event_category', () => {
       event_cat
         .map(e => e.toJSON())
         .map(e => ({
-          event_id: e.event_id,
+          category_id: e.category_id,
           name: e.name
         }))
     ).toEqual([
       {
-        event_id: 1,
+        category_id: 1,
         name: 'PARTY'
       }
     ]);

@@ -1,7 +1,7 @@
 // @flow
 import axios from 'axios';
-import { User, Issue, IssueCategory, Event, Municipal } from './models.js';
-import { EventCategory } from './models';
+import { User, Issue, IssueCategory, Event, Municipal} from "./models.js";
+import {EventCategory, Feedback} from "./models";
 
 axios.interceptors.response.use(response => response.data);
 
@@ -25,7 +25,6 @@ class UserService {
   updateUser(user: User): Promise<void> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    console.log(user);
     return axios.put('/secure/users/' + user.user_id, user, {
       headers: { 'x-access-token': token }
     });
@@ -55,10 +54,10 @@ class UserService {
     });
   }
 
-  forgotPassword(): Promise<JSON> {
+  forgotPassword(email: string): Promise<JSON> {
     return axios
       .post('/forgotPassword', {
-        email: this.state.email
+        email: email
       })
       .then(response => {
         console.log(response.data);
@@ -137,20 +136,24 @@ class IssueCategoryService {
     });
   }
 
-  getCategory(categoryId: number): Promise<IssueCategory> {
-    let token = localStorage.getItem('token');
-    if (token) token = JSON.parse(token).jwt;
-    return axios.get('/secure/issueCat/' + categoryId, {
-      headers: { 'x-access-token': token }
-    });
+  getCategory(category_id: number): Promise<IssueCategory> {
+      let token = localStorage.getItem('token');
+      if (token) token = JSON.parse(token).jwt;
+    return axios.get('/secure/issueCat/' + category_id,
+        {
+            headers: {'x-access-token': token}
+
+        });
   }
 
   updateCategory(category: IssueCategory): Promise<void> {
-    let token = localStorage.getItem('token');
-    if (token) token = JSON.parse(token).jwt;
-    return axios.put('/secure/issueCat/' + category.categoryId, category, {
-      headers: { 'x-access-token': token }
-    });
+      let token = localStorage.getItem('token');
+      if (token) token = JSON.parse(token).jwt;
+    return axios.put('/secure/issueCat/' + category.category_id, category,
+        {
+            headers: {'x-access-token': token}
+
+        });
   }
 
   addCategory(category: IssueCategory): Promise<number> {
@@ -173,6 +176,7 @@ class IssueCategoryService {
 export let issueCategoryService = new IssueCategoryService();
 
 class EventService {
+
   getEvents(): Promise<Event[]> {
     let token = localStorage.getItem('token');
     if (token) {
@@ -276,3 +280,15 @@ class EventCategoryService {
 }
 
 export let eventCategoryService = new EventCategoryService();
+
+class FeedbackService {
+  getFeedbacks(issueId: number): Promise<Feedback[]> {
+      let token = localStorage.getItem('token');
+      if (token) token = JSON.parse(token).jwt;
+      return axios.get("/secure/issues/" + issueId + "/feedback", {
+          headers: {'x-access-token': token}
+      });
+  }
+}
+
+export let feedbackService = new FeedbackService()
