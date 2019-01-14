@@ -223,7 +223,7 @@ app.get('/secure/eventCat', (req: Request, res: Response) => {
 });
 
 app.get('/secure/eventCat/:id', (req: Request, res: Response) => {
-  return Event_category.findOne({ where: { event_id: Number(req.params.id) } }).then(eventCategory =>
+  return Event_category.findOne({ where: { category_id: Number(req.params.id) } }).then(eventCategory =>
     eventCategory ? res.send(eventCategory) : res.sendStatus(404)
   );
 });
@@ -236,7 +236,7 @@ app.put('/secure/eventCat/:id', (req: Request, res: Response) => {
     },
     {
       where: {
-        event_id: req.params.id
+        category_id: req.params.id
       }
     }
   ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
@@ -250,7 +250,7 @@ app.post('/secure/eventCat', (req: Request, res: Response) => {
 app.delete('/secure/eventCat/:id', (req: Request, res: Response) => {
   return Event_category.destroy({
     where: {
-      event_id: req.params.id
+      category_id: req.params.id
     }
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });

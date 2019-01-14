@@ -14,11 +14,11 @@ let sequelize = new Sequelize(
   // process.env.CI ? 'database' : 'sebasman',
   // process.env.CI ? 'root' : 'sebasman',
   // process.env.CI ? '' : 'GSBLuzbB',
-  process.env.CI ? 'database' : 'hverdagshelt',
-  process.env.CI ? 'root' : 'vegard',
-  process.env.CI ? '' : '1234',
+  process.env.CI ? 'database' : 'trondjro',
+  process.env.CI ? 'root' : 'user',
+  process.env.CI ? '' : 'password',
   {
-    host: process.env.CI ? 'mysql' : 'mysql.stud.iie.ntnu.no',
+    host: process.env.CI ? 'mysql' : 'localhost',
     dialect: 'mysql',
     pool: {
       max: 5,
