@@ -45,8 +45,8 @@ export class IssueCategory {
   categoryId: number;
   name: string;
 
-  /*constructor (categoryId: number, name: string) {
-        this.categoryId = categoryId
+  /*constructor (category_id: number, name: string) {
+        this.category_id = category_id
         this.name = name
     }*/
 }
@@ -75,11 +75,11 @@ export class Event {
 }
 
 export class EventCategory {
-  categoryId: number;
+  category_id: number;
   name: string;
 
-  /*constructor (categoryId: number, name: string) {
-        this.categoryId = categoryId
+  /*constructor (category_id: number, name: string) {
+        this.category_id = category_id
         this.name = name
     }*/
 }

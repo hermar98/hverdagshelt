@@ -24,14 +24,16 @@ export default class EventForm extends Component {
             onChange={e => (this.event.title = e.target.value)}
             required
             placeholder="Tittel"/>
-          <div className="form-group form-inline col-sm-12 justify-content-center">
-            <select className="form-control col-sm-4 justify-content-center" value={this.event.categoryId || ''}
-                    onChange={(e: SyntheticInputEvent<HTMLInputElement>) => {if(this.event) this.event.categoryId = parseInt(e.target.value)}}>
-              <option selected value={2}>Velg kategori..</option>
+          <div className="form-group row justify-content-center">
+            <div className="col-sm-10 col-lg-4 justify-content-center">
+            <select required className="form-control" value={this.event.category_id || ''}
+                    onChange={(e: SyntheticInputEvent<HTMLInputElement>) => {if(this.event) this.event.category_id = parseInt(e.target.value)}}>
+              <option selected disabled value=''>Velg kategori..</option>
               <option value={1}>Dab </option>
-              {this.categories.map(cat => <option key={cat.categoryId} value={cat.categoryId}>{cat.name}</option>)}
-              <option value={0}>Annet</option>
+              {this.categories.map(cat => <option key={cat.category_id} value={cat.category_id}>{cat.name}</option>)}
+              <option value={100}>Annet</option>
             </select>
+            </div>
           </div>
           <Form.InputLarge
             type="text"
@@ -90,7 +92,7 @@ export default class EventForm extends Component {
     eventCategoryService
       .getCategories()
       .then(e => this.categories = e)
-      .then(e => console.log(this.categories.map(es => es.categoryId)))
+      .then(e => console.log(this.categories.map(es => es.category_id)))
       .catch((error: Error) => Alert.danger(error.message));
   }
 

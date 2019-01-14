@@ -14,9 +14,9 @@ let sequelize = new Sequelize(
   // process.env.CI ? 'database' : 'sebasman',
   // process.env.CI ? 'root' : 'sebasman',
   // process.env.CI ? '' : 'GSBLuzbB',
-  process.env.CI ? 'database' : 'everydayhero',
+  process.env.CI ? 'database' : 'testdb',
   process.env.CI ? 'root' : 'user',
-  process.env.CI ? '' : 'password',
+  process.env.CI ? '' : '1234',
   {
     host: process.env.CI ? 'mysql' : 'localhost',
     dialect: 'mysql',
@@ -149,8 +149,8 @@ export let Issue_category: Class<Model<{ category_id?: number, name: string }>> 
   name: Sequelize.STRING
 });
 
-export let Event_category: Class<Model<{ event_id?: number, name: string }>> = sequelize.define('Event_category', {
-  event_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+export let Event_category: Class<Model<{ category_id?: number, name: string }>> = sequelize.define('Event_category', {
+  category_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
   name: Sequelize.STRING
 });
 
@@ -547,7 +547,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             name: 'Konsert'
           },
           {
-            category_id: 1,
+            category_id: 3,
             name: 'Galleri'
           }
         ])

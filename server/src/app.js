@@ -208,7 +208,7 @@ app.post('/secure/events', (req: Request, res: Response) => {
     latitude: req.body.latitude,
     time_start: req.body.timeStart,
     time_end: req.body.timeEnd,
-    category_id: req.body.categoryId
+    category_id: req.body.category_id
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 app.delete('/secure/events/:id', (req: Request, res: Response) => {
