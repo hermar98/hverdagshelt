@@ -15,10 +15,8 @@ import { RegisterPage } from './components/pages/RegisterPage';
 import { EventPage } from './components/pages/EventPage';
 import { ChooseMunicipalPage } from './components/pages/ChooseMunicipalPage';
 import { RegisterEventPage } from './components/pages/RegisterEventPage';
-import { IssueLarge, IssueOverviewNormal, IssueOverviewSmall } from './components/issueViews/issueViews';
+import { IssueLarge, IssueOverviewNormal, IssueNormal, IssueOverviewSmall } from './components/issueViews/issueViews';
 import { ForgotPassword } from './components/pages/ForgotPassword.js';
-
-import { IssueLarge, IssueNormal, IssueOverviewSmall } from './components/issueViews/issueViews';
 import { Issue } from './models.js';
 
 // Reload application when not in production environment
