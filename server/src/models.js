@@ -5,9 +5,18 @@ import type { Model } from 'sequelize';
 require('dotenv').config();
 
 let sequelize = new Sequelize(
-  process.env.CI ? 'database' : 'hermanc',
-  process.env.CI ? 'root' : 'hermanc',
-  process.env.CI ? '' : '7GUbgG3Y',
+  // process.env.CI ? 'database' : 'cdaxell',
+  // process.env.CI ? 'root' : 'cdaxell',
+  // process.env.CI ? '' : 'yAmB12A4',
+  // process.env.CI ? 'database' : 'sandern',
+  // process.env.CI ? 'root' : 'sandern',
+  // process.env.CI ? '' : 'KcL5ZgzU',
+  // process.env.CI ? 'database' : 'sebasman',
+  // process.env.CI ? 'root' : 'sebasman',
+  // process.env.CI ? '' : 'GSBLuzbB',
+  process.env.CI ? 'database' : 'hverdagshelt',
+  process.env.CI ? 'root' : 'vegard',
+  process.env.CI ? '' : '1234',
   {
     host: process.env.CI ? 'mysql' : 'mysql.stud.iie.ntnu.no',
     dialect: 'mysql',
@@ -37,7 +46,6 @@ export let Issue: Class<
         image: string,
         longitude: number,
         latitude: number,
-        date: Date,
         status_id: number,
         category_id: number
     }>
@@ -48,7 +56,6 @@ export let Issue: Class<
     image: Sequelize.STRING,
     longitude: Sequelize.DOUBLE,
     latitude: Sequelize.DOUBLE,
-    date: Sequelize.DATE,
     status_id: { type: Sequelize.INTEGER, defaultValue: 1 },
     category_id: Sequelize.INTEGER
 });

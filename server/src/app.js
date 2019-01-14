@@ -206,7 +206,7 @@ app.post('/secure/events', (req: Request, res: Response) => {
     latitude: req.body.latitude,
     time_start: req.body.timeStart,
     time_end: req.body.timeEnd,
-    category_id: req.body.categoryId
+    category_id: req.body.category_id
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 app.delete('/secure/events/:id', (req: Request, res: Response) => {
@@ -304,7 +304,6 @@ app.post('/secure/issues', (req: Request, res: Response) => {
     longitude: req.body.longitude,
     latitude: req.body.latitude,
     status: req.body.status,
-    date: req.body.date,
     status_id: req.body.status_id,
     category_id: req.body.category_id
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
