@@ -27,7 +27,9 @@ export class Issue {
   longitude: number;
   latitude: number;
   status: number;
+  categoryId: number;
   date: Date; //Works with string, unsure about date convertion
+  categoryId: number;
 
   /*constructor(issueId: number, title: string, content: string, image: string, longitude: number, latitude: number, status: number, date: Date){
         this.issueId = issueId
@@ -85,10 +87,10 @@ export class EventCategory {
 }
 
 export class Municipal {
-    mun_id: number;
-    name: string;
+  munId: number;
+  name: string;
 
-    /*
+  /*
     constructor( mun_id: number, title: string){
         this.mun_id = mun_id;
         this.title = title;

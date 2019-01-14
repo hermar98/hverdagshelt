@@ -10,6 +10,7 @@ export default class Menu extends Component {
       <div>
         <NavBar>
             <NavBar.Brand image="images/Trondheim_kommune.png">Trondheim Kommune</NavBar.Brand>
+            <NavBar.Link to="/events">Events/hendelser</NavBar.Link>
             <NavBar.Link to="/issues">Innmeldinger</NavBar.Link>
             <NavBar.Link to="/registerIssue">Registrer sak</NavBar.Link>
             <NavBar.Link to="/login">Logg inn</NavBar.Link>

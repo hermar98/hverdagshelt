@@ -35,7 +35,7 @@ app.post('/login', (req: Request, res: Response) => {
       let passwordData = passwordHash.sha512(req.body.password, user.salt);
       if (passwordData.passwordHash === user.hash_str) {
         let token = jwt.sign({ email: req.body.email }, secretKey, {
-          expiresIn: 600
+          expiresIn: 4000
         });
         res.json({ jwt: token });
       } else {
@@ -152,9 +152,9 @@ app.get('/municipals/:id', (req: Request, res: Response) => {
 });
 
 app.get('/municipals/:id/issues', (req: Request, res: Response) => {
-    return Municipal.findAll({where: {mun_id: Number(req.params.id) } }).then(muns =>
+  return Municipal.findAll({ where: { mun_id: Number(req.params.id) } }).then(muns =>
     muns ? res.send(muns) : res.sendStatus(404)
-    );
+  );
 });
 
 //County
@@ -167,8 +167,6 @@ app.get('/secure/county/:id', (req: Request, res: Response) => {
     user ? res.send(user) : res.sendStatus(404)
   );
 });
-
-
 
 //Event
 app.get('/secure/events', (req: Request, res: Response) => {
@@ -273,9 +271,9 @@ app.get('/secure/issues/:id/feedback', (req: Request, res: Response) => {
   );
 });
 app.get('/secure/users/:id/issues', (req: Request, res: Response) => {
-    return Issue.findAll({ where: { user_id: Number(req.params.id) } }).then(issue =>
-        issue ? res.send(issue) : res.sendStatus(404)
-    );
+  return Issue.findAll({ where: { user_id: Number(req.params.id) } }).then(issue =>
+    issue ? res.send(issue) : res.sendStatus(404)
+  );
 });
 
 app.put('/secure/issues/:id', (req: Request, res: Response) => {
@@ -306,7 +304,9 @@ app.post('/secure/issues', (req: Request, res: Response) => {
     longitude: req.body.longitude,
     latitude: req.body.latitude,
     status: req.body.status,
-    date: req.body.date
+    date: req.body.date,
+    status_id: req.body.status_id,
+    category_id: req.body.category_id
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
