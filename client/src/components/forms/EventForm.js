@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Event } from "../../models.js"
-import { eventService} from '../../services';
+import { Event, EventCategory } from "../../models.js"
+import {eventCategoryService, eventService} from '../../services';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
 import {history} from '../../index';
 
@@ -10,6 +10,8 @@ import {history} from '../../index';
 export default class EventForm extends Component {
   event = new Event();
   form = null;
+  categories = [];
+  category = new EventCategory();
 
   render() {
     return(
@@ -20,6 +22,27 @@ export default class EventForm extends Component {
             onChange={e => (this.event.title = e.target.value)}
             required
             placeholder="Tittel"/>
+          <div className="form-group form-inline col-sm-12 justify-content-center">
+            <div className="input-group-prepend">
+              <button className="btn btn-outline-secondary" type="button" onClick={this.newCategory}>Velg kategori</button>
+            </div>
+            <select className="form-control col-sm-3 justify-content-center" value={this.event.categoryId || ''}
+                    onChange={(e: SyntheticInputEvent<HTMLInputElement>) => {if(this.event) this.event.categoryId = parseInt(e.target.value)}}>
+              <option selected value={2}>Velg kategori..</option>
+              <option value={1}>Dab </option>
+              {this.categories.map(cat => <option key={cat.categoryId} value={cat.categoryId}>{cat.name}</option>)}
+            </select>
+          </div>
+          <div className="form-row">
+            <div className="form-group col-md-6">
+              <label htmlFor="sel1">Select category</label>
+              <select className="form-control" id="sel2" value={this.event.categoryId || ''}
+                      onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
+                        if (this.event) this.event.categoryId = parseInt(event.target.value);}}>
+                {this.categories.map(cat => <option key={cat.categoryId} value={cat.categoriId}>{cat.name}</option>)}
+              </select>
+            </div>
+          </div>
           <Form.InputLarge
             type="text"
             onChange={e => (this.event.content = e.target.value)}
@@ -70,9 +93,14 @@ export default class EventForm extends Component {
       .addEvent(this.event)
       .then(history.push('/'))
       .catch((error: Error) => Alert.danger(error.message));
+
   }
 
   mounted(){
-
+    eventCategoryService
+      .getCategories()
+      .then(e => this.categories = e)
+      .then(e => console.log(this.categories.map(es => es.categoryId)))
+      .catch((error: Error) => Alert.danger(error.message));
   }
 }

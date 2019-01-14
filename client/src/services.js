@@ -205,7 +205,11 @@ export let municipalService = new MunicipalService();
 
 class EventCategoryService {
   getCategories(): Promise<EventCategory[]> {
-    return axios.get('/secure/eventCat');
+    let token = localStorage.getItem('token');
+    if (token) token = JSON.parse(token).jwt;
+    return axios.get('/secure/eventCat', {
+      headers: {'x-access-token': token}
+    });
   }
 
   getCategory(categoryId: number): Promise<EventCategory> {
