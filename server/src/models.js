@@ -5,7 +5,7 @@ import type { Model } from 'sequelize';
 require('dotenv').config();
 
 let sequelize = new Sequelize(
-  process.env.CI ? 'localhost' : 'testdb',
+  process.env.CI ? 'database' : 'testdb',
   process.env.CI ? 'root' : 'user',
   process.env.CI ? '' : 'password',
     {
