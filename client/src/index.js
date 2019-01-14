@@ -15,6 +15,8 @@ import { RegisterPage } from './components/pages/RegisterPage';
 import { EventPage } from './components/pages/EventPage';
 import { ChooseMunicipalPage } from './components/pages/ChooseMunicipalPage';
 import { RegisterEventPage } from './components/pages/RegisterEventPage';
+import { EventPage } from './components/pages/EventPage';
+import { IssueLarge, IssueOverviewNormal, IssueOverviewSmall } from './components/issueViews/issueViews';
 import { ForgotPassword } from './components/pages/ForgotPassword.js';
 
 import { IssueLarge, IssueNormal, IssueOverviewSmall } from './components/issueViews/issueViews';
@@ -39,9 +41,10 @@ if (root)
     <HashRouter>
       <div>
         <Alert />
+        <Menu/>
         <Route exact path="/" component={ChooseMunicipalPage} />
-        <Route exact path="/issues" component={IssueOverviewSmall} />
-        <Route path="/issues/:issueId" component={IssueLarge} />
+        <Route exact path="/issues" component={IssueOverviewNormal} />
+        <Route path="/issues/:issue_id" component={IssueLarge} />
         <Route exact path="/registerUser" component={RegisterPage} />
         <Route exact path="/registerIssue" component={FileIssuePage} />
         <Route exact path="/login" component={LoginPage} />
@@ -56,3 +59,5 @@ if (root)
     </HashRouter>,
     root
   );
+
+
