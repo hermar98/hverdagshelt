@@ -84,10 +84,10 @@ export class EventCategory {
 }
 
 export class Municipal {
-    mun_id: number;
-    name: string;
+  munId: number;
+  name: string;
 
-    /*
+  /*
     constructor( mun_id: number, title: string){
         this.mun_id = mun_id;
         this.title = title;

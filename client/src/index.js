@@ -6,15 +6,15 @@ import { Component } from 'react-simplified';
 import { BrowserRouter, HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from './widgets';
 import { MenuLoggedIn } from './components/menu/MenuLoggedIn';
-import Menu from "./components/menu/Menu";
+import Menu from './components/menu/Menu';
 import { FileIssuePage } from './components/pages/FileIssuePage';
 import { LoginPage } from './components/pages/LoginPage';
-import { ProfilePage } from './components/pages/ProfilePage/ProfilePage';
+import { UserProfilePage } from './components/pages/ProfilePage/UserProfilePage';
 import { RegisterPage } from './components/pages/RegisterPage';
 import { EventPage } from './components/pages/EventPage';
 import { ChooseMunicipalPage } from './components/pages/ChooseMunicipalPage';
 import { RegisterEventPage } from './components/pages/RegisterEventPage';
-import { EventPage } from './components/pages/EventPage';
+
 import { IssueLarge, IssueNormal, IssueOverviewSmall } from './components/issueViews/issueViews';
 import { Issue } from './models.js';
 
@@ -37,29 +37,23 @@ if (root)
     <HashRouter>
       <div>
         <Alert />
-        <Menu/>
+        <Menu />
         <Route exact path="/" component={ChooseMunicipalPage} />
         <Route exact path="/issues" component={IssueOverviewSmall} />
         <Route path="/issues/:issueId" component={IssueLarge} />
         <Route exact path="/registerUser" component={RegisterPage} />
         <Route exact path="/registerIssue" component={FileIssuePage} />
         <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/profile" component={ProfilePage} />
+        <Route exact path="/profile" component={UserProfilePage} />
         <Route exact path="/sendEmail" />
-<<<<<<< HEAD
+
         <Route exact path="/event/register" component={RegisterEventPage} />
         <Route exact path="/events/" component={EventPage} />
-=======
-        <Route exact path="/event/register" component={RegisterEventPage}/>
-        <Route exact path="/events/" component={EventPage}/>
+
+        <Route exact path="/event/register" component={RegisterEventPage} />
+        <Route exact path="/events/" component={EventPage} />
         <Route exact path="/municipal/:mun_id" component={IssueNormal} />
->>>>>>> 155e159c8518e7f9372d92ead235704274d34776
       </div>
     </HashRouter>,
     root
   );
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 155e159c8518e7f9372d92ead235704274d34776

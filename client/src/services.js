@@ -1,7 +1,7 @@
 // @flow
 import axios from 'axios';
-import { User, Issue, IssueCategory, Event, Municipal} from "./models.js";
-import {EventCategory} from "./models";
+import { User, Issue, IssueCategory, Event, Municipal } from './models.js';
+import { EventCategory } from './models';
 
 axios.interceptors.response.use(response => response.data);
 
@@ -10,7 +10,7 @@ class UserService {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
     return axios.get('/secure/users', {
-      headers: {'x-access-token': token}
+      headers: { 'x-access-token': token }
     });
   }
 
@@ -18,15 +18,16 @@ class UserService {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
     return axios.get('/secure/users/' + userId, {
-      headers: {'x-access-token': token}
+      headers: { 'x-access-token': token }
     });
   }
 
   updateUser(user: User): Promise<void> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.put('/secure/users/' + user.userId, user, {
-        headers: {'x-access-token': token}
+    console.log(user.user_id);
+    return axios.put('/secure/users/' + user.user_id, user, {
+      headers: { 'x-access-token': token }
     });
   }
 
@@ -38,19 +39,19 @@ class UserService {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
     return axios.delete('/secure/users/' + userId, {
-      headers: {'x-access-token': token}
+      headers: { 'x-access-token': token }
     });
   }
 
   login(email: string, password: string): Promise<JSON> {
-    return axios.post('/login', {email: email, password: password});
+    return axios.post('/login', { email: email, password: password });
   }
 
   getToken(): Promise<JSON> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
     return axios.get('/token', {
-      headers: {'x-access-token': token}
+      headers: { 'x-access-token': token }
     });
   }
 }
@@ -62,7 +63,7 @@ class IssueService {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
     return axios.get('/secure/issues', {
-      headers: {'x-access-token': token}
+      headers: { 'x-access-token': token }
     });
   }
 
@@ -70,7 +71,7 @@ class IssueService {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
     return axios.get('/secure/issues/' + issueId, {
-      headers: {'x-access-token': token}
+      headers: { 'x-access-token': token }
     });
   }
 
@@ -78,7 +79,7 @@ class IssueService {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
     return axios.put('/secure/issues/' + issue.issueId, issue, {
-      headers: {'x-access-token': token}
+      headers: { 'x-access-token': token }
     });
   }
 
@@ -86,7 +87,7 @@ class IssueService {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
     return axios.post('/secure/issues', issue, {
-        headers: {'x-access-token': token}
+      headers: { 'x-access-token': token }
     });
   }
 
@@ -94,7 +95,7 @@ class IssueService {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
     return axios.delete('/secure/issues/' + issueId, {
-      headers: {'x-access-token': token}
+      headers: { 'x-access-token': token }
     });
   }
 }
@@ -126,11 +127,10 @@ class IssueCategoryService {
 export let issueCategoryService = new IssueCategoryService();
 
 class EventService {
-
   getEvents(): Promise<Event[]> {
     let token = localStorage.getItem('token');
     if (token) {
-      token = JSON.parse(token).jwt
+      token = JSON.parse(token).jwt;
     }
     return axios.get('/secure/events', {
       headers: {
@@ -142,7 +142,7 @@ class EventService {
   getEvent(eventId: number): Promise<Event> {
     let token = localStorage.getItem('token');
     if (token) {
-      token = JSON.parse(token).jwt
+      token = JSON.parse(token).jwt;
     }
     return axios.get('/secure/events/' + eventId, {
       headers: {
@@ -154,7 +154,7 @@ class EventService {
   updateEvent(event: Event): Promise<void> {
     let token = localStorage.getItem('token');
     if (token) {
-        token = JSON.parse(token).jwt
+      token = JSON.parse(token).jwt;
     }
     return axios.put('/secure/events/' + event.eventId, event, {
       headers: {
@@ -165,7 +165,7 @@ class EventService {
   addEvent(event: Event): Promise<number> {
     let token = localStorage.getItem('token');
     if (token) {
-      token = JSON.parse(token).jwt
+      token = JSON.parse(token).jwt;
     }
     return axios.post('/secure/events', event, {
       headers: {
@@ -176,7 +176,7 @@ class EventService {
   deleteEvent(eventId: number): Promise<void> {
     let token = localStorage.getItem('token');
     if (token) {
-      token = JSON.parse(token).jwt
+      token = JSON.parse(token).jwt;
     }
     return axios.delete('/secure/events/' + eventId, {
       headers: {
@@ -196,8 +196,8 @@ class MunicipalService {
     return axios.get('/municipals/' + mun_id);
   }
 
-  getIssuesByMunicipals(mun_id: number): Promise<Municipal[]>{
-    return axios.get('/municipals/' + mun_id +'/issues');
+  getIssuesByMunicipals(mun_id: number): Promise<Municipal[]> {
+    return axios.get('/municipals/' + mun_id + '/issues');
   }
 }
 
