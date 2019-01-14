@@ -35,9 +35,9 @@ app.post('/login', (req: Request, res: Response) => {
       let passwordData = passwordHash.sha512(req.body.password, user.salt);
       if (passwordData.passwordHash === user.hash_str) {
         let token = jwt.sign({ email: req.body.email }, secretKey, {
-          expiresIn: 600
+          expiresIn: 30
         });
-        res.json({ jwt: token });
+        res.json({ userId: user.user_id, jwt: token });
       } else {
         res.sendStatus(401);
       }
@@ -54,7 +54,7 @@ app.get('/token', (req, res) => {
       res.sendStatus(401);
     } else {
       token = jwt.sign({ email: decoded.email }, secretKey, {
-        expiresIn: 600
+        expiresIn: 30
       });
       res.json({ jwt: token });
     }

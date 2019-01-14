@@ -5,11 +5,11 @@ import type { Model } from 'sequelize';
 require('dotenv').config();
 
 let sequelize = new Sequelize(
-  process.env.CI ? 'database' : 'sandern',
-  process.env.CI ? 'root' : 'sandern',
-  process.env.CI ? '' : 'KcL5ZgzU',
+  process.env.CI ? 'localhost' : 'testdb',
+  process.env.CI ? 'root' : 'user',
+  process.env.CI ? '' : 'password',
     {
-        host: process.env.CI ? 'mysql' : 'mysql.stud.iie.ntnu.no',
+        host: process.env.CI ? 'mysql' : 'localhost',
         dialect: 'mysql',
         pool: {
             max: 5,
