@@ -136,7 +136,7 @@ app.put('/secure/users/:id', (req: Request, res: Response) => {
 
 app.delete('/secure/users/:id', (req: Request, res: Response) => {
   return User.destroy({
-    where: { userId: req.params.id }
+    where: { user_id: req.params.id }
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
