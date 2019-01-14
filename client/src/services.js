@@ -54,6 +54,32 @@ class UserService {
       headers: { 'x-access-token': token }
     });
   }
+
+  forgotPassword(): Promise<JSON> {
+    return axios
+      .post('/forgotPassword', {
+        email: this.state.email
+      })
+      .then(response => {
+        console.log(response.data);
+        if (response.data === 'email not in db') {
+          this.setState({
+            showError: true,
+            messageFromServer: '',
+            showNullError: false
+          });
+        } else if (response.data === 'recovery email sent') {
+          this.setState({
+            showError: false,
+            messageFromServer: 'recovery email sent',
+            showNullError: false
+          });
+        }
+      })
+      .catch(error => {
+        console.log(error.data);
+      });
+  }
 }
 
 export let userService = new UserService();
@@ -208,7 +234,7 @@ class EventCategoryService {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
     return axios.get('/secure/eventCat', {
-      headers: {'x-access-token': token}
+      headers: { 'x-access-token': token }
     });
   }
 
