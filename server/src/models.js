@@ -338,7 +338,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             salt: 'a83f4da094cc247b',
             hash_str:
               '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
-            mun_id: '5016',
+            mun_id: 5016,
             profilePicture: ''
           },
           {
@@ -348,7 +348,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             rank: 3,
             salt: 'b79ryp98',
             hash_str: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
-            mun_id: '528',
+            mun_id: 528,
             profilePicture:
               'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
           },
@@ -359,7 +359,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             rank: 1,
             salt: 'b79ryp98',
             hash_str: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
-            mun_id: '1503',
+            mun_id: 1503,
             profilePicture:
               'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
           },
@@ -370,7 +370,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             rank: 1,
             salt: 'b79ryp98',
             hash_str: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
-            mun_id: '528',
+            mun_id: 528,
             profilePicture:
               'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
           },
@@ -381,7 +381,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             rank: 1,
             salt: 'b79ryp98',
             hash_str: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
-            mun_id: '528',
+            mun_id: 528,
             profilePicture:
               'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
           },
@@ -392,7 +392,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             rank: 1,
             salt: 'b79ryp98',
             hash_str: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
-            mun_id: '528',
+            mun_id: 528,
             profilePicture:
               'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
           },
@@ -403,7 +403,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             rank: 1,
             salt: 'b79ryp98',
             hash_str: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
-            mun_id: '528',
+            mun_id: 528,
             profilePicture:
               'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
           },
@@ -414,7 +414,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             rank: 1,
             salt: 'b79ryp98',
             hash_str: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
-            mun_id: '528',
+            mun_id: 528,
             profilePicture:
               'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
           }
@@ -524,15 +524,15 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             name: 'Dumme folk er dumme',
             content: 'Vi skal fikse dette!',
             date: new Date(Date.now()),
-            user_id: '2',
-            issue_id: '1'
+            user_id: 2,
+            issue_id: 1
           },
           {
             name: 'Veilyset på 33 er fisket!',
             content: 'Veilyset er fikset!',
             date: new Date(Date.now()),
-            user_id: '2',
-            issue_id: '4'
+            user_id: 2,
+            issue_id: 4
           }
         ])
       )
@@ -562,7 +562,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             latitude: 10.822102,
             time_start: new Date(Date.now()),
             time_end: new Date(Date.now()),
-            user_id: '1',
+            user_id: 1,
             category_id: 1
           },
           {
@@ -573,7 +573,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             latitude: 10.817339,
             time_start: new Date(Date.now()),
             time_end: new Date(Date.now()),
-            user_id: '2',
+            user_id: 2,
             category_id: 1
           }
         ])
