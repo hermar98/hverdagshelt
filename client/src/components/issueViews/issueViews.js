@@ -31,7 +31,7 @@ export class IssueLarge extends Component<{match: {params: {issue_id: number}}}>
         return (
             <div className="issue-container">
                 <div className="issue-large">
-                    <Status status={this.issue.status_id}/>
+                    <Status status={this.issue.status_id} id={this.issue.issue_id}/>
                     <div className="card">
                         <div className="card-body">
                             <div className="d-flex flex-row">
@@ -297,25 +297,24 @@ export class IssueOverviewNormal extends Component {
 /*
 A colored status-bar. The number decides which status is rendered
  */
-export class Status extends Component<{status: number}> {
+export class Status extends Component<{status: number, id: number}> {
     render () {
         switch (this.props.status){
             case 1: return (
-
                     <div className="status status-blocked">
-                        <h4>Ikke behandlet</h4>
+                        <h4>{"Ikke behandlet - " + "#" + this.props.id}</h4>
                     </div>
                 )
                 break;
             case 2: return (
                     <div className="status status-pending">
-                        <h4>Under behandling</h4>
+                        <h4>{"Under behandling - " + "#" + this.props.id}</h4>
                     </div>
             )
                 break;
             case 3: return (
                     <div className="status status-finished">
-                        <h4>Behandlet</h4>
+                        <h4>{"Behandlet - " + "#" + this.props.id}</h4>
                     </div>
             )
                 break;

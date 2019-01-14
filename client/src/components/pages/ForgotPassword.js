@@ -12,7 +12,8 @@ const title = {
 };
 
 export class ForgotPassword extends Component {
-  constructor() {
+
+    /*constructor() {
     super();
 
     this.state = {
@@ -130,7 +131,7 @@ export class ForgotPassword extends Component {
         );
     }
   };
-  /*
+
   render() {
     const { email, messageFromServer, showNullError, showError } = this.state;
 
