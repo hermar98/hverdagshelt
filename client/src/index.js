@@ -46,13 +46,10 @@ if (root)
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/profile" component={UserProfilePage} />
         <Route exact path="/sendEmail" />
-
-        <Route exact path="/event/register" component={RegisterEventPage} />
-        <Route exact path="/events/" component={EventPage} />
-
         <Route exact path="/event/register" component={RegisterEventPage} />
         <Route exact path="/events/" component={EventPage} />
         <Route exact path="/municipal/:mun_id" component={IssueNormal} />
+        <Route exact path="/map" component={Map} />
       </div>
     </HashRouter>,
     root

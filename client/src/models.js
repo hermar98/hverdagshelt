@@ -60,6 +60,7 @@ export class Event {
   latitude: number;
   timeStart: string;
   timeEnd: string;
+  categoryId: number;
 
   /*constructor (    eventId: number, title: string, content: string, image: string, longitude: number, latitude: number, timeStart: string, timeEnd: string) {
         this.eventId = eventId
@@ -93,4 +94,14 @@ export class Municipal {
         this.title = title;
     }
      */
+}
+
+export class Feedback {
+    feedback_id: number
+    name: string
+    content: string
+    date: Date
+    user_id: number
+    issue_id: number
+    user: User
 }
