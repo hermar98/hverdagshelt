@@ -18,7 +18,7 @@ let sequelize = new Sequelize(
   process.env.CI ? 'root' : 'vegard',
   process.env.CI ? '' : '1234',
   {
-    host: process.env.CI ? 'mysql' : 'localhost',
+    host: process.env.CI ? 'mysql' : 'mysql.stud.iie.ntnu.no',
     dialect: 'mysql',
     pool: {
       max: 5,
@@ -466,8 +466,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             issue_id: 1,
             title: 'Dumme folk ødeleger lømp',
             content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
-            image:
-              'https://www.thesun.co.uk/wp-content/uploads/2018/07/AF-COMPOSITE-FIGHT.jpg?strip=all&quality=100&w=750&h=500&crop=1',
+            image: 'null',
             longitude: 60.656877,
             latitude: 10.824107,
             date: new Date(Date.now()),
@@ -508,8 +507,8 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           {
             issue_id: 4,
             title: 'Veilys ødelagt på 33',
-            content: 'I have a question for god. WHYYYYYYYYYYY. Is this light broken',
-            image: 'https://i.ytimg.com/vi/MPNN_nVwG5w/maxresdefault.jpg',
+            content: 'Kjørte ned 33 søndag og så et ødelagt veylys. Dere burte fixe det',
+            image: '',
             longitude: 60.68273,
             latitude: 10.831514,
             date: new Date(Date.now()),
