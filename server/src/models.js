@@ -21,6 +21,7 @@ let sequelize = new Sequelize(
             idle: 10000
         }
     }
+  }
 );
 
 sequelize.authenticate().then(function(){
@@ -124,14 +125,16 @@ export let User: Class<
 export let Municipal: Class<Model<{ munId?: number, name: string , municipalShield?: string}>> = sequelize.define('Municipal', {
     munId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
     name: Sequelize.STRING,
-    municipalShield: Sequelize.STRING,
-});
+    municipalShield: Sequelize.STRING
+  }
+);
 
 export let County: Class<Model<{ countyId?: number, name: string, countyShield?: string}>> = sequelize.define('County', {
     countyId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
     name: Sequelize.STRING,
     countyShield: Sequelize.STRING
-});
+  }
+);
 
 export let Status: Class<Model<{ statusId?: number, name: string }>> = sequelize.define('Status', {
     statusId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
@@ -489,6 +492,19 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
                         categoryId: 2,
                         statusId: 3    },
 
+          {
+            issue_id: 3,
+            title: 'Dårlig grafitti på skole veggen',
+            content: 'Det er dårlig grafitti på skole veggen',
+            image: 'http://i.imgur.com/so8Ea.jpg',
+            longitude: 60.684721,
+            latitude: 10.841522,
+            date: new Date(Date.now()),
+            mun_id: 528,
+            user_id: 2,
+            category_id: 4,
+            status_id: 6
+          },
 
                 ]))
             .then(() =>

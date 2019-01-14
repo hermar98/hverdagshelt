@@ -11,70 +11,67 @@ import { userService, issueService } from '../../services.js';
 type P = { user_id: number };
 type S = {};
 export default class ChangePasswordForm extends Component<P, S> {
-  user = new User();
+  user = new User(0, '', '', '', 0, '', '');
   currentPassword = '';
   newPassword = '';
   newPasswordRepeated = '';
 
   mounted() {
     userService
-      .getUser(this.props.user_id)
+      .getUser(1)
       .then(rows => {
         this.user = rows;
       })
       .catch(error => console.log(error));
   }
 
-  handleChangePassword(e: Object) {
+  handleChangePassword(e) {
     e.preventDefault();
-
-    let json = {
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      rank: user.rank,
-      salt: passwordData.salt,
-      hash_str: passwordData.passwordHash
-    };
-
-    userService.updateUser(json);
+    console.log(this.newPassword);
+    console.log(this.newPasswordRepeated);
+    if (this.newPassword != this.newPasswordRepeated) {
+      console.log('Passordene er ikke like');
+    } else {
+      this.user.password = this.newPassword;
+      console.log(this.user);
+      userService.updateUser(this.user);
+    }
   }
 
   render() {
     return (
       <div>
-        <form
-          action={'http://localhost:3000/users/' + this.props.user_id}
-          method="PUT"
-          onSubmit={this.handleChangePassword}
-        >
+        <form onSubmit={this.handleChangePassword}>
           <div>
-            <Form.Input
+            <input
               type="password"
               onChange={event => (this.currentPassword = event.target.value)}
               required
               placeholder="Nåværende passord"
             />
           </div>
+
           <div>
-            <Form.Input
+            <input
               type="password"
               onChange={event => (this.newPassword = event.target.value)}
               required
               placeholder="Nytt passord"
             />
           </div>
+
           <div>
-            <Form.Input
+            <input
               type="password"
               onChange={event => (this.newPasswordRepeated = event.target.value)}
               required
               placeholder="Gjenta passord"
             />
           </div>
+
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
-              <Button.Basic type="submit">Endre Passord</Button.Basic>
+              <button type="submit">Endre Passord</button>
             </div>
           </div>
         </form>

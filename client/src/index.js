@@ -5,14 +5,18 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { BrowserRouter, HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from './widgets';
-import Menu from './components/menu/Menu.js';
+import { MenuLoggedIn } from './components/menu/MenuLoggedIn';
+import { MenuMunicipalWorker } from './components/menu/MenuMunicipalWorker';
+import Menu from './components/menu/Menu';
 import { FileIssuePage } from './components/pages/FileIssuePage';
 import { LoginPage } from './components/pages/LoginPage';
-import { ProfilePage } from './components/pages/ProfilePage/ProfilePage';
+import { UserProfilePage } from './components/pages/ProfilePage/UserProfilePage';
 import { RegisterPage } from './components/pages/RegisterPage';
+import { EventPage } from './components/pages/EventPage';
 import { ChooseMunicipalPage } from './components/pages/ChooseMunicipalPage';
 import { RegisterEventPage } from './components/pages/RegisterEventPage';
-import { IssueLarge, IssueOverviewSmall } from './components/issueViews/issueViews';
+import { IssueLarge, IssueOverviewNormal, IssueNormal, IssueOverviewSmall } from './components/issueViews/issueViews';
+import { ForgotPassword } from './components/pages/ForgotPassword.js';
 import { Issue } from './models.js';
 
 // Reload application when not in production environment
@@ -36,17 +40,19 @@ if (root)
         <Alert />
         <Menu />
         <Route exact path="/" component={ChooseMunicipalPage} />
-        <Route exact path="/issues" component={IssueOverviewSmall} />
-        <Route path="/issues/:issueId" component={IssueLarge} />
+        <Route exact path="/issues" component={IssueOverviewNormal} />
+        <Route path="/issues/:issue_id" component={IssueLarge} />
         <Route exact path="/registerUser" component={RegisterPage} />
         <Route exact path="/registerIssue" component={FileIssuePage} />
         <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/profile" component={ProfilePage} />
+        <Route exact path="/profile" component={UserProfilePage} />
+        <Route exact path="/forgotpassword" component={ForgotPassword} />
         <Route exact path="/sendEmail" />
-        <Route exact path="/event/register" component={RegisterEventPage}/>
-        <Route exact path="/events/" component={EventPage}/>
+        <Route exact path="/event/register" component={RegisterEventPage} />
+        <Route exact path="/events/" component={EventPage} />
+        <Route exact path="/municipal/:mun_id" component={IssueNormal} />
+        <Route exact path="/map" component={Map} />
       </div>
     </HashRouter>,
     root
   );
-

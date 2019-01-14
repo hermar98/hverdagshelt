@@ -6,6 +6,7 @@ export class User {
   lastName: string;
   email: string;
   rank: number;
+  munId: number;
   password: string;
 
   /*constructor (userId: number, firstName: string, lastName: string, email: string, rank: number, hash: string, salt: string) {
@@ -27,7 +28,7 @@ export class Issue {
   longitude: number;
   latitude: number;
   status: number;
-  date: Date; //Works with string, unsure about date convertion
+  category_id: number;
 
   /*constructor(issueId: number, title: string, content: string, image: string, longitude: number, latitude: number, status: number, date: Date){
         this.issueId = issueId
@@ -42,11 +43,11 @@ export class Issue {
 }
 
 export class IssueCategory {
-  categoryId: number;
+  category_id: number;
   name: string;
 
-  /*constructor (categoryId: number, name: string) {
-        this.categoryId = categoryId
+  /*constructor (category_id: number, name: string) {
+        this.category_id = category_id
         this.name = name
     }*/
 }
@@ -60,6 +61,7 @@ export class Event {
   latitude: number;
   timeStart: string;
   timeEnd: string;
+  categoryId: number;
 
   /*constructor (    eventId: number, title: string, content: string, image: string, longitude: number, latitude: number, timeStart: string, timeEnd: string) {
         this.eventId = eventId
@@ -74,23 +76,33 @@ export class Event {
 }
 
 export class EventCategory {
-  categoryId: number;
+  category_id: number;
   name: string;
 
-  /*constructor (categoryId: number, name: string) {
-        this.categoryId = categoryId
+  /*constructor (category_id: number, name: string) {
+        this.category_id = category_id
         this.name = name
     }*/
 }
 
 export class Municipal {
-    mun_id: number;
-    name: string;
+  munId: number;
+  name: string;
 
-    /*
+  /*
     constructor( mun_id: number, title: string){
         this.mun_id = mun_id;
         this.title = title;
     }
      */
+}
+
+export class Feedback {
+  feedback_id: number;
+  name: string;
+  content: string;
+  date: Date;
+  user_id: number;
+  issue_id: number;
+  user: User;
 }

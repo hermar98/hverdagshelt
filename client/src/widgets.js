@@ -5,6 +5,8 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { NavLink } from 'react-router-dom';
 import moment from 'moment';
+import { issueCategoryService } from './services.js';
+import {eventCategoryService} from './services.js';
 
 
 
@@ -182,16 +184,30 @@ class NavBarLink extends Component <{ to: string, exact?: boolean, children?: Re
     }
 }
 
-export class NavBar extends Component<{ children: React.Element<typeof NavBarBrand | typeof NavBarLink>[] }> {
+class NavBarLogout extends Component <{ to: string, exact?: boolean, children?: React.Node} >{
+    render() {
+        if(!this.props.children) return null;
+        return(
+          <NavLink className="nav-link" activeClassName="active" exact={this.props.exact} to={this.props.to}>
+            <form className="form-inline">
+                <button className="btn btn-outline-danger">{this.props.children}</button>
+            </form>
+          </NavLink>
+        );
+    }
+}
+
+export class NavBar extends Component<{ children: React.Element<typeof NavBarBrand | typeof NavBarLink | typeof NavBarLogout>[] }> {
     static Brand = NavBarBrand;
     static Link = NavBarLink;
+    static Logout = NavBarLogout;
 
     render(){
         return(
             <nav className="navbar navbar-expand-sm bg-dark navbar-dark mt-0">
                 <div className="container-fluid">
                     {this.props.children.filter(child => child.type == NavBarBrand)}
-                    <ul className="nav navbar-nav navbar-right">{this.props.children.filter(child => child.type == NavBarLink)}</ul>
+                    <ul className="nav navbar-nav navbar-right">{this.props.children.filter(child => (child.type == NavBarLink || child.type == NavBarLogout))}</ul>
                 </div>
             </nav>
         );
@@ -210,9 +226,10 @@ class FormInput extends Component<{
 }> {
     render() {
         return (
-            <div className="form-group row">
-                <label className="col-sm-4 col-form-label">{this.props.label}</label>
-                <div className="col-sm-4">
+            <div className="form-group row justify-content-center">
+
+                <div className="col-sm-4 col-sm-offset-4">
+                    <label>{this.props.label}</label>
                     <input
                         className="form-control"
                         type={this.props.type}
@@ -230,8 +247,8 @@ class FormInput extends Component<{
 
 class FormInputBig extends Component <{
     type: string,
-    label: React.Node,
-    value: mixed,
+    label?: React.Node,
+    value?: mixed,
     onChange: (event: SyntheticInputEvent<HTMLInputElement>) => mixed,
     required?: boolean,
     pattern?: string,
@@ -275,10 +292,25 @@ class FileInput extends Component <{
     }
 }
 
+class FormAlert extends Component <{ text: string }> {
+    render() {
+        return(
+            <div className="form-group row justify-content-center">
+                <div className="col-sm-10 col-lg-4 justify-content-center">
+                    <div className="alert alert-danger" role="alert">
+                        {this.props.text}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
 export class Form {
     static Input = FormInput;
     static InputLarge = FormInputBig;
     static FileInput = FileInput;
+    static Alert = FormAlert;
 }
 
 export class DisplayEvent extends Component<{title: string, content: string,  image: string, longitude: number, latitude: number, time_start: string, time_end: string}> {
@@ -290,5 +322,31 @@ export class DisplayEvent extends Component<{title: string, content: string,  im
         <div className="card-footer text-muted">{"Starter: " + moment(this.props.time_start).format("DD.MM.YYYY HH:mm") + ". Slutter: " + moment(this.props.time_end).format("DD.MM.YYYY HH:mm")}</div>
       </Card>
     );
+  }
+}
+
+class EventCatDropdown extends Component <{ label?: React.Node,  onChange: (event: SyntheticInputEvent<HTMLInputElement>) => mixed, }>{
+  categories = [];
+  render(){
+    return(
+      <div className="form-group row">
+        <label className="col-sm-1 col-form-label">{this.props.label}</label>
+        <div className="col-sm-11">
+          <select id="priority" className="form-control form-control">
+            {this.categories.map(category => (
+              <option value={category.category_id}>{category.name}</option>
+            ))}
+            <option value={100}>Annet</option>
+          </select>
+        </div>
+      </div>
+    );
+  }
+
+  mounted() {
+    eventCategoryService
+      .getCategories()
+      .then(categories => (this.categories = categories))
+      .catch((error: Error) => Alert.danger(error.message));
   }
 }

@@ -1,10 +1,8 @@
 // @flow
 
-import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
-import { BrowserRouter, Route, NavLink } from 'react-router-dom';
 
 export default class Menu extends Component {
   render() {
@@ -12,6 +10,7 @@ export default class Menu extends Component {
       <div>
         <NavBar>
             <NavBar.Brand image="images/Trondheim_kommune.png">Trondheim Kommune</NavBar.Brand>
+            <NavBar.Link to="/events">Events/hendelser</NavBar.Link>
             <NavBar.Link to="/issues">Innmeldinger</NavBar.Link>
             <NavBar.Link to="/registerIssue">Registrer sak</NavBar.Link>
             <NavBar.Link to="/login">Logg inn</NavBar.Link>

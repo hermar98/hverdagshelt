@@ -35,9 +35,9 @@ app.post('/login', (req: Request, res: Response) => {
       let passwordData = passwordHash.sha512(req.body.password, user.salt);
       if (passwordData.passwordHash === user.hashStr) {
         let token = jwt.sign({ email: req.body.email }, secretKey, {
-          expiresIn: 600000000
+          expiresIn: 4000
         });
-        res.json({ jwt: token });
+        res.json({ userId: user.user_id, jwt: token });
       } else {
         res.sendStatus(401);
       }
@@ -54,7 +54,7 @@ app.get('/token', (req, res) => {
       res.sendStatus(401);
     } else {
       token = jwt.sign({ email: decoded.email }, secretKey, {
-        expiresIn: 600
+        expiresIn: 30
       });
       res.json({ jwt: token });
     }
@@ -114,6 +114,7 @@ app.put('/secure/users/:id', (req: Request, res: Response) => {
         lastName: req.body.lastName,
         email: req.body.email,
         rank: req.body.rank,
+        mun_id: req.body.mun_id,
         salt: passwordSalt,
         hashStr: passwordData.passwordHash
       },
@@ -127,6 +128,7 @@ app.put('/secure/users/:id', (req: Request, res: Response) => {
       lastName: req.body.lastName,
       email: req.body.email,
       rank: req.body.rank,
+      mun_id: req.body.mun_id,
       salt: req.body.salt,
       hashStr: req.body.hashStr
     },
@@ -141,13 +143,19 @@ app.delete('/secure/users/:id', (req: Request, res: Response) => {
 });
 
 //Municipal
-app.get('/secure/municipals', (req: Request, res: Response) => {
-  return Municipal.findAll().then(users => res.send(users));
+app.get('/municipals', (req: Request, res: Response) => {
+  return Municipal.findAll().then(muns => res.send(muns));
 });
 
-app.get('/secure/municipals/:id', (req: Request, res: Response) => {
-  return Municipal.findOne({ where: { munId: Number(req.params.id) } }).then(user =>
-    user ? res.send(user) : res.sendStatus(404)
+app.get('/municipals/:id', (req: Request, res: Response) => {
+  return Municipal.findOne({ where: { mun_id: Number(req.params.id) } }).then(mun =>
+    mun ? res.send(mun) : res.sendStatus(404)
+  );
+});
+
+app.get('/municipals/:id/issues', (req: Request, res: Response) => {
+  return Municipal.findAll({ where: { mun_id: Number(req.params.id) } }).then(muns =>
+    muns ? res.send(muns) : res.sendStatus(404)
   );
 });
 
@@ -161,8 +169,6 @@ app.get('/secure/county/:id', (req: Request, res: Response) => {
     user ? res.send(user) : res.sendStatus(404)
   );
 });
-
-
 
 //Event
 app.get('/secure/events', (req: Request, res: Response) => {
@@ -200,8 +206,9 @@ app.post('/secure/events', (req: Request, res: Response) => {
     image: req.body.image,
     longitude: req.body.longitude,
     latitude: req.body.latitude,
-    timeStart: req.body.timeStart,
-    timeEnd: req.body.timeEnd
+    time_start: req.body.timeStart,
+    time_end: req.body.timeEnd,
+    category_id: req.body.category_id
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 app.delete('/secure/events/:id', (req: Request, res: Response) => {
@@ -218,7 +225,7 @@ app.get('/secure/eventCat', (req: Request, res: Response) => {
 });
 
 app.get('/secure/eventCat/:id', (req: Request, res: Response) => {
-  return Event_category.findOne({ where: { eventId: Number(req.params.id) } }).then(eventCategory =>
+  return Event_category.findOne({ where: { category_id: Number(req.params.id) } }).then(eventCategory =>
     eventCategory ? res.send(eventCategory) : res.sendStatus(404)
   );
 });
@@ -231,7 +238,7 @@ app.put('/secure/eventCat/:id', (req: Request, res: Response) => {
     },
     {
       where: {
-        eventId: req.params.id
+        category_id: req.params.id
       }
     }
   ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
@@ -245,7 +252,7 @@ app.post('/secure/eventCat', (req: Request, res: Response) => {
 app.delete('/secure/eventCat/:id', (req: Request, res: Response) => {
   return Event_category.destroy({
     where: {
-      eventId: req.params.id
+      category_id: req.params.id
     }
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
@@ -299,7 +306,8 @@ app.post('/secure/issues', (req: Request, res: Response) => {
     longitude: req.body.longitude,
     latitude: req.body.latitude,
     status: req.body.status,
-    date: req.body.date
+    status_id: req.body.status_id,
+    category_id: req.body.category_id
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
