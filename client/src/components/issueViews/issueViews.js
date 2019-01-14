@@ -63,9 +63,9 @@ export class IssueLarge extends Component<{match: {params: {issue_id: number}}}>
                             </div>
                             <div className="d-flex flex-row justify-content-end">
                                 <div className="status-selection" ref={this.statusSelect}>
-                                    <StatusButton status={1} />
-                                    <StatusButton status={2} />
-                                    <StatusButton status={3} />
+                                    <StatusButton status={1} onclick={() => console.log("blocked")} />
+                                    <StatusButton status={2} onclick={() => console.log("pending")} />
+                                    <StatusButton status={3} onclick={() => console.log("finished")} />
                                 </div>
                             </div>
                             <div className="card-text">
