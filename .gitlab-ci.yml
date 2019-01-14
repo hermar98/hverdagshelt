@@ -5,9 +5,10 @@ variables:
   MYSQL_ALLOW_EMPTY_PASSWORD: 1
 
 test:
-  image: sebsterr/node-alpine:latest
+  image: alpine:latest
   services:
     - mysql:5 # The JS mysql-library does not yet support the newest mysql protocol
+    - node:latest
   script:
     # - npm install -g flow-bin
     - cd server && npm install && npm test
