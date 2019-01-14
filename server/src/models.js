@@ -5,9 +5,9 @@ import type { Model } from 'sequelize';
 require('dotenv').config({path: "C:\\hverdagshelt_Team_3\\.env"});
 
 let sequelize = new Sequelize(
-    process.env.CI ? 'database' : 'hverdagshelt',
-    process.env.CI ? 'root' : 'root',
-    process.env.CI ? '' : '',
+    process.env.CI ? 'database' : 'trondjro',
+    process.env.CI ? 'root' : 'user',
+    process.env.CI ? '' : 'password',
     // process.env.CI ? 'database' : 'sebasman',
     // process.env.CI ? 'root' : 'sebasman',
     // process.env.CI ? '' : 'GSBLuzbB',
@@ -20,7 +20,9 @@ let sequelize = new Sequelize(
             acquire: 30000,
             idle: 10000
         }
-    }
+
+  }
+
 );
 
 sequelize.authenticate().then(function(){
