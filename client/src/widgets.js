@@ -5,7 +5,7 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { NavLink } from 'react-router-dom';
 import moment from 'moment';
-import { issueCategoryService } from './services.js'
+import { issueCategoryService } from './services.js';
 
 
 
@@ -245,8 +245,8 @@ class FormInput extends Component<{
 
 class FormInputBig extends Component <{
     type: string,
-    label: React.Node,
-    value: mixed,
+    label?: React.Node,
+    value?: mixed,
     onChange: (event: SyntheticInputEvent<HTMLInputElement>) => mixed,
     required?: boolean,
     pattern?: string,
@@ -290,7 +290,7 @@ class FileInput extends Component <{
     }
 }
 
-class IssueCatDropdown extends Component <{ label?: React.Node,  onChange: (event: SyntheticInputEvent<HTMLInputElement>) => mixed, }>{
+class IssueCatDropdown extends Component <{ label?: React.Node,  onChange: (event: SyntheticInputEvent<HTMLInputElement>) => mixed }>{
     categories = [];
     render(){
         return(
@@ -299,7 +299,7 @@ class IssueCatDropdown extends Component <{ label?: React.Node,  onChange: (even
                 <div className="col-sm-4">
                     <select id="priority" className="form-control form-control">
                         {this.categories.map(category => (
-                            <option value={category.categoryId}>{category.name}</option>
+                            <option key={category.categoryId} value={category.categoryId}>{category.name}</option>
                         ))}
                     </select>
                 </div>
@@ -311,7 +311,10 @@ class IssueCatDropdown extends Component <{ label?: React.Node,  onChange: (even
         issueCategoryService
             .getCategories()
             .then(categories => (this.categories = categories))
+            .then(console.log(this.categories))
             .catch((error: Error) => Alert.danger(error.message));
+
+
     }
 }
 

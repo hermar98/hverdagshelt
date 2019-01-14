@@ -305,7 +305,9 @@ app.post('/secure/issues', (req: Request, res: Response) => {
     longitude: req.body.longitude,
     latitude: req.body.latitude,
     status: req.body.status,
-    date: req.body.date
+    date: req.body.date,
+    status_id: req.body.status_id,
+    category_id: req.body.category_id
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 

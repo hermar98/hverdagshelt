@@ -5,11 +5,11 @@ import type { Model } from 'sequelize';
 require('dotenv').config();
 
 let sequelize = new Sequelize(
-  process.env.CI ? 'database' : 'sandern',
-  process.env.CI ? 'root' : 'sandern',
-  process.env.CI ? '' : 'KcL5ZgzU',
+  process.env.CI ? 'localhost' : 'testdb',
+  process.env.CI ? 'root' : 'user',
+  process.env.CI ? '' : 'password',
     {
-        host: process.env.CI ? 'mysql' : 'mysql.stud.iie.ntnu.no',
+        host: process.env.CI ? 'mysql' : 'localhost',
         dialect: 'mysql',
         pool: {
             max: 5,
@@ -38,7 +38,8 @@ export let Issue: Class<
         longitude: number,
         latitude: number,
         date: Date,
-        status_id: number
+        status_id: number,
+        category_id: number
     }>
     > = sequelize.define('Issue', {
     issue_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
@@ -48,7 +49,8 @@ export let Issue: Class<
     longitude: Sequelize.DOUBLE,
     latitude: Sequelize.DOUBLE,
     date: Sequelize.DATE,
-    status_id: { type: Sequelize.INTEGER, defaultValue: 1 }
+    status_id: { type: Sequelize.INTEGER, defaultValue: 1 },
+    category_id: Sequelize.INTEGER
 });
 
 export let IssuePicture: Class<

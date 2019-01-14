@@ -54,6 +54,6 @@ export default class RegisterIssue extends Component {
       .then(history.push('/issues/' + this.issue.issueId))
       .catch((error: Error) => Alert.danger(error.message));
 
-    console.log(this.issue.categoryId);
+    console.log(this.issue);
   }
 }
