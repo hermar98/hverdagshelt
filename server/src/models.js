@@ -1,4 +1,3 @@
-// @flow
 
 import Sequelize from 'sequelize';
 import type { Model } from 'sequelize';

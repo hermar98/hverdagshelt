@@ -47,7 +47,7 @@ app.post('/login', (req: Request, res: Response) => {
   });
 });
 
-app.get('/token', (req, res) => {
+app.get('/token', (req: Request, res: Response) => {
   let token = req.headers['x-access-token'];
   jwt.verify(token, secretKey, (err, decoded) => {
     if (err) {
@@ -78,7 +78,7 @@ app.post('/register', (req: Request, res: Response) => {
 });
 
 //User
-app.get('/secure/users', (req: Request, res: response) => {
+app.get('/secure/users', (req: Request, res: Response) => {
   return User.findAll().then(users => res.send(users));
 });
 
@@ -344,7 +344,7 @@ app.post('/secure/issueCat', (req: Request, res: Response) => {
     name: req.body.name
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
-app.delete('/secure/issueCat/:id', function(req, res) {
+app.delete('/secure/issueCat/:id', function(req: Request, res: Response) {
   return Issue_category.destroy({
     where: {
       category_id: req.params.id
