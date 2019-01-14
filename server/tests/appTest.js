@@ -40,7 +40,7 @@ describe('public tests', () => {
   });
   //POST login as a user
   test('POST /login', async () => {
-    let user = { email: 'test@test.no', password: '1' };
+    let user = { email: 'test@test.ce', password: '1' };
     const response = await request(app)
       .post('/login')
       .send(user);
