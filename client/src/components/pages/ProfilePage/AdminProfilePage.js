@@ -16,7 +16,7 @@ import { Issue } from '../../../models';
 import { Municipal } from '../../../models';
 //import styles from './ProfilePage.css';
 
-export class ProfilePage extends Component {
+export class AdminProfilePage extends Component {
   state = {
     isLoaded: false
   };
@@ -56,7 +56,7 @@ export class ProfilePage extends Component {
 
     municipalService
       .getMunicipals()
-      .then(rows => ((this.municipals = rows), (this.municipal = rows.find(mun => (mun.mun_id = this.user.mun_id)))))
+      .then(rows => ((this.municipals = rows), (this.municipal = rows.find(mun => (mun.munId = this.user.munId)))))
       .catch(error => console.log(error));
   }
 
@@ -76,6 +76,13 @@ export class ProfilePage extends Component {
     userService.updateUser(json);
   }
 
+  delete(issueId: number) {
+    issueService
+      .deleteIssue(issueId)
+      .then(rows => (this.issues = this.issues.filter(e => e.issueId !== issueId)))
+      .catch(error => console.log(error));
+  }
+
   render() {
     return (
       <div>
@@ -92,7 +99,7 @@ export class ProfilePage extends Component {
                 id="municipalInput"
                 type="text"
                 name="municipal"
-                onChange={event => (this.mun_id = event.target.value)}
+                onChange={event => (this.munId = event.target.value)}
               />
               <button value="" type="submit">
                 Endre Kommune
@@ -107,7 +114,10 @@ export class ProfilePage extends Component {
           <ul>
             {this.issues.map((issue, index) => (
               <li key={index}>
-                <p>{issue.title}</p>
+                <h1>{issue.title}</h1>
+                <button onClick={this.delete(issue.issueId)} className="btn btn-danger ">
+                  Delete
+                </button>
               </li>
             ))}
           </ul>

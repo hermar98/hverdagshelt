@@ -114,7 +114,6 @@ describe('Issue tests', () => {
           issue_id: e.issue_id,
           title: e.title,
           content: e.content,
-          image: e.image,
           longitude: e.longitude,
           latitude: e.latitude
         }))
@@ -123,9 +122,8 @@ describe('Issue tests', () => {
         issue_id: 1,
         title: 'Dumme folk ødeleger lømp',
         content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
-        image: 'null',
-          latitude: 10.824107,
-          longitude: 60.656877
+        latitude: 10.824107,
+        longitude: 60.656877
       }
     ]);
   });
@@ -164,7 +162,6 @@ describe('Event tests', () => {
           event_id: e.event_id,
           title: e.title,
           content: e.content,
-          image: e.image,
           longitude: e.longitude,
           latitude: e.latitude
         }))
@@ -173,7 +170,6 @@ describe('Event tests', () => {
         event_id: 1,
         title: 'party at the house man!',
         content: 'Det skal være party at the house!',
-        image: 'notin',
         longitude: 60.652168,
         latitude: 10.822102
       }
@@ -209,12 +205,12 @@ describe('Event_category', () => {
       event_cat
         .map(e => e.toJSON())
         .map(e => ({
-          event_id: e.event_id,
+          category_id: e.category_id,
           name: e.name
         }))
     ).toEqual([
       {
-        event_id: 1,
+        category_id: 1,
         name: 'PARTY'
       }
     ]);

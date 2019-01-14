@@ -19,23 +19,24 @@
 div.status > h4 {
     font-size: 3vh;
 }
-.issue-container {margin: 5% 15% 5% 15%; padding-bottom: 5%}
+.issue-container {margin: 5% 10% 5% 10%; padding-bottom: 5%}
 .issue-image:hover {
     background-color: #b9bbbe;
 }
+
 .issue-image-normal {
-    width: 15vw;
+    width: 21vw;
     height: auto;
+    min-height: 12.5vw;
 }
 
-.issue-title-normal {
-    font-size: 3vw;
-    align-self: center;
+.issue-image-normal-container {
+    margin-right: 3%;
 }
 
 .issue-image {
     width: auto;
-    height: 30vh;
+    height: 15vw;
     padding: 1% 1% 1% 1%;
 }
 
@@ -50,27 +51,31 @@ div.status > h4 {
 }
 
 .submitter-info {
+    margin-top: 0.8vw;
     text-align: left;
     align-self: center;
+    flex: 1;
 }
 
 .date {
     color: grey;
+    flex: 1;
 }
 
 .date-small {
-    font-size: 90%;
+    font-size: 75%;
     color: grey;
 }
 
 .list-group-item {
     margin-bottom: 10px;
+    padding: 0 0 0 0
 }
 
 .profile-image {
     border: gray solid 1px;
     border-radius: 50%;
-    height: 12vh;
+    height: 9vh;
     width: auto;
     margin: 1vh 1vh 1vh 1vh;
 }
@@ -89,6 +94,27 @@ div.status > h4 {
     background-color: white;
 }
 
+.image-button:hover {
+    background-color: lightgray;
+}
+
+.image-button {
+    background-color: white;
+    border-radius: 50%;
+    height: 8vh
+}
+
+.image-button img {
+    width: 4vh;
+    height: 4vh;
+}
+
+.sort-box {
+    padding: 1% 1% 0 1%;
+    margin-bottom: 2%;
+    background-color: #32383e;
+}
+
 .hover-button {
     border: #4e555b 1px solid;
     background-color: #4e555b;
@@ -104,19 +130,91 @@ div.feedback-button button {
     grid-column: 2;
 }
 
-.event-image{
-    margin-left: 10px;
-    margin-right: 10px;
+#a-hover:hover {
+    background-color: white;
+    opacity: 0.5;
+    border: solid whitesmoke .3vw;
+}
+
+.issue-hover:hover .status-image {
+    opacity: 0;
+}
+
+#a-hover {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%; width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+#a-hover img {
+    opacity: 0;
     width: auto;
-    height: 200px;
+    height: 4vw;
+    padding-left: 1vw;
+    margin-right: 1vw;
+    align-self: center;
+}
+
+#image-hover-container {
+    background-color: black;
+}
+
+#a-hover:hover img {
+    opacity: 0.5;
+}
+
+#image-hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+#image-hover:hover {
+    background-color: black;
+}
+
+.issue-flex {
     align-items: center;
 }
 
-.text-muted-left{
-    float: left;
+.issue-small {
+    padding: 1% 1% 0% 1%;
 }
 
-.text-muted-right{
-    float: right;
+.status-image {
+    width: 7vh;
+    height: 7vh;
 }
 
+.issue-normal {
+    padding-right: 1.5vw;
+}
+
+#issue-normal-content {
+    font-size: 1.2vw;
+}
+
+.options {
+    margin-right: 1.5vw;
+}
+
+#issue-normal-title {
+    font-size: 1.2vw;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+#issue-normal-text {
+    margin: .6vw 0 .6vw 0;
+    flex: 1;
+}
+
+#date-normal {
+    font-size: 1vw;
+}
