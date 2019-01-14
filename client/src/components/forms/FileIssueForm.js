@@ -4,8 +4,9 @@ import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Issue} from '../../models.js';
-import { issueService } from "../../services.js"
-import { Alert, NavBar, Form, Card, Button } from '../../widgets';
+import { issueService, issueCategoryService } from "../../services.js"
+import { Alert, Form, Card, Button } from '../../widgets';
+import { history } from "../../index";
 
 export default class RegisterIssue extends Component {
   issue = new Issue();
@@ -21,6 +22,7 @@ export default class RegisterIssue extends Component {
             required
             placeholder="Skriv en passende tittel"
           />
+          <Form.IssueCatDropdown onChange={event => this.issue.categoryId = parseInt(event.target.value)}/>
           <Form.InputLarge
             type="text"
             onChange={event => (this.issue.content = event.target.value)}
@@ -39,15 +41,19 @@ export default class RegisterIssue extends Component {
   }
 
   save() {
-    if (!this.form || this.form.checkValidity()) return;
+    if (!this.form || !this.form.checkValidity()) return;
 
-    this.issue.latitude = 0.0;
-    this.issue.longitude = 0.0;
+    if(this.issue.categoryId == null) this.issue.categoryId = 1;
+
+    this.issue.latitude = 0.1;
+    this.issue.longitude = 0.2;
     this.issue.image = 'hei';
 
     issueService
       .addIssue(this.issue)
-      .then(() => history.push('/'))
+      .then(history.push('/issues/' + this.issue.issueId))
       .catch((error: Error) => Alert.danger(error.message));
+
+    console.log(this.issue);
   }
 }

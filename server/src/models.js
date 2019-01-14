@@ -14,11 +14,11 @@ let sequelize = new Sequelize(
   // process.env.CI ? 'database' : 'sebasman',
   // process.env.CI ? 'root' : 'sebasman',
   // process.env.CI ? '' : 'GSBLuzbB',
-  process.env.CI ? 'database' : 'testdb',
-  process.env.CI ? 'root' : 'user',
+  process.env.CI ? 'database' : 'hverdagshelt',
+  process.env.CI ? 'root' : 'vegard',
   process.env.CI ? '' : '1234',
   {
-    host: process.env.CI ? 'mysql' : 'localhost',
+    host: process.env.CI ? 'mysql' : 'mysql.stud.iie.ntnu.no',
     dialect: 'mysql',
     pool: {
       max: 5,
@@ -39,25 +39,27 @@ export let Feedback: Class<
 });
 
 export let Issue: Class<
-  Model<{
-    issue_id?: number,
-    title: string,
-    content: string,
-    image: string,
-    longitude: number,
-    latitude: number,
-    date: Date,
-    status_id: number
-  }>
-> = sequelize.define('Issue', {
-  issue_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  title: Sequelize.STRING,
-  content: Sequelize.STRING,
-  image: Sequelize.STRING,
-  longitude: Sequelize.DOUBLE,
-  latitude: Sequelize.DOUBLE,
-  date: Sequelize.DATE,
-  status_id: { type: Sequelize.INTEGER, defaultValue: 1 }
+    Model<{
+        issue_id?: number,
+        title: string,
+        content: string,
+        image: string,
+        longitude: number,
+        latitude: number,
+        date: Date,
+        status_id: number,
+        category_id: number
+    }>
+    > = sequelize.define('Issue', {
+    issue_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+    title: Sequelize.STRING,
+    content: Sequelize.STRING,
+    image: Sequelize.STRING,
+    longitude: Sequelize.DOUBLE,
+    latitude: Sequelize.DOUBLE,
+    date: Sequelize.DATE,
+    status_id: { type: Sequelize.INTEGER, defaultValue: 1 },
+    category_id: Sequelize.INTEGER
 });
 
 export let IssuePicture: Class<
@@ -149,8 +151,8 @@ export let Issue_category: Class<Model<{ category_id?: number, name: string }>> 
   name: Sequelize.STRING
 });
 
-export let Event_category: Class<Model<{ category_id?: number, name: string }>> = sequelize.define('Event_category', {
-  category_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+export let Event_category: Class<Model<{ event_id?: number, name: string }>> = sequelize.define('Event_category', {
+  event_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
   name: Sequelize.STRING
 });
 
@@ -338,7 +340,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             salt: 'a83f4da094cc247b',
             hash_str:
               '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
-            mun_id: '5016',
+            mun_id: 5016,
             profilePicture: ''
           },
           {
@@ -348,7 +350,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             rank: 3,
             salt: 'b79ryp98',
             hash_str: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
-            mun_id: '528',
+            mun_id: 528,
             profilePicture:
               'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
           },
@@ -359,7 +361,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             rank: 1,
             salt: 'b79ryp98',
             hash_str: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
-            mun_id: '1503',
+            mun_id: 1503,
             profilePicture:
               'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
           },
@@ -370,7 +372,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             rank: 1,
             salt: 'b79ryp98',
             hash_str: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
-            mun_id: '528',
+            mun_id: 528,
             profilePicture:
               'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
           },
@@ -381,7 +383,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             rank: 1,
             salt: 'b79ryp98',
             hash_str: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
-            mun_id: '528',
+            mun_id: 528,
             profilePicture:
               'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
           },
@@ -392,7 +394,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             rank: 1,
             salt: 'b79ryp98',
             hash_str: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
-            mun_id: '528',
+            mun_id: 528,
             profilePicture:
               'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
           },
@@ -403,7 +405,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             rank: 1,
             salt: 'b79ryp98',
             hash_str: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
-            mun_id: '528',
+            mun_id: 528,
             profilePicture:
               'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
           },
@@ -414,7 +416,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             rank: 1,
             salt: 'b79ryp98',
             hash_str: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
-            mun_id: '528',
+            mun_id: 528,
             profilePicture:
               'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
           }
@@ -464,8 +466,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             issue_id: 1,
             title: 'Dumme folk ødeleger lømp',
             content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
-            image:
-              'https://www.thesun.co.uk/wp-content/uploads/2018/07/AF-COMPOSITE-FIGHT.jpg?strip=all&quality=100&w=750&h=500&crop=1',
+            image: 'null',
             longitude: 60.656877,
             latitude: 10.824107,
             date: new Date(Date.now()),
@@ -506,8 +507,8 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           {
             issue_id: 4,
             title: 'Veilys ødelagt på 33',
-            content: 'I have a question for god. WHYYYYYYYYYYY. Is this light broken',
-            image: 'https://i.ytimg.com/vi/MPNN_nVwG5w/maxresdefault.jpg',
+            content: 'Kjørte ned 33 søndag og så et ødelagt veylys. Dere burte fixe det',
+            image: '',
             longitude: 60.68273,
             latitude: 10.831514,
             date: new Date(Date.now()),
@@ -524,15 +525,15 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             name: 'Dumme folk er dumme',
             content: 'Vi skal fikse dette!',
             date: new Date(Date.now()),
-            user_id: '2',
-            issue_id: '1'
+            user_id: 2,
+            issue_id: 1
           },
           {
             name: 'Veilyset på 33 er fisket!',
             content: 'Veilyset er fikset!',
             date: new Date(Date.now()),
-            user_id: '2',
-            issue_id: '4'
+            user_id: 2,
+            issue_id: 4
           }
         ])
       )
@@ -547,7 +548,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             name: 'Konsert'
           },
           {
-            category_id: 3,
+            category_id: 1,
             name: 'Galleri'
           }
         ])
@@ -562,7 +563,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             latitude: 10.822102,
             time_start: new Date(Date.now()),
             time_end: new Date(Date.now()),
-            user_id: '1',
+            user_id: 1,
             category_id: 1
           },
           {
@@ -573,7 +574,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             latitude: 10.817339,
             time_start: new Date(Date.now()),
             time_end: new Date(Date.now()),
-            user_id: '2',
+            user_id: 2,
             category_id: 1
           }
         ])

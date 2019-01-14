@@ -5,6 +5,7 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { NavLink } from 'react-router-dom';
 import moment from 'moment';
+import { issueCategoryService } from './services.js';
 import {eventCategoryService} from './services.js';
 
 
@@ -245,8 +246,8 @@ class FormInput extends Component<{
 
 class FormInputBig extends Component <{
     type: string,
-    label: React.Node,
-    value: mixed,
+    label?: React.Node,
+    value?: mixed,
     onChange: (event: SyntheticInputEvent<HTMLInputElement>) => mixed,
     required?: boolean,
     pattern?: string,
@@ -290,10 +291,39 @@ class FileInput extends Component <{
     }
 }
 
+class IssueCatDropdown extends Component <{ label?: React.Node,  onChange: (event: SyntheticInputEvent<HTMLInputElement>) => mixed }>{
+    categories = [];
+    render(){
+        return(
+            <div className="form-group row">
+                <label className="col-sm-4 col-form-label">{this.props.label}</label>
+                <div className="col-sm-4">
+                    <select id="priority" className="form-control form-control">
+                        {this.categories.map(category => (
+                            <option key={category.categoryId} value={category.categoryId}>{category.name}</option>
+                        ))}
+                    </select>
+                </div>
+            </div>
+        );
+    }
+
+    mounted() {
+        issueCategoryService
+            .getCategories()
+            .then(categories => (this.categories = categories))
+            .then(console.log(this.categories))
+            .catch((error: Error) => Alert.danger(error.message));
+
+
+    }
+}
+
 export class Form {
     static Input = FormInput;
     static InputLarge = FormInputBig;
     static FileInput = FileInput;
+    static IssueCatDropdown = IssueCatDropdown;
 }
 
 export class DisplayEvent extends Component<{title: string, content: string,  image: string, longitude: number, latitude: number, time_start: string, time_end: string}> {
