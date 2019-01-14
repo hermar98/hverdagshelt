@@ -21,7 +21,6 @@ let sequelize = new Sequelize(
             idle: 10000
         }
     }
-  }
 );
 
 sequelize.authenticate().then(function(){
@@ -141,12 +140,12 @@ export let Status: Class<Model<{ statusId?: number, name: string }>> = sequelize
     name: Sequelize.STRING
 });
 
-export let Issue_category: Class<Model<{ categoryId?: number, name: string }>> = sequelize.define('IssueCategory', {
+export let IssueCategory: Class<Model<{ categoryId?: number, name: string }>> = sequelize.define('IssueCategory', {
     categoryId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
     name: Sequelize.STRING
 });
 
-export let Event_category: Class<Model<{ categoryId?: number, name: string }>> = sequelize.define('EventCategory', {
+export let EventCategory: Class<Model<{ categoryId?: number, name: string }>> = sequelize.define('EventCategory', {
     categoryId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
     name: Sequelize.STRING
 });
@@ -167,7 +166,7 @@ User.belongsToMany(Municipal, { through: 'UserMunicipal', foreignKey: 'userId' }
 User.belongsToMany(Issue, { through: 'UserIssue', foreignKey: 'userId' });
 Issue.belongsToMany(User, { through: 'UserIssue', foreignKey: 'issueId' });
 
-Issue.belongsTo(Issue_category, { foreignKey: 'categoryId' });
+Issue.belongsTo(IssueCategory, { foreignKey: 'categoryId' });
 Issue.belongsTo(Status, { foreignKey: 'statusId' });
 Issue.hasMany(Feedback, { foreignKey: 'issueId' });
 Issue.hasMany(IssuePicture, { foreignKey: 'issueId' });
@@ -176,7 +175,7 @@ User.hasMany(Issue, { foreignKey: 'userId' });
 User.hasMany(Event, { foreignKey: 'userId' });
 User.hasMany(Feedback, { foreignKey: 'userId' });
 
-Event.belongsTo(Event_category, { foreignKey: 'categoryId' });
+Event.belongsTo(EventCategory, { foreignKey: 'categoryId' });
 
 //Municipal.belongsTo(County, {foreignKey: 'fk_companyname', targetKey: 'name'});
 //hasOne, target model is the foreign key
@@ -438,7 +437,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
                 }])
             )
             .then(() =>
-                Issue_category.bulkCreate([
+                IssueCategory.bulkCreate([
                     {name: 'Fyllikere på gata som ødeleger lamper'},
                     {name: 'En veilys er ødelagt'},
                     {name: 'Et veihul på gata'},
@@ -493,17 +492,17 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
                         statusId: 3    },
 
           {
-            issue_id: 3,
+            issueId: 3,
             title: 'Dårlig grafitti på skole veggen',
             content: 'Det er dårlig grafitti på skole veggen',
             image: 'http://i.imgur.com/so8Ea.jpg',
             longitude: 60.684721,
             latitude: 10.841522,
             date: new Date(Date.now()),
-            mun_id: 528,
-            user_id: 2,
-            category_id: 4,
-            status_id: 6
+            munId: 528,
+            userId: 2,
+            categoryId: 4,
+            statusId: 6
           },
 
                 ]))
@@ -524,7 +523,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
                     }])
             )
             .then(() =>
-                Event_category.bulkCreate([{
+                EventCategory.bulkCreate([{
                     name: 'PARTY'
                 },
                     {
