@@ -95,3 +95,13 @@ export class Municipal {
     }
      */
 }
+
+export class Feedback {
+    feedback_id: number
+    name: string
+    content: string
+    date: Date
+    user_id: number
+    issue_id: number
+    user: User
+}
