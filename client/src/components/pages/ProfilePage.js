@@ -5,7 +5,7 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
-import Menu from '../../components/menu/Menu.js';
+import MenuLoggedIn from '../../components/menu/Menu.js';
 import ChangePasswordForm from '../../components/forms/ChangePasswordForm';
 import { userService } from '../../services';
 import { issueService } from '../../services';
@@ -30,6 +30,7 @@ export class ProfilePage extends Component {
   render() {
     return (
       <div>
+        <MenuLoggedIn />
         <Card title="Min Profil">
           <p>
             Navn: {this.user.firstName}

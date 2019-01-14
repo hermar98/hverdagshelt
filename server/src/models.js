@@ -39,25 +39,27 @@ export let Feedback: Class<
 });
 
 export let Issue: Class<
-  Model<{
-    issue_id?: number,
-    title: string,
-    content: string,
-    image: string,
-    longitude: number,
-    latitude: number,
-    date: Date,
-    status_id: number
-  }>
-> = sequelize.define('Issue', {
-  issue_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  title: Sequelize.STRING,
-  content: Sequelize.STRING,
-  image: Sequelize.STRING,
-  longitude: Sequelize.DOUBLE,
-  latitude: Sequelize.DOUBLE,
-  date: Sequelize.DATE,
-  status_id: { type: Sequelize.INTEGER, defaultValue: 1 }
+    Model<{
+        issue_id?: number,
+        title: string,
+        content: string,
+        image: string,
+        longitude: number,
+        latitude: number,
+        date: Date,
+        status_id: number,
+        category_id: number
+    }>
+    > = sequelize.define('Issue', {
+    issue_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+    title: Sequelize.STRING,
+    content: Sequelize.STRING,
+    image: Sequelize.STRING,
+    longitude: Sequelize.DOUBLE,
+    latitude: Sequelize.DOUBLE,
+    date: Sequelize.DATE,
+    status_id: { type: Sequelize.INTEGER, defaultValue: 1 },
+    category_id: Sequelize.INTEGER
 });
 
 export let IssuePicture: Class<
