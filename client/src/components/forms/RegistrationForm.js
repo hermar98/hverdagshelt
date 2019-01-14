@@ -11,38 +11,38 @@ export default class RegistrationForm extends Component {
 
   render() {
     return (
-        <Card title="Registrer ny bruker">
-            <Form.Input
-                type="text"
-                onChange={event => (this.user.firstName = event.target.value)}
-                required
-                placeholder="Skriv inn fornavn"/>
-            <Form.Input
-                type="text"
-                onChange={event => (this.user.lastName = event.target.value)}
-                required
-                placeholder="Skriv inn etternavn"/>
-            <Form.Input
-                type="text"
-                onChange={event => (this.user.email = event.target.value)}
-                required
-                placeholder="Skriv inn epost"/>
-            <Form.Input
-                type="password"
-                onChange={event => (this.user.password = event.target.value)}
-                required
-                placeholder="Passord"/>
-            <Form.Input
-                type="password"
-                required
-                placeholder="Gjenta passord"/>
-            <div className="container h-100">
-                <div className="row h-100 justify-content-center align-items-center">
-                    <Button.Basic onClick={this.save}>Lag bruker</Button.Basic>
-                </div>
-            </div>
-        </Card>
-
+      <Card title="Registrer ny bruker">
+        <Form.Input
+          type="text"
+          onChange={event => (this.user.firstName = event.target.value)}
+          required
+          placeholder="Skriv inn fornavn"
+        />
+        <Form.Input
+          type="text"
+          onChange={event => (this.user.lastName = event.target.value)}
+          required
+          placeholder="Skriv inn etternavn"
+        />
+        <Form.Input
+          type="text"
+          onChange={event => (this.user.email = event.target.value)}
+          required
+          placeholder="Skriv inn epost"
+        />
+        <Form.Input
+          type="password"
+          onChange={event => (this.user.password = event.target.value)}
+          required
+          placeholder="Passord"
+        />
+        <Form.Input type="password" required placeholder="Gjenta passord" />
+        <div className="container h-100">
+          <div className="row h-100 justify-content-center align-items-center">
+            <Button.Basic onClick={this.save}>Lag bruker</Button.Basic>
+          </div>
+        </div>
+      </Card>
     );
   }
   save() {
