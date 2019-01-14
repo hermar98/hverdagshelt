@@ -55,10 +55,10 @@ class UserService {
     });
   }
 
-  forgotPassword(): Promise<JSON> {
+  forgotPassword(email: string): Promise<JSON> {
     return axios
       .post('/forgotPassword', {
-        email: this.state.email
+        email: email
       })
       .then(response => {
         console.log(response.data);
