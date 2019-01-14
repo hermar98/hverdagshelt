@@ -149,8 +149,8 @@ export let Issue_category: Class<Model<{ category_id?: number, name: string }>> 
   name: Sequelize.STRING
 });
 
-export let Event_category: Class<Model<{ event_id?: number, name: string }>> = sequelize.define('Event_category', {
-  event_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+export let Event_category: Class<Model<{ category_id?: number, name: string }>> = sequelize.define('Event_category', {
+  category_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
   name: Sequelize.STRING
 });
 
@@ -546,7 +546,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             name: 'Konsert'
           },
           {
-            category_id: 1,
+            category_id: 3,
             name: 'Galleri'
           }
         ])
