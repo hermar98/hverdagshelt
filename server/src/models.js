@@ -5,8 +5,8 @@ require('dotenv').config({path: "C:\\hverdagshelt_Team_3\\.env"});
 
 let sequelize = new Sequelize(
     process.env.CI ? 'database' : 'trondjro',
-    process.env.CI ? 'root' : 'user',
-    process.env.CI ? '' : 'password',
+    process.env.CI ? 'root' : 'root',
+    process.env.CI ? '' : '',
     // process.env.CI ? 'database' : 'sebasman',
     // process.env.CI ? 'root' : 'sebasman',
     // process.env.CI ? '' : 'GSBLuzbB',
@@ -345,8 +345,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
                     Municipal: [
                         {munId: 528},
                         {munId: 5027}]
-                },
-                {
+                }, {
                     firstName: 'Christian',
                     lastName: 'Axell',
                     email: 'cdaxell@stud.ntnu.no',
@@ -409,8 +408,8 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
                     hashStr: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
                     munId: 528,
                     profilePicture: 'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
-                }
-                ], {
+                }],
+                    {
                     include: [{
                         model: Municipal,
                         as: 'munId'
@@ -490,21 +489,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
                         munId: 528,
                         userId: 6,
                         categoryId: 2,
-                        statusId: 3    },
-
-          {
-            issueId: 3,
-            title: 'Dårlig grafitti på skole veggen',
-            content: 'Det er dårlig grafitti på skole veggen',
-            image: 'http://i.imgur.com/so8Ea.jpg',
-            longitude: 60.684721,
-            latitude: 10.841522,
-            date: new Date(Date.now()),
-            munId: 528,
-            userId: 2,
-            categoryId: 4,
-            statusId: 6
-          },
+                        statusId: 3    }
 
                 ]))
             .then(() =>
