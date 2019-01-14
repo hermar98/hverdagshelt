@@ -25,9 +25,24 @@ Large view of an issue, which includes the title, content, image and status.
  */
 export class IssueLarge extends Component<{match: {params: {issue_id: number}}}> {
 
+    constructor (props) {
+        super(props)
+        this.statusSelect = React.createRef()
+        this.state = {
+            clickedStatus: false
+        }
+    }
+
     issue = new Issue();
 
     render() {
+
+        if(!this.state.clickedStatus && this.statusSelect.current != null) {
+            this.statusSelect.current.classList.add('show')
+        }else if(this.statusSelect.current != null){
+            this.statusSelect.current.classList.remove('show')
+        }
+
         return (
             <div className="issue-container">
                 <div className="issue-large">
@@ -40,7 +55,18 @@ export class IssueLarge extends Component<{match: {params: {issue_id: number}}}>
                                     <ImageButton source="../../images/cog.png" onclick="Edited" />
                                     <ImageButton source="../../images/trashcan.png" onclick="Deleted" />
                                 </div>
-                                <StatusImage status={this.issue.status_id} />
+                                <StatusButton status={this.issue.status_id} onclick={() => {
+                                    this.setState({
+                                        clickedStatus: !this.state.clickedStatus
+                                    })
+                                }}/>
+                            </div>
+                            <div className="d-flex flex-row justify-content-end">
+                                <div className="status-selection" ref={this.statusSelect}>
+                                    <StatusButton status={1} />
+                                    <StatusButton status={2} />
+                                    <StatusButton status={3} />
+                                </div>
                             </div>
                             <div className="card-text">
                                 <p>{this.issue.content}</p>
@@ -60,7 +86,6 @@ export class IssueLarge extends Component<{match: {params: {issue_id: number}}}>
                 </div>
                 <h4 className="feedback-title">Oppdateringer</h4>
                 {sharedFeedback.feedback.map(feedback => {
-                    console.log(JSON.stringify(feedback));
                     return <IssueFeedback feedback={feedback}/>
                 })}
                 <p id="feedbackFill"/>
@@ -202,17 +227,17 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
     render() {
         return (
             <div className="feedback" feedback={this.props.feedback}>
-                <div className="d-flex flex-row submitter">
-                    <div className="p-2">
-                        <img className="card-img profile-image" src={this.user.profilePicture}/>
-                    </div>
-                    <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{this.props.feedback.date}</p></div>
-                    <ImageButton source="../../images/cog.png" onclick="Edited" />
-                    <ImageButton source="../../images/trashcan.png" onclick="Deleted" />
-                </div>
                 <div className="card feedback">
                     <div className="card-body">
-                        <div className="card-text">
+                        <div className="d-flex flex-row submitter">
+                            <div className="p-2">
+                                <img className="card-img profile-image" src={this.user.profilePicture}/>
+                            </div>
+                            <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{this.props.feedback.date}</p></div>
+                            <ImageButton source="../../images/cog.png" onclick="Edited" />
+                            <ImageButton source="../../images/trashcan.png" onclick="Deleted" />
+                        </div>
+                        <div id="feedback-text" className="card-text">
                             {this.props.feedback.content}
                         </div>
                     </div>
@@ -297,7 +322,7 @@ export class IssueOverviewNormal extends Component {
 /*
 A colored status-bar. The number decides which status is rendered
  */
-export class Status extends Component<{status: number, id: number}> {
+class Status extends Component<{status: number, id: number}> {
     render () {
         switch (this.props.status){
             case 1: return (
@@ -323,7 +348,7 @@ export class Status extends Component<{status: number, id: number}> {
     }
 }
 
-export class StatusImage extends Component<{status: number}> {
+class StatusImage extends Component<{status: number}> {
     render () {
         switch (this.props.status){
             case 1: return (
@@ -343,7 +368,27 @@ export class StatusImage extends Component<{status: number}> {
     }
 }
 
-export class HoverButton extends Component<{onclick: function, title: string}> {
+class StatusButton extends Component<{status: number, onclick: function}> {
+    render () {
+        switch (this.props.status){
+            case 1: return (
+                <ImageButton source="../../images/blockedTrans.png" onclick={this.props.onclick}/>
+            )
+                break;
+            case 2: return (
+                <ImageButton source="../../images/pendingTrans.png" onclick={this.props.onclick}/>
+            )
+                break;
+            case 3: return (
+                <ImageButton source="../../images/finishedTrans.png" onclick={this.props.onclick}/>
+            )
+                break;
+            default: return null; break;
+        }
+    }
+}
+
+class HoverButton extends Component<{onclick: function, title: string}> {
     render (){
         return (
             <button className="btn hover-button" id="hover-Button" type="button" onClick={this.props.onclick} title={this.props.title}>
@@ -353,7 +398,7 @@ export class HoverButton extends Component<{onclick: function, title: string}> {
     }
 }
 
-export class ImageButton extends Component<{source: string, onclick: function}> {
+class ImageButton extends Component<{source: string, onclick: function}> {
     render() {
         return(
             <button className="btn image-button" type="button" onClick={this.props.onclick} >
@@ -362,3 +407,16 @@ export class ImageButton extends Component<{source: string, onclick: function}> 
         )
     }
 }
+
+export class StatusSelection extends Component<{issue: Issue}>{
+    render() {
+        return (
+            <div className="status-select d-flex flex-row justify-content-center">
+                <StatusImage status={1} />
+                <StatusImage status={2} />
+                <StatusImage status={3} />
+            </div>
+        )
+    }
+}
+

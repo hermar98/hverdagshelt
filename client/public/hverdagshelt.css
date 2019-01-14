@@ -19,7 +19,7 @@
 div.status > h4 {
     font-size: 3vh;
 }
-.issue-container {margin: 5% 10% 5% 10%; padding-bottom: 5%}
+.issue-container {margin: 5% 16% 5% 16%; padding-bottom: 5%}
 .issue-image:hover {
     background-color: #b9bbbe;
 }
@@ -85,8 +85,7 @@ div.status > h4 {
 }
 
 .feedback-title {
-    margin-bottom: 5vh;
-    border-bottom: gray solid 1px;
+    margin-bottom: 2%
 }
 
 .hover-button:hover {
@@ -100,8 +99,9 @@ div.status > h4 {
 
 .image-button {
     background-color: white;
-    border-radius: 50%;
-    height: 8vh
+    height: 8vh;
+    margin: 0 .3vh 0 .3vh;
+    border-radius: 0;
 }
 
 .image-button img {
@@ -175,10 +175,6 @@ div.feedback-button button {
     justify-content: end;
 }
 
-#image-hover:hover {
-    background-color: black;
-}
-
 .issue-flex {
     align-items: center;
 }
@@ -188,8 +184,8 @@ div.feedback-button button {
 }
 
 .status-image {
-    width: 7vh;
-    height: 7vh;
+    width: 6vh;
+    height: 6vh;
 }
 
 .issue-normal {
@@ -198,10 +194,6 @@ div.feedback-button button {
 
 #issue-normal-content {
     font-size: 1.2vw;
-}
-
-.options {
-    margin-right: 1.5vw;
 }
 
 #issue-normal-title {
@@ -217,4 +209,22 @@ div.feedback-button button {
 
 #date-normal {
     font-size: 1vw;
+}
+
+.status-selection {
+    margin-top: 2vh;
+    margin-bottom: 1vh;
+    position: absolute;
+}
+
+.show {
+    display: none
+}
+
+#feedback-text {
+    margin: 2% 0 0 0;
+}
+
+.submitter {
+    border-bottom: lightgray solid 1px;
 }
