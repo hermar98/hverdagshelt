@@ -138,10 +138,10 @@ class IssueCategoryService {
           });
   }
 
-  getCategory(categoryId: number): Promise<IssueCategory> {
+  getCategory(category_id: number): Promise<IssueCategory> {
       let token = localStorage.getItem('token');
       if (token) token = JSON.parse(token).jwt;
-    return axios.get('/secure/issueCat/' + categoryId,
+    return axios.get('/secure/issueCat/' + category_id,
         {
             headers: {'x-access-token': token}
 
@@ -151,7 +151,7 @@ class IssueCategoryService {
   updateCategory(category: IssueCategory): Promise<void> {
       let token = localStorage.getItem('token');
       if (token) token = JSON.parse(token).jwt;
-    return axios.put('/secure/issueCat/' + category.categoryId, category,
+    return axios.put('/secure/issueCat/' + category.category_id, category,
         {
             headers: {'x-access-token': token}
 

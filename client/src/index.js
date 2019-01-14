@@ -22,6 +22,7 @@ import { ForgotPassword } from './components/pages/ForgotPassword.js';
 import { IssueLarge, IssueNormal, IssueOverviewSmall } from './components/issueViews/issueViews';
 import { Issue } from './models.js';
 
+
 // Reload application when not in production environment
 
 if (process.env.NODE_ENV !== 'production') {

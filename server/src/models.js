@@ -46,7 +46,6 @@ export let Issue: Class<
         image: string,
         longitude: number,
         latitude: number,
-        date: Date,
         status_id: number,
         category_id: number
     }>
@@ -57,7 +56,6 @@ export let Issue: Class<
     image: Sequelize.STRING,
     longitude: Sequelize.DOUBLE,
     latitude: Sequelize.DOUBLE,
-    date: Sequelize.DATE,
     status_id: { type: Sequelize.INTEGER, defaultValue: 1 },
     category_id: Sequelize.INTEGER
 });
