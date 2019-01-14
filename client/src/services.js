@@ -130,23 +130,53 @@ export let issueService = new IssueService();
 
 class IssueCategoryService {
   getCategories(): Promise<IssueCategory[]> {
-    return axios.get('/secure/issueCat');
+      let token = localStorage.getItem('token');
+      if (token) token = JSON.parse(token).jwt;
+      return axios.get('/secure/issueCat',
+          {
+              headers: {'x-access-token': token}
+
+          });
   }
 
   getCategory(categoryId: number): Promise<IssueCategory> {
-    return axios.get('/secure/issueCat/' + categoryId);
+      let token = localStorage.getItem('token');
+      if (token) token = JSON.parse(token).jwt;
+    return axios.get('/secure/issueCat/' + categoryId,
+        {
+            headers: {'x-access-token': token}
+
+        });
   }
 
   updateCategory(category: IssueCategory): Promise<void> {
-    return axios.put('/secure/issueCat/' + category.categoryId, category);
+      let token = localStorage.getItem('token');
+      if (token) token = JSON.parse(token).jwt;
+    return axios.put('/secure/issueCat/' + category.categoryId, category,
+        {
+            headers: {'x-access-token': token}
+
+        });
   }
 
   addCategory(category: IssueCategory): Promise<number> {
-    return axios.post('/secure/issueCat', category);
+      let token = localStorage.getItem('token');
+      if (token) token = JSON.parse(token).jwt;
+    return axios.post('/secure/issueCat', category,
+        {
+            headers: {'x-access-token': token}
+
+        });
   }
 
   deleteCategory(categoryId: number): Promise<void> {
-    return axios.delete('/secure/issueCat/' + categoryId);
+      let token = localStorage.getItem('token');
+      if (token) token = JSON.parse(token).jwt;
+    return axios.delete('/secure/issueCat/' + categoryId,
+        {
+            headers: {'x-access-token': token}
+
+        });
   }
 }
 

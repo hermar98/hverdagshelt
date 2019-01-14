@@ -6,7 +6,8 @@ import { Component } from 'react-simplified';
 import { BrowserRouter, HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from './widgets';
 import { MenuLoggedIn } from './components/menu/MenuLoggedIn';
-import Menu from './components/menu/Menu';
+import { MenuMunicipalWorker } from './components/menu/MenuMunicipalWorker';
+import Menu from "./components/menu/Menu";
 import { FileIssuePage } from './components/pages/FileIssuePage';
 import { LoginPage } from './components/pages/LoginPage';
 import { UserProfilePage } from './components/pages/ProfilePage/UserProfilePage';
@@ -38,7 +39,6 @@ if (root)
     <HashRouter>
       <div>
         <Alert />
-        <Menu />
         <Route exact path="/" component={ChooseMunicipalPage} />
         <Route exact path="/issues" component={IssueOverviewSmall} />
         <Route path="/issues/:issueId" component={IssueLarge} />

@@ -5,6 +5,8 @@ import { Event, EventCategory } from "../../models.js"
 import {eventCategoryService, eventService} from '../../services';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
 import {history} from '../../index';
+import { myFunction } from '../../../public/AddEventCategory';
+
 
 
 export default class EventForm extends Component {
@@ -23,25 +25,13 @@ export default class EventForm extends Component {
             required
             placeholder="Tittel"/>
           <div className="form-group form-inline col-sm-12 justify-content-center">
-            <div className="input-group-prepend">
-              <button className="btn btn-outline-secondary" type="button" onClick={this.newCategory}>Velg kategori</button>
-            </div>
-            <select className="form-control col-sm-3 justify-content-center" value={this.event.categoryId || ''}
+            <select className="form-control col-sm-4 justify-content-center" value={this.event.categoryId || ''}
                     onChange={(e: SyntheticInputEvent<HTMLInputElement>) => {if(this.event) this.event.categoryId = parseInt(e.target.value)}}>
               <option selected value={2}>Velg kategori..</option>
               <option value={1}>Dab </option>
               {this.categories.map(cat => <option key={cat.categoryId} value={cat.categoryId}>{cat.name}</option>)}
+              <option value={0}>Annet</option>
             </select>
-          </div>
-          <div className="form-row">
-            <div className="form-group col-md-6">
-              <label htmlFor="sel1">Select category</label>
-              <select className="form-control" id="sel2" value={this.event.categoryId || ''}
-                      onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
-                        if (this.event) this.event.categoryId = parseInt(event.target.value);}}>
-                {this.categories.map(cat => <option key={cat.categoryId} value={cat.categoriId}>{cat.name}</option>)}
-              </select>
-            </div>
           </div>
           <Form.InputLarge
             type="text"
@@ -101,6 +91,24 @@ export default class EventForm extends Component {
       .getCategories()
       .then(e => this.categories = e)
       .then(e => console.log(this.categories.map(es => es.categoryId)))
+      .catch((error: Error) => Alert.danger(error.message));
+  }
+
+  newEvent(){
+    let category = new EventCategory();
+    let name = myFunction();
+    console.log(name);
+    if(name === ""){
+      console.log("INGEN INPUT");
+      return null;
+    }
+
+    category.name = name;
+
+
+    eventCategoryService
+      .addCategory(category)
+      .then()
       .catch((error: Error) => Alert.danger(error.message));
   }
 }

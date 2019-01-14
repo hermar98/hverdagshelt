@@ -5,20 +5,11 @@ import type { Model } from 'sequelize';
 require('dotenv').config();
 
 let sequelize = new Sequelize(
-  // process.env.CI ? 'database' : 'cdaxell',
-  // process.env.CI ? 'root' : 'cdaxell',
-  // process.env.CI ? '' : 'yAmB12A4',
-  // process.env.CI ? 'database' : 'sandern',
-  // process.env.CI ? 'root' : 'sandern',
-  // process.env.CI ? '' : 'KcL5ZgzU',
-  // process.env.CI ? 'database' : 'sebasman',
-  // process.env.CI ? 'root' : 'sebasman',
-  // process.env.CI ? '' : 'GSBLuzbB',
-  process.env.CI ? 'database' : 'everydayhero',
-  process.env.CI ? 'root' : 'user',
-  process.env.CI ? '' : 'password',
+  process.env.CI ? 'database' : 'hermanc',
+  process.env.CI ? 'root' : 'hermanc',
+  process.env.CI ? '' : '7GUbgG3Y',
   {
-    host: process.env.CI ? 'mysql' : 'localhost',
+    host: process.env.CI ? 'mysql' : 'mysql.stud.iie.ntnu.no',
     dialect: 'mysql',
     pool: {
       max: 5,
@@ -39,25 +30,27 @@ export let Feedback: Class<
 });
 
 export let Issue: Class<
-  Model<{
-    issue_id?: number,
-    title: string,
-    content: string,
-    image: string,
-    longitude: number,
-    latitude: number,
-    date: Date,
-    status_id: number
-  }>
-> = sequelize.define('Issue', {
-  issue_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  title: Sequelize.STRING,
-  content: Sequelize.STRING,
-  image: Sequelize.STRING,
-  longitude: Sequelize.DOUBLE,
-  latitude: Sequelize.DOUBLE,
-  date: Sequelize.DATE,
-  status_id: { type: Sequelize.INTEGER, defaultValue: 1 }
+    Model<{
+        issue_id?: number,
+        title: string,
+        content: string,
+        image: string,
+        longitude: number,
+        latitude: number,
+        date: Date,
+        status_id: number,
+        category_id: number
+    }>
+    > = sequelize.define('Issue', {
+    issue_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+    title: Sequelize.STRING,
+    content: Sequelize.STRING,
+    image: Sequelize.STRING,
+    longitude: Sequelize.DOUBLE,
+    latitude: Sequelize.DOUBLE,
+    date: Sequelize.DATE,
+    status_id: { type: Sequelize.INTEGER, defaultValue: 1 },
+    category_id: Sequelize.INTEGER
 });
 
 export let IssuePicture: Class<
@@ -464,8 +457,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             issue_id: 1,
             title: 'Dumme folk ødeleger lømp',
             content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
-            image:
-              'https://www.thesun.co.uk/wp-content/uploads/2018/07/AF-COMPOSITE-FIGHT.jpg?strip=all&quality=100&w=750&h=500&crop=1',
+            image: 'null',
             longitude: 60.656877,
             latitude: 10.824107,
             date: new Date(Date.now()),
@@ -506,8 +498,8 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           {
             issue_id: 4,
             title: 'Veilys ødelagt på 33',
-            content: 'I have a question for god. WHYYYYYYYYYYY. Is this light broken',
-            image: 'https://i.ytimg.com/vi/MPNN_nVwG5w/maxresdefault.jpg',
+            content: 'Kjørte ned 33 søndag og så et ødelagt veylys. Dere burte fixe det',
+            image: '',
             longitude: 60.68273,
             latitude: 10.831514,
             date: new Date(Date.now()),
