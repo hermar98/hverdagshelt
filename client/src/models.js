@@ -27,6 +27,7 @@ export class Issue {
   longitude: number;
   latitude: number;
   status: number;
+  categoryId: number;
   date: Date; //Works with string, unsure about date convertion
 
   /*constructor(issueId: number, title: string, content: string, image: string, longitude: number, latitude: number, status: number, date: Date){

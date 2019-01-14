@@ -295,8 +295,8 @@ class IssueCatDropdown extends Component <{ label?: React.Node,  onChange: (even
     render(){
         return(
             <div className="form-group row">
-                <label className="col-sm-1 col-form-label">{this.props.label}</label>
-                <div className="col-sm-11">
+                <label className="col-sm-4 col-form-label">{this.props.label}</label>
+                <div className="col-sm-4">
                     <select id="priority" className="form-control form-control">
                         {this.categories.map(category => (
                             <option value={category.categoryId}>{category.name}</option>
