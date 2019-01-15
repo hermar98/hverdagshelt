@@ -15,6 +15,7 @@ export default class Login extends Component{
     password = '';
     form = null;
     loginError = false;
+    munId = localStorage.getItem('munId');
 
     render() {
         return(
@@ -55,7 +56,7 @@ export default class Login extends Component{
     mounted() {
         userService.getToken().then(token => {
             console.log(token);
-            history.push('/municipals/:munId');
+            history.push('/municipal/' + this.munId);
         }).catch((error: Error) => console.log(error));
     }
 
@@ -68,7 +69,7 @@ export default class Login extends Component{
             .login(this.email, this.password)
             .then(token => {
                 tokenManager.addToken(token);
-                history.push('/municipals/:munId');
+                history.push('/municipal/' + this.munId);
             })
             .catch((error: Error) => {
                 console.log(error);
@@ -77,6 +78,6 @@ export default class Login extends Component{
     }
 
   goTo() {
-    history.push('/municipals/:munId/forgotPassword');
+    history.push('/municipal/'+ this.munId + '/forgotPassword');
   }
 }

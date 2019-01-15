@@ -9,14 +9,15 @@ import {history} from "../../index";
 
 export default class Menu extends Component {
     user = null;
+    munId = localStorage.getItem('munId');
 
     render() {
         return this.user ? (
             <NavBar>
                 <NavBar.Brand image="images/Trondheim_kommune.png">Trondheim Kommune</NavBar.Brand>
-                <NavBar.Link to={'/municipal/:munId/events'}>Events/hendelser</NavBar.Link>
-                <NavBar.Link to={'/municipal/:munId/issues'}>Innmeldinger</NavBar.Link>
-                <NavBar.Link to={'/municipal/:munId/issues/fileIssue'}>Registrer sak</NavBar.Link>
+                <NavBar.Link to={'/municipal/' + this.munId + '/events'}>Events/hendelser</NavBar.Link>
+                <NavBar.Link to={'/municipal/' + this.munId + '/issues'}>Innmeldinger</NavBar.Link>
+                <NavBar.Link to={'/municipal/' + this.munId + '/issues/fileIssue'}>Registrer sak</NavBar.Link>
                 <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
                     <DropdownHeader>{this.user.email}</DropdownHeader>
                     <DropdownFooter>{'Rank: ' + this.user.rank}</DropdownFooter>
@@ -27,9 +28,9 @@ export default class Menu extends Component {
             </NavBar>
             ) : (
             <NavBar>
-                <NavBar.Brand image="images/Trondheim_kommune.png">Trondheim Kommune</NavBar.Brand>
-                <NavBar.Link to="/municipal/:munId/login">Logg inn</NavBar.Link>
-                <NavBar.Link to="/municipal/:munId/register">Registrer bruker</NavBar.Link>
+                <NavBar.Brand image='images/Trondheim_kommune.png'>Trondheim Kommune</NavBar.Brand>
+                <NavBar.Link to={'/municipal/' + this.munId + '/login'}>Logg inn</NavBar.Link>
+                <NavBar.Link to={'/municipal/' + this.munId + '/register'}>Registrer bruker</NavBar.Link>
             </NavBar>
         );
     }
@@ -43,11 +44,11 @@ export default class Menu extends Component {
     }
 
     toProfile() {
-        history.push('/municipal/:munId/profile');
+        history.push('/municipal/' + this.munId + '/profile');
     }
 
     logout() {
         tokenManager.deleteToken();
-        history.push('/municipal/:munId/login');
+        history.push('/municipal/' + this.munId + '/login');
     }
 }

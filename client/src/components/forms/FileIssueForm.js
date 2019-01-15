@@ -8,10 +8,11 @@ import { issueService, issueCategoryService } from '../../services.js';
 import { Alert, Form, Card, Button } from '../../widgets';
 import { history } from '../../index';
 
-export default class RegisterIssue extends Component <{match: {params: {munId: number}}}>{
+export default class RegisterIssue extends Component {
   issue = new Issue();
   categories = [];
   form = null;
+  munId = localStorage.getItem('munId');
 
   render() {
     return (
@@ -64,14 +65,14 @@ export default class RegisterIssue extends Component <{match: {params: {munId: n
   save() {
     if (!this.form || !this.form.checkValidity()) return;
 
-    this.issue.munId = this.props.match.params.munId;
+    this.issue.munId = this.munId;
     this.issue.latitude = 0.1;
     this.issue.longitude = 0.2;
     this.issue.image = 'hei';
 
     issueService
       .addIssue(this.issue)
-      .then(history.push('/issues/' + this.issue.issueId))
+      .then(history.push('/municipals/' + this.munId + '/issues'))
       .catch((error: Error) => Alert.danger(error.message));
 
     console.log(this.issue);
