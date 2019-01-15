@@ -2,3 +2,25 @@
   text-align: left;
   width: 18rem;
 }
+
+.event-image{
+  margin-left: 10px;
+  margin-right: 10px;
+  width: auto;
+  height: 200px;
+  align-items: center;
+}
+
+.text-muted-left{
+  float: left;
+}
+
+.text-muted-right{
+  float: right;
+}
+
+#card-event{
+  height: 400px;
+  margin-right: 10px;
+}
+

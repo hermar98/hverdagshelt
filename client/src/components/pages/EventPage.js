@@ -7,6 +7,7 @@ import {Alert, DisplayEvent} from '../../widgets';
 import {Issue} from "../../models";
 import {Status} from "../issueViews/issueViews";
 import moment from "moment";
+import Menu from "../menu/Menu";
 
 
 export class EventPage extends Component {
@@ -14,11 +15,14 @@ export class EventPage extends Component {
 
   render() {
     return (
+      <div>
+      <Menu/>
       <div className="container col-10 mt-4 h-100">
         <div className="row h-100">
         {this.events.map(e =>
         <EventLarge event={e}/>)}
         </div>
+      </div>
       </div>
     );
   }
@@ -70,8 +74,7 @@ export class EventPage2 extends Component<{issues: Issue[]}> {
 export class EventLarge extends Component<{ event: Event }> {
   render() {
     return (
-      <div className="event-large" event={this.props.event}>
-        <div className="card">
+        <div className="card" id="card-event">
           <div className="card-body">
             <div className="card-title-event">
               <h2>{this.props.event.title}</h2>
@@ -86,7 +89,6 @@ export class EventLarge extends Component<{ event: Event }> {
             <small className="text-muted-right">{"Til: " + moment(this.props.event.timeEnd).format("DD.MM HH:mm")}</small>
           </div>
         </div>
-      </div>
     )
   }
 }
