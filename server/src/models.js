@@ -3,7 +3,6 @@ import type { Model } from 'sequelize';
 require('dotenv').config({ path: 'C:\\hverdagshelt_Team_3\\.env' });
 
 let sequelize = new Sequelize(
-
   process.env.CI ? 'database' : 'hverdagshelt',
   process.env.CI ? 'root' : 'user',
   process.env.CI ? '' : 'password',
@@ -163,6 +162,7 @@ export let UserIssue: Class<Model<{}>> = sequelize.define('UserIssue', {});
 County.hasMany(Municipal, { foreignKey: 'countyId' });
 Municipal.hasMany(User, { foreignKey: 'munId' });
 Municipal.hasMany(Issue, { foreignKey: 'munId' });
+Municipal.hasMany(Event, { foreignKey: 'munId' });
 
 Municipal.belongsToMany(User, { through: 'UserMunicipal', foreignKey: 'munId' });
 User.belongsToMany(Municipal, { through: 'UserMunicipal', foreignKey: 'userId' });
@@ -589,6 +589,18 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             timeEnd: new Date(Date.now()),
             userId: '2',
             categoryId: 1
+          }
+        ])
+      )
+      .then(() =>
+        UserMunicipal.bulkCreate([
+          {
+            munId: 101,
+            userId: 1
+          },
+          {
+            munId: 514,
+            userId: 1
           }
         ])
       );

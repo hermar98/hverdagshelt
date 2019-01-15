@@ -43,6 +43,8 @@ app.use('/secure', (req: Request, res: Response, next) => {
   });
 });
 
+
+
 app.post('/login', (req: Request, res: Response) => {
   User.findOne({ where: { email: req.body.email } }).then(user => {
     //TODO: Flow check: Cannot get `req.body.email` because property `email` is missing in mixed [1].
@@ -68,7 +70,7 @@ app.put('/reset/:id', (req: Request, res: Response) => {
   console.log(token);
   User.findOne({ where: { resetPasswordToken: token } }).then(user => {
     if (user) {
-      console.log(user.user_id);
+      console.log(user.userId);
       let passwordSalt = passwordHash.genRandomString(16);
       let passwordData = passwordHash.sha512(req.body.password, passwordSalt);
       console.log('Password' + req.body.password);
@@ -77,10 +79,8 @@ app.put('/reset/:id', (req: Request, res: Response) => {
           salt: passwordSalt,
           hash_str: passwordData.passwordHash
         },
-        { where: { user_id: user.user_id } }
-      )
-        .then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
-        .then(res.json({ userId: user.userId, jwt: jwt.sign({ email: user.email }, secretKey, { expiresIn: 5000 }) }));
+        { where: { userId: user.userId } }
+      ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
     }
   });
 });
@@ -101,6 +101,10 @@ app.get('/token', (req: Request, res: Response) => {
 
 app.post('/register', (req: Request, res: Response) => {
   if (!(req.body instanceof Object)) return res.sendStatus(400);
+
+  User.findOne({where: {email: req.body.email}}).then(user => {
+      if (user) return res.sendStatus(409);
+  });
 
   let passwordSalt = passwordHash.genRandomString(16);
   let passwordData = passwordHash.sha512(req.body.password, passwordSalt); //TODO:  Flow check: Cannot get `req.body.password` because property `password` is missing in mixed [1].
@@ -140,7 +144,7 @@ app.post('/secure/users', (req: Request, res: Response) => {
 });
 
 app.put('/secure/users/:id', (req: Request, res: Response) => {
-  if (!(req.body instanceof Object)) return res.sendStatus(400);
+  if (!req.body || !(typeof req.body.email === 'string')) return res.sendStatus(400);
 
   if (req.body.password) {
     let passwordSalt = passwordHash.genRandomString(16);
@@ -166,11 +170,11 @@ app.put('/secure/users/:id', (req: Request, res: Response) => {
       lastName: req.body.lastName,
       email: req.body.email,
       rank: req.body.rank,
-      mun_id: req.body.mun_id,
+      munId: req.body.munId,
       salt: req.body.salt,
       hash_str: req.body.hash_str
     },
-    { where: { user_id: req.params.id } }
+    { where: { userId: req.params.id } }
   ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
@@ -192,9 +196,15 @@ app.get('/municipals/:id', (req: Request, res: Response) => {
 });
 
 app.get('/municipals/:id/issues', (req: Request, res: Response) => {
-  return Municipal.findAll({ where: { mun_id: Number(req.params.id) } }).then(muns =>
-    muns ? res.send(muns) : res.sendStatus(404)
-  );
+    return Issue.findAll({ where: {munId: Number(req.params.id) } }).then(issues =>
+        issues ? res.send(issues) : res.sendStatus(404)
+    );
+});
+
+app.get('/municipals/:id/events', (req: Request, res: Response) => {
+    return Event.findAll({ where: { munId: Number(req.params.id) } }).then(events =>
+        events ? res.send(events) : res.sendStatus(404)
+    );
 });
 
 //County
@@ -316,6 +326,8 @@ app.get('/secure/users/:id/issues', (req: Request, res: Response) => {
   );
 });
 
+
+
 app.put('/secure/issues/:id', (req: Request, res: Response) => {
   if (!(req.body instanceof Object)) return res.sendStatus(400);
   return Issue.update(
@@ -402,8 +414,8 @@ app.get('/secure/userMun/:id', (req: Request, res: Response) => {
         through: {model: UserMunicipal, as: 'UserMunicipals', attributes:[]}
       }
     ],
-    attributes: [],
-    where: { userId: Number(req.params.id) }
+    where: { userId: Number(req.params.id) },
+    attributes: []
   }).then(user => (user ? res.send(user) : res.sendStatus(404)));
 });
 
