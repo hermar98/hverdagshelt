@@ -1,5 +1,5 @@
 // @flow
-import { Feedback, IssueCategory, EventCategory, Event, Issue, County, Municipal, User, sync } from '../src/models';
+import { UserIssue,UserMunicipal, Feedback, IssueCategory, EventCategory, Event, Issue, County, Municipal, User, sync } from '../src/models';
 
 const request = require('supertest');
 const app = require('../src/app');
@@ -115,12 +115,13 @@ describe('User tests', () => {
   //   expect(response.body.hashStr).toBe(
   //     '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722'
   //   );
+  //
   // });
 
   test('PUT /secure/users/:id', async () => {
     const updateUserResponse = await request(app)
       .put('/secure/users/1')
-      .send({ firstName: 'Jørgen', password: '1' })
+      .send({ firstName: 'Jørgen', password: '1', email: 'j@j.j' })
       .set({ 'x-access-token': token });
 
     expect(updateUserResponse.statusCode).toBe(200);
@@ -130,10 +131,10 @@ describe('User tests', () => {
       .set({ 'x-access-token': token });
 
     expect(response.body.firstName).toBe('Jørgen');
-    expect(response.body.lastName).toBe('Andersson');
-    expect(response.body.email).toBe('test@test.no');
+    expect(response.body.email).toBe('j@j.j');
     expect(response.body.rank).toBe(1);
   });
+
   //Delete user
   test('DELETE /secure/users/:id', async () => {
     let totalUsers = await User.count();
@@ -488,4 +489,76 @@ describe('Issue Category Test', () => {
   });
 });
 
+//userMunicipals tests
+describe('userMunicipals tests',() => {
+    //GET /secure/userMun/:id
+    test('GET /secure/userMun/:id', async ()=>{
+        const r1 = await request(app).post('/secure/user/1/mun/5001').set({ 'x-access-token': token });
+        const r2 = await request(app).post('/secure/user/1/mun/807').set({ 'x-access-token': token });
+        expect(r1.statusCode).toBe(200);
+        expect(r2.statusCode).toBe(200);
 
+        const response = await request(app).get('/secure/userMun/1').set({ 'x-access-token': token });
+        expect(response.statusCode).toBe(200);
+        expect(response.type).toEqual('application/json');
+
+
+        //TODO: Fix so it checks result
+    });
+
+    //POST /secure/user/:userId/mun/:munId
+    test('POST /secure/user/:userId/mun/:munId', async () => {
+        let count = await UserMunicipal.count(); // entries in database
+
+        const response = await request(app)
+            .post('/secure/user/1/mun/935')
+            .set({ 'x-access-token': token });
+        expect(response.statusCode).toBe(200);
+        expect(await UserMunicipal.count()).toEqual(count + 1);
+    });
+    //DELETE /secure/users/:userId/mun/:munId
+    test('DELETE /secure/user/:userId/mun/:munId', async () => {
+        let count = await UserMunicipal.count();
+        const response = await request(app)
+            .delete('/secure/user/1/mun/935')
+            .set({ 'x-access-token': token });
+        expect(response.statusCode).toBe(200);
+        expect(await UserMunicipal.count()).toBe(count - 1);
+    });
+});
+//userIssues tests
+describe('userIssues tests',() => {
+    //GET /secure/userIssue/:id
+    // test('GET /secure/userIssue/:id', async ()=>{
+    //     const r1 = await request(app).post('/secure/user/1/issue/2 ').set({ 'x-access-token': token });
+    //     const r2 = await request(app).post('/secure/user/1/issue/3').set({ 'x-access-token': token });
+    //     expect(r1.statusCode).toBe(200);
+    //     expect(r2.statusCode).toBe(200);
+    //
+    //     const response = await request(app).get('/secure/userIssue/1').set({ 'x-access-token': token });
+    //     expect(response.statusCode).toBe(200);
+    //     // expect(response.type).toEqual('application/json');
+    //
+    //
+    //     //TODO: Fix so it checks result
+    // });
+
+    //POST /secure/user/:userId/issue/:issueId
+    test('POST /secure/user/:userId/issue/:issueId', async () => {
+        let count = await UserIssue.count(); // entries in database
+        const response = await request(app)
+            .post('/secure/user/1/issue/2')
+            .set({ 'x-access-token': token });
+        expect(response.statusCode).toBe(200);
+        expect(await UserIssue.count()).toEqual(count + 1);
+    });
+    //DELETE /secure/users/:userId/issue/:issueId
+    test('DELETE /secure/user/:userId/issue/:issueId', async () => {
+        let count = await UserIssue.count();
+        const response = await request(app)
+            .delete('/secure/user/1/issue/2')
+            .set({ 'x-access-token': token });
+        expect(response.statusCode).toBe(200);
+        expect(await UserIssue.count()).toBe(count - 1);
+    });
+});
