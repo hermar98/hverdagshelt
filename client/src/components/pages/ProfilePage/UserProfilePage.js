@@ -17,11 +17,14 @@ import { UserMunicipal } from '../../../models';
 import { IssueSmall, IssueNormal, IssueOverviewSmall } from '../../issueViews/issueViews';
 
 export class UserProfilePage extends Component<{ match: { params: { userId: number } } }> {
+  state = {
+    isLoaded: false
+  };
   user: User = new User(0, '', '', '', 0, 0, '');
   issues: Issue[] = [];
   municipal: UserMunicipal = new UserMunicipal();
   newMunicipal: Municipal = new Municipal(0, '', '', '', 0);
-  municipals: UserMunicipal[] = [];
+  municipals: Municipal[] = [];
 
   mounted() {
     async function f() {
@@ -52,6 +55,7 @@ export class UserProfilePage extends Component<{ match: { params: { userId: numb
       .getUserMunicipals(1)
       .then(rows => {
         this.municipals = rows;
+        this.isLoaded = true;
       })
       .catch(error => console.log(error));
   }
@@ -87,7 +91,7 @@ export class UserProfilePage extends Component<{ match: { params: { userId: numb
               </p>
               <p>Email: {this.user.email}</p>
 
-              {console.log(this.municipals)}
+              <p>Kommune(r): {this.isLoaded && this.municipals.Municipals[0].name}</p>
             </div>
           </Card>
           <br />
