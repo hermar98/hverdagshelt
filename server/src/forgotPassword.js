@@ -17,7 +17,7 @@ const app = require('./app');
 
 app.post('/forgotPassword', (req: Request, res: Response) => {
   if (!req.body || !(typeof req.body.email === 'string')) return res.sendStatus(400);
-  if (req.body.email) {
+  if (!req.body.email) {
     //TODO: Flow check: Property `email` is missing in mixed [1].
     res.json('email er påkrevd');
   }
@@ -28,7 +28,6 @@ app.post('/forgotPassword', (req: Request, res: Response) => {
     }
   }).then(user => {
     if (user === null) {
-      console.log('email not in database');
       res.json('email er ikke i databasen');
     } else {
       let t = new Date();

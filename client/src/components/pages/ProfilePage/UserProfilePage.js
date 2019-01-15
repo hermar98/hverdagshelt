@@ -5,15 +5,9 @@ import { Component } from 'react-simplified';
 import { Alert, NavBar, Form, Card, Button } from '../../../widgets';
 import MenuLoggedIn from '../../../components/menu/Menu.js';
 import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
-import { userService } from '../../../services';
-import { issueService } from '../../../services';
-import { userMunicipalService } from '../../../services';
-import { municipalService } from '../../../services';
+import { userService, municipalService, issueService, userMunicipalService } from '../../../services';
 import { autocomplete } from '../../../../public/autocomplete';
-import { User } from '../../../models';
-import { Issue } from '../../../models';
-import { Municipal } from '../../../models';
-import { UserMunicipal } from '../../../models';
+import { User, Issue, Municipal, UserMunicipal } from '../../../models';
 import { IssueSmall, IssueNormal, IssueOverviewSmall } from '../../issueViews/issueViews';
 
 export class UserProfilePage extends Component {
@@ -61,7 +55,8 @@ export class UserProfilePage extends Component {
 
     //this.user.munId = this.municipals.find(mun => mun.name === this.newMunicipal).munId;
 
-    userMunicipalService.addUserMunicipal(1, 514);
+    userMunicipalService.addUserMunicipal(1, 5001);
+    // userService.getUser(1);
   }
 
   delete(issueId: number) {
