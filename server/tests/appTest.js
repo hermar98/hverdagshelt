@@ -120,7 +120,7 @@ describe('User tests', () => {
   test('PUT /secure/users/:id', async () => {
     const updateUserResponse = await request(app)
       .put('/secure/users/1')
-      .send({ firstName: 'Jørgen', password: '1' })
+      .send({ firstName: 'Jørgen', password: '1', email: 'j@j.j' })
       .set({ 'x-access-token': token });
 
     expect(updateUserResponse.statusCode).toBe(200);
@@ -130,10 +130,10 @@ describe('User tests', () => {
       .set({ 'x-access-token': token });
 
     expect(response.body.firstName).toBe('Jørgen');
-    expect(response.body.lastName).toBe('Andersson');
-    expect(response.body.email).toBe('test@test.no');
+    expect(response.body.email).toBe('j@j.j');
     expect(response.body.rank).toBe(1);
   });
+
   //Delete user
   test('DELETE /secure/users/:id', async () => {
     let totalUsers = await User.count();
