@@ -71,7 +71,7 @@ export class UserProfilePage extends Component<{ match: { params: { userId: numb
         .then(rows => (this.issues = this.issues.filter(e => e.issueId !== issueId)))
         .catch(error => console.log(error));
     } else {
-      console.log('Not allowed to delete this issue');
+      console.log('Not allowed to delete this issue  ');
     }
   }
 
