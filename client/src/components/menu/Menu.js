@@ -8,18 +8,18 @@ import {tokenManager} from '../../tokenManager';
 import {history} from "../../index";
 
 export default class Menu extends Component {
-    isLoggedIn = false;
+    user = null;
 
     render() {
-        return this.isLoggedIn ? (
+        return this.user ? (
             <NavBar>
                 <NavBar.Brand image="images/Trondheim_kommune.png">Trondheim Kommune</NavBar.Brand>
                 <NavBar.Link to="/events">Events/hendelser</NavBar.Link>
                 <NavBar.Link to="/issues">Innmeldinger</NavBar.Link>
                 <NavBar.Link to="/registerIssue">Registrer sak</NavBar.Link>
-                <NavBar.Dropdown title={'Herman Ryen Martinsen'}>
-                    <DropdownHeader>martinsenhr@gmail.com</DropdownHeader>
-                    <DropdownFooter>Kommuneansatt</DropdownFooter>
+                <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
+                    <DropdownHeader>{this.user.email}</DropdownHeader>
+                    <DropdownFooter>{'Rank: ' + this.user.rank}</DropdownFooter>
                     <DropdownDivider/>
                     <DropdownItem onClick={this.toProfile}>Min profil</DropdownItem>
                     <DropdownItem onClick={this.logout}>Logg ut</DropdownItem>
@@ -35,9 +35,10 @@ export default class Menu extends Component {
     }
 
     mounted() {
-        userService.getToken().then(token => {
-            console.log(token);
-            this.isLoggedIn = true;
+        userService.getToken().then(() => {
+            userService.getUser(tokenManager.getUserId())
+                .then(user => this.user = user)
+                .catch((error: Error) => console.log(error));
         }).catch((error: Error) => console.log(error));
     }
 
