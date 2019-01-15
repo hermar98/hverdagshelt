@@ -10,13 +10,13 @@ import { IssueSmall } from '../issueViews/issueViews';
 import { DisplayEvent2 } from "./EventPage";
 import Menu from "../menu/Menu";
 
-export class MunicipalPage extends Component <{match: {params: {munId:number }}}>{
+export class MunicipalPage extends Component <{match: {params: {munId: number}}}>{
     issues = [];
     events = [];
     render() {
         return(
             <div>
-                <Menu/>
+                <Menu />
                 <div className="row">
                     <div className="col-lg-6">
                         <Card title="Feil/mangler">

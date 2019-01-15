@@ -8,7 +8,7 @@ import { issueService, issueCategoryService } from '../../services.js';
 import { Alert, Form, Card, Button } from '../../widgets';
 import { history } from '../../index';
 
-export default class RegisterIssue extends Component {
+export default class RegisterIssue extends Component <{match: {params: {munId: number}}}>{
   issue = new Issue();
   categories = [];
   form = null;
@@ -64,6 +64,7 @@ export default class RegisterIssue extends Component {
   save() {
     if (!this.form || !this.form.checkValidity()) return;
 
+    this.issue.munId = this.props.match.params.munId;
     this.issue.latitude = 0.1;
     this.issue.longitude = 0.2;
     this.issue.image = 'hei';

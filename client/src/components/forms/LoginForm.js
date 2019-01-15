@@ -10,7 +10,7 @@ import { userService, issueService } from "../../services.js"
 import {tokenManager} from '../../tokenManager.js';
 import {history} from "../../index";
 
-export default class Login extends Component {
+export default class Login extends Component{
     email = '';
     password = '';
     form = null;
@@ -42,12 +42,12 @@ export default class Login extends Component {
                             <Button.Basic type="submit" onClick={this.login}>Logg inn</Button.Basic>
                         </div>
                     </div>
-                    <div className="container h-100">
-                        <div className="row justify-content-center align-items-center">
-                            <Button.Link onClick={this.goTo}>Glemt passord</Button.Link>
-                        </div>
-                    </div>
                 </form>
+                <div className="container h-100">
+                    <div className="row justify-content-center align-items-center">
+                        <Button.Link onClick={this.goTo}>Glemt passord</Button.Link>
+                    </div>
+                </div>
             </Card>
         );
     }
@@ -55,7 +55,7 @@ export default class Login extends Component {
     mounted() {
         userService.getToken().then(token => {
             console.log(token);
-            history.push('/issues');
+            history.push('/municipals/:munId');
         }).catch((error: Error) => console.log(error));
     }
 
@@ -68,7 +68,7 @@ export default class Login extends Component {
             .login(this.email, this.password)
             .then(token => {
                 tokenManager.addToken(token);
-                history.push('/issues');
+                history.push('/municipals/:munId');
             })
             .catch((error: Error) => {
                 console.log(error);
@@ -77,6 +77,6 @@ export default class Login extends Component {
     }
 
   goTo() {
-    history.push('/forgotpassword');
+    history.push('/municipals/:munId/forgotPassword');
   }
 }

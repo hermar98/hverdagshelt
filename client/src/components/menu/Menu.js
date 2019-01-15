@@ -14,9 +14,9 @@ export default class Menu extends Component {
         return this.user ? (
             <NavBar>
                 <NavBar.Brand image="images/Trondheim_kommune.png">Trondheim Kommune</NavBar.Brand>
-                <NavBar.Link to="/municipal/:munId/events">Events/hendelser</NavBar.Link>
-                <NavBar.Link to="/municipal/:munId/issues">Innmeldinger</NavBar.Link>
-                <NavBar.Link to="/municipal/:munId/issues/fileIssue">Registrer sak</NavBar.Link>
+                <NavBar.Link to={'/municipal/:munId/events'}>Events/hendelser</NavBar.Link>
+                <NavBar.Link to={'/municipal/:munId/issues'}>Innmeldinger</NavBar.Link>
+                <NavBar.Link to={'/municipal/:munId/issues/fileIssue'}>Registrer sak</NavBar.Link>
                 <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
                     <DropdownHeader>{this.user.email}</DropdownHeader>
                     <DropdownFooter>{'Rank: ' + this.user.rank}</DropdownFooter>
@@ -48,6 +48,6 @@ export default class Menu extends Component {
 
     logout() {
         tokenManager.deleteToken();
-        history.push('//municipal/:munId/login');
+        history.push('/municipal/:munId/login');
     }
 }
