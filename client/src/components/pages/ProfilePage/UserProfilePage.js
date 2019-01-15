@@ -36,12 +36,14 @@ export class UserProfilePage extends Component<{ match: { params: { userId: numb
     f();
 
     userService
-      .getUser(this.props.match.params.userId)
+      // .getUser(this.props.match.params.userId)
+      .getUser(1)
       .then(rows => (this.user = rows))
       .catch(error => console.log(error));
 
     issueService
-      .getIssuesByUser(this.props.match.params.userId)
+      // .getIssuesByUser(this.props.match.params.userId)
+      .getIssuesByUser(1)
       .then(rows => (this.issues = rows))
       .catch(error => console.log(error));
 
@@ -54,13 +56,15 @@ export class UserProfilePage extends Component<{ match: { params: { userId: numb
       .catch(error => console.log(error));
   }
 
-  handleAddMunicipal(e: Object) {
-    e.preventDefault();
+  handleAddMunicipal() {
 
     //this.user.munId = this.municipals.find(mun => mun.name === this.newMunicipal).munId;
 
     userMunicipalService.addUserMunicipal(1, 5001);
+    // let s = userMunicipalService.getUserMunicipals(1);
     // userService.getUser(1);
+    userMunicipalService.anythingElse(5001,1);
+    console.log("s");
   }
 
   delete(issueId: number) {
@@ -91,7 +95,7 @@ export class UserProfilePage extends Component<{ match: { params: { userId: numb
           </Card>
           <br />
           <div>
-            <form autoComplete="off" onSubmit={this.handleAddMunicipal.bind(this)}>
+            <form autoComplete="off">
               <div className="autocomplete">
                 <input
                   id="municipalInput"
@@ -99,7 +103,7 @@ export class UserProfilePage extends Component<{ match: { params: { userId: numb
                   name="municipal"
                   onChange={event => (this.newMunicipal = event.target.value)}
                 />
-                <button type="submit">Legg Til Kommune</button>
+                <button type="submit" onClick={this.handleAddMunicipal}>Legg Til Kommune</button>
               </div>
             </form>
           </div>

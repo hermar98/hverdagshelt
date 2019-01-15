@@ -14,7 +14,7 @@ export default class Menu extends Component {
     render() {
         return this.user ? (
             <NavBar>
-                <NavBar.Brand image="images/Trondheim_kommune.png">Trondheim Kommune</NavBar.Brand>
+                <NavBar.Brand image="images/Trondheim_kommune.png" to={'/municipal/' + this.munId}>Trondheim Kommune</NavBar.Brand>
                 <NavBar.Link to={'/municipal/' + this.munId + '/events'}>Events/hendelser</NavBar.Link>
                 <NavBar.Link to={'/municipal/' + this.munId + '/issues'}>Innmeldinger</NavBar.Link>
                 <NavBar.Link to={'/municipal/' + this.munId + '/issues/fileIssue'}>Registrer sak</NavBar.Link>

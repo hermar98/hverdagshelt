@@ -35,6 +35,7 @@ let secretKey = fs.readFileSync('./secret.key', 'utf8');
 
 app.use('/secure', (req: Request, res: Response, next) => {
   let token = req.headers['x-access-token'];
+  console.log(token);
   jwt.verify(token, secretKey, err => {
     if (err) {
       res.sendStatus(401);
@@ -445,6 +446,7 @@ app.get('/secure/userMun/:id', (req: Request, res: Response) => {
 });
 
 app.post('/secure/user/:userId/mun/:munId', (req: Request, res: Response) => {
+  if (!(req.body instanceof Object)) return res.sendStatus(400);
   return UserMunicipal.create({
     userId: req.params.userId,
     munId: req.params.munId

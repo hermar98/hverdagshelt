@@ -72,7 +72,7 @@ export default class RegisterIssue extends Component {
 
     issueService
       .addIssue(this.issue)
-      .then(history.push('/municipals/' + this.munId + '/issues'))
+      .then(history.push('/municipal/' + this.munId + '/issues'))
       .catch((error: Error) => Alert.danger(error.message));
 
     console.log(this.issue);

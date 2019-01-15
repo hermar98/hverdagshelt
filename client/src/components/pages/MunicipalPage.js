@@ -47,12 +47,14 @@ export class MunicipalPage extends Component <{match: {params: {munId: number}}}
 
     mounted() {
         issueService
-            .getIssuesByMunicipal(this.props.match.params.munId)
-            .then(issues => (this.issues = issues))
+            // .getIssuesByMunicipal(this.props.match.params.munId)
+            .getIssues()
+            .then(issues => {(this.issues = issues);})
             .catch((error: Error) => Alert.danger(error.message));
 
         eventService
-            .getEventsByMunicipal(this.props.match.params.munId)
+            // .getEventsByMunicipal(this.props.match.params.munId)
+            .getEvents()
             .then(events => (this.events = events))
             .catch((error: Error) => Alert.danger(error.message));
     }

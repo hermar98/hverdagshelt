@@ -43,7 +43,6 @@ if (root)
   ReactDOM.render(
     <HashRouter>
       <div>
-        <Menu />
         <Alert />
         <Route exact path="/" component={ChooseMunicipalPage} />
         <Route exact path="/municipal/:munId" component={MunicipalPage} />

@@ -153,11 +153,11 @@ export class Card extends Component<{ title?: React.Node, children?: React.Node 
   }
 }
 
-class NavBarBrand extends Component<{ image?: React.Node, children?: React.Node }> {
+class NavBarBrand extends Component<{ image?: React.Node, to?: string, children?: React.Node }> {
   render() {
     if (!this.props.children) return null;
     return (
-      <NavLink className="navbar-brand" activeClassName="active" exact to="/">
+      <NavLink className="navbar-brand" activeClassName="active" exact to={(this.props.to ? this.props.to : "/")}>
         <a>
           <img src={this.props.image} alt="" width="50px" height="40px" />
         </a>
