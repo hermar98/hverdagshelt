@@ -44,6 +44,7 @@ app.use('/secure', (req: Request, res: Response, next) => {
 });
 
 
+
 app.post('/login', (req: Request, res: Response) => {
   User.findOne({ where: { email: req.body.email } }).then(user => {
     //TODO: Flow check: Cannot get `req.body.email` because property `email` is missing in mixed [1].
