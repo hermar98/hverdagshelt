@@ -1,8 +1,8 @@
 // @flow
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import {userService, issueService} from '../src/services';
-import {Issue, User} from "../src/models";
+import {userService, issueService, eventService} from '../src/services';
+import {Issue, User, Event} from "../src/models";
 
 let mock = new MockAdapter(axios);
 let user = {
@@ -30,6 +30,20 @@ let issue = {
 let issueArray = [];
 issueArray.push(issue);
 
+let event = {
+  eventId: 1,
+  title: "Konsert på rådhuset - REVIVAL",
+  content: "XXXTentacion holder eksklusiv konsert for sine fans",
+  image: "stringTabellArgs.img",
+  longitude: 246810,
+  latitude: 12141,
+  timeStart: "01.02.2014",
+  timeEnd: "01.03.2014",
+  categoryId: 1,
+}
+let eventArray =[];
+eventArray.push(event);
+
 
 beforeAll(() => {
   mock.onGet('/secure/users/' + user.userId).reply(200, user)
@@ -40,7 +54,8 @@ beforeAll(() => {
     .onGet('/secure/issues/' + issue.issueId).reply(200, issue)
     .onPut('secure/issues/' + issue.issueId).reply(200)
     .onPost('/secure/issues').reply(200, 1)
-    .onDelete('/secure/issues/' + issue.issueId).reply(200, 1);
+    .onDelete('/secure/issues/' + issue.issueId).reply(200)
+    .onGet('/secure/events').reply(200, eventArray);
 
 });
 
@@ -105,8 +120,26 @@ describe('Issue tests', () =>{
 
   it('addIssue return number (1)', done => {
 
-    issueService.updateIssue(issue).then(response => {
+    issueService.addIssue(issue).then(response => {
       expect(response).toEqual(1);
+      done();
+    });
+  });
+
+  it('addIssue returns void and status code 200', done => {
+
+    issueService.deleteIssue(issue.issueId).then(response => {
+      expect(response).toEqual();
+      done();
+    });
+  });
+});
+
+describe('Event tests', () =>{
+  it('getEvents returns Array of events', done => {
+
+    eventService.getEvents().then(response => {
+      expect(response[0]).toEqual(eventArray[0]);
       done();
     });
   });

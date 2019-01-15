@@ -3,7 +3,6 @@ import type { Model } from 'sequelize';
 require('dotenv').config({ path: 'C:\\hverdagshelt_Team_3\\.env' });
 
 let sequelize = new Sequelize(
-<<<<<<< HEAD
   process.env.CI ? 'database' : 'hverdagshelt',
   process.env.CI ? 'root' : 'user',
   process.env.CI ? '' : 'password',
@@ -19,25 +18,10 @@ let sequelize = new Sequelize(
       acquire: 30000,
       idle: 10000
     }
-=======
-    process.env.CI ? 'database' : 'hverdagshelt',
-    process.env.CI ? 'root' : 'vegard',
-    process.env.CI ? '' : '1234',
+  }
     // process.env.CI ? 'database' : 'sebasman',
     // process.env.CI ? 'root' : 'sebasman',
     // process.env.CI ? '' : 'GSBLuzbB',
-    {
-        host: process.env.CI ? 'mysql' : '127.0.0.1',
-        dialect: 'mysql',
-        pool: {
-            max: 5,
-            min: 0,
-            acquire: 30000,
-            idle: 10000
-        }
-
->>>>>>> 797cc041fb3cd4babce3dc79e6c27f065836c579
-  }
 );
 
 sequelize
