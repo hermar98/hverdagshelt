@@ -8,7 +8,7 @@ import { Alert, Card } from '../../widgets';
 import { history } from '../../index';
 import { IssueSmall } from '../issueViews/issueViews';
 import { DisplayEvent2 } from "./EventPage";
-import {MenuLoggedIn} from "../menu/MenuLoggedIn";
+import Menu from "../menu/Menu";
 
 export class MunicipalPage extends Component <{match: {params: {munId:number }}}>{
     issues = [];
@@ -16,7 +16,7 @@ export class MunicipalPage extends Component <{match: {params: {munId:number }}}
     render() {
         return(
             <div>
-                <MenuLoggedIn/>
+                <Menu/>
                 <div className="row">
                     <div className="col-lg-6">
                         <Card title="Feil/mangler">

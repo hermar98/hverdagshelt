@@ -14,9 +14,9 @@ export default class Menu extends Component {
         return this.user ? (
             <NavBar>
                 <NavBar.Brand image="images/Trondheim_kommune.png">Trondheim Kommune</NavBar.Brand>
-                <NavBar.Link to="/events">Events/hendelser</NavBar.Link>
-                <NavBar.Link to="/issues">Innmeldinger</NavBar.Link>
-                <NavBar.Link to="/registerIssue">Registrer sak</NavBar.Link>
+                <NavBar.Link to="/municipal/:munId/events">Events/hendelser</NavBar.Link>
+                <NavBar.Link to="/municipal/:munId/issues">Innmeldinger</NavBar.Link>
+                <NavBar.Link to="/municipal/:munId/issues/fileIssue">Registrer sak</NavBar.Link>
                 <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
                     <DropdownHeader>{this.user.email}</DropdownHeader>
                     <DropdownFooter>{'Rank: ' + this.user.rank}</DropdownFooter>
@@ -28,8 +28,8 @@ export default class Menu extends Component {
             ) : (
             <NavBar>
                 <NavBar.Brand image="images/Trondheim_kommune.png">Trondheim Kommune</NavBar.Brand>
-                <NavBar.Link to="/login">Logg inn</NavBar.Link>
-                <NavBar.Link to="/registerUser">Registrer bruker</NavBar.Link>
+                <NavBar.Link to="/municipal/:munId/login">Logg inn</NavBar.Link>
+                <NavBar.Link to="/municipal/:munId/register">Registrer bruker</NavBar.Link>
             </NavBar>
         );
     }
@@ -43,11 +43,11 @@ export default class Menu extends Component {
     }
 
     toProfile() {
-        history.push('/profile');
+        history.push('/municipal/:munId/profile');
     }
 
     logout() {
         tokenManager.deleteToken();
-        history.push('/login');
+        history.push('//municipal/:munId/login');
     }
 }

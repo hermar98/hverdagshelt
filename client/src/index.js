@@ -43,36 +43,19 @@ if (root)
     <HashRouter>
       <div>
         <Alert />
-        <Route exact path="/" component={ChooseMunicipalPage} />
-        <Route exact path="/issues" component={IssuePage} />
-        <Route path="/issues/:issue_id" component={IssueLarge} />
-        <Route exact path="/registerUser" component={RegisterPage} />
-        <Route exact path="/registerIssue" component={FileIssuePage} />
-        <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/profile" component={UserProfilePage} />
-        <Route exact path="/forgotpassword" component={ForgotPassword} />
-        <Route exact path="/reset/:id" component={NewPasswordPage} />
-        <Route exact path="/sendEmail" />
-        <Route exact path="/event/register" component={RegisterEventPage} />
-        <Route exact path="/events/" component={EventPage} />
-        <Route exact path="/municipal/:munId" component={MunicipalPage} />
-        <Route exact path="/UploadImageTest" component={UploadImageTest} />
+          <Route exact path="/" component={ChooseMunicipalPage} />
+          <Route exact path="/municipal/:munId" component={MunicipalPage} />
+          <Route exact path="/municipal/:munId/login" component={LoginPage} />
+          <Route exact path="/municipal/:munId/register" component={RegisterPage} />
+          <Route exact path="/municipal/:munId/profile" component={UserProfilePage} />
+          <Route exact path="/municipal/:munId/forgotPassword" component={ForgotPassword} />
+          <Route exact path="/municipal/:munId/reset/:userId" component={ForgotPassword} />
+          <Route exact path="/municipal/:munId/events" component={EventPage} />
+          <Route exact path="/municipal/:munId/events/registerEvent" component={RegisterEventPage} />
+          <Route exact path="/municipal/:munId/issues" component={IssuePage} />
+          <Route exact path="/municipal/:munId/issues/fileIssue" component={FileIssuePage} />
+          <Route exact path="/municipal/:munId/issues/:issueId" component={IssueLarge} />
       </div>
     </HashRouter>,
     root
   );
-
-/*
-  <Route exact path="/" component={ChooseMunicipalPage} />
-  <Route exact path="/municipal/:munId" component={MunicipalPage} />
-  <Route exact path="/municipal/:munId/login" component={LoginPage} />
-  <Route exact path="/municipal/:munId/register" component={RegisterPage} />
-  <Route exact path="/municipal/:munId/profile" component={UserProfilePage} />
-  <Route exact path="/municipal/:munId/forgotPassword" component={ForgotPassword} />
-  <Route exact path="/municipal/:munId/reset/:userId" component={ForgotPassword} />
-  <Route exact path="/municipal/:munId/events" component={EventPage} />
-  <Route exact path="/municipal/:munId/events/registerEvent" component={RegisterEventPage} />
-  <Route exact path="/municipal/:munId/issues" component={IssueOverviewNormal} />
-  <Route exact path="/municipal/:munId/issues/fileIssue" component={FileIssuePage} />
-  <Route exact path="/municipal/:munId/issues/:issueId" component={IssueLarge} />
- */
