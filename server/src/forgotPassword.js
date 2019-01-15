@@ -1,30 +1,28 @@
 // @flow
-
 import { User } from '../src/models';
-import express from 'express';
-import path from 'path';
 require('dotenv').config();
 
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-const public_path = path.join(__dirname, '/../../client/public');
 
-// type Application = express$Application;
+//Flow type checking
 type Request = express$Request;
 type Response = express$Response;
 
 const app = require('./app');
 
 app.post('/forgotPassword', (req: Request, res: Response) => {
-  if (!req.body || !(typeof req.body.email === 'string')) return res.sendStatus(400);
-  if (!req.body.email) {
-    //TODO: Flow check: Property `email` is missing in mixed [1].
+    //Flow type checking mixed src: https://github.com/flow-typed/flow-typed/issues/812
+    const body = (req.body !== null && typeof req.body === 'object') ? req.body : {};
+    const {email} = body;
+  // if (!req.body || !(typeof req.body.email === 'string')) return res.sendStatus(400);
+  if (!email) {
     res.json('email er påkrevd');
   }
 
   User.findOne({
     where: {
-      email: req.body.email //TODO: Flow check: Cannot get `req.body.email` because property `email` is missing in mixed [1].
+      email: email
     }
   }).then(user => {
     if (user === null) {
