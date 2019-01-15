@@ -23,7 +23,7 @@ export class MunicipalPage extends Component <{match: {params: {munId:number }}}
                             <ul className="container-fluid">
                                 {this.issues.map(issue =>
                                     <Card>
-                                        <li>
+                                        <li key={issue.issueId}>
                                             <IssueSmall issue={issue}/>
                                         </li>
                                     </Card>
@@ -34,7 +34,7 @@ export class MunicipalPage extends Component <{match: {params: {munId:number }}}
                     <div className="col-lg-6">
                         <ul className="container-fluid">
                             {this.events.map(event =>
-                                <li>
+                                <li key={event.eventId}>
                                     <DisplayEvent2 event={event}/>
                                 </li>
                             )}
