@@ -61,6 +61,26 @@ app.post('/login', (req: Request, res: Response) => {
   });
 });
 
+app.put('/reset/:id', (req: Request, res: Response) => {
+    let token = req.params.id;
+    console.log(token);
+    User.findOne({ where: { resetPasswordToken: token } }).then(user => {
+        if (user) {
+            console.log(user.user_id);
+            let passwordSalt = passwordHash.genRandomString(16);
+            let passwordData = passwordHash.sha512(req.body.password, passwordSalt);
+            console.log('Password' + req.body.password);
+            return User.update(
+                {
+                    salt: passwordSalt,
+                    hash_str: passwordData.passwordHash
+                },
+                { where: { user_id: user.user_id } }
+            ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+        }
+    });
+});
+
 app.get('/token', (req: Request, res: Response) => {
   let token = req.headers['x-access-token'];
   jwt.verify(token, secretKey, (err, decoded) => {
@@ -135,6 +155,19 @@ app.put('/secure/users/:id', (req: Request, res: Response) => {
       { where: { userId: req.params.id } }
     ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
   }
+
+  return User.update(
+    {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      rank: req.body.rank,
+      mun_id: req.body.mun_id,
+      salt: req.body.salt,
+      hash_str: req.body.hash_str
+    },
+    { where: { user_id: req.params.id } }
+  ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
 app.delete('/secure/users/:id', (req: Request, res: Response) => {
@@ -155,8 +188,8 @@ app.get('/municipals/:id', (req: Request, res: Response) => {
 });
 
 app.get('/municipals/:id/issues', (req: Request, res: Response) => {
-  return Municipal.findAll({ where: { munId: Number(req.params.id) } }).then(
-    muns => (muns ? res.send(muns) : res.sendStatus(404))
+  return Municipal.findAll({ where: { mun_id: Number(req.params.id) } }).then(muns =>
+    muns ? res.send(muns) : res.sendStatus(404)
   );
 });
 

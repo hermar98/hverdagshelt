@@ -46,7 +46,14 @@ export default class Login extends Component {
 
     userService
       .forgotPassword(this.email)
-      .then((res: respons) => Alert.Danger(respons))
+      .then(res => {
+        if (res.bad) {
+          Alert.danger(res.bad);
+        } else {
+          Alert.success(res);
+          history.push('/');
+        }
+      })
       .catch((error: error) => Alert.danger(error));
   }
 }
