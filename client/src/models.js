@@ -27,7 +27,7 @@ export class Issue {
   image: string;
   longitude: number;
   latitude: number;
-  status: number;
+  statusId: number;
   category_id: number;
 
   /*constructor(issueId: number, title: string, content: string, image: string, longitude: number, latitude: number, status: number, date: Date){

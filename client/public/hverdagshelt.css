@@ -100,7 +100,6 @@ div.status > h4 {
 .image-button {
     background-color: white;
     height: 8vh;
-    margin: 0 .3vh 0 .3vh;
     border-radius: 0;
 }
 
@@ -212,9 +211,8 @@ div.feedback-button button {
 }
 
 .status-selection {
-    margin-top: 2vh;
-    margin-bottom: 1vh;
     position: absolute;
+    border: solid 1px lightgray;
 }
 
 .show {
@@ -227,4 +225,10 @@ div.feedback-button button {
 
 .submitter {
     border-bottom: lightgray solid 1px;
+}
+
+.btn:focus, .btn:active {
+    outline: none !important;
+    background-color: lightgray;
+    box-shadow: none;
 }

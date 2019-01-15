@@ -8,18 +8,6 @@ import { issueService, userService, feedbackService } from "../../services";
 let sharedIssues = sharedComponentData({issues: []})
 let sharedFeedback = sharedComponentData({feedback: []})
 
-/*var issueTest = new Issue(0, "Hull i veien ved Gate 7", "Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg",1, 1,  3, new Date());
-sharedIssues.issues =  [
-    new Issue(1, "Hull i veien ved Gate 7" ," Hull i veien, hull i veien", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg",1, 1,  1, 1),
-    new Issue(2, "Ødelagt bom ved broa" ,"Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg",1, 1,  3,2),
-    new Issue(3, "Herverk på husveggen min" ,"Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg",1, 1,  2,Date.now()),
-    new Issue(4, "Søppeltømmingsplanene fungerer ikke bra" ,"Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg",1, 1 , 2,Date.now()),
-    new Issue(5, "Hull i veien ved Gate 7" ,"Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg",1, 1,  3,Date.now()),
-    new Issue(6, "Ødelagt bom ved broa" ,"Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien", "https://i.imgur.com/nqTGipe.jpg",1, 1, 3,Date.now()),
-    new Issue(7, "Herverk på husveggen min" ,"Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg",1, 1, 2,Date.now()),
-    new Issue(8, "Søppeltømmingsplanene fungerer ikke bra" ,"Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, hull i veien, Hull i veien, hull i veien", "https://4svs02umxmk119m8u2jfuxf1-wpengine.netdna-ssl.com/wp-content/uploads/2015/03/shutterstock_55640203-900x450.jpg",1, 1,  1,Date.now())
-]*/
-
 /*
 Large view of an issue, which includes the title, content, image and status.
  */
@@ -63,9 +51,9 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
                             </div>
                             <div className="d-flex flex-row justify-content-end">
                                 <div className="status-selection" ref={this.statusSelect}>
-                                    <StatusButton status={1} onclick={() => console.log("blocked")} />
-                                    <StatusButton status={2} onclick={() => console.log("pending")} />
-                                    <StatusButton status={3} onclick={() => console.log("finished")} />
+                                    <StatusButton status={1} onclick={() => this.onClick(1)} />
+                                    <StatusButton status={2} onclick={() => this.onClick(2)} />
+                                    <StatusButton status={3} onclick={() => this.onClick(3)} />
                                 </div>
                             </div>
                             <div className="card-text">
@@ -90,7 +78,6 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
                 })}
                 <p id="feedbackFill"/>
                 <div className="feedback-button">
-                    <HoverButton onclick={null} title="Legg inn oppdatering" />
                 </div>
             </div>
         )
@@ -98,6 +85,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
 
     mounted () {
         window.scrollTo(0, 0);
+        console.log(this.props.match.params.issueId)
         issueService.getIssue(this.props.match.params.issueId)
             .then(issue => {
                 this.issue = issue;
@@ -111,7 +99,17 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
     }
 
     onClick (val: number) {
-        issueService.updateIssue()
+        this.issue.statusId = val;
+        issueService.updateIssue(this.issue)
+            .then(res => {
+                issueService.getIssue(this.issue.issueId)
+                    .then(issue => {
+                        this.issue = issue;
+                        this.setState({clickedStatus: !this.state.clickedStatus})
+                    })
+                    .catch(error => console.error("Error: ", error))
+            })
+            .catch(error => console.error("Error"))
     }
 }
 
@@ -306,6 +304,7 @@ export class IssueOverviewNormal extends Component {
     }
 
     mounted (){
+        console.log("asdasd")
         issueService.getIssues()
             .then(data => {
                 sharedIssues.issues = data;
@@ -392,34 +391,12 @@ class StatusButton extends Component<{status: number, onclick: function}> {
     }
 }
 
-class HoverButton extends Component<{onclick: function, title: string}> {
-    render (){
-        return (
-            <button className="btn hover-button" id="hover-Button" type="button" onClick={this.props.onclick} title={this.props.title}>
-                {this.props.title}
-            </button>
-        )
-    }
-}
-
 class ImageButton extends Component<{source: string, onclick: function}> {
     render() {
         return(
             <button className="btn image-button" type="button" onClick={this.props.onclick} >
                 <img id="image-button-image" src={this.props.source} />
             </button>
-        )
-    }
-}
-
-export class StatusSelection extends Component<{issue: Issue}>{
-    render() {
-        return (
-            <div className="status-select d-flex flex-row justify-content-center">
-                <StatusImage status={1} />
-                <StatusImage status={2} />
-                <StatusImage status={3} />
-            </div>
         )
     }
 }

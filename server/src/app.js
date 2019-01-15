@@ -49,7 +49,7 @@ app.post('/login', (req: Request, res: Response) => {
       let passwordData = passwordHash.sha512(req.body.password, user.salt); //TODO: Flow check: Cannot get `req.body.password` because property `password` is missing in mixed [1].
       if (passwordData.passwordHash === user.hashStr) {
         let token = jwt.sign({ email: req.body.email }, secretKey, { // TODO: Flow check: Cannot get `req.body.email` because property `email` is missing in mixed [1].
-          expiresIn: 4000
+          expiresIn: 4000000
         });
         res.json({ userId: user.userId, jwt: token });
       } else {
@@ -321,7 +321,7 @@ app.put('/secure/issues/:id', (req: Request, res: Response) => {
       image: req.body.image,
       longitude: req.body.longitude,
       latitude: req.body.latitude,
-      status: req.body.status,
+      statusId: req.body.statusId,
       date: req.body.date
     },
     {

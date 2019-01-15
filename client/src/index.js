@@ -39,10 +39,11 @@ if (root)
   ReactDOM.render(
     <HashRouter>
       <div>
+        <Menu />
         <Alert />
         <Route exact path="/" component={ChooseMunicipalPage} />
         <Route exact path="/issues" component={IssueOverviewNormal} />
-        <Route path="/issues/:issue_id" component={IssueLarge} />
+        <Route path="/issues/:issueId" component={IssueLarge} />
         <Route exact path="/registerUser" component={RegisterPage} />
         <Route exact path="/registerIssue" component={FileIssuePage} />
         <Route exact path="/login" component={LoginPage} />
