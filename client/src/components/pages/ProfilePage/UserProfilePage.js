@@ -9,6 +9,7 @@ import MenuLoggedIn from '../../../components/menu/Menu.js';
 import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
 import { userService } from '../../../services';
 import { issueService } from '../../../services';
+import { userMunicipalService } from '../../../services';
 import { municipalService } from '../../../services';
 import { autocomplete } from '../../../../public/autocomplete';
 import { User } from '../../../models';
@@ -48,28 +49,28 @@ export class UserProfilePage extends Component {
       .then(rows => (this.issues = rows))
       .catch(error => console.log(error));
 
-    municipalService
-      .getMunicipals()
+    userMunicipalService
+      .getUserMunicipals(1)
       .then(rows => {
         this.municipals = rows;
-        this.municipal = rows.find(mun => mun.mun_id === this.user.mun_id);
+        this.municipal = rows.find(mun => mun.munId === this.user.munId);
       })
       .catch(error => console.log(error));
   }
 
-  handleChangeMunicipal(e: Object) {
+  handleAddMunicipal(e: Object) {
     e.preventDefault();
 
-    this.user.mun_id = this.municipals.find(mun => mun.name === this.newMunicipal).mun_id;
+    //this.user.munId = this.municipals.find(mun => mun.name === this.newMunicipal).munId;
 
-    userService.updateUser(this.user);
+    userMunicipalService.addUserMunicipal(1, 101);
   }
 
-  delete(issue_id: number) {
-    if (this.issues.find(e => e.issue_id === issue_id).status_id === 6) {
+  delete(issueId: number) {
+    if (this.issues.find(e => e.issueId === issueId).statusId === 6) {
       issueService
-        .deleteIssue(issue_id)
-        .then(rows => (this.issues = this.issues.filter(e => e.issue_id !== issue_id)))
+        .deleteIssue(issueId)
+        .then(rows => (this.issues = this.issues.filter(e => e.issueId !== issueId)))
         .catch(error => console.log(error));
     } else {
       console.log('Not allowed to delete this issue');
@@ -87,12 +88,12 @@ export class UserProfilePage extends Component {
                 Navn: {this.user.firstName} {this.user.lastName}
               </p>
               <p>Email: {this.user.email}</p>
-              <p>Hjemkommune: {this.municipal.name}</p>
+              <p>Hjemkommune: </p>
             </div>
           </Card>
           <br />
           <div>
-            <form autoComplete="off" onSubmit={this.handleChangeMunicipal.bind(this)}>
+            <form autoComplete="off" onSubmit={this.handleAddMunicipal.bind(this)}>
               <div className="autocomplete">
                 <input
                   id="municipalInput"
@@ -111,8 +112,8 @@ export class UserProfilePage extends Component {
         <Card className="issues" title="Mine Saker">
           {this.issues.map((issue, index) => (
             <div key={index}>
-              <IssueSmall issue={issue} />
-              <button className="btn btn-danger" onClick={this.delete.bind(this, issue.issue_id)}>
+              <IssueNormal issue={issue} />
+              <button className="btn btn-danger" onClick={this.delete.bind(this, issue.issueId)}>
                 Delete
               </button>
             </div>

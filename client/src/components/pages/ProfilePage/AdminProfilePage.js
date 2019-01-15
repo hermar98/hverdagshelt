@@ -5,7 +5,7 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 
 import { Alert, NavBar, Form, Card, Button } from '../../../widgets';
-import Menu from '../../../components/menu/Menu.js';
+import MenuLoggedIn from '../../../components/menu/Menu.js';
 import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
 import { userService } from '../../../services';
 import { issueService } from '../../../services';
@@ -17,12 +17,7 @@ import { Municipal } from '../../../models';
 //import styles from './ProfilePage.css';
 
 export class AdminProfilePage extends Component {
-  state = {
-    isLoaded: false
-  };
-
   user: User = new User(0, '', '', '', 0, '', '');
-  issues: Issue[] = [];
   municipal: Municipal = new Municipal(0, '', '', '', 0);
   municipals: Municipal[] = [];
 
@@ -49,11 +44,6 @@ export class AdminProfilePage extends Component {
       })
       .catch(error => console.log(error));
 
-    issueService
-      .getIssues()
-      .then(rows => (this.issues = rows))
-      .catch(error => console.log(error));
-
     municipalService
       .getMunicipals()
       .then(rows => ((this.municipals = rows), (this.municipal = rows.find(mun => (mun.munId = this.user.munId)))))
@@ -76,22 +66,16 @@ export class AdminProfilePage extends Component {
     userService.updateUser(json);
   }
 
-  delete(issueId: number) {
-    issueService
-      .deleteIssue(issueId)
-      .then(rows => (this.issues = this.issues.filter(e => e.issueId !== issueId)))
-      .catch(error => console.log(error));
-  }
-
   render() {
     return (
       <div>
+        <MenuLoggedIn />
         <Card title="Min Profil">
           <p>
-            Navn: {this.state.isLoaded && this.user.firstName} {this.state.isLoaded && this.user.lastName}
+            Navn: {this.user.firstName} {this.user.lastName}
           </p>
-          <p>Email: {this.state.isLoaded && this.user.email}</p>
-          <p>Hjemkommune: {this.state.isLoaded && this.municipal.name}</p>
+          <p>Email: {this.user.email}</p>
+          <p>Hjemkommune: {this.municipal.name}</p>
           <br />
           <form autoComplete="off">
             <div className="autocomplete">
@@ -109,18 +93,6 @@ export class AdminProfilePage extends Component {
         </Card>
         <Card>
           <ChangePasswordForm />
-        </Card>
-        <Card className="issues" title="Mine Saker">
-          <ul>
-            {this.issues.map((issue, index) => (
-              <li key={index}>
-                <h1>{issue.title}</h1>
-                <button onClick={this.delete(issue.issueId)} className="btn btn-danger ">
-                  Delete
-                </button>
-              </li>
-            ))}
-          </ul>
         </Card>
       </div>
     );

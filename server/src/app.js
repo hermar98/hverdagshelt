@@ -44,11 +44,13 @@ app.use('/secure', (req: Request, res: Response, next) => {
 });
 
 app.post('/login', (req: Request, res: Response) => {
-  User.findOne({ where: { email: req.body.email } }).then(user => { //TODO: Flow check: Cannot get `req.body.email` because property `email` is missing in mixed [1].
+  User.findOne({ where: { email: req.body.email } }).then(user => {
+    //TODO: Flow check: Cannot get `req.body.email` because property `email` is missing in mixed [1].
     if (user) {
       let passwordData = passwordHash.sha512(req.body.password, user.salt); //TODO: Flow check: Cannot get `req.body.password` because property `password` is missing in mixed [1].
       if (passwordData.passwordHash === user.hashStr) {
-        let token = jwt.sign({ email: req.body.email }, secretKey, { // TODO: Flow check: Cannot get `req.body.email` because property `email` is missing in mixed [1].
+        let token = jwt.sign({ email: req.body.email }, secretKey, {
+          // TODO: Flow check: Cannot get `req.body.email` because property `email` is missing in mixed [1].
           expiresIn: 4000
         });
         res.json({ userId: user.userId, jwt: token });
@@ -62,23 +64,23 @@ app.post('/login', (req: Request, res: Response) => {
 });
 
 app.put('/reset/:id', (req: Request, res: Response) => {
-    let token = req.params.id;
-    console.log(token);
-    User.findOne({ where: { resetPasswordToken: token } }).then(user => {
-        if (user) {
-            console.log(user.user_id);
-            let passwordSalt = passwordHash.genRandomString(16);
-            let passwordData = passwordHash.sha512(req.body.password, passwordSalt);
-            console.log('Password' + req.body.password);
-            return User.update(
-                {
-                    salt: passwordSalt,
-                    hash_str: passwordData.passwordHash
-                },
-                { where: { user_id: user.user_id } }
-            ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
-        }
-    });
+  let token = req.params.id;
+  console.log(token);
+  User.findOne({ where: { resetPasswordToken: token } }).then(user => {
+    if (user) {
+      console.log(user.userId);
+      let passwordSalt = passwordHash.genRandomString(16);
+      let passwordData = passwordHash.sha512(req.body.password, passwordSalt);
+      console.log('Password' + req.body.password);
+      return User.update(
+        {
+          salt: passwordSalt,
+          hash_str: passwordData.passwordHash
+        },
+        { where: { userId: user.userId } }
+      ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+    }
+  });
 });
 
 app.get('/token', (req: Request, res: Response) => {
@@ -104,9 +106,9 @@ app.post('/register', (req: Request, res: Response) => {
   return User.create({
     firstName: req.body.firstName, // TODO: Flow check: Cannot get `req.body.firstName` because property `firstName` is missing in mixed [1].
     lastName: req.body.lastName, //TODO: Flow check: Cannot get `req.body.lastName` because property `lastName` is missing in mixed [1].
-      email: req.body.email, //TODO: Flow check: Cannot get `req.body.email` because property `email` is missing in mixed [1].
-      rank: req.body.rank, //TODO: Flow check: Cannot get `req.body.rank` because property `rank` is missing in mixed [1].
-      salt: passwordSalt,
+    email: req.body.email, //TODO: Flow check: Cannot get `req.body.email` because property `email` is missing in mixed [1].
+    rank: req.body.rank, //TODO: Flow check: Cannot get `req.body.rank` because property `rank` is missing in mixed [1].
+    salt: passwordSalt,
     hashStr: passwordData.passwordHash
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
@@ -117,8 +119,8 @@ app.get('/secure/users', (req: Request, res: Response) => {
 });
 
 app.get('/secure/users/:id', (req: Request, res: Response) => {
-  return User.findOne({ where: { userId: Number(req.params.id) } }).then(
-    user => (user ? res.send(user) : res.sendStatus(404))
+  return User.findOne({ where: { userId: Number(req.params.id) } }).then(user =>
+    user ? res.send(user) : res.sendStatus(404)
   );
 });
 
@@ -145,11 +147,11 @@ app.put('/secure/users/:id', (req: Request, res: Response) => {
     return User.update(
       {
         firstName: req.body.firstName, //TODO: Flow check: Cannot get `req.body.firstName` because property `firstName` is missing in mixed [1].
-          lastName: req.body.lastName, //TODO: Flow check: Cannot get `req.body.lastName` because property `lastName` is missing in mixed [1].
-          email: req.body.email, //TODO: Flow check: Cannot get `req.body.email` because property `email` is missing in mixed [1].
-          rank: req.body.rank, //TODO: Flow check: Cannot get `req.body.rank` because property `rank` is missing in mixed [1].
-          munId: req.body.munId, //TODO: Flow check: Cannot get `req.body.munId` because property `munId` is missing in mixed [1].
-          salt: passwordSalt,
+        lastName: req.body.lastName, //TODO: Flow check: Cannot get `req.body.lastName` because property `lastName` is missing in mixed [1].
+        email: req.body.email, //TODO: Flow check: Cannot get `req.body.email` because property `email` is missing in mixed [1].
+        rank: req.body.rank, //TODO: Flow check: Cannot get `req.body.rank` because property `rank` is missing in mixed [1].
+        munId: req.body.munId, //TODO: Flow check: Cannot get `req.body.munId` because property `munId` is missing in mixed [1].
+        salt: passwordSalt,
         hashStr: passwordData.passwordHash
       },
       { where: { userId: req.params.id } }
@@ -162,11 +164,11 @@ app.put('/secure/users/:id', (req: Request, res: Response) => {
       lastName: req.body.lastName,
       email: req.body.email,
       rank: req.body.rank,
-      mun_id: req.body.mun_id,
+      munId: req.body.munId,
       salt: req.body.salt,
       hash_str: req.body.hash_str
     },
-    { where: { user_id: req.params.id } }
+    { where: { userId: req.params.id } }
   ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
@@ -182,13 +184,13 @@ app.get('/municipals', (req: Request, res: Response) => {
 });
 
 app.get('/municipals/:id', (req: Request, res: Response) => {
-  return Municipal.findOne({ where: { munId: Number(req.params.id) } }).then(
-    mun => (mun ? res.send(mun) : res.sendStatus(404))
+  return Municipal.findOne({ where: { munId: Number(req.params.id) } }).then(mun =>
+    mun ? res.send(mun) : res.sendStatus(404)
   );
 });
 
 app.get('/municipals/:id/issues', (req: Request, res: Response) => {
-  return Municipal.findAll({ where: { mun_id: Number(req.params.id) } }).then(muns =>
+  return Municipal.findAll({ where: { munId: Number(req.params.id) } }).then(muns =>
     muns ? res.send(muns) : res.sendStatus(404)
   );
 });
@@ -199,8 +201,8 @@ app.get('/secure/county', (req: Request, res: Response) => {
 });
 
 app.get('/secure/county/:id', (req: Request, res: Response) => {
-  return County.findOne({ where: { countyId: Number(req.params.id) } }).then(
-    user => (user ? res.send(user) : res.sendStatus(404))
+  return County.findOne({ where: { countyId: Number(req.params.id) } }).then(user =>
+    user ? res.send(user) : res.sendStatus(404)
   );
 });
 
@@ -209,8 +211,8 @@ app.get('/secure/events', (req: Request, res: Response) => {
   return Event.findAll().then(events => res.send(events));
 });
 app.get('/secure/events/:id', (req: Request, res: Response) => {
-  return Event.findOne({ where: { eventId: Number(req.params.id) } }).then(
-    event => (event ? res.send(event) : res.sendStatus(404))
+  return Event.findOne({ where: { eventId: Number(req.params.id) } }).then(event =>
+    event ? res.send(event) : res.sendStatus(404)
   );
 });
 app.put('/secure/events/:id', (req: Request, res: Response) => {
@@ -259,8 +261,8 @@ app.get('/secure/eventCat', (req: Request, res: Response) => {
 });
 
 app.get('/secure/eventCat/:id', (req: Request, res: Response) => {
-  return EventCategory.findOne({ where: { categoryId: Number(req.params.id) } }).then(
-    eventCategory => (eventCategory ? res.send(eventCategory) : res.sendStatus(404))
+  return EventCategory.findOne({ where: { categoryId: Number(req.params.id) } }).then(eventCategory =>
+    eventCategory ? res.send(eventCategory) : res.sendStatus(404)
   );
 });
 
@@ -297,18 +299,18 @@ app.get('/secure/issues', (req: Request, res: Response) => {
   return Issue.findAll().then(issues => res.send(issues));
 });
 app.get('/secure/issues/:id', (req: Request, res: Response) => {
-  return Issue.findOne({ where: { issueId: Number(req.params.id) } }).then(
-    issue => (issue ? res.send(issue) : res.sendStatus(404))
+  return Issue.findOne({ where: { issueId: Number(req.params.id) } }).then(issue =>
+    issue ? res.send(issue) : res.sendStatus(404)
   );
 });
 app.get('/secure/issues/:id/feedback', (req: Request, res: Response) => {
-  return Feedback.findAll({ where: { issueId: Number(req.params.id) } }).then(
-    issue => (issue ? res.send(issue) : res.sendStatus(404))
+  return Feedback.findAll({ where: { issueId: Number(req.params.id) } }).then(issue =>
+    issue ? res.send(issue) : res.sendStatus(404)
   );
 });
 app.get('/secure/users/:id/issues', (req: Request, res: Response) => {
-  return Issue.findAll({ where: { userId: Number(req.params.id) } }).then(
-    issue => (issue ? res.send(issue) : res.sendStatus(404))
+  return Issue.findAll({ where: { userId: Number(req.params.id) } }).then(issue =>
+    issue ? res.send(issue) : res.sendStatus(404)
   );
 });
 
@@ -357,8 +359,8 @@ app.get('/secure/issueCat', (req: Request, res: Response) => {
   return IssueCategory.findAll().then(issueCategories => res.send(issueCategories));
 });
 app.get('/secure/issueCat/:id', (req: Request, res: Response) => {
-  return IssueCategory.findOne({ where: { categoryId: Number(req.params.id) } }).then(
-    issueCategory => (issueCategory ? res.send(issueCategory) : res.sendStatus(404))
+  return IssueCategory.findOne({ where: { categoryId: Number(req.params.id) } }).then(issueCategory =>
+    issueCategory ? res.send(issueCategory) : res.sendStatus(404)
   );
 });
 app.put('/secure/issueCat/:id', (req: Request, res: Response) => {
@@ -410,8 +412,8 @@ app.post('/secure/user/:userId/mun/:munId', (req: Request, res: Response) => {
 });
 
 app.delete('/secure/user/:userId/mun/:munId', (req: Request, res: Response) => {
-  return UserMunicipal.destroy({ where: { userId: req.params.userId, munId: req.params.munId } }).then(
-    count => (count ? res.sendStatus(200) : res.sendStatus(404))
+  return UserMunicipal.destroy({ where: { userId: req.params.userId, munId: req.params.munId } }).then(count =>
+    count ? res.sendStatus(200) : res.sendStatus(404)
   );
 });
 
@@ -437,8 +439,8 @@ app.post('/secure/user/:userId/issue/:issueId', (req: Request, res: Response) =>
 });
 
 app.delete('/secure/user/:userId/issue/:issueId', (req: Request, res: Response) => {
-  return UserIssue.destroy({ where: { userId: req.params.userId, issueId: req.params.issueId } }).then(
-    count => (count ? res.sendStatus(200) : res.sendStatus(404))
+  return UserIssue.destroy({ where: { userId: req.params.userId, issueId: req.params.issueId } }).then(count =>
+    count ? res.sendStatus(200) : res.sendStatus(404)
   );
 });
 

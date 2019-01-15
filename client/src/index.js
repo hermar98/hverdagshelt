@@ -11,6 +11,7 @@ import Menu from './components/menu/Menu';
 import { FileIssuePage } from './components/pages/FileIssuePage';
 import { LoginPage } from './components/pages/LoginPage';
 import { UserProfilePage } from './components/pages/ProfilePage/UserProfilePage';
+import { AdminProfilePage } from './components/pages/ProfilePage/AdminProfilePage';
 import { RegisterPage } from './components/pages/RegisterPage';
 import { EventPage } from './components/pages/EventPage';
 import { ChooseMunicipalPage } from './components/pages/ChooseMunicipalPage';
@@ -47,6 +48,7 @@ if (root)
         <Route exact path="/registerIssue" component={FileIssuePage} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/profile" component={UserProfilePage} />
+        <Route exact path="/adminProfile" component={AdminProfilePage} />
         <Route exact path="/forgotpassword" component={ForgotPassword} />
         <Route exact path="/reset/:id" component={NewPasswordPage} />
         <Route exact path="/sendEmail" />
