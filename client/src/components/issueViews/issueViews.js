@@ -109,6 +109,10 @@ export class IssueLarge extends Component<{match: {params: {issue_id: number}}}>
             })
             .catch(error => console.error("Error: ", error))
     }
+
+    onClick (val: number) {
+        issueService.updateIssue()
+    }
 }
 
 /*
