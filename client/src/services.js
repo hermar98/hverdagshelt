@@ -86,10 +86,10 @@ class IssueService {
     });
   }
 
-  getIssuesByUser(user: User): Promise<Issue[]> {
+  getIssuesByUser(userId: User): Promise<Issue[]> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.get('/secure/users/' + user.userId + '/issues', {
+    return axios.get('/secure/users/' + userId + '/issues', {
       headers: { 'x-access-token': token }
     });
   }

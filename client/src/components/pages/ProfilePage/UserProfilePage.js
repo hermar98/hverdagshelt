@@ -16,7 +16,7 @@ import { Municipal } from '../../../models';
 import { UserMunicipal } from '../../../models';
 import { IssueSmall, IssueNormal, IssueOverviewSmall } from '../../issueViews/issueViews';
 
-export class UserProfilePage extends Component {
+export class UserProfilePage extends Component<{ match: { params: { userId: number } } }> {
   user: User = new User(0, '', '', '', 0, 0, '');
   issues: Issue[] = [];
   municipal: UserMunicipal = new UserMunicipal();
@@ -39,12 +39,12 @@ export class UserProfilePage extends Component {
     f();
 
     userService
-      .getUser(1)
+      .getUser(this.props.match.params.userId)
       .then(rows => (this.user = rows))
       .catch(error => console.log(error));
 
     issueService
-      .getIssues()
+      .getIssuesByUser(this.props.match.params.userId)
       .then(rows => (this.issues = rows))
       .catch(error => console.log(error));
 

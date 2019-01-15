@@ -45,11 +45,11 @@ if (root)
         <Alert />
         <Route exact path="/" component={ChooseMunicipalPage} />
         <Route exact path="/issues" component={IssuePage} />
-        <Route path="/issues/:issue_id" component={IssueLarge} />
+        <Route path="/issues/:issueId" component={IssueLarge} />
         <Route exact path="/registerUser" component={RegisterPage} />
         <Route exact path="/registerIssue" component={FileIssuePage} />
         <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/profile" component={UserProfilePage} />
+        <Route exact path="/profile/:userId" component={UserProfilePage} />
         <Route exact path="/adminProfile" component={AdminProfilePage} />
         <Route exact path="/forgotpassword" component={ForgotPassword} />
         <Route exact path="/reset/:id" component={NewPasswordPage} />
