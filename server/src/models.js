@@ -590,5 +590,17 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             categoryId: 1
           }
         ])
+      )
+      .then(() =>
+        UserMunicipal.bulkCreate([
+          {
+            munId: 101,
+            userId: 1
+          },
+          {
+            munId: 514,
+            userId: 1
+          }
+        ])
       );
 });

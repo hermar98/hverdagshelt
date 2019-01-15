@@ -1,6 +1,6 @@
 // @flow
 import axios from 'axios';
-import { User, Issue, IssueCategory, Event, Municipal } from './models.js';
+import { User, Issue, IssueCategory, Event, Municipal, UserMunicipal } from './models.js';
 import { EventCategory, Feedback } from './models';
 
 axios.interceptors.response.use(response => response.data);
@@ -258,9 +258,10 @@ class UserMunicipalService {
       headers: { 'x-access-token': token }
     });
   }
-  addUserMunicipal(userId: number, munId: number): Promise<UserMunicipal> {
+  addUserMunicipal(userId: number, munId: number): Promise<void> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
+    console.log(token);
     return axios.post('/secure/user/' + userId + '/mun/' + munId, {
       headers: { 'x-access-token': token }
     });

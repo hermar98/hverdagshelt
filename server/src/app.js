@@ -397,7 +397,7 @@ app.get('/secure/userMun/:id', (req: Request, res: Response) => {
         model: Municipal,
         as: 'Municipals',
         attributes: ['munId', 'name'],
-        through: {model: UserMunicipal, as: 'UserMunicipals', attributes:[]}
+        through: { model: UserMunicipal, as: 'UserMunicipals', attributes: [] }
       }
     ],
     where: { userId: Number(req.params.id) },

@@ -15,14 +15,15 @@ import { autocomplete } from '../../../../public/autocomplete';
 import { User } from '../../../models';
 import { Issue } from '../../../models';
 import { Municipal } from '../../../models';
+import { UserMunicipal } from '../../../models';
 import { IssueSmall, IssueNormal, IssueOverviewSmall } from '../../issueViews/issueViews';
 
 export class UserProfilePage extends Component {
   user: User = new User(0, '', '', '', 0, 0, '');
   issues: Issue[] = [];
-  municipal: Municipal = new Municipal(0, '', '', '', 0);
+  municipal: UserMunicipal = new UserMunicipal();
   newMunicipal: Municipal = new Municipal(0, '', '', '', 0);
-  municipals: Municipal[] = [];
+  municipals: UserMunicipal[] = [];
 
   mounted() {
     async function f() {
@@ -53,7 +54,6 @@ export class UserProfilePage extends Component {
       .getUserMunicipals(1)
       .then(rows => {
         this.municipals = rows;
-        this.municipal = rows.find(mun => mun.munId === this.user.munId);
       })
       .catch(error => console.log(error));
   }
@@ -63,7 +63,7 @@ export class UserProfilePage extends Component {
 
     //this.user.munId = this.municipals.find(mun => mun.name === this.newMunicipal).munId;
 
-    userMunicipalService.addUserMunicipal(1, 101);
+    userMunicipalService.addUserMunicipal(1, 514);
   }
 
   delete(issueId: number) {
@@ -88,7 +88,8 @@ export class UserProfilePage extends Component {
                 Navn: {this.user.firstName} {this.user.lastName}
               </p>
               <p>Email: {this.user.email}</p>
-              <p>Hjemkommune: </p>
+
+              {console.log(this.municipals)}
             </div>
           </Card>
           <br />
@@ -101,7 +102,7 @@ export class UserProfilePage extends Component {
                   name="municipal"
                   onChange={event => (this.newMunicipal = event.target.value)}
                 />
-                <button type="submit">Endre Kommune</button>
+                <button type="submit">Legg Til Kommune</button>
               </div>
             </form>
           </div>
