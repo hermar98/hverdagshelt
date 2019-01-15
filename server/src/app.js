@@ -411,7 +411,7 @@ app.get('/secure/userMun/:id', (req: Request, res: Response) => {
         model: Municipal,
         as: 'Municipals',
         attributes: ['munId', 'name'],
-        through: { model: UserMunicipal, as: 'UserMunicipals', attributes: [] }
+        through: {model: UserMunicipal, as: 'UserMunicipals', attributes:[]}
       }
     ],
     where: { userId: Number(req.params.id) },
@@ -438,7 +438,8 @@ app.get('/secure/userIssue/:id', (req: Request, res: Response) => {
       {
         model: Issue,
         as: 'Issues',
-        attributes: ['issueId', 'name']
+        attributes: ['issueId', 'name'],
+        through: {model: UserIssue, as: 'UserIssues', attributes:[]}
       }
     ],
     attributes: [],
@@ -449,7 +450,7 @@ app.get('/secure/userIssue/:id', (req: Request, res: Response) => {
 app.post('/secure/user/:userId/issue/:issueId', (req: Request, res: Response) => {
   return UserIssue.create({
     userId: req.params.userId,
-    munId: req.params.issueId
+    issueId: req.params.issueId
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
