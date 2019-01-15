@@ -13,6 +13,7 @@ export class RegisterPage extends Component {
   render() {
     return (
       <div>
+        <Menu/>
         <RegistrationForm />
       </div>
     );
