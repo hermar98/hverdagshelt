@@ -66,9 +66,4 @@ export default class NewPasswordForm extends Component {
       })
       .catch((error: Error) => Alert.danger(error));
   }
-
-  goTo() {
-    console.log(this.password);
-    console.log('asd');
-  }
 }

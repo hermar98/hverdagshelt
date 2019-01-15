@@ -6,6 +6,7 @@ export class User {
   lastName: string;
   email: string;
   rank: number;
+  munId: number;
   password: string;
 
   /*constructor (userId: number, firstName: string, lastName: string, email: string, rank: number, hash: string, salt: string) {
@@ -97,11 +98,11 @@ export class Municipal {
 }
 
 export class Feedback {
-    feedback_id: number
-    name: string
-    content: string
-    date: Date
-    user_id: number
-    issue_id: number
-    user: User
+  feedback_id: number;
+  name: string;
+  content: string;
+  date: Date;
+  user_id: number;
+  issue_id: number;
+  user: User;
 }
