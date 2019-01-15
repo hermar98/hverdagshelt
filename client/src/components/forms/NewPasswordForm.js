@@ -38,11 +38,6 @@ export default class NewPasswordForm extends Component {
               </Button.Basic>
             </div>
           </div>
-          <div className="container h-100">
-            <div className="row justify-content-center align-items-center">
-              <Button.Link onClick={this.goTo}>Glemt passord</Button.Link>
-            </div>
-          </div>
         </form>
       </Card>
     );
@@ -64,6 +59,6 @@ export default class NewPasswordForm extends Component {
         history.push('/issues');
         console.log('Login ok');
       })
-      .catch((error: Error) => Alert.danger(error));
+      .catch((error: Error) => Alert.danger(error.message));
   }
 }

@@ -10,7 +10,7 @@ let sequelize = new Sequelize(
   // process.env.CI ? 'root' : 'sebasman',
   // process.env.CI ? '' : 'GSBLuzbB',
   {
-    host: process.env.CI ? 'mysql' : 'localhost',
+    host: process.env.CI ? 'mysql' : 'mysql.stud.iie.ntnu.no',
     dialect: 'mysql',
     pool: {
       max: 5,
@@ -19,9 +19,6 @@ let sequelize = new Sequelize(
       idle: 10000
     }
   }
-    // process.env.CI ? 'database' : 'sebasman',
-    // process.env.CI ? 'root' : 'sebasman',
-    // process.env.CI ? '' : 'GSBLuzbB',
 );
 
 sequelize
@@ -591,6 +588,18 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             timeEnd: new Date(Date.now()),
             userId: '2',
             categoryId: 1
+          }
+        ])
+      )
+      .then(() =>
+        UserMunicipal.bulkCreate([
+          {
+            munId: 101,
+            userId: 1
+          },
+          {
+            munId: 514,
+            userId: 1
           }
         ])
       );
