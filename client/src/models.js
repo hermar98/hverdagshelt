@@ -46,8 +46,8 @@ export class IssueCategory {
   categoryId: number;
   name: string;
 
-  /*constructor (category_id: number, name: string) {
-        this.category_id = category_id
+  /*constructor (categoryId: number, name: string) {
+        this.categoryId = categoryId
         this.name = name
     }*/
 }
@@ -79,8 +79,8 @@ export class EventCategory {
   categoryId: number;
   name: string;
 
-  /*constructor (category_id: number, name: string) {
-        this.category_id = category_id
+  /*constructor (categoryId: number, name: string) {
+        this.categoryId = categoryId
         this.name = name
     }*/
 }
@@ -90,11 +90,16 @@ export class Municipal {
   name: string;
 
   /*
-    constructor( mun_id: number, title: string){
-        this.mun_id = mun_id;
+    constructor( munId: number, title: string){
+        this.munId = munId;
         this.title = title;
     }
      */
+}
+
+export class UserMunicipal {
+  userId: number;
+  munId: number;
 }
 
 export class Feedback {
