@@ -76,16 +76,6 @@ export default class Login extends Component {
             });
     }
 
-    userService
-      .login(this.email, this.password)
-      .then(token => {
-        localStorage.setItem('token', JSON.stringify(token));
-        history.push('/issues');
-        console.log('Login ok');
-      })
-      .catch((error: Error) => Alert.danger('Feil brukernavn eller passord'));
-  }
-
   goTo() {
     history.push('/forgotpassword');
   }

@@ -23,15 +23,30 @@ sharedIssues.issues =  [
 /*
 Large view of an issue, which includes the title, content, image and status.
  */
-export class IssueLarge extends Component<{match: {params: {issue_id: number}}}> {
+export class IssueLarge extends Component<{match: {params: {issueId: number}}}> {
+
+    constructor (props) {
+        super(props)
+        this.statusSelect = React.createRef()
+        this.state = {
+            clickedStatus: false
+        }
+    }
 
     issue = new Issue();
 
     render() {
+
+        if(!this.state.clickedStatus && this.statusSelect.current != null) {
+            this.statusSelect.current.classList.add('show')
+        }else if(this.statusSelect.current != null){
+            this.statusSelect.current.classList.remove('show')
+        }
+
         return (
             <div className="issue-container">
                 <div className="issue-large">
-                    <Status status={this.issue.status_id}/>
+                    <Status status={this.issue.statusId} id={this.issue.issueId}/>
                     <div className="card">
                         <div className="card-body">
                             <div className="d-flex flex-row">
@@ -40,7 +55,18 @@ export class IssueLarge extends Component<{match: {params: {issue_id: number}}}>
                                     <ImageButton source="../../images/cog.png" onclick="Edited" />
                                     <ImageButton source="../../images/trashcan.png" onclick="Deleted" />
                                 </div>
-                                <StatusImage status={this.issue.status_id} />
+                                <StatusButton status={this.issue.statusId} onclick={() => {
+                                    this.setState({
+                                        clickedStatus: !this.state.clickedStatus
+                                    })
+                                }}/>
+                            </div>
+                            <div className="d-flex flex-row justify-content-end">
+                                <div className="status-selection" ref={this.statusSelect}>
+                                    <StatusButton status={1} onclick={() => console.log("blocked")} />
+                                    <StatusButton status={2} onclick={() => console.log("pending")} />
+                                    <StatusButton status={3} onclick={() => console.log("finished")} />
+                                </div>
                             </div>
                             <div className="card-text">
                                 <p>{this.issue.content}</p>
@@ -60,7 +86,6 @@ export class IssueLarge extends Component<{match: {params: {issue_id: number}}}>
                 </div>
                 <h4 className="feedback-title">Oppdateringer</h4>
                 {sharedFeedback.feedback.map(feedback => {
-                    console.log(JSON.stringify(feedback));
                     return <IssueFeedback feedback={feedback}/>
                 })}
                 <p id="feedbackFill"/>
@@ -73,16 +98,20 @@ export class IssueLarge extends Component<{match: {params: {issue_id: number}}}>
 
     mounted () {
         window.scrollTo(0, 0);
-        issueService.getIssue(this.props.match.params.issue_id)
+        issueService.getIssue(this.props.match.params.issueId)
             .then(issue => {
                 this.issue = issue;
             })
             .catch(error => console.error("Error: ", error))
-        feedbackService.getFeedbacks(this.props.match.params.issue_id)
+        feedbackService.getFeedbacks(this.props.match.params.issueId)
             .then(data => {
                 sharedFeedback.feedback = data;
             })
             .catch(error => console.error("Error: ", error))
+    }
+
+    onClick (val: number) {
+        issueService.updateIssue()
     }
 }
 
@@ -94,7 +123,7 @@ export class IssueNormal extends Component<{issue: Issue}>{
     render () {
         return (
             <div className="issue-normal issue-hover" issue={this.props.issue}>
-                <a id="a-hover" href={"#issues/" + this.props.issue.issue_id}>
+                <a id="a-hover" href={"#issues/" + this.props.issue.issueId}>
                     <img src="../../images/arrowRightTrans.png" />
                 </a>
                 <div className="d-flex flex-row issue-flex">
@@ -111,7 +140,7 @@ export class IssueNormal extends Component<{issue: Issue}>{
                         </div>
                     </div>
                     <div>
-                        <StatusImage status={this.props.issue.status_id} />
+                        <StatusImage status={this.props.issue.statusId} />
                     </div>
                 </div>
             </div>
@@ -126,7 +155,7 @@ export class IssueSmall extends Component<{issue: Issue}> {
     render() {
         return (
             <div className="issue-small issue-hover" issue={this.props.issue}>
-                <a id="a-hover" href={"#issues/" + this.props.issue.issue_id}>
+                <a id="a-hover" href={"#issues/" + this.props.issue.issueId}>
                     <img src="../../images/arrowRightTrans.png" />
                 </a>
                 <div className="d-flex flex-row justify-content-between">
@@ -136,7 +165,7 @@ export class IssueSmall extends Component<{issue: Issue}> {
                             {this.props.issue.title}
                         </h5>
                     </div>
-                    <StatusImage status={this.props.issue.status_id} />
+                    <StatusImage status={this.props.issue.statusId} />
                 </div>
             </div>
         )
@@ -172,7 +201,7 @@ export class IssueOverviewSmall extends Component {
                 </div>
                 <ul className="list-group">
                     {sharedIssues.issues.map(issue => {
-                        if (this.status == issue.status_id || this.status == 0) {
+                        if (this.status == issue.statusId || this.status == 0) {
                             return(
                                 <li className="list-group-item">
                                     <IssueSmall issue={issue}/>
@@ -202,17 +231,17 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
     render() {
         return (
             <div className="feedback" feedback={this.props.feedback}>
-                <div className="d-flex flex-row submitter">
-                    <div className="p-2">
-                        <img className="card-img profile-image" src={this.user.profilePicture}/>
-                    </div>
-                    <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{this.props.feedback.date}</p></div>
-                    <ImageButton source="../../images/cog.png" onclick="Edited" />
-                    <ImageButton source="../../images/trashcan.png" onclick="Deleted" />
-                </div>
                 <div className="card feedback">
                     <div className="card-body">
-                        <div className="card-text">
+                        <div className="d-flex flex-row submitter">
+                            <div className="p-2">
+                                <img className="card-img profile-image" src={this.user.profilePicture}/>
+                            </div>
+                            <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{this.props.feedback.date}</p></div>
+                            <ImageButton source="../../images/cog.png" onclick="Edited" />
+                            <ImageButton source="../../images/trashcan.png" onclick="Deleted" />
+                        </div>
+                        <div id="feedback-text" className="card-text">
                             {this.props.feedback.content}
                         </div>
                     </div>
@@ -222,7 +251,7 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
     }
 
     mounted () {
-        userService.getUser(this.props.feedback.user_id)
+        userService.getUser(this.props.feedback.userId)
             .then(user => {
                 this.user = user
                 console.log(JSON.stringify(this.user))
@@ -263,7 +292,7 @@ export class IssueOverviewNormal extends Component {
                 </div>
                 <ul className="list-group">
                     {sharedIssues.issues.map(issue => {
-                        if (this.status == issue.status_id || this.status == 0) {
+                        if (this.status == issue.statusId || this.status == 0) {
                             return (
                                 <li className="list-group-item">
                                     <IssueNormal issue={issue}/>
@@ -297,25 +326,24 @@ export class IssueOverviewNormal extends Component {
 /*
 A colored status-bar. The number decides which status is rendered
  */
-export class Status extends Component<{status: number}> {
+class Status extends Component<{status: number, id: number}> {
     render () {
         switch (this.props.status){
             case 1: return (
-
                     <div className="status status-blocked">
-                        <h4>Ikke behandlet</h4>
+                        <h4>{"Ikke behandlet - " + "#" + this.props.id}</h4>
                     </div>
                 )
                 break;
             case 2: return (
                     <div className="status status-pending">
-                        <h4>Under behandling</h4>
+                        <h4>{"Under behandling - " + "#" + this.props.id}</h4>
                     </div>
             )
                 break;
             case 3: return (
                     <div className="status status-finished">
-                        <h4>Behandlet</h4>
+                        <h4>{"Behandlet - " + "#" + this.props.id}</h4>
                     </div>
             )
                 break;
@@ -324,7 +352,7 @@ export class Status extends Component<{status: number}> {
     }
 }
 
-export class StatusImage extends Component<{status: number}> {
+class StatusImage extends Component<{status: number}> {
     render () {
         switch (this.props.status){
             case 1: return (
@@ -344,7 +372,27 @@ export class StatusImage extends Component<{status: number}> {
     }
 }
 
-export class HoverButton extends Component<{onclick: function, title: string}> {
+class StatusButton extends Component<{status: number, onclick: function}> {
+    render () {
+        switch (this.props.status){
+            case 1: return (
+                <ImageButton source="../../images/blockedTrans.png" onclick={this.props.onclick}/>
+            )
+                break;
+            case 2: return (
+                <ImageButton source="../../images/pendingTrans.png" onclick={this.props.onclick}/>
+            )
+                break;
+            case 3: return (
+                <ImageButton source="../../images/finishedTrans.png" onclick={this.props.onclick}/>
+            )
+                break;
+            default: return null; break;
+        }
+    }
+}
+
+class HoverButton extends Component<{onclick: function, title: string}> {
     render (){
         return (
             <button className="btn hover-button" id="hover-Button" type="button" onClick={this.props.onclick} title={this.props.title}>
@@ -354,7 +402,7 @@ export class HoverButton extends Component<{onclick: function, title: string}> {
     }
 }
 
-export class ImageButton extends Component<{source: string, onclick: function}> {
+class ImageButton extends Component<{source: string, onclick: function}> {
     render() {
         return(
             <button className="btn image-button" type="button" onClick={this.props.onclick} >
@@ -363,3 +411,16 @@ export class ImageButton extends Component<{source: string, onclick: function}> 
         )
     }
 }
+
+export class StatusSelection extends Component<{issue: Issue}>{
+    render() {
+        return (
+            <div className="status-select d-flex flex-row justify-content-center">
+                <StatusImage status={1} />
+                <StatusImage status={2} />
+                <StatusImage status={3} />
+            </div>
+        )
+    }
+}
+

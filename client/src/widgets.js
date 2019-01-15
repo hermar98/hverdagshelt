@@ -147,8 +147,8 @@ export class Card extends Component<{ title: React.Node, children?: React.Node }
         return(
             <div className="card">
                 <div className="card-body">
-                    <div className="container h-100">
-                        <div className="row h-100 justify-content-center align-items-center">
+                    <div className="container">
+                        <div className="row justify-content-center align-items-center">
                             <h5 className="card-title">{this.props.title}</h5>
                         </div>
                     </div>
