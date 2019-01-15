@@ -47,6 +47,26 @@ app.post('/login', (req: Request, res: Response) => {
   });
 });
 
+app.put('/reset/:id', (req: Request, res: Response) => {
+  let token = req.params.id;
+  console.log(token);
+  User.findOne({ where: { resetPasswordToken: token } }).then(user => {
+    if (user) {
+      console.log(user.user_id);
+      let passwordSalt = passwordHash.genRandomString(16);
+      let passwordData = passwordHash.sha512(req.body.password, passwordSalt);
+      console.log('Password' + req.body.password);
+      return User.update(
+        {
+          salt: passwordSalt,
+          hash_str: passwordData.passwordHash
+        },
+        { where: { user_id: user.user_id } }
+      ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+    }
+  });
+});
+
 app.get('/token', (req, res) => {
   let token = req.headers['x-access-token'];
   jwt.verify(token, secretKey, (err, decoded) => {

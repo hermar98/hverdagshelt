@@ -17,6 +17,8 @@ import { ChooseMunicipalPage } from './components/pages/ChooseMunicipalPage';
 import { RegisterEventPage } from './components/pages/RegisterEventPage';
 import { IssueLarge, IssueOverviewNormal, IssueNormal, IssueOverviewSmall } from './components/issueViews/issueViews';
 import { ForgotPassword } from './components/pages/ForgotPassword.js';
+import { NewPasswordPage } from './components/pages/NewPasswordPage.js';
+
 import { Issue } from './models.js';
 
 // Reload application when not in production environment
@@ -38,7 +40,6 @@ if (root)
     <HashRouter>
       <div>
         <Alert />
-        <Menu />
         <Route exact path="/" component={ChooseMunicipalPage} />
         <Route exact path="/issues" component={IssueOverviewNormal} />
         <Route path="/issues/:issue_id" component={IssueLarge} />
@@ -47,6 +48,7 @@ if (root)
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/profile" component={UserProfilePage} />
         <Route exact path="/forgotpassword" component={ForgotPassword} />
+        <Route exact path="/reset/:id" component={NewPasswordPage} />
         <Route exact path="/sendEmail" />
         <Route exact path="/event/register" component={RegisterEventPage} />
         <Route exact path="/events/" component={EventPage} />
