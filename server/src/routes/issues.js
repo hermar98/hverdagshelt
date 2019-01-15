@@ -1,4 +1,5 @@
 import {Issue} from "../models";
+import Sequelize from "../../flow-typed/npm/sequelize_v4.x.x";
 
 type Request = express$Request;
 type Response = express$Response;
@@ -6,6 +7,17 @@ type Response = express$Response;
 const app = require('../app');
 
 app.get('/issues/:lim/limit/:offset/offset/:catId/category/:order/ordering/:statusId/status/:munId/municipal', (req: Request, res: Response) => {
+    let where = {offset: parseInt(req.params.offset)};
+    where.where  = {
+        categoryId: 0,
+    };
+
+    where.where +={
+        statusId: 0
+    };
+
+    console.log(where);
+    console.log(where.where);
 
     let order;
     if(req.params.order = 0){
@@ -17,38 +29,35 @@ app.get('/issues/:lim/limit/:offset/offset/:catId/category/:order/ordering/:stat
     let catId;
     if(req.params.catId != 0){
         catId = req.params.catId;;
-    } else{
+    } else {
         catId = {$ne: null};
     }
 
     let statusId;
-    if(req.params.statusId != 0){
-        statusId = {$ne: null};
-    } else{
+    if(req.params.statusId != 0) {
         statusId = req.params.statusId;
+    } else {
+        statusId = {$ne: null};
     }
 
     let munId;
-    if(req.params.munId != 0){
+    if(req.params.munId != 0) {
         munId = req.params.munId;
-    } else{
+    } else {
         munId = {$ne: null};
     }
 
-
-    let where = {where: {
-        categoryId: catId,
-        statusId: statusId,
-        munId: munId
-    }};
-
     return Issue.findAll({
-        where,
-        offset: req.params.offset,
-        limit: req.params.lim,
+        where: {
+            categoryId: catId,
+            statusId: statusId,
+            munId: munId
+        },
         order: [
             ['createdAt', order]
-        ]
+        ],
+        offset: parseInt(req.params.offset),
+        limit: parseInt(req.params.lim),
     }).then( issue => (issue ? res.send(issue) : res.sendStatus(404))
     );
 });
