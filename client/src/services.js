@@ -280,8 +280,4 @@ class FeedbackService {
   }
 }
 
-<<<<<<< HEAD
 export let feedbackService = new FeedbackService();
-=======
-export let feedbackService = new FeedbackService()
->>>>>>> 95414df5c6f9587462666b0ee47cb42d3ec23249
