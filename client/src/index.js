@@ -43,7 +43,6 @@ if (root)
         <Route exact path="/" component={ChooseMunicipalPage} />
         <Route exact path="/issues" component={IssueOverviewNormal} />
         <Route path="/issues/:issue_id" component={IssueLarge} />
-        <Route path="/issues/:issue_id/status" component={StatusSelection} />
         <Route exact path="/registerUser" component={RegisterPage} />
         <Route exact path="/registerIssue" component={FileIssuePage} />
         <Route exact path="/login" component={LoginPage} />
