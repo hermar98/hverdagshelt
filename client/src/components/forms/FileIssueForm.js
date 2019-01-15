@@ -12,6 +12,7 @@ export default class RegisterIssue extends Component {
   issue = new Issue();
   categories = [];
   form = null;
+  munId = localStorage.getItem('munId');
 
   render() {
     return (
@@ -64,13 +65,14 @@ export default class RegisterIssue extends Component {
   save() {
     if (!this.form || !this.form.checkValidity()) return;
 
+    this.issue.munId = this.munId;
     this.issue.latitude = 0.1;
     this.issue.longitude = 0.2;
     this.issue.image = 'hei';
 
     issueService
       .addIssue(this.issue)
-      .then(history.push('/issues/' + this.issue.issueId))
+      .then(history.push('/municipals/' + this.munId + '/issues'))
       .catch((error: Error) => Alert.danger(error.message));
 
     console.log(this.issue);

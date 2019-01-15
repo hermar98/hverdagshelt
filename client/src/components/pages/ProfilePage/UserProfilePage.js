@@ -10,7 +10,7 @@ import { autocomplete } from '../../../../public/autocomplete';
 import { User, Issue, Municipal, UserMunicipal } from '../../../models';
 import { IssueSmall, IssueNormal, IssueOverviewSmall } from '../../issueViews/issueViews';
 
-export class UserProfilePage extends Component {
+export class UserProfilePage extends Component<{ match: { params: { userId: number } } }> {
   user: User = new User(0, '', '', '', 0, 0, '');
   issues: Issue[] = [];
   municipal: UserMunicipal = new UserMunicipal();
@@ -33,12 +33,12 @@ export class UserProfilePage extends Component {
     f();
 
     userService
-      .getUser(1)
+      .getUser(this.props.match.params.userId)
       .then(rows => (this.user = rows))
       .catch(error => console.log(error));
 
     issueService
-      .getIssues()
+      .getIssuesByUser(this.props.match.params.userId)
       .then(rows => (this.issues = rows))
       .catch(error => console.log(error));
 
@@ -66,7 +66,7 @@ export class UserProfilePage extends Component {
         .then(rows => (this.issues = this.issues.filter(e => e.issueId !== issueId)))
         .catch(error => console.log(error));
     } else {
-      console.log('Not allowed to delete this issue');
+      console.log('Not allowed to delete this issue  ');
     }
   }
 

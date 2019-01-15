@@ -11,6 +11,7 @@ import { history } from '../../index.js';
 export default class RegistrationForm extends Component {
   user = new User();
   form = null;
+  munId = localStorage.getItem('munId');
 
   render() {
     return (
@@ -57,7 +58,7 @@ export default class RegistrationForm extends Component {
 
     userService
       .addUser(this.user)
-      .then(() => history.push('/home'))
+      .then(() => history.push('/municipal/' + this.munId))
       .catch((error: Error) => Alert.danger(error.message));
   }
 }

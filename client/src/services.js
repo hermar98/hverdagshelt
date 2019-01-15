@@ -86,10 +86,10 @@ class IssueService {
     });
   }
 
-  getIssuesByUser(user: User): Promise<Issue[]> {
+  getIssuesByUser(userId: User): Promise<Issue[]> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.get('/secure/users/' + user.userId + '/issues', {
+    return axios.get('/secure/users/' + userId + '/issues', {
       headers: { 'x-access-token': token }
     });
   }
@@ -100,6 +100,14 @@ class IssueService {
     return axios.get('/secure/issues/' + issueId, {
       headers: { 'x-access-token': token }
     });
+  }
+
+  getIssuesByMunicipal(munId: number): Promise<Issue[]> {
+      let token = localStorage.getItem('token');
+      if (token) token = JSON.parse(token).jwt;
+      return axios.get('/municipals/' + munId + "/issues", {
+          headers: { 'x-access-token': token }
+      });
   }
 
   updateIssue(issue: Issue): Promise<void> {
@@ -196,6 +204,16 @@ class EventService {
         'x-access-token': token
       }
     });
+  }
+
+  getEventsByMunicipal(munId: number): Promise<Event[]> {
+      let token = localStorage.getItem('token');
+      if(token) token = JSON.parse(token).jwt;
+      return axios.get('municipals/' + munId + '/events', {
+          headers: {
+              'x-access-token': token
+          }
+      });
   }
 
   updateEvent(event: Event): Promise<void> {

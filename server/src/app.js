@@ -190,9 +190,15 @@ app.get('/municipals/:id', (req: Request, res: Response) => {
 });
 
 app.get('/municipals/:id/issues', (req: Request, res: Response) => {
-  return Municipal.findAll({ where: { munId: Number(req.params.id) } }).then(muns =>
-    muns ? res.send(muns) : res.sendStatus(404)
-  );
+    return Issue.findAll({ where: {munId: Number(req.params.id) } }).then(issues =>
+        issues ? res.send(issues) : res.sendStatus(404)
+    );
+});
+
+app.get('/municipals/:id/events', (req: Request, res: Response) => {
+    return Event.findAll({ where: { munId: Number(req.params.id) } }).then(events =>
+        events ? res.send(events) : res.sendStatus(404)
+    );
 });
 
 //County
@@ -313,6 +319,8 @@ app.get('/secure/users/:id/issues', (req: Request, res: Response) => {
     issue ? res.send(issue) : res.sendStatus(404)
   );
 });
+
+
 
 app.put('/secure/issues/:id', (req: Request, res: Response) => {
   if (!(req.body instanceof Object)) return res.sendStatus(400);
