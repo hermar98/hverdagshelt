@@ -10,7 +10,7 @@ let sequelize = new Sequelize(
   // process.env.CI ? 'root' : 'sebasman',
   // process.env.CI ? '' : 'GSBLuzbB',
   {
-    host: process.env.CI ? 'mysql' : 'mysql.stud.iie.ntnu.no',
+    host: process.env.CI ? 'mysql' : 'localhost',
     dialect: 'mysql',
     pool: {
       max: 5,

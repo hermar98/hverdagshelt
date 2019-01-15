@@ -102,6 +102,10 @@ app.get('/token', (req: Request, res: Response) => {
 app.post('/register', (req: Request, res: Response) => {
   if (!(req.body instanceof Object)) return res.sendStatus(400);
 
+  User.findOne({where: {email: req.body.email}}).then(user => {
+      if (user) return res.sendStatus(409);
+  });
+
   let passwordSalt = passwordHash.genRandomString(16);
   let passwordData = passwordHash.sha512(req.body.password, passwordSalt); //TODO:  Flow check: Cannot get `req.body.password` because property `password` is missing in mixed [1].
 
