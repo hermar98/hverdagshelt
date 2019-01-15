@@ -23,7 +23,7 @@ sharedIssues.issues =  [
 /*
 Large view of an issue, which includes the title, content, image and status.
  */
-export class IssueLarge extends Component<{match: {params: {issue_id: number}}}> {
+export class IssueLarge extends Component<{match: {params: {issueId: number}}}> {
 
     constructor (props) {
         super(props)
@@ -46,7 +46,7 @@ export class IssueLarge extends Component<{match: {params: {issue_id: number}}}>
         return (
             <div className="issue-container">
                 <div className="issue-large">
-                    <Status status={this.issue.status_id} id={this.issue.issue_id}/>
+                    <Status status={this.issue.statusId} id={this.issue.issueId}/>
                     <div className="card">
                         <div className="card-body">
                             <div className="d-flex flex-row">
@@ -55,7 +55,7 @@ export class IssueLarge extends Component<{match: {params: {issue_id: number}}}>
                                     <ImageButton source="../../images/cog.png" onclick="Edited" />
                                     <ImageButton source="../../images/trashcan.png" onclick="Deleted" />
                                 </div>
-                                <StatusButton status={this.issue.status_id} onclick={() => {
+                                <StatusButton status={this.issue.statusId} onclick={() => {
                                     this.setState({
                                         clickedStatus: !this.state.clickedStatus
                                     })
@@ -98,12 +98,12 @@ export class IssueLarge extends Component<{match: {params: {issue_id: number}}}>
 
     mounted () {
         window.scrollTo(0, 0);
-        issueService.getIssue(this.props.match.params.issue_id)
+        issueService.getIssue(this.props.match.params.issueId)
             .then(issue => {
                 this.issue = issue;
             })
             .catch(error => console.error("Error: ", error))
-        feedbackService.getFeedbacks(this.props.match.params.issue_id)
+        feedbackService.getFeedbacks(this.props.match.params.issueId)
             .then(data => {
                 sharedFeedback.feedback = data;
             })
@@ -123,7 +123,7 @@ export class IssueNormal extends Component<{issue: Issue}>{
     render () {
         return (
             <div className="issue-normal issue-hover" issue={this.props.issue}>
-                <a id="a-hover" href={"#issues/" + this.props.issue.issue_id}>
+                <a id="a-hover" href={"#issues/" + this.props.issue.issueId}>
                     <img src="../../images/arrowRightTrans.png" />
                 </a>
                 <div className="d-flex flex-row issue-flex">
@@ -140,7 +140,7 @@ export class IssueNormal extends Component<{issue: Issue}>{
                         </div>
                     </div>
                     <div>
-                        <StatusImage status={this.props.issue.status_id} />
+                        <StatusImage status={this.props.issue.statusId} />
                     </div>
                 </div>
             </div>
@@ -155,7 +155,7 @@ export class IssueSmall extends Component<{issue: Issue}> {
     render() {
         return (
             <div className="issue-small issue-hover" issue={this.props.issue}>
-                <a id="a-hover" href={"#issues/" + this.props.issue.issue_id}>
+                <a id="a-hover" href={"#issues/" + this.props.issue.issueId}>
                     <img src="../../images/arrowRightTrans.png" />
                 </a>
                 <div className="d-flex flex-row justify-content-between">
@@ -165,7 +165,7 @@ export class IssueSmall extends Component<{issue: Issue}> {
                             {this.props.issue.title}
                         </h5>
                     </div>
-                    <StatusImage status={this.props.issue.status_id} />
+                    <StatusImage status={this.props.issue.statusId} />
                 </div>
             </div>
         )
@@ -201,7 +201,7 @@ export class IssueOverviewSmall extends Component {
                 </div>
                 <ul className="list-group">
                     {sharedIssues.issues.map(issue => {
-                        if (this.status == issue.status_id || this.status == 0) {
+                        if (this.status == issue.statusId || this.status == 0) {
                             return(
                                 <li className="list-group-item">
                                     <IssueSmall issue={issue}/>
@@ -251,7 +251,7 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
     }
 
     mounted () {
-        userService.getUser(this.props.feedback.user_id)
+        userService.getUser(this.props.feedback.userId)
             .then(user => {
                 this.user = user
                 console.log(JSON.stringify(this.user))
@@ -292,7 +292,7 @@ export class IssueOverviewNormal extends Component {
                 </div>
                 <ul className="list-group">
                     {sharedIssues.issues.map(issue => {
-                        if (this.status == issue.status_id || this.status == 0) {
+                        if (this.status == issue.statusId || this.status == 0) {
                             return (
                                 <li className="list-group-item">
                                     <IssueNormal issue={issue}/>
