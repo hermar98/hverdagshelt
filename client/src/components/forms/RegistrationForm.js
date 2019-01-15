@@ -10,7 +10,7 @@ import { history } from '../../index.js';
 
 export default class RegistrationForm extends Component {
   user = new User();
-  from = null;
+  form = null;
 
   render() {
     return (
