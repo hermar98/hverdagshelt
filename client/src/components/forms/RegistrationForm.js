@@ -15,6 +15,7 @@ export default class RegistrationForm extends Component {
   passwordsMatch = true;
   emailRegistered = false;
   form = null;
+  munId = localStorage.getItem('munId');
 
   render() {
     return (
@@ -101,7 +102,7 @@ export default class RegistrationForm extends Component {
 
     userService
       .addUser(this.user)
-      .then(() => history.push('/issue'))
+      .then(() => history.push('/municipal/' + this.munId))
       .catch((error: Error) => {
         console.log(error);
         this.emailRegistered = true;

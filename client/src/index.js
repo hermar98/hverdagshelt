@@ -22,6 +22,7 @@ import { ForgotPassword } from './components/pages/ForgotPassword.js';
 import { NewPasswordPage } from './components/pages/NewPasswordPage.js';
 import { UploadImageTest } from './components/image/UploadImageTest.js';
 
+import { MunicipalPage } from './components/pages/MunicipalPage';
 import { Issue } from './models.js';
 
 // Reload application when not in production environment
@@ -44,21 +45,17 @@ if (root)
       <div>
         <Alert />
         <Route exact path="/" component={ChooseMunicipalPage} />
-        <Route exact path="/issues" component={IssuePage} />
-        <Route path="/issues/:issueId" component={IssueLarge} />
-        <Route path="/issues/:issue_id" component={IssueLarge} />
-        <Route exact path="/register" component={RegisterPage} />
-        <Route exact path="/registerIssue" component={FileIssuePage} />
-        <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/profile/:userId" component={UserProfilePage} />
-        <Route exact path="/adminProfile" component={AdminProfilePage} />
-        <Route exact path="/forgotpassword" component={ForgotPassword} />
-        <Route exact path="/reset/:id" component={NewPasswordPage} />
-        <Route exact path="/sendEmail" />
-        <Route exact path="/event/register" component={RegisterEventPage} />
-        <Route exact path="/events/" component={EventPage} />
-        <Route exact path="/municipal/:mun_id" component={IssueOverviewNormal} />
-        <Route exact path="/UploadImageTest" component={UploadImageTest} />
+        <Route exact path="/municipal/:munId" component={MunicipalPage} />
+        <Route exact path="/municipal/:munId/login" component={LoginPage} />
+        <Route exact path="/municipal/:munId/register" component={RegisterPage} />
+        <Route exact path="/municipal/:munId/profile" component={UserProfilePage} />
+        <Route exact path="/forgotPassword" component={ForgotPassword} />
+        <Route exact path="/reset/:userId" component={NewPasswordPage} />
+        <Route exact path="/municipal/:munId/events" component={EventPage} />
+        <Route exact path="/municipal/:munId/events/registerEvent" component={RegisterEventPage} />
+        <Route exact path="/municipal/:munId/issues" component={IssuePage} />
+        <Route exact path="/municipal/:munId/issues/fileIssue" component={FileIssuePage} />
+        <Route exact path="/municipal/:munId/issues/:issueId" component={IssueLarge} />
       </div>
     </HashRouter>,
     root
