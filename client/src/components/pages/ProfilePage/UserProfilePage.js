@@ -1,5 +1,3 @@
-// @flow
-
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
@@ -7,21 +5,17 @@ import { Component } from 'react-simplified';
 import { Alert, NavBar, Form, Card, Button } from '../../../widgets';
 import MenuLoggedIn from '../../../components/menu/Menu.js';
 import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
-import { userService } from '../../../services';
-import { issueService } from '../../../services';
-import { municipalService } from '../../../services';
+import { userService, municipalService, issueService, userMunicipalService } from '../../../services';
 import { autocomplete } from '../../../../public/autocomplete';
-import { User } from '../../../models';
-import { Issue } from '../../../models';
-import { Municipal } from '../../../models';
+import { User, Issue, Municipal, UserMunicipal } from '../../../models';
 import { IssueSmall, IssueNormal, IssueOverviewSmall } from '../../issueViews/issueViews';
 
-export class UserProfilePage extends Component {
+export class UserProfilePage extends Component<{ match: { params: { userId: number } } }> {
   user: User = new User(0, '', '', '', 0, 0, '');
   issues: Issue[] = [];
-  municipal: Municipal = new Municipal(0, '', '', '', 0);
+  municipal: UserMunicipal = new UserMunicipal();
   newMunicipal: Municipal = new Municipal(0, '', '', '', 0);
-  municipals: Municipal[] = [];
+  municipals: UserMunicipal[] = [];
 
   mounted() {
     async function f() {
@@ -39,40 +33,40 @@ export class UserProfilePage extends Component {
     f();
 
     userService
-      .getUser(1)
+      .getUser(this.props.match.params.userId)
       .then(rows => (this.user = rows))
       .catch(error => console.log(error));
 
     issueService
-      .getIssues()
+      .getIssuesByUser(this.props.match.params.userId)
       .then(rows => (this.issues = rows))
       .catch(error => console.log(error));
 
-    municipalService
-      .getMunicipals()
+    userMunicipalService
+      .getUserMunicipals(1)
       .then(rows => {
         this.municipals = rows;
-        this.municipal = rows.find(mun => mun.mun_id === this.user.mun_id);
       })
       .catch(error => console.log(error));
   }
 
-  handleChangeMunicipal(e: Object) {
+  handleAddMunicipal(e: Object) {
     e.preventDefault();
 
-    this.user.mun_id = this.municipals.find(mun => mun.name === this.newMunicipal).mun_id;
+    //this.user.munId = this.municipals.find(mun => mun.name === this.newMunicipal).munId;
 
-    userService.updateUser(this.user);
+    userMunicipalService.addUserMunicipal(1, 5001);
+    // userService.getUser(1);
   }
 
-  delete(issue_id: number) {
-    if (this.issues.find(e => e.issue_id === issue_id).status_id === 6) {
+  delete(issueId: number) {
+    if (this.issues.find(e => e.issueId === issueId).statusId === 6) {
       issueService
-        .deleteIssue(issue_id)
-        .then(rows => (this.issues = this.issues.filter(e => e.issue_id !== issue_id)))
+        .deleteIssue(issueId)
+        .then(rows => (this.issues = this.issues.filter(e => e.issueId !== issueId)))
         .catch(error => console.log(error));
     } else {
-      console.log('Not allowed to delete this issue');
+      console.log('Not allowed to delete this issue  ');
     }
   }
 
@@ -81,18 +75,19 @@ export class UserProfilePage extends Component {
       <div>
         <MenuLoggedIn />
         <Card title="Min Profil">
-          <Card>
+          <Card title="">
             <div className="info">
               <p>
                 Navn: {this.user.firstName} {this.user.lastName}
               </p>
               <p>Email: {this.user.email}</p>
-              <p>Hjemkommune: {this.municipal.name}</p>
+
+              {console.log(this.municipals)}
             </div>
           </Card>
           <br />
           <div>
-            <form autoComplete="off" onSubmit={this.handleChangeMunicipal.bind(this)}>
+            <form autoComplete="off" onSubmit={this.handleAddMunicipal.bind(this)}>
               <div className="autocomplete">
                 <input
                   id="municipalInput"
@@ -100,19 +95,19 @@ export class UserProfilePage extends Component {
                   name="municipal"
                   onChange={event => (this.newMunicipal = event.target.value)}
                 />
-                <button type="submit">Endre Kommune</button>
+                <button type="submit">Legg Til Kommune</button>
               </div>
             </form>
           </div>
         </Card>
-        <Card>
+        <Card title="">
           <ChangePasswordForm />
         </Card>
         <Card className="issues" title="Mine Saker">
           {this.issues.map((issue, index) => (
             <div key={index}>
-              <IssueSmall issue={issue} />
-              <button className="btn btn-danger" onClick={this.delete.bind(this, issue.issue_id)}>
+              <IssueNormal issue={issue} />
+              <button className="btn btn-danger" onClick={this.delete.bind(this, issue.issueId)}>
                 Delete
               </button>
             </div>

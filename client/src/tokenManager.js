@@ -29,6 +29,10 @@ class TokenManager {
             localStorage.setItem('token', JSON.stringify(localToken));
         }
     }
+
+    deleteToken() {
+        localStorage.removeItem('token');
+    }
 }
 
 export let tokenManager = new TokenManager();

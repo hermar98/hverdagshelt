@@ -1,4 +1,4 @@
-/*import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom';
 import * as React from 'react';
 import axios from 'axios';
 import { Component } from 'react-simplified';
@@ -26,4 +26,3 @@ export default class UploadImageButton extends Component {
     );
   }
 }
-*/
