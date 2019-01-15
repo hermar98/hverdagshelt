@@ -55,7 +55,7 @@ if (root)
         <Route exact path="/sendEmail" />
         <Route exact path="/event/register" component={RegisterEventPage} />
         <Route exact path="/events/" component={EventPage} />
-        <Route exact path="/municipal/:mun_id" component={IssueOverviewNormal} />
+        <Route exact path="/municipal/:munId" component={MunicipalPage} />
         <Route exact path="/UploadImageTest" component={UploadImageTest} />
       </div>
     </HashRouter>,

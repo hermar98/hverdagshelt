@@ -192,15 +192,15 @@ app.get('/municipals/:id', (req: Request, res: Response) => {
 });
 
 app.get('/municipals/:id/issues', (req: Request, res: Response) => {
-  return Issue.findAll({ where: {munId: Number(req.params.id) } }).then(issues =>
-    issues ? res.send(issues) : res.sendStatus(404)
-  );
+    return Issue.findAll({ where: {munId: Number(req.params.id) } }).then(issues =>
+        issues ? res.send(issues) : res.sendStatus(404)
+    );
 });
 
 app.get('/municipals/:id/events', (req: Request, res: Response) => {
-   return Event.findAll({ where: { munId: Number(req.params.id) } }).then(issues =>
-   issues ? res.send(issues) : res.sendStatus(404)
-   );
+    return Event.findAll({ where: { munId: Number(req.params.id) } }).then(events =>
+        events ? res.send(events) : res.sendStatus(404)
+    );
 });
 
 //County
