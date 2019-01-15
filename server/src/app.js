@@ -37,12 +37,32 @@ app.post('/login', (req: Request, res: Response) => {
         let token = jwt.sign({ email: req.body.email }, secretKey, {
           expiresIn: 4000
         });
-        res.json({ jwt: token });
+        res.json({ userId: user.user_id, jwt: token });
       } else {
         res.sendStatus(401);
       }
     } else {
       res.sendStatus(401);
+    }
+  });
+});
+
+app.put('/reset/:id', (req: Request, res: Response) => {
+  let token = req.params.id;
+  console.log(token);
+  User.findOne({ where: { resetPasswordToken: token } }).then(user => {
+    if (user) {
+      console.log(user.user_id);
+      let passwordSalt = passwordHash.genRandomString(16);
+      let passwordData = passwordHash.sha512(req.body.password, passwordSalt);
+      console.log('Password' + req.body.password);
+      return User.update(
+        {
+          salt: passwordSalt,
+          hash_str: passwordData.passwordHash
+        },
+        { where: { user_id: user.user_id } }
+      ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
     }
   });
 });
@@ -54,7 +74,7 @@ app.get('/token', (req, res) => {
       res.sendStatus(401);
     } else {
       token = jwt.sign({ email: decoded.email }, secretKey, {
-        expiresIn: 600
+        expiresIn: 30
       });
       res.json({ jwt: token });
     }
@@ -114,6 +134,7 @@ app.put('/secure/users/:id', (req: Request, res: Response) => {
         lastName: req.body.lastName,
         email: req.body.email,
         rank: req.body.rank,
+        mun_id: req.body.mun_id,
         salt: passwordSalt,
         hash_str: passwordData.passwordHash
       },
@@ -127,6 +148,7 @@ app.put('/secure/users/:id', (req: Request, res: Response) => {
       lastName: req.body.lastName,
       email: req.body.email,
       rank: req.body.rank,
+      mun_id: req.body.mun_id,
       salt: req.body.salt,
       hash_str: req.body.hash_str
     },
@@ -206,7 +228,7 @@ app.post('/secure/events', (req: Request, res: Response) => {
     latitude: req.body.latitude,
     time_start: req.body.timeStart,
     time_end: req.body.timeEnd,
-    category_id: req.body.categoryId
+    category_id: req.body.category_id
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 app.delete('/secure/events/:id', (req: Request, res: Response) => {
@@ -223,7 +245,7 @@ app.get('/secure/eventCat', (req: Request, res: Response) => {
 });
 
 app.get('/secure/eventCat/:id', (req: Request, res: Response) => {
-  return Event_category.findOne({ where: { event_id: Number(req.params.id) } }).then(eventCategory =>
+  return Event_category.findOne({ where: { category_id: Number(req.params.id) } }).then(eventCategory =>
     eventCategory ? res.send(eventCategory) : res.sendStatus(404)
   );
 });
@@ -236,7 +258,7 @@ app.put('/secure/eventCat/:id', (req: Request, res: Response) => {
     },
     {
       where: {
-        event_id: req.params.id
+        category_id: req.params.id
       }
     }
   ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
@@ -250,7 +272,7 @@ app.post('/secure/eventCat', (req: Request, res: Response) => {
 app.delete('/secure/eventCat/:id', (req: Request, res: Response) => {
   return Event_category.destroy({
     where: {
-      event_id: req.params.id
+      category_id: req.params.id
     }
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
@@ -304,7 +326,6 @@ app.post('/secure/issues', (req: Request, res: Response) => {
     longitude: req.body.longitude,
     latitude: req.body.latitude,
     status: req.body.status,
-    date: req.body.date,
     status_id: req.body.status_id,
     category_id: req.body.category_id
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));

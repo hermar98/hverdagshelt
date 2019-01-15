@@ -6,6 +6,7 @@ export class User {
   lastName: string;
   email: string;
   rank: number;
+  munId: number;
   password: string;
 
   /*constructor (userId: number, firstName: string, lastName: string, email: string, rank: number, hash: string, salt: string) {
@@ -27,9 +28,7 @@ export class Issue {
   longitude: number;
   latitude: number;
   status: number;
-  categoryId: number;
-  date: Date; //Works with string, unsure about date convertion
-  categoryId: number;
+  category_id: number;
 
   /*constructor(issueId: number, title: string, content: string, image: string, longitude: number, latitude: number, status: number, date: Date){
         this.issueId = issueId
@@ -44,11 +43,11 @@ export class Issue {
 }
 
 export class IssueCategory {
-  categoryId: number;
+  category_id: number;
   name: string;
 
-  /*constructor (categoryId: number, name: string) {
-        this.categoryId = categoryId
+  /*constructor (category_id: number, name: string) {
+        this.category_id = category_id
         this.name = name
     }*/
 }
@@ -77,11 +76,11 @@ export class Event {
 }
 
 export class EventCategory {
-  categoryId: number;
+  category_id: number;
   name: string;
 
-  /*constructor (categoryId: number, name: string) {
-        this.categoryId = categoryId
+  /*constructor (category_id: number, name: string) {
+        this.category_id = category_id
         this.name = name
     }*/
 }
@@ -99,11 +98,11 @@ export class Municipal {
 }
 
 export class Feedback {
-    feedback_id: number
-    name: string
-    content: string
-    date: Date
-    user_id: number
-    issue_id: number
-    user: User
+  feedback_id: number;
+  name: string;
+  content: string;
+  date: Date;
+  user_id: number;
+  issue_id: number;
+  user: User;
 }

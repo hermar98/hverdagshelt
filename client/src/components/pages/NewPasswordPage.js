@@ -3,15 +3,19 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { studentService, User } from '../../services';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
-import ForgotPasswordForm from '../../components/forms/ForgotPasswordForm';
+import NewPasswordForm from '../../components/forms/NewPasswordForm';
 import Menu from '../../components/menu/Menu.js';
 import axios from 'axios';
 
-export class ForgotPassword extends Component {
+const title = {
+  pageTitle: 'Forgot Password Screen'
+};
+
+export class NewPasswordPage extends Component {
   render() {
     return (
       <div>
-        <ForgotPasswordForm />
+        <NewPasswordForm />
       </div>
     );
   }

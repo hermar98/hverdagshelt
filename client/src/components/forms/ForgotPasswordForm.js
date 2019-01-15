@@ -5,11 +5,14 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
+import { userService } from '../../services.js';
 import { User, Issue } from '../../models.js';
 import { history } from '../../index';
 
 export default class Login extends Component {
+  email = '';
   form = null;
+  message = '';
 
   render() {
     return (
@@ -24,14 +27,12 @@ export default class Login extends Component {
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
               <Button.Basic type="submit" onClick={this.login}>
-                Send Epos
+                Send Epost
               </Button.Basic>
             </div>
           </div>
           <div className="container h-100">
-            <div className="row justify-content-center align-items-center">
-              <Button.Link onClick={this.goTo}>Glemt passord</Button.Link>
-            </div>
+            <div className="row justify-content-center align-items-center">{this.message}</div>
           </div>
         </form>
       </Card>
@@ -44,16 +45,15 @@ export default class Login extends Component {
     }
 
     userService
-      .login(this.email, this.password)
-      .then(token => {
-        localStorage.setItem('token', JSON.stringify(token));
-        history.push('/issues');
-        console.log('Login ok');
+      .forgotPassword(this.email)
+      .then(res => {
+        if (res.bad) {
+          Alert.danger(res.bad);
+        } else {
+          Alert.success(res);
+          history.push('/');
+        }
       })
-      .catch((error: Error) => Alert.danger('Feil brukernavn eller passord'));
-  }
-
-  goTo() {
-    history.push('/forgotpassword');
+      .catch((error: error) => Alert.danger(error));
   }
 }

@@ -14,9 +14,9 @@ let sequelize = new Sequelize(
   // process.env.CI ? 'database' : 'sebasman',
   // process.env.CI ? 'root' : 'sebasman',
   // process.env.CI ? '' : 'GSBLuzbB',
-  process.env.CI ? 'database' : 'hverdagshelt',
-  process.env.CI ? 'root' : 'vegard',
-  process.env.CI ? '' : '1234',
+  process.env.CI ? 'database' : 'everydayhero',
+  process.env.CI ? 'root' : 'user',
+  process.env.CI ? '' : 'password',
   {
     host: process.env.CI ? 'mysql' : 'localhost',
     dialect: 'mysql',
@@ -39,27 +39,25 @@ export let Feedback: Class<
 });
 
 export let Issue: Class<
-    Model<{
-        issue_id?: number,
-        title: string,
-        content: string,
-        image: string,
-        longitude: number,
-        latitude: number,
-        date: Date,
-        status_id: number,
-        category_id: number
-    }>
-    > = sequelize.define('Issue', {
-    issue_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-    title: Sequelize.STRING,
-    content: Sequelize.STRING,
-    image: Sequelize.STRING,
-    longitude: Sequelize.DOUBLE,
-    latitude: Sequelize.DOUBLE,
-    date: Sequelize.DATE,
-    status_id: { type: Sequelize.INTEGER, defaultValue: 1 },
-    category_id: Sequelize.INTEGER
+  Model<{
+    issue_id?: number,
+    title: string,
+    content: string,
+    image: string,
+    longitude: number,
+    latitude: number,
+    status_id: number,
+    category_id: number
+  }>
+> = sequelize.define('Issue', {
+  issue_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+  title: Sequelize.STRING,
+  content: Sequelize.STRING,
+  image: Sequelize.STRING,
+  longitude: Sequelize.DOUBLE,
+  latitude: Sequelize.DOUBLE,
+  status_id: { type: Sequelize.INTEGER, defaultValue: 1 },
+  category_id: Sequelize.INTEGER
 });
 
 export let IssuePicture: Class<
@@ -151,8 +149,8 @@ export let Issue_category: Class<Model<{ category_id?: number, name: string }>> 
   name: Sequelize.STRING
 });
 
-export let Event_category: Class<Model<{ event_id?: number, name: string }>> = sequelize.define('Event_category', {
-  event_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+export let Event_category: Class<Model<{ category_id?: number, name: string }>> = sequelize.define('Event_category', {
+  category_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
   name: Sequelize.STRING
 });
 
@@ -466,8 +464,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             issue_id: 1,
             title: 'Dumme folk ødeleger lømp',
             content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
-            image:
-              'https://www.thesun.co.uk/wp-content/uploads/2018/07/AF-COMPOSITE-FIGHT.jpg?strip=all&quality=100&w=750&h=500&crop=1',
+            image: 'null',
             longitude: 60.656877,
             latitude: 10.824107,
             date: new Date(Date.now()),
@@ -508,8 +505,8 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           {
             issue_id: 4,
             title: 'Veilys ødelagt på 33',
-            content: 'I have a question for god. WHYYYYYYYYYYY. Is this light broken',
-            image: 'https://i.ytimg.com/vi/MPNN_nVwG5w/maxresdefault.jpg',
+            content: 'Kjørte ned 33 søndag og så et ødelagt veylys. Dere burte fixe det',
+            image: '',
             longitude: 60.68273,
             latitude: 10.831514,
             date: new Date(Date.now()),
@@ -549,7 +546,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             name: 'Konsert'
           },
           {
-            category_id: 1,
+            category_id: 3,
             name: 'Galleri'
           }
         ])

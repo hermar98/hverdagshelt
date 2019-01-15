@@ -1,0 +1,9 @@
+.info {
+  text-align: left;
+  width: 18rem;
+}
+
+input {
+  border: 2px solid black;
+  border-radius: 4px;
+}
