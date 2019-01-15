@@ -2,34 +2,32 @@
 
 import { User } from '../src/models';
 import express from 'express';
-import path from "path";
+import path from 'path';
 require('dotenv').config();
 
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const public_path = path.join(__dirname, '/../../client/public');
 
-type Application = express$Application
+// type Application = express$Application;
 type Request = express$Request;
 type Response = express$Response;
 
-
-let app: Application = express();
-app.use(express.static(public_path));
-app.use(express.json()); // For parsing application/json
+const app = require('./app');
 
 app.post('/forgotPassword', (req: Request, res: Response) => {
-  if (req.body.email === '') { //TODO: Flow check: Property `email` is missing in mixed [1].
-      res.json('email er påkrevd');
+  if (!req.body || !(typeof req.body.email === 'string')) return res.sendStatus(400);
+  if (!req.body.email) {
+    //TODO: Flow check: Property `email` is missing in mixed [1].
+    res.json('email er påkrevd');
   }
-  console.log(req.body.email); //TODO: Flow check: Cannot get `req.body.email` because property `email` is missing in mixed [1].
-    User.findOne({
+
+  User.findOne({
     where: {
       email: req.body.email //TODO: Flow check: Cannot get `req.body.email` because property `email` is missing in mixed [1].
     }
   }).then(user => {
     if (user === null) {
-      console.log('email not in database');
       res.json('email er ikke i databasen');
     } else {
       let t = new Date();
@@ -76,11 +74,11 @@ app.post('/forgotPassword', (req: Request, res: Response) => {
           console.error('there was an error: ', err);
         } else {
           console.log('here is the res: ', response);
-          res.status(200).json('recovery email sent');
+          res.sendStatus(200).json('recovery email sent');
         }
       });
     }
   });
 });
 
-module.exports = app;
+// module.exports = app;

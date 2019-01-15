@@ -8,24 +8,24 @@ import { Alert, NavBar, Form, Card, Button } from '../../widgets';
 import { User, Issue } from '../../models.js';
 import { userService, issueService } from '../../services.js';
 
-type P = { user_id: number };
+type P = { userId: number };
 type S = {};
 export default class ChangePasswordForm extends Component<P, S> {
-  user = new User(0, '', '', '', 0, '', '');
+  user = new User();
   currentPassword = '';
   newPassword = '';
   newPasswordRepeated = '';
 
   mounted() {
     userService
-      .getUser(1)
+      .getUser(1) //TODO: check who is logged in.
       .then(rows => {
         this.user = rows;
       })
       .catch(error => console.log(error));
   }
 
-  handleChangePassword(e) {
+  handleChangePassword(e: Object) {
     e.preventDefault();
     console.log(this.newPassword);
     console.log(this.newPasswordRepeated);
