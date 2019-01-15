@@ -15,7 +15,8 @@ import { RegisterPage } from './components/pages/RegisterPage';
 import { EventPage } from './components/pages/EventPage';
 import { ChooseMunicipalPage } from './components/pages/ChooseMunicipalPage';
 import { RegisterEventPage } from './components/pages/RegisterEventPage';
-import { IssueLarge, IssueOverviewNormal, IssueNormal, IssueOverviewSmall} from './components/issueViews/issueViews';
+import { IssuePage } from './components/pages/IssuePage';
+import { IssueLarge, IssueOverviewNormal, IssueNormal, IssueOverviewSmall } from './components/issueViews/issueViews';
 import { ForgotPassword } from './components/pages/ForgotPassword.js';
 import { NewPasswordPage } from './components/pages/NewPasswordPage.js';
 import { UploadImageTest } from './components/image/UploadImageTest.js';
@@ -42,7 +43,7 @@ if (root)
       <div>
         <Alert />
         <Route exact path="/" component={ChooseMunicipalPage} />
-        <Route exact path="/issues" component={IssueOverviewNormal} />
+        <Route exact path="/issues" component={IssuePage} />
         <Route path="/issues/:issue_id" component={IssueLarge} />
         <Route exact path="/registerUser" component={RegisterPage} />
         <Route exact path="/registerIssue" component={FileIssuePage} />

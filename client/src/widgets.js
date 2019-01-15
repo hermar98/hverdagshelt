@@ -180,38 +180,111 @@ class NavBarLink extends Component<{ to: string, exact?: boolean, children?: Rea
   }
 }
 
-class NavBarLogout extends Component<{ to: string, exact?: boolean, children?: React.Node }> {
-  render() {
-    if (!this.props.children) return null;
-    return (
-      <NavLink className="nav-link" activeClassName="active" exact={this.props.exact} to={this.props.to}>
-        <form className="form-inline">
-          <button className="btn btn-outline-danger">{this.props.children}</button>
-        </form>
-      </NavLink>
-    );
-  }
+class NavBarLogout extends Component <{
+    to: string,
+    onClick: () => mixed,
+    exact?: boolean,
+    children?: React.Node}
+    >{
+    render() {
+        if(!this.props.children) return null;
+        return(
+          <NavLink className="nav-link mt-5" activeClassName="active" exact={this.props.exact} to={this.props.to}>
+            <form className="form-inline">
+                <button className="btn btn-outline-danger" onClick={this.props.onClick}>
+                    {this.props.children}
+                </button>
+            </form>
+          </NavLink>
+        );
+    }
 }
 
-export class NavBar extends Component<{
-  children: React.Element<typeof NavBarBrand | typeof NavBarLink | typeof NavBarLogout>[]
-}> {
-  static Brand = NavBarBrand;
-  static Link = NavBarLink;
-  static Logout = NavBarLogout;
+type S = {isOpen: boolean}; //Quick fix
 
-  render() {
-    return (
-      <nav className="navbar navbar-expand-sm bg-dark navbar-dark mt-0">
-        <div className="container-fluid">
-          {this.props.children.filter(child => child.type == NavBarBrand)}
-          <ul className="nav navbar-nav navbar-right">
-            {this.props.children.filter(child => child.type == NavBarLink || child.type == NavBarLogout)}
-          </ul>
-        </div>
-      </nav>
-    );
-  }
+class NavBarDropdown extends Component <{title: string, children: React.Element<typeof DropdownHeader | typeof DropdownFooter | typeof DropdownDivider | typeof DropdownItem>[]}, S>{
+    state = {isOpen: false};
+    toggleOpen = () => this.setState({ isOpen: !this.state.isOpen });
+
+    render() {
+        if (!this.props.children) return null;
+        const menuClass = `dropdown-menu${this.state.isOpen ? " show" : ""}`;
+        return(
+            <div className="dropdown form-inline ml-2" onClick={this.toggleOpen}>
+                <button
+                    className="btn btn-info dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                >
+                    {this.props.title}
+                </button>
+                <div className={menuClass} aria-labelledby="dropdownMenuButton">
+                    {this.props.children.filter(child => (child.type === DropdownHeader || child.type === DropdownFooter || child.type === DropdownDivider || child.type === DropdownItem))}
+                </div>
+            </div>
+        );
+    }
+}
+
+export class DropdownHeader extends Component <{children?: React.Node}> {
+    render() {
+        if (!this.props.children) return null;
+        return (
+            <h6 className="dropdown-header">
+                {this.props.children}
+            </h6>
+        );
+    }
+}
+
+export class DropdownFooter extends Component <{children?: React.Node}> {
+    render() {
+        if (!this.props.children) return null;
+        return (
+            <small className="dropdown-header">
+                {this.props.children}
+            </small>
+        );
+    }
+}
+
+export class DropdownDivider extends Component {
+    render() {
+        return (<div className="dropdown-divider"/>);
+    }
+}
+
+export class DropdownItem extends Component <{
+    onClick: () => mixed,
+    children?: React.Node }> {
+    render() {
+        if (!this.props.children) return null;
+        return (
+            <button className="dropdown-item" onClick={this.props.onClick}>
+                {this.props.children}
+            </button>
+        );
+    }
+}
+
+export class NavBar extends Component<{ children: React.Element<typeof NavBarBrand | typeof NavBarLink | typeof NavBarLogout | typeof NavBarDropdown>[] }> {
+    static Brand = NavBarBrand;
+    static Link = NavBarLink;
+    static Logout = NavBarLogout;
+    static Dropdown = NavBarDropdown;
+
+    render(){
+        return(
+            <nav className="navbar navbar-expand-sm bg-dark navbar-dark mt-0">
+                <div className="container-fluid">
+                    {this.props.children.filter(child => child.type == NavBarBrand)}
+                    <ul className="nav navbar-nav navbar-right">{this.props.children.filter(child => (child.type == NavBarLink || child.type == NavBarLogout || child.type == NavBarDropdown))}</ul>
+                </div>
+            </nav>
+        );
+    }
 }
 
 class FormInput extends Component<{
