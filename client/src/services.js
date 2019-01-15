@@ -1,6 +1,6 @@
 // @flow
 import axios from 'axios';
-import { User, Issue, IssueCategory, Event, Municipal } from './models.js';
+import { User, Issue, IssueCategory, Event, Municipal, UserMunicipal } from './models.js';
 import { EventCategory, Feedback } from './models';
 
 axios.interceptors.response.use(response => response.data);
@@ -86,6 +86,14 @@ class IssueService {
     });
   }
 
+  getIssuesByUser(user: User): Promise<Issue[]> {
+    let token = localStorage.getItem('token');
+    if (token) token = JSON.parse(token).jwt;
+    return axios.get('/secure/users/' + user.userId + '/issues', {
+      headers: { 'x-access-token': token }
+    });
+  }
+
   getIssue(issueId: number): Promise<Issue> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
@@ -130,10 +138,10 @@ class IssueCategoryService {
     });
   }
 
-  getCategory(category_id: number): Promise<IssueCategory> {
+  getCategory(categoryId: number): Promise<IssueCategory> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.get('/secure/issueCat/' + category_id, {
+    return axios.get('/secure/issueCat/' + categoryId, {
       headers: { 'x-access-token': token }
     });
   }
@@ -231,16 +239,36 @@ class MunicipalService {
     return axios.get('/municipals');
   }
 
-  getMunicipal(mun_id: number): Promise<Municipal> {
-    return axios.get('/municipals/' + mun_id);
+  getMunicipal(munId: number): Promise<Municipal> {
+    return axios.get('/municipals/' + munId);
   }
 
-  getIssuesByMunicipals(mun_id: number): Promise<Municipal[]> {
-    return axios.get('/municipals/' + mun_id + '/issues');
+  getIssuesByMunicipals(munId: number): Promise<Municipal[]> {
+    return axios.get('/municipals/' + munId + '/issues');
   }
 }
 
 export let municipalService = new MunicipalService();
+
+class UserMunicipalService {
+  getUserMunicipals(userId: number): Promise<Municipal[]> {
+    let token = localStorage.getItem('token');
+    if (token) token = JSON.parse(token).jwt;
+    return axios.get('/secure/userMun/' + userId, {
+      headers: { 'x-access-token': token }
+    });
+  }
+  addUserMunicipal(userId: number, munId: number): Promise<void> {
+    let token = localStorage.getItem('token');
+    if (token) token = JSON.parse(token).jwt;
+    console.log(token);
+    return axios.post('/secure/user/' + userId + '/mun/' + munId, {
+      headers: { 'x-access-token': token }
+    });
+  }
+}
+
+export let userMunicipalService = new UserMunicipalService();
 
 class EventCategoryService {
   getCategories(): Promise<EventCategory[]> {
