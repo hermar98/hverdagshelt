@@ -405,7 +405,7 @@ app.delete('/secure/issueCat/:id', function(req: Request, res: Response) {
 });
 
 app.get('/secure/userMun/:id', (req: Request, res: Response) => {
-  return User.findAll({
+  return User.find({
     include: [
       {
         model: Municipal,
@@ -414,8 +414,8 @@ app.get('/secure/userMun/:id', (req: Request, res: Response) => {
         through: {model: UserMunicipal, as: 'UserMunicipals', attributes:[]}
       }
     ],
-    where: { userId: Number(req.params.id) },
-    attributes: []
+    attributes: [],
+    where: { userId: Number(req.params.id) }
   }).then(user => (user ? res.send(user) : res.sendStatus(404)));
 });
 
