@@ -1,5 +1,3 @@
-// @flow
-
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
@@ -82,7 +80,7 @@ export class UserProfilePage extends Component {
       <div>
         <MenuLoggedIn />
         <Card title="Min Profil">
-          <Card>
+          <Card title="">
             <div className="info">
               <p>
                 Navn: {this.user.firstName} {this.user.lastName}
@@ -107,7 +105,7 @@ export class UserProfilePage extends Component {
             </form>
           </div>
         </Card>
-        <Card>
+        <Card title="">
           <ChangePasswordForm />
         </Card>
         <Card className="issues" title="Mine Saker">

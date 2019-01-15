@@ -54,23 +54,23 @@ class UserService {
     });
   }
 
-  forgotPassword(email: string): Promise<JSON> {
+  forgotPassword(email: string): Promise<Object> {
     return axios
       .post('/forgotPassword', {
         email: email
       })
       .catch(error => {
-        console.log(error.data);
+        console.log(error);
       });
   }
 
-  newPassword(token: string, password: string): Promise<JSON> {
+  newPassword(token: string, password: string): Promise<Object> {
     return axios
       .put('/reset/' + token, {
         password: password
       })
-      .catch(error => {
-        console.log(error.data);
+      .catch((error: Error) => {
+        console.log(error);
       });
   }
 }

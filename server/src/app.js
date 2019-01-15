@@ -138,7 +138,7 @@ app.post('/secure/users', (req: Request, res: Response) => {
 });
 
 app.put('/secure/users/:id', (req: Request, res: Response) => {
-  if (!(req.body instanceof Object)) return res.sendStatus(400);
+  if (!req.body || !(typeof req.body.email === 'string')) return res.sendStatus(400);
 
   if (req.body.password) {
     let passwordSalt = passwordHash.genRandomString(16);

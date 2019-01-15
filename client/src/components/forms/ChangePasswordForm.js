@@ -18,14 +18,14 @@ export default class ChangePasswordForm extends Component<P, S> {
 
   mounted() {
     userService
-      .getUser(1)
+      .getUser(1) //TODO: check who is logged in.
       .then(rows => {
         this.user = rows;
       })
       .catch(error => console.log(error));
   }
 
-  handleChangePassword(e) {
+  handleChangePassword(e: Object) {
     e.preventDefault();
     console.log(this.newPassword);
     console.log(this.newPasswordRepeated);

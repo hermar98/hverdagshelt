@@ -115,12 +115,13 @@ describe('User tests', () => {
   //   expect(response.body.hashStr).toBe(
   //     '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722'
   //   );
+  //
   // });
 
   test('PUT /secure/users/:id', async () => {
     const updateUserResponse = await request(app)
       .put('/secure/users/1')
-      .send({ firstName: 'Jørgen', password: '1' })
+      .send({ firstName: 'Jørgen', password: '1', email: 'j@j.j' })
       .set({ 'x-access-token': token });
 
     expect(updateUserResponse.statusCode).toBe(200);
@@ -130,10 +131,10 @@ describe('User tests', () => {
       .set({ 'x-access-token': token });
 
     expect(response.body.firstName).toBe('Jørgen');
-    expect(response.body.lastName).toBe('Andersson');
-    expect(response.body.email).toBe('test@test.no');
+    expect(response.body.email).toBe('j@j.j');
     expect(response.body.rank).toBe(1);
   });
+
   //Delete user
   test('DELETE /secure/users/:id', async () => {
     let totalUsers = await User.count();

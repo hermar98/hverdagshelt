@@ -49,11 +49,13 @@ export default class Login extends Component {
       .then(res => {
         if (res.bad) {
           Alert.danger(res.bad);
+          this.message = res.bad;
         } else {
           Alert.success(res);
+          this.message = res;
           history.push('/');
         }
       })
-      .catch((error: error) => Alert.danger(error));
+      .catch((error: Error) => Alert.danger(error.message));
   }
 }
