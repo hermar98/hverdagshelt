@@ -69,7 +69,7 @@ class UserService {
       .put('/reset/' + token, {
         password: password
       })
-      .catch(error => {
+      .catch((error: Error) => {
         console.log(error.data);
       });
   }
