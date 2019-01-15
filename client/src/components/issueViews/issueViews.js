@@ -33,7 +33,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
         }
 
         if(this.state.clickedAdd){
-            return <Redirect to="/issues" />
+            return <Redirect to={"/issues/" + this.issue.issueId + "/feedback"} />
         }
 
         return (
@@ -338,19 +338,19 @@ class Status extends Component<{status: number, id: number}> {
         switch (this.props.status){
             case 1: return (
                     <div className="status status-blocked">
-                        <h4>{"Ikke behandlet - " + "#" + this.props.id}</h4>
+                        <h4>{"Ikke behandlet"}</h4>
                     </div>
                 )
                 break;
             case 2: return (
                     <div className="status status-pending">
-                        <h4>{"Under behandling - " + "#" + this.props.id}</h4>
+                        <h4>{"Under behandling"}</h4>
                     </div>
             )
                 break;
             case 3: return (
                     <div className="status status-finished">
-                        <h4>{"Behandlet - " + "#" + this.props.id}</h4>
+                        <h4>{"Behandlet"}</h4>
                     </div>
             )
                 break;
