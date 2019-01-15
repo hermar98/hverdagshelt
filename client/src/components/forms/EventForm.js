@@ -29,7 +29,6 @@ export default class EventForm extends Component {
             <select required className="form-control" value={this.event.category_id || ''}
                     onChange={(e: SyntheticInputEvent<HTMLInputElement>) => {if(this.event) this.event.category_id = parseInt(e.target.value)}}>
               <option selected disabled value=''>Velg kategori..</option>
-              <option value={1}>Dab </option>
               {this.categories.map(cat => <option key={cat.category_id} value={cat.category_id}>{cat.name}</option>)}
               <option value={100}>Annet</option>
             </select>
@@ -57,7 +56,9 @@ export default class EventForm extends Component {
             type="text"
             required
             placeholder="Adresse"/>
+          <input type="file" onChange={this.fileSelectedHandler}/>
           <Form.FileInput>Legg til bilde (valgfritt) </Form.FileInput>
+          <button onClick={this.fileUploadHandler}>Upload</button>
         <div className="container h-100">
           <div className="row h-100 justify-content-center align-items-center">
             <Button.Basic type="submit" onClick={this.save}>Registrer event</Button.Basic>
@@ -83,7 +84,7 @@ export default class EventForm extends Component {
 
     eventService
       .addEvent(this.event)
-      .then(history.push('/'))
+      .then(history.push('/events'))
       .catch((error: Error) => Alert.danger(error.message));
 
   }

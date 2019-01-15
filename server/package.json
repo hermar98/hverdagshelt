@@ -34,6 +34,7 @@
     "jest": "^23.6.0",
     "nodemailer": "^5.1.1",
     "nodemon": "^1.18.4",
+    "prettier": "^1.15.3",
     "style-loader": "^0.23.1",
     "superagent": "^4.1.0",
     "supertest": "^3.3.0"

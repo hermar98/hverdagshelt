@@ -5,11 +5,11 @@ import {
   Municipal,
   County,
   Status,
-  Issue_category,
+  IssueCategory,
   Issue,
   Feedback,
   Event,
-  Event_category,
+  EventCategory,
   sync
 } from '../src/models.js';
 
@@ -25,23 +25,23 @@ describe('User tests', () => {
       user
         .map(e => e.toJSON())
         .map(e => ({
-          user_id: e.user_id,
+          userId: e.userId,
           firstName: e.firstName,
           lastName: e.lastName,
           email: e.email,
           rank: e.rank,
           salt: e.salt,
-          hash_str: e.hash_str
+          hashStr: e.hashStr
         }))
     ).toEqual([
       {
-        user_id: 1,
+        userId: 1,
         firstName: 'Vegard',
         lastName: 'Andersson',
         email: 'test@test.no',
         rank: 1,
         salt: 'a83f4da094cc247b',
-        hash_str:
+        hashStr:
           '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722'
       }
     ]);
@@ -56,12 +56,12 @@ describe('County tests', () => {
       county
         .map(e => e.toJSON())
         .map(e => ({
-          county_id: e.county_id,
+          countyId: e.countyId,
           name: e.name
         }))
     ).toEqual([
       {
-        county_id: 1,
+        countyId: 1,
         name: 'Østfold'
       }
     ]);
@@ -76,10 +76,10 @@ describe('Municipal tests', () => {
       municipal
         .map(e => e.toJSON())
         .map(e => ({
-          mun_id: e.mun_id,
+          munId: e.munId,
           name: e.name
         }))
-    ).toEqual([{ mun_id: 101, name: 'Halden' }]);
+    ).toEqual([{ munId: 101, name: 'Halden' }]);
   });
 });
 
@@ -91,12 +91,12 @@ describe('Status tests', () => {
       stat
         .map(e => e.toJSON())
         .map(e => ({
-          status_id: e.status_id,
+          statusId: e.statusId,
           name: e.name
         }))
     ).toEqual([
       {
-        status_id: 1,
+        statusId: 1,
         name: 'Situation Normal, All fucked upp'
       }
     ]);
@@ -111,7 +111,7 @@ describe('Issue tests', () => {
       issue
         .map(e => e.toJSON())
         .map(e => ({
-          issue_id: e.issue_id,
+          issueId: e.issueId,
           title: e.title,
           content: e.content,
           longitude: e.longitude,
@@ -119,7 +119,7 @@ describe('Issue tests', () => {
         }))
     ).toEqual([
       {
-        issue_id: 1,
+        issueId: 1,
         title: 'Dumme folk ødeleger lømp',
         content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
         latitude: 10.824107,
@@ -137,13 +137,13 @@ describe('Feedback tests', () => {
       feedback
         .map(e => e.toJSON())
         .map(e => ({
-          feedback_id: e.feedback_id,
+          feedbackId: e.feedbackId,
           name: e.name,
           content: e.content
         }))
     ).toEqual([
       {
-        feedback_id: 1,
+        feedbackId: 1,
         name: 'Dumme folk er dumme',
         content: 'Vi skal fikse dette!'
       }
@@ -159,7 +159,7 @@ describe('Event tests', () => {
       event
         .map(e => e.toJSON())
         .map(e => ({
-          event_id: e.event_id,
+          eventId: e.eventId,
           title: e.title,
           content: e.content,
           longitude: e.longitude,
@@ -167,7 +167,7 @@ describe('Event tests', () => {
         }))
     ).toEqual([
       {
-        event_id: 1,
+        eventId: 1,
         title: 'party at the house man!',
         content: 'Det skal være party at the house!',
         longitude: 60.652168,
@@ -177,40 +177,40 @@ describe('Event tests', () => {
   });
 });
 
-describe('Issue_category tests', () => {
-  it('Issue_category.findAll() and check if first has correct data', async () => {
-    let issue_cats = await Issue_category.findAll();
-    let issue_cat = issue_cats.slice(0, 1);
+describe('IssueCategory tests', () => {
+  it('IssueCategory.findAll() and check if first has correct data', async () => {
+    let issueCats = await IssueCategory.findAll();
+    let issueCat = issueCats.slice(0, 1);
     expect(
-      issue_cat
+      issueCat
         .map(e => e.toJSON())
         .map(e => ({
-          category_id: e.category_id,
+          categoryId: e.categoryId,
           name: e.name
         }))
     ).toEqual([
       {
-        category_id: 1,
+        categoryId: 1,
         name: 'Fyllikere på gata som ødeleger lamper'
       }
     ]);
   });
 });
 
-describe('Event_category', () => {
-  it('Event_category.findAll() and check if first has correct data', async () => {
-    let event_cats = await Event_category.findAll();
-    let event_cat = event_cats.slice(0, 1);
+describe('EventCategory', () => {
+  it('EventCategory.findAll() and check if first has correct data', async () => {
+    let eventCats = await EventCategory.findAll();
+    let eventCat = eventCats.slice(0, 1);
     expect(
-      event_cat
+      eventCat
         .map(e => e.toJSON())
         .map(e => ({
-          category_id: e.category_id,
+          categoryId: e.categoryId,
           name: e.name
         }))
     ).toEqual([
       {
-        category_id: 1,
+        categoryId: 1,
         name: 'PARTY'
       }
     ]);

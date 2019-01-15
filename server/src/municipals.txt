@@ -1,4 +1,4 @@
-INSERT INTO `Municipals`(`mun_id`, `name`, `county_id`) VALUES
+INSERT INTO `Municipals`(`munId`, `name`, `countyId`) VALUES
 (5016, 'Agdenes', 50),
 (1820, 'Alstahaug', 18),
 (2012, 'Alta', 20),
