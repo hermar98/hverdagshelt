@@ -1,7 +1,7 @@
 
 import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
-import {NavLink} from 'react-router-dom'
+import {Redirect, NavLink} from 'react-router-dom'
 import { Issue, Feedback, User } from '../../models';
 import { issueService, userService, feedbackService } from "../../services";
 
@@ -17,7 +17,8 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
         super(props)
         this.statusSelect = React.createRef()
         this.state = {
-            clickedStatus: false
+            clickedStatus: false,
+            clickedAdd: false
         }
     }
 
@@ -29,6 +30,10 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
             this.statusSelect.current.classList.add('show')
         }else if(this.statusSelect.current != null){
             this.statusSelect.current.classList.remove('show')
+        }
+
+        if(this.state.clickedAdd){
+            return <Redirect to="/issues" />
         }
 
         return (
@@ -78,6 +83,9 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
                 })}
                 <p id="feedbackFill"/>
                 <div className="feedback-button">
+                    <ImageButton source="../../images/add.png" onclick={() => {
+                        this.setState({clickedAdd: !this.state.clickedAdd})
+                    }} />
                 </div>
             </div>
         )

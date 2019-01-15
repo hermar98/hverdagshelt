@@ -122,7 +122,7 @@ div.status > h4 {
 
 div.feedback-button {
     display: grid;
-    grid-template-columns: 40% 20% 40%;
+    grid-template-columns: 42% 16% 42%;
 }
 
 div.feedback-button button {
@@ -229,6 +229,12 @@ div.feedback-button button {
 
 .btn:focus, .btn:active {
     outline: none !important;
-    background-color: lightgray;
+    background-color: darkgrey;
     box-shadow: none;
+}
+
+.feedback-button img {
+    opacity: 0.8;
+    width: 6vh;
+    height: 6vh;
 }
