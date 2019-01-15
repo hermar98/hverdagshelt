@@ -11,10 +11,6 @@ const mapsClient = require('@google/maps').createClient({
 
 export class Map extends Component {
   render() {
-    return (
-      <div>
-        <LoginForm />
-      </div>
-    );
+    return <div />;
   }
 }
