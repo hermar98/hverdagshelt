@@ -487,3 +487,5 @@ describe('Issue Category Test', () => {
     expect(await IssueCategory.count()).toBe(n - 1);
   });
 });
+
+
