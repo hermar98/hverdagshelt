@@ -24,3 +24,7 @@
   margin-right: 10px;
 }
 
+input {
+  border: 2px solid black;
+  border-radius: 4px;
+}

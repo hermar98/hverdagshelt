@@ -147,8 +147,8 @@ export class Card extends Component<{ title: React.Node, children?: React.Node }
         return(
             <div className="card">
                 <div className="card-body">
-                    <div className="container h-100">
-                        <div className="row h-100 justify-content-center align-items-center">
+                    <div className="container">
+                        <div className="row justify-content-center align-items-center">
                             <h5 className="card-title">{this.props.title}</h5>
                         </div>
                     </div>
@@ -226,9 +226,10 @@ class FormInput extends Component<{
 }> {
     render() {
         return (
-            <div className="form-group row">
-                <label className="col-sm-12 col-lg-4 col-form-label">{this.props.label}</label>
-                <div className="col-sm-12 col-lg-4">
+            <div className="form-group row justify-content-center">
+
+                <div className="col-sm-4 col-sm-offset-4">
+                    <label>{this.props.label}</label>
                     <input
                         className="form-control"
                         type={this.props.type}
@@ -291,39 +292,25 @@ class FileInput extends Component <{
     }
 }
 
-class IssueCatDropdown extends Component <{ value: React.Node, label?: React.Node,  onChange: (event: SyntheticInputEvent<HTMLInputElement>) => mixed }>{
-    categories = [];
-    render(){
+class FormAlert extends Component <{ text: string }> {
+    render() {
         return(
-            <div className="form-group row">
-                <label className="col-sm-4 col-form-label">{this.props.label}</label>
-                <div className="col-sm-4">
-                    <select id="priority" className="form-control form-control" value={this.props.value}>
-                        <option>Velg kategori...</option>
-                        {this.categories.map(category => (
-                            <option key={category.category_id} value={category.category_id}>{category.category_id}</option>
-                        ))}
-                    </select>
+            <div className="form-group row justify-content-center">
+                <div className="col-sm-10 col-lg-4 justify-content-center">
+                    <div className="alert alert-danger" role="alert">
+                        {this.props.text}
+                    </div>
                 </div>
             </div>
         );
     }
-    mounted() {
-        issueCategoryService
-            .getCategories()
-            .then(issueCategories => (this.categories = issueCategories))
-            .then(() => console.log(this.categories))
-            .catch((error: Error) => Alert.danger(error.message));
-
-    }
-
 }
 
 export class Form {
     static Input = FormInput;
     static InputLarge = FormInputBig;
     static FileInput = FileInput;
-    static IssueCatDropdown = IssueCatDropdown;
+    static Alert = FormAlert;
 }
 
 export class DisplayEvent extends Component<{title: string, content: string,  image: string, longitude: number, latitude: number, time_start: string, time_end: string}> {
