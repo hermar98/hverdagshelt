@@ -43,6 +43,7 @@ if (root)
         <Route exact path="/" component={ChooseMunicipalPage} />
         <Route exact path="/issues" component={IssueOverviewNormal} />
         <Route path="/issues/:issue_id" component={IssueLarge} />
+        <Route path="/issues/:issue_id/status" component={StatusSelection} />
         <Route exact path="/registerUser" component={RegisterPage} />
         <Route exact path="/registerIssue" component={FileIssuePage} />
         <Route exact path="/login" component={LoginPage} />
@@ -52,8 +53,7 @@ if (root)
         <Route exact path="/sendEmail" />
         <Route exact path="/event/register" component={RegisterEventPage} />
         <Route exact path="/events/" component={EventPage} />
-        <Route exact path="/municipal/:mun_id" component={IssueNormal} />
-        <Route exact path="/map" component={Map} />
+        <Route exact path="/municipal/:mun_id" component={IssueOverviewNormal} />
       </div>
     </HashRouter>,
     root
