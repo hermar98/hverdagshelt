@@ -16,12 +16,12 @@ type Response = express$Response;
 const app = require('./app');
 
 app.post('/forgotPassword', (req: Request, res: Response) => {
-  if (!req.body || typeof req.body.email != 'string') return res.sendStatus(400);
-  if (req.body instanceof Object) {
+  if (!req.body || !(typeof req.body.email === 'string')) return res.sendStatus(400);
+  if (req.body.email) {
     //TODO: Flow check: Property `email` is missing in mixed [1].
     res.json('email er påkrevd');
   }
-  console.log(req.body.email); //TODO: Flow check: Cannot get `req.body.email` because property `email` is missing in mixed [1].
+
   User.findOne({
     where: {
       email: req.body.email //TODO: Flow check: Cannot get `req.body.email` because property `email` is missing in mixed [1].
@@ -75,7 +75,7 @@ app.post('/forgotPassword', (req: Request, res: Response) => {
           console.error('there was an error: ', err);
         } else {
           console.log('here is the res: ', response);
-          res.sendSratus(200).json('recovery email sent');
+          res.sendStatus(200).json('recovery email sent');
         }
       });
     }
