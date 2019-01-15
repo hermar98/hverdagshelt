@@ -337,7 +337,7 @@ app.put('/secure/issues/:id', (req: Request, res: Response) => {
       image: req.body.image,
       longitude: req.body.longitude,
       latitude: req.body.latitude,
-      status: req.body.status,
+      statusId: req.body.statusId,
       date: req.body.date
     },
     {
