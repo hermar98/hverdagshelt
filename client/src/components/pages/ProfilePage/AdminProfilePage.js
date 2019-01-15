@@ -15,8 +15,8 @@ import { Municipal } from '../../../models';
 //import styles from './ProfilePage.css';
 
 export class AdminProfilePage extends Component {
-  user: User = new User(0, '', '', '', 0, '', '');
-  municipal: Municipal = new Municipal(0, '', '', '', 0);
+  user: User = new User();
+  municipal: Municipal = new Municipal();
   municipals: Municipal[] = [];
 
   mounted() {
