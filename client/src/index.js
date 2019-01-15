@@ -44,18 +44,18 @@ if (root)
     <HashRouter>
       <div>
         <Alert />
-          <Route exact path="/" component={ChooseMunicipalPage} />
-          <Route exact path="/municipal/:munId" component={MunicipalPage} />
-          <Route exact path="/municipal/:munId/login" component={LoginPage} />
-          <Route exact path="/municipal/:munId/register" component={RegisterPage} />
-          <Route exact path="/municipal/:munId/profile" component={UserProfilePage} />
-          <Route exact path="/municipal/:munId/forgotPassword" component={ForgotPassword} />
-          <Route exact path="/municipal/:munId/reset/:userId" component={NewPasswordPage} />
-          <Route exact path="/municipal/:munId/events" component={EventPage} />
-          <Route exact path="/municipal/:munId/events/registerEvent" component={RegisterEventPage} />
-          <Route exact path="/municipal/:munId/issues" component={IssuePage} />
-          <Route exact path="/municipal/:munId/issues/fileIssue" component={FileIssuePage} />
-          <Route exact path="/municipal/:munId/issues/:issueId" component={IssueLarge} />
+        <Route exact path="/" component={ChooseMunicipalPage} />
+        <Route exact path="/municipal/:munId" component={MunicipalPage} />
+        <Route exact path="/municipal/:munId/login" component={LoginPage} />
+        <Route exact path="/municipal/:munId/register" component={RegisterPage} />
+        <Route exact path="/municipal/:munId/profile" component={UserProfilePage} />
+        <Route exact path="/forgotPassword" component={ForgotPassword} />
+        <Route exact path="/reset/:userId" component={NewPasswordPage} />
+        <Route exact path="/municipal/:munId/events" component={EventPage} />
+        <Route exact path="/municipal/:munId/events/registerEvent" component={RegisterEventPage} />
+        <Route exact path="/municipal/:munId/issues" component={IssuePage} />
+        <Route exact path="/municipal/:munId/issues/fileIssue" component={FileIssuePage} />
+        <Route exact path="/municipal/:munId/issues/:issueId" component={IssueLarge} />
       </div>
     </HashRouter>,
     root
