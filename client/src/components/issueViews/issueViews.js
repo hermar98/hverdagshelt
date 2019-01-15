@@ -16,9 +16,9 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
     constructor (props) {
         super(props)
         this.statusSelect = React.createRef()
+        this.addFeedbackButton = React.createRef()
         this.state = {
-            clickedStatus: false,
-            clickedAdd: false
+            clickedStatus: false
         }
     }
 
@@ -32,8 +32,10 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
             this.statusSelect.current.classList.remove('show')
         }
 
-        if(this.state.clickedAdd){
-            return <Redirect to={"/issues/" + this.issue.issueId + "/feedback"} />
+        if(this.addFeedbackButton.current != null && this.addFeedbackButton.current.classList.contains('show')){
+            this.addFeedbackButton.current.classList.remove('show')
+        }else if(this.addFeedbackButton.current != null){
+            this.addFeedbackButton.current.classList.add('show')
         }
 
         return (
@@ -62,7 +64,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
                                 </div>
                             </div>
                             <div className="card-text">
-                                <p>{this.issue.content}</p>
+                                <p id="issue-large-text">{this.issue.content}</p>
                             </div>
                             <h5>Kategori</h5>
                         </div>
@@ -81,11 +83,16 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
                 {sharedFeedback.feedback.map(feedback => {
                     return <IssueFeedback feedback={feedback}/>
                 })}
-                <p id="feedbackFill"/>
                 <div className="feedback-button">
-                    <ImageButton source="../../images/add.png" onclick={() => {
-                        this.setState({clickedAdd: !this.state.clickedAdd})
-                    }} />
+                    <div>
+                        <a id="feedback-link" href={"#issues/" + this.issue.issueId + "/feedback"} >
+                            <button ref={this.addFeedbackButton} className="btn image-button" type="button" onClick={() => {
+
+                            }}>
+                                <img id="image-button-image" src="../../images/add.png" />
+                            </button>
+                        </a>
+                    </div>
                 </div>
             </div>
         )
@@ -406,6 +413,39 @@ class ImageButton extends Component<{source: string, onclick: function}> {
                 <img id="image-button-image" src={this.props.source} />
             </button>
         )
+    }
+}
+
+class HoverButton extends Component<{onclick: function, text: string}> {
+    render () {
+        return (
+            <button className="btn hover-button" type="button" onClick={this.props.onclick} >
+                {this.props.text}
+            </button>
+        )
+    }
+}
+
+export class AddFeedback extends Component<{match: {params: {issueId: number}}}> {
+    render() {
+        return (
+            <div className="feedback-container">
+                <div className="form-group">
+                    <textarea className="form-control" placeholder="skriv feedback..." rows={8} />
+                </div>
+                <a href={"/#/issues/" + this.props.match.params.issueId}>
+                    <HoverButton text="Send" onclick={() => this.onClick()} />
+                </a>
+            </div>
+        )
+    }
+
+    mounted () {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    onClick() {
+
     }
 }
 
