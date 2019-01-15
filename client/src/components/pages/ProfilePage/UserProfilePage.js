@@ -1,5 +1,3 @@
-// @flow
-
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
@@ -52,7 +50,7 @@ export class UserProfilePage extends Component {
       .getMunicipals()
       .then(rows => {
         this.municipals = rows;
-        this.municipal = rows.find(mun => mun.mun_id === this.user.mun_id);
+        this.municipal = rows.find(mun => mun.mun_id === this.user.munId);
       })
       .catch(error => console.log(error));
   }
@@ -60,16 +58,16 @@ export class UserProfilePage extends Component {
   handleChangeMunicipal(e: Object) {
     e.preventDefault();
 
-    this.user.mun_id = this.municipals.find(mun => mun.name === this.newMunicipal).mun_id;
+    this.user.mun_id = this.municipals.find(mun => mun.name === this.newMunicipal).munId;
 
     userService.updateUser(this.user);
   }
 
   delete(issue_id: number) {
-    if (this.issues.find(e => e.issue_id === issue_id).status_id === 6) {
+    if (this.issues.find(e => e.issueId === issue_id).status === 6) {
       issueService
         .deleteIssue(issue_id)
-        .then(rows => (this.issues = this.issues.filter(e => e.issue_id !== issue_id)))
+        .then(rows => (this.issues = this.issues.filter(e => e.issueId !== issue_id)))
         .catch(error => console.log(error));
     } else {
       console.log('Not allowed to delete this issue');
@@ -81,7 +79,7 @@ export class UserProfilePage extends Component {
       <div>
         <MenuLoggedIn />
         <Card title="Min Profil">
-          <Card>
+          <Card title="">
             <div className="info">
               <p>
                 Navn: {this.user.firstName} {this.user.lastName}
@@ -105,14 +103,14 @@ export class UserProfilePage extends Component {
             </form>
           </div>
         </Card>
-        <Card>
+        <Card title="">
           <ChangePasswordForm />
         </Card>
         <Card className="issues" title="Mine Saker">
           {this.issues.map((issue, index) => (
             <div key={index}>
               <IssueSmall issue={issue} />
-              <button className="btn btn-danger" onClick={this.delete.bind(this, issue.issue_id)}>
+              <button className="btn btn-danger" onClick={this.delete.bind(this, issue.issueId)}>
                 Delete
               </button>
             </div>
