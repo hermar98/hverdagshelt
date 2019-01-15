@@ -25,7 +25,7 @@ class UserService {
   updateUser(user: User): Promise<void> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.put('/secure/users/' + user.user_id, user, {
+    return axios.put('/secure/users/' + user.userId, user, {
       headers: { 'x-access-token': token }
     });
   }
