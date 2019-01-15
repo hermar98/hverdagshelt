@@ -44,6 +44,7 @@ export class ChooseMunicipalPage extends Component {
     let municipal = municipalObjects.find(e => e.name == glob);
     console.log(municipal);
     if (municipal) {
+      localStorage.setItem('munId', municipal.munId);
       history.push('/municipal/' + municipal.munId);
     }
   }
