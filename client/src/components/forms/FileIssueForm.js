@@ -3,7 +3,7 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Issue} from '../../models.js';
+import { Issue } from '../../models.js';
 import { issueService, issueCategoryService } from "../../services.js"
 import { Alert, Form, Card, Button } from '../../widgets';
 import { history } from "../../index";
@@ -12,6 +12,8 @@ export default class RegisterIssue extends Component {
   issue = new Issue();
   categories = [];
   form = null;
+
+
 
   render() {
     return (
@@ -38,7 +40,11 @@ export default class RegisterIssue extends Component {
             required
             placeholder="Skriv innholdet i saken"
           />
-          <Form.FileInput>Legg til bilde</Form.FileInput>
+            <div className="form-group row justify-content-center">
+                <div className="col-sm-10 col-lg-4 justify-content-center">
+                    <input type="file" onChange={this.prepareUpload}/>
+                </div>
+            </div>
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
               <Button.Basic onClick={this.save}>Send inn</Button.Basic>
@@ -55,14 +61,13 @@ export default class RegisterIssue extends Component {
 
     this.issue.latitude = 0.1;
     this.issue.longitude = 0.2;
-    this.issue.image = 'hei';
+    this.prepareUpload();
 
     issueService
       .addIssue(this.issue)
-      .then(history.push('/issues/' + this.issue.issueId))
+      .then(history.push('/issues'))
       .catch((error: Error) => Alert.danger(error.message));
 
-    console.log(this.issue);
   }
 
     mounted() {
@@ -73,4 +78,6 @@ export default class RegisterIssue extends Component {
             .catch((error: Error) => Alert.danger(error.message));
 
     }
+
+
 }

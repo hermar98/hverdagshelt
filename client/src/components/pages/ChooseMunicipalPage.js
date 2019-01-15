@@ -48,6 +48,6 @@ export class ChooseMunicipalPage extends Component {
         let municipal = municipalObjects.find(e => e.name == glob);
         console.log(municipal);
 
-        history.push('/municipal/' + municipal.mun_id);
+        history.push('/municipal/' + municipal.munId);
     }
 }

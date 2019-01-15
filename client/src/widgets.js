@@ -142,7 +142,7 @@ export class Button{
 }
 
 
-export class Card extends Component<{ title: React.Node, children?: React.Node }> {
+export class Card extends Component<{ title?: React.Node, children?: React.Node }> {
     render(){
         return(
             <div className="card">
