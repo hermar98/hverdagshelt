@@ -396,11 +396,12 @@ app.get('/secure/userMun/:id', (req: Request, res: Response) => {
       {
         model: Municipal,
         as: 'Municipals',
-        attributes: ['munId', 'name']
+        attributes: ['munId', 'name'],
+        through: {model: UserMunicipal, as: 'UserMunicipals', attributes:[]}
       }
     ],
-    attributes: [],
-    where: { userId: Number(req.params.id) }
+    where: { userId: Number(req.params.id) },
+    attributes: []
   }).then(user => (user ? res.send(user) : res.sendStatus(404)));
 });
 
