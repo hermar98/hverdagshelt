@@ -44,7 +44,6 @@ if (root)
       <div>
         <Alert />
           <Route exact path="/" component={ChooseMunicipalPage} />
-          <Menu/>
           <Route exact path="/municipal/:munId" component={MunicipalPage} />
           <Route exact path="/municipal/:munId/login" component={LoginPage} />
           <Route exact path="/municipal/:munId/register" component={RegisterPage} />
