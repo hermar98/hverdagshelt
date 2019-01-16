@@ -339,7 +339,6 @@ export class IssueOverviewNormal extends Component<{munId: number}> {
     }
 
     mounted (){
-        console.log("asdasd")
         issueService.getIssues()
             .then(data => {
                 sharedIssues.issues = data;

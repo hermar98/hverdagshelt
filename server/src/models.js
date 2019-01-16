@@ -10,7 +10,7 @@ let sequelize = new Sequelize(
   // process.env.CI ? 'root' : 'sebasman',
   // process.env.CI ? '' : 'GSBLuzbB',
   {
-    host: process.env.CI ? 'mysql' : 'localhost',
+    host: process.env.CI ? 'mysql' : 'mysql.stud.iie.ntnu.no',
     dialect: 'mysql',
     pool: {
       max: 5,
@@ -47,8 +47,7 @@ export let Issue: Class<
     image: string,
     longitude: number,
     latitude: number,
-    date: Date,
-    statusId: number
+    statusId: number,
   }>
 > = sequelize.define('Issue', {
   issueId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
@@ -57,7 +56,6 @@ export let Issue: Class<
   image: Sequelize.STRING,
   longitude: Sequelize.DOUBLE,
   latitude: Sequelize.DOUBLE,
-  date: Sequelize.DATE,
   statusId: { type: Sequelize.INTEGER, defaultValue: 1 }
 });
 
@@ -354,8 +352,9 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
               lastName: 'Axell',
               email: 'cdaxell@stud.ntnu.no',
               rank: 3,
-              salt: 'b79ryp98',
-              hashStr: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
+              salt: 'a83f4da094cc247b',
+              hashStr:
+                '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
               munId: 528,
               profilePicture:
                 'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
@@ -364,7 +363,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
               firstName: 'Sebastian',
               lastName: 'Andresen',
               email: 'sebasman@stud.ntnu.no',
-              rank: 1,
+              rank: 3,
               salt: 'b79ryp98',
               hashStr: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
               munId: 1503,

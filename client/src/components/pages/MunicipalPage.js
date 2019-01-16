@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { autocomplete, glob } from '../../../public/autocomplete';
-import {eventService, issueService} from '../../services';
+import { eventService, issueService } from '../../services';
 import { Alert, Card } from '../../widgets';
 import { history } from '../../index';
 import {IssueOverviewSmall, IssueSmall} from '../issueViews/issueViews';
@@ -39,17 +39,19 @@ export class MunicipalPage extends Component <{match: {params: {munId: number}}}
         );
     }
 
-    mounted() {
-        issueService
-            // .getIssuesByMunicipal(this.props.match.params.munId)
-            .getIssues()
-            .then(issues => {(this.issues = issues);})
-            .catch((error: Error) => Alert.danger(error.message));
+  mounted() {
+    issueService
+      .getIssuesByMunicipal(this.props.match.params.munId)
+      // .getIssues()
+      .then(issues => {
+        this.issues = issues;
+      })
+      .catch((error: Error) => Alert.danger(error.message));
 
-        eventService
-            // .getEventsByMunicipal(this.props.match.params.munId)
-            .getEvents()
-            .then(events => (this.events = events))
-            .catch((error: Error) => Alert.danger(error.message));
-    }
+    eventService
+      .getEventsByMunicipal(this.props.match.params.munId)
+      // .getEvents()
+      .then(events => (this.events = events))
+      .catch((error: Error) => Alert.danger(error.message));
+  }
 }

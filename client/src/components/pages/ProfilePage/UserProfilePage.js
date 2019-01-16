@@ -16,9 +16,10 @@ export class UserProfilePage extends Component<{ match: { params: { userId: numb
   };
   user: User = new User(0, '', '', '', 0, 0, '');
   issues: Issue[] = [];
-  municipal: UserMunicipal = new UserMunicipal();
-  newMunicipal: Municipal = new Municipal(0, '', '', '', 0);
-  municipals: Municipal[] = [];
+  allMunicipals: Municipal[] = new UserMunicipal();
+  newMunicipalName: string = '';
+  newMunicipalId: number = 0;
+  userMunicipals: Municipal[] = [];
 
   mounted() {
     async function f() {
@@ -47,24 +48,26 @@ export class UserProfilePage extends Component<{ match: { params: { userId: numb
       .then(rows => (this.issues = rows))
       .catch(error => console.log(error));
 
+    municipalService
+      .getMunicipals()
+      .then(rows => {
+        this.allMunicipals = rows;
+      })
+      .catch(error => console.log(error));
+
     userMunicipalService
       .getUserMunicipals(1)
       .then(rows => {
-        this.municipals = rows;
+        this.userMunicipals = rows;
         this.isLoaded = true;
       })
       .catch(error => console.log(error));
   }
 
   handleAddMunicipal() {
+    this.newMunicipalId = this.allMunicipals.find(mun => mun.name === this.newMunicipalName).munId;
 
-    //this.user.munId = this.municipals.find(mun => mun.name === this.newMunicipal).munId;
-
-    userMunicipalService.addUserMunicipal(1, 5001);
-    // let s = userMunicipalService.getUserMunicipals(1);
-    // userService.getUser(1);
-    userMunicipalService.anythingElse(5001,1);
-    console.log("s");
+    userMunicipalService.addUserMunicipal(1, this.newMunicipalId);
   }
 
   delete(issueId: number) {
@@ -78,6 +81,13 @@ export class UserProfilePage extends Component<{ match: { params: { userId: numb
     }
   }
 
+  deleteUserMunicipal(userId: number, munId: number) {
+    userMunicipalService
+      .deleteUserMunicipal(userId, munId)
+      .then(rows => (this.userMunicipals = this.userMunicipals.filter(e => e.munId !== munId)))
+      .catch(error => console.log(error));
+  }
+
   render() {
     return (
       <div>
@@ -89,8 +99,15 @@ export class UserProfilePage extends Component<{ match: { params: { userId: numb
                 Navn: {this.user.firstName} {this.user.lastName}
               </p>
               <p>Email: {this.user.email}</p>
-
-              <p>Kommune(r): {this.isLoaded && this.municipals.Municipals[0].name}</p>
+              <p>Kommuner:</p>
+              <Card>
+                {this.userMunicipals.map((mun, index) => (
+                  <p key={index}>
+                    {mun.name}
+                    <button onClick={this.deleteUserMunicipal.bind(this, this.user.userId, mun.munId)}>Slett</button>
+                  </p>
+                ))}
+              </Card>
             </div>
           </Card>
           <br />
@@ -101,9 +118,11 @@ export class UserProfilePage extends Component<{ match: { params: { userId: numb
                   id="municipalInput"
                   type="text"
                   name="municipal"
-                  onChange={event => (this.newMunicipal = event.target.value)}
+                  onChange={event => (this.newMunicipalName = event.target.value)}
                 />
-                <button type="submit" onClick={this.handleAddMunicipal}>Legg Til Kommune</button>
+                <button type="submit" onClick={this.handleAddMunicipal}>
+                  Legg Til Kommune
+                </button>
               </div>
             </form>
           </div>
