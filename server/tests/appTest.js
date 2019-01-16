@@ -1,5 +1,17 @@
 // @flow
-import { UserIssue,UserMunicipal, Feedback, IssueCategory, EventCategory, Event, Issue, County, Municipal, User, sync } from '../src/models';
+import {
+  UserIssue,
+    UserMunicipal,
+    // Feedback,
+    IssueCategory,
+    EventCategory,
+    Event,
+    Issue,
+    County,
+    Municipal,
+    User,
+    sync
+} from '../src/models';
 
 const request = require('supertest');
 const app = require('../src/app');
@@ -95,28 +107,28 @@ describe('User tests', () => {
   });
   //Put user
 
-  // test('PUT /secure/users/:id', async () => { //TODO: Denne testen feilet men neste PUT test fungerer... Så jeg ignorer det og går videre...
-  //   const updateUserResponse = await request(app)
-  //     .put('/secure/users/1')
-  //     .send({ firstName: 'Jørgen' })
-  //     .set({ 'x-access-token': token });
-  //
-  //   expect(updateUserResponse.statusCode).toBe(200);
-  //
-  //   const response = await request(app)
-  //     .get('/secure/users/1')
-  //     .set({ 'x-access-token': token });
-  //
-  //   expect(response.body.firstName).toBe('Jørgen');
-  //   expect(response.body.lastName).toBe('Andersson');
-  //   expect(response.body.email).toBe('test@test.no');
-  //   expect(response.body.rank).toBe(1);
-  //   expect(response.body.salt).toBe('a83f4da094cc247b');
-  //   expect(response.body.hashStr).toBe(
-  //     '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722'
-  //   );
-  //
-  // });
+  test('PUT /secure/users/:id', async () => {
+    const updateUserResponse = await request(app)
+      .put('/secure/users/1')
+      .send({ firstName: 'Jørgen' })
+      .set({ 'x-access-token': token });
+
+    expect(updateUserResponse.statusCode).toBe(200);
+
+    const response = await request(app)
+      .get('/secure/users/1')
+      .set({ 'x-access-token': token });
+
+    expect(response.body.firstName).toBe('Jørgen');
+    expect(response.body.lastName).toBe('Andersson');
+    expect(response.body.email).toBe('test@test.no');
+    expect(response.body.rank).toBe(1);
+    expect(response.body.salt).toBe('a83f4da094cc247b');
+    expect(response.body.hashStr).toBe(
+      '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722'
+    );
+
+  });
 
   test('PUT /secure/users/:id', async () => {
     const updateUserResponse = await request(app)
@@ -501,6 +513,7 @@ describe('userMunicipals tests',() => {
         const response = await request(app).get('/secure/userMun/1').set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
+        console.log((response.body));
 
 
         //TODO: Fix so it checks result
@@ -529,25 +542,26 @@ describe('userMunicipals tests',() => {
 //userIssues tests
 describe('userIssues tests',() => {
     //GET /secure/userIssue/:id
-    // test('GET /secure/userIssue/:id', async ()=>{
-    //     const r1 = await request(app).post('/secure/user/1/issue/2 ').set({ 'x-access-token': token });
-    //     const r2 = await request(app).post('/secure/user/1/issue/3').set({ 'x-access-token': token });
-    //     expect(r1.statusCode).toBe(200);
-    //     expect(r2.statusCode).toBe(200);
-    //
-    //     const response = await request(app).get('/secure/userIssue/1').set({ 'x-access-token': token });
-    //     expect(response.statusCode).toBe(200);
-    //     // expect(response.type).toEqual('application/json');
-    //
-    //
-    //     //TODO: Fix so it checks result
-    // });
+    test('GET /secure/userIssue/:id', async ()=>{
+        const r1 = await request(app).post('/secure/user/1/issue/2 ').set({ 'x-access-token': token });
+        const r2 = await request(app).post('/secure/user/1/issue/3').set({ 'x-access-token': token });
+        expect(r1.statusCode).toBe(200);
+        expect(r2.statusCode).toBe(200);
+
+        const response = await request(app).get('/secure/userIssue/1').set({ 'x-access-token': token });
+        expect(response.statusCode).toBe(200);
+        expect(response.type).toEqual('application/json');
+        console.log(response.body);
+
+
+        //TODO: Fix so it checks result
+    });
 
     //POST /secure/user/:userId/issue/:issueId
     test('POST /secure/user/:userId/issue/:issueId', async () => {
         let count = await UserIssue.count(); // entries in database
         const response = await request(app)
-            .post('/secure/user/1/issue/2')
+            .post('/secure/user/1/issue/4')
             .set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(await UserIssue.count()).toEqual(count + 1);
