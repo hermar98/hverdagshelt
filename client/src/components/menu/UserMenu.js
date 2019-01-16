@@ -12,7 +12,7 @@ export class UserMenu extends Component<{user: User}> {
         return (
             <NavBar>
                 <NavBar.Brand image="images/Trondheim_kommune.png" to={'/municipal/' + this.munId}>Trondheim Kommune</NavBar.Brand>
-                <NavBar.Link to={'/municipal/' + this.munId + '/issues/fileIssue'}>Registrer sak</NavBar.Link>
+                <NavBar.Link to={'/municipal/' + this.munId + '/fileIssue'}>Registrer sak</NavBar.Link>
                 <NavBar.Dropdown title={this.props.user.firstName + ' ' + this.props.user.lastName}>
                     <DropdownHeader>{this.props.user.email}</DropdownHeader>
                     <DropdownFooter>Privatperson</DropdownFooter>

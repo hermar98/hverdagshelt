@@ -13,7 +13,7 @@ export class MunicipalMenu extends Component<{user: User}> {
             <NavBar>
                 <NavBar.Brand image="images/Trondheim_kommune.png" to={'/municipal/' + this.munId}>Trondheim Kommune</NavBar.Brand>
                 <NavBar.Link to={'/municipal/' + this.munId + '/fileIssue'}>Registrer sak</NavBar.Link>
-                <NavBar.Link to={'/municipal/' + this.munId + '/fileIssue'}>Registrer event</NavBar.Link>
+                <NavBar.Link to={'/municipal/' + this.munId + '/registerEvent'}>Registrer event</NavBar.Link>
                 <NavBar.Dropdown title={this.props.user.firstName + ' ' + this.props.user.lastName}>
                     <DropdownHeader>{this.props.user.email}</DropdownHeader>
                     <DropdownFooter>Kommuneansatt</DropdownFooter>
