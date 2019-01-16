@@ -52,9 +52,9 @@ if (root)
         <Route exact path="/forgotPassword" component={ForgotPassword} />
         <Route exact path="/reset/:userId" component={NewPasswordPage} />
         <Route exact path="/municipal/:munId/events" component={EventPage} />
-        <Route exact path="/municipal/:munId/events/registerEvent" component={RegisterEventPage} />
+        <Route exact path="/municipal/:munId/registerEvent" component={RegisterEventPage} />
         <Route exact path="/municipal/:munId/issues" component={IssuePage} />
-        <Route exact path="/municipal/:munId/issues/fileIssue" component={FileIssuePage} />
+        <Route exact path="/municipal/:munId/fileIssue" component={FileIssuePage} />
         <Route exact path="/municipal/:munId/issues/:issueId" component={IssueLarge} />
       </div>
     </HashRouter>,

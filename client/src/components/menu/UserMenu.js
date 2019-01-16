@@ -2,8 +2,12 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import {DropdownDivider, DropdownFooter, DropdownHeader, DropdownItem, NavBar} from '../../widgets';
 import {User} from "../../models";
+import {history} from "../../index";
+import {tokenManager} from "../../tokenManager";
 
 export class UserMenu extends Component<{user: User}> {
+    munId = localStorage.getItem('munId');
+
     render() {
         return (
             <NavBar>
@@ -18,5 +22,14 @@ export class UserMenu extends Component<{user: User}> {
                 </NavBar.Dropdown>
             </NavBar>
         )
+    }
+
+    toProfile() {
+        history.push('/municipal/' + this.munId + '/profile');
+    }
+
+    logout() {
+        tokenManager.deleteToken();
+        history.push('/municipal/' + this.munId + '/login');
     }
 }

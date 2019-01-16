@@ -33,17 +33,10 @@ export default class Menu extends Component {
     mounted() {
         userService.getToken().then(() => {
             userService.getUser(tokenManager.getUserId())
-                .then(user => {this.user = user})
+                .then(user => {
+                    this.user = user
+                })
                 .catch((error: Error) => console.log(error));
         }).catch((error: Error) => console.log(error));
-    }
-
-    toProfile() {
-        history.push('/municipal/' + this.munId + '/profile');
-    }
-
-    logout() {
-        tokenManager.deleteToken();
-        history.push('/municipal/' + this.munId + '/login');
     }
 }
