@@ -5,7 +5,7 @@ require('dotenv').config({ path: 'C:\\hverdagshelt_Team_3\\.env' });
 let sequelize = new Sequelize(
   process.env.CI ? 'database' : 'hverdagshelt',
   process.env.CI ? 'root' : 'user',
-  process.env.CI ? '' : '1234',
+  process.env.CI ? '' : 'password',
   // process.env.CI ? 'database' : 'sebasman',
   // process.env.CI ? 'root' : 'sebasman',
   // process.env.CI ? '' : 'GSBLuzbB',
@@ -579,24 +579,26 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           {
             title: 'party at the house man!',
             content: 'Det skal være party at the house!',
-            image: 'notin',
+            image: 'https://www.rosannadavisonnutrition.com/wp-content/uploads/2018/01/Party.png',
             longitude: 60.652168,
             latitude: 10.822102,
             timeStart: new Date(Date.now()),
             timeEnd: new Date(Date.now()),
             userId: '1',
-            categoryId: 1
+            categoryId: 1,
+            munId: 5001
           },
           {
             title: 'PARTIET FORSETTER!',
             content: 'DET FORRIGE PARTY FORSETTER HOS ANDERS!',
-            image: 'notin',
+            image: 'http://www.chinatownfair.biz/party.gif',
             longitude: 60.655754,
             latitude: 10.817339,
             timeStart: new Date(Date.now()),
             timeEnd: new Date(Date.now()),
             userId: '2',
-            categoryId: 1
+            categoryId: 1,
+            munId: 5001
           }
         ])
       )
