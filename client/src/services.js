@@ -369,6 +369,15 @@ class FeedbackService {
       headers: { 'x-access-token': token }
     });
   }
+
+  deleteFeedback(feedbackId: number): Promise<number> {
+      let token = localStorage.getItem('token');
+      if (token) token = JSON.parse(token).jwt;
+      return axios.delete('/feedback/' + feedbackId, {
+          headers: { 'x-access-token': token }
+      });
+  }
+
 }
 
 export let feedbackService = new FeedbackService();
