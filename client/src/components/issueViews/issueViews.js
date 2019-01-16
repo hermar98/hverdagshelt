@@ -249,7 +249,7 @@ export class IssueOverviewSmall extends Component<{munId: number}> {
 
     mounted (){
         window.scrollTo(0, 0);
-        issueService.getIssues()
+        issueService.getIssuesByMunicipal(window.location.hash.slice(12))
             .then(data => {
                 sharedIssues.issues = data;
             })
