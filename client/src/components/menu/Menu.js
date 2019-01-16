@@ -25,7 +25,7 @@ export default class Menu extends Component {
         }
         return (
             <NavBar>
-                <NavBar.Brand image='images/Trondheim_kommune.png'>{this.municipal.name + ' kommune'}</NavBar.Brand>
+                <NavBar.Brand image={this.municipal.municipalShield}>{this.municipal.name + ' kommune'}</NavBar.Brand>
                 <NavBar.Link to={'/municipal/' + this.munId + '/login'}>Logg inn</NavBar.Link>
                 <NavBar.Link to={'/municipal/' + this.munId + '/register'}>Registrer bruker</NavBar.Link>
             </NavBar>

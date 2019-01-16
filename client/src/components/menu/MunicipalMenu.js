@@ -11,7 +11,7 @@ export class MunicipalMenu extends Component<{user: User, municipal: Municipal}>
     render() {
         return (
             <NavBar>
-                <NavBar.Brand image="images/Trondheim_kommune.png" to={'/municipal/' + this.munId}>{this.props.municipal}</NavBar.Brand>
+                <NavBar.Brand image={municipal.municipalShield} to={'/municipal/' + this.munId}>{this.props.municipal}</NavBar.Brand>
                 <NavBar.Link to={'/municipal/' + this.munId + '/fileIssue'}>Registrer sak</NavBar.Link>
                 <NavBar.Link to={'/municipal/' + this.munId + '/registerEvent'}>Registrer event</NavBar.Link>
                 <NavBar.Dropdown title={this.props.user.firstName + ' ' + this.props.user.lastName}>

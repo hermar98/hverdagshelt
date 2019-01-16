@@ -5,13 +5,13 @@ import {User} from "../../models";
 import {history} from "../../index";
 import {tokenManager} from "../../tokenManager";
 
-export class UserMenu extends Component<{user: User}> {
+export class UserMenu extends Component<{user: User, municipal: Municipal}> {
     munId = localStorage.getItem('munId');
 
     render() {
         return (
             <NavBar>
-                <NavBar.Brand image="images/Trondheim_kommune.png" to={'/municipal/' + this.munId}>Trondheim Kommune</NavBar.Brand>
+                <NavBar.Brand image={municipal.municipalShield} to={'/municipal/' + this.munId}>{municipal.name + ' kommune'}</NavBar.Brand>
                 <NavBar.Link to={'/municipal/' + this.munId + '/fileIssue'}>Registrer sak</NavBar.Link>
                 <NavBar.Dropdown title={this.props.user.firstName + ' ' + this.props.user.lastName}>
                     <DropdownHeader>{this.props.user.email}</DropdownHeader>
