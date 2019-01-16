@@ -35,7 +35,7 @@ export let Feedback: Class<
 > = sequelize.define('Feedback', {
   feedbackId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
   name: Sequelize.STRING,
-  content: Sequelize.STRING,
+  content: Sequelize.STRING(2000),
   date: Sequelize.DATE
 });
 
@@ -545,7 +545,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           },
           {
             name: 'Veilyset på 33 er fisket!',
-            content: 'Veilyset er fikset!',
+            content: 'Oppbygginga av ein artikkel er logisk og velordna og følgjer ofte ei klassisk tredeling med innleiing, midtdel og konklusjon. Språket er normalprosa med moderat bruk av litterære verkemiddel. Det er stort spenn i meiningsinnhald innan undersjangrane av artikkelen, frå den nøytrale og informative leksikonartikkelen til artiklar som inneheld spissformulerte meiningsytringar, t.d. leiarartikkelen eller lesarbrevet i ei avis. Artikkelsjangrane varierer også mykje i lengde og informasjonsmengde. Her utgjer den minste nyhendeartikkelen i ei avis, notisen, eit ytterpunkt, medan fagartikkelen er døme på artiklar som kan vera lange og innhaldsrike',
             date: new Date(Date.now()),
             userId: '2',
             issueId: '4'

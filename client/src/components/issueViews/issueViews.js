@@ -277,7 +277,7 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
     render() {
         return (
             <div className="feedback" feedback={this.props.feedback}>
-                <div className="card">
+                <div className="card feedback-card">
                     <div className="card-body">
                         <div className="d-flex flex-row submitter">
                             <div className="p-2">
