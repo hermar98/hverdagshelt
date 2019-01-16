@@ -264,10 +264,10 @@ export class IssueOverviewSmall extends Component<{munId: number}> {
                     </div>
                 </div>
                 <ul className="list-group">
-                    {sharedIssues.issues.map(issue => {
+                    {sharedIssues.issues.map((issue,index) => {
                         if (this.status == issue.statusId || this.status == 0) {
                             return(
-                                <li className="list-group-item">
+                                <li key={index} className="list-group-item">
                                     <IssueSmall issue={issue} munId={this.props.munId}/>
                                 </li>
                             )
@@ -280,7 +280,7 @@ export class IssueOverviewSmall extends Component<{munId: number}> {
 
     mounted (){
         window.scrollTo(0, 0);
-        issueService.getIssues()
+        issueService.getIssuesByMunicipal(window.location.hash.slice(12))
             .then(data => {
                 sharedIssues.issues = data;
             })

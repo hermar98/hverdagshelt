@@ -64,7 +64,8 @@ class UserService {
       });
   }
 
-  newPassword(token: string, password: string): Promise<Object> {
+  newPassword(token: string, password: string): Promise<JSON> {
+    console.log(password + 'serivee');
     return axios
       .put('/reset/' + token, {
         password: password
@@ -86,7 +87,7 @@ class IssueService {
     });
   }
 
-  getIssuesByUser(userId: User): Promise<Issue[]> {
+  getIssuesByUser(userId: number): Promise<Issue[]> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
     return axios.get('/secure/users/' + userId + '/issues', {
@@ -105,6 +106,8 @@ class IssueService {
   getIssuesByMunicipal(munId: number): Promise<Issue[]> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
+    console.log(munId);
+    console.log('s');
     return axios.get('/municipals/' + munId + '/issues', {
       headers: { 'x-access-token': token }
     });
@@ -209,7 +212,7 @@ class EventService {
   getEventsByMunicipal(munId: number): Promise<Event[]> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.get('municipals/' + munId + '/events', {
+    return axios.get('/municipals/' + munId + '/events', {
       headers: {
         'x-access-token': token
       }
@@ -360,11 +363,11 @@ class FeedbackService {
   }
 
   addFeedback(feedback: Feedback): Promise<number> {
-      let token = localStorage.getItem('token');
-      if (token) token = JSON.parse(token).jwt;
-      return axios.post('/secure/feedback', feedback, {
-          headers: { 'x-access-token': token }
-      });
+    let token = localStorage.getItem('token');
+    if (token) token = JSON.parse(token).jwt;
+    return axios.post('/secure/feedback', feedback, {
+      headers: { 'x-access-token': token }
+    });
   }
 
   deleteFeedback(feedbackId: number): Promise<number> {

@@ -4,13 +4,13 @@ require('dotenv').config({ path: 'C:\\hverdagshelt_Team_3\\.env' });
 
 let sequelize = new Sequelize(
   process.env.CI ? 'database' : 'hverdagshelt',
-  process.env.CI ? 'root' : 'vegard',
-  process.env.CI ? '' : '1234',
+  process.env.CI ? 'root' : 'user',
+  process.env.CI ? '' : 'password',
   // process.env.CI ? 'database' : 'sebasman',
   // process.env.CI ? 'root' : 'sebasman',
   // process.env.CI ? '' : 'GSBLuzbB',
   {
-    host: process.env.CI ? 'localhost' : 'localhost',
+    host: process.env.CI ? 'mysql' : 'localhost',
     dialect: 'mysql',
     pool: {
       max: 5,
@@ -47,7 +47,7 @@ export let Issue: Class<
     image: string,
     longitude: number,
     latitude: number,
-    statusId: number,
+    statusId: number
   }>
 > = sequelize.define('Issue', {
   issueId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
@@ -279,7 +279,13 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           { munId: 229, name: 'Enebakk', countyId: 2 },
           { munId: 1003, name: 'Farsund', countyId: 10 },
           { munId: 5036, name: 'Frosta', countyId: 50 },
-          { munId: 1432, name: 'Førde', countyId: 14 },
+          {
+            munId: 1432,
+            name: 'Førde',
+            countyId: 14,
+            municipalShield:
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/F%C3%B8rde_komm.svg/800px-F%C3%B8rde_komm.svg.png'
+          },
           { munId: 502, name: 'Gjøvik', countyId: 5 },
           { munId: 617, name: 'Gol', countyId: 6 },
           { munId: 5045, name: 'Grong', countyId: 50 },
@@ -291,7 +297,13 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           { munId: 935, name: 'Iveland', countyId: 9 },
           { munId: 532, name: 'Jevnaker', countyId: 5 },
           { munId: 1227, name: 'Jondal', countyId: 12 },
-          { munId: 1431, name: 'Jølster', countyId: 14 },
+          {
+            munId: 1850,
+            name: 'Tysfjord',
+            countyId: 18,
+            municipalShield:
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Tysfjord_komm.svg/800px-Tysfjord_komm.svg.png'
+          },
           { munId: 2021, name: 'Karasjok', countyId: 20 },
           { munId: 1120, name: 'Klepp', countyId: 11 },
           { munId: 5030, name: 'Klæbu', countyId: 50 },
@@ -299,11 +311,23 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           { munId: 514, name: 'Lom', countyId: 5 },
           { munId: 1422, name: 'Lærdal', countyId: 14 },
           { munId: 1002, name: 'Mandal', countyId: 10 },
-          { munId: 5034, name: 'Meråker', countyId: 50 },
+          {
+            munId: 5034,
+            name: 'Meråker',
+            countyId: 50,
+            municipalShield:
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Mer%C3%A5ker_komm.svg/800px-Mer%C3%A5ker_komm.svg.png'
+          },
           { munId: 1502, name: 'Molde', countyId: 15 },
           { munId: 5005, name: 'Namsos', countyId: 50 },
           { munId: 216, name: 'Nesodden', countyId: 2 },
-          { munId: 807, name: 'Notodden', countyId: 8 },
+          {
+            munId: 807,
+            name: 'Notodden',
+            countyId: 8,
+            municipalShield:
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Notodden_komm.svg/800px-Notodden_komm.svg.png'
+          },
           { munId: 1228, name: 'Odda', countyId: 12 },
           { munId: 5021, name: 'Oppdal', countyId: 50 },
           { munId: 1243, name: 'Os', countyId: 12 },
@@ -316,7 +340,13 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           { munId: 710, name: 'Sandefjord', countyId: 7 },
           { munId: 1573, name: 'Smøla', countyId: 15 },
           { munId: 1560, name: 'Tingvoll', countyId: 15 },
-          { munId: 5001, name: 'Trondheim', countyId: 50 },
+          {
+            munId: 5001,
+            name: 'Trondheim',
+            countyId: 50,
+            municipalShield:
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Trondheim_komm.svg/800px-Trondheim_komm.svg.png'
+          },
           { munId: 1835, name: 'Træna', countyId: 18 },
           { munId: 235, name: 'Ullensaker', countyId: 2 },
           { munId: 1231, name: 'Ullensvang', countyId: 12 },
@@ -326,7 +356,13 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           { munId: 529, name: 'Vestre Toten', countyId: 5 },
           { munId: 1868, name: 'Øksnes', countyId: 18 },
           { munId: 5015, name: 'Ørland', countyId: 50 },
-          { munId: 528, name: 'Østre Toten', countyId: 5 },
+          {
+            munId: 528,
+            name: 'Østre Toten',
+            countyId: 5,
+            municipalShield:
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/%C3%98stre_Toten_komm.svg/800px-%C3%98stre_Toten_komm.svg.png'
+          },
           { munId: 5018, name: 'Åfjord', countyId: 50 },
           { munId: 1503, name: 'Ålesund', countyId: 15 },
           { munId: 1424, name: 'Årdal', countyId: 14 }
@@ -339,7 +375,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
               firstName: 'Vegard',
               lastName: 'Andersson',
               email: 'test@test.no',
-              rank: 1,
+              rank: 2,
               salt: 'a83f4da094cc247b',
               hashStr:
                 '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
@@ -364,8 +400,9 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
               lastName: 'Andresen',
               email: 'sebasman@stud.ntnu.no',
               rank: 3,
-              salt: 'b79ryp98',
-              hashStr: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
+              salt: 'a83f4da094cc247b',
+              hashStr:
+                '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
               munId: 1503,
               profilePicture:
                 'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
@@ -375,8 +412,9 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
               lastName: 'Rondestvedt',
               email: 'trondjro@stud.ntnu.no',
               rank: 1,
-              salt: 'b79ryp98',
-              hashStr: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
+              salt: 'a83f4da094cc247b',
+              hashStr:
+                '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
               munId: 528,
               profilePicture:
                 'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
@@ -386,8 +424,9 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
               lastName: 'Nicolausson',
               email: 'sandern@stud.ntnu.no',
               rank: 1,
-              salt: 'b79ryp98',
-              hashStr: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
+              salt: 'a83f4da094cc247b',
+              hashStr:
+                '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
               munId: 528,
               profilePicture:
                 'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
@@ -396,9 +435,10 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
               firstName: 'Jørgen',
               lastName: 'Aasvestad',
               email: 'jorgaas@stud.ntnu.no',
-              rank: 1,
-              salt: 'b79ryp98',
-              hashStr: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
+              rank: 4,
+              salt: 'a83f4da094cc247b',
+              hashStr:
+                '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
               munId: 528,
               profilePicture:
                 'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
@@ -407,9 +447,10 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
               firstName: 'Herman Ryen',
               lastName: 'Martinsen',
               email: 'HermanRM@stud.ntnu.no',
-              rank: 1,
-              salt: 'b79ryp98',
-              hashStr: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
+              rank: 4,
+              salt: 'a83f4da094cc247b',
+              hashStr:
+                '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
               munId: 528,
               profilePicture:
                 'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
@@ -418,9 +459,10 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
               firstName: 'Herman',
               lastName: 'Christiansen',
               email: 'hermanc@stud.ntnu.no',
-              rank: 1,
-              salt: 'b79ryp98',
-              hashStr: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
+              rank: 4,
+              salt: 'a83f4da094cc247b',
+              hashStr:
+                '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
               munId: 528,
               profilePicture:
                 'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
@@ -555,6 +597,9 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
       .then(() =>
         EventCategory.bulkCreate([
           {
+            name: 'Annet'
+          },
+          {
             name: 'PARTY'
           },
           {
@@ -570,24 +615,26 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           {
             title: 'party at the house man!',
             content: 'Det skal være party at the house!',
-            image: 'notin',
+            image: 'https://www.rosannadavisonnutrition.com/wp-content/uploads/2018/01/Party.png',
             longitude: 60.652168,
             latitude: 10.822102,
             timeStart: new Date(Date.now()),
             timeEnd: new Date(Date.now()),
             userId: '1',
-            categoryId: 1
+            categoryId: 1,
+            munId: 5001
           },
           {
             title: 'PARTIET FORSETTER!',
             content: 'DET FORRIGE PARTY FORSETTER HOS ANDERS!',
-            image: 'notin',
+            image: 'http://www.chinatownfair.biz/party.gif',
             longitude: 60.655754,
             latitude: 10.817339,
             timeStart: new Date(Date.now()),
             timeEnd: new Date(Date.now()),
             userId: '2',
-            categoryId: 1
+            categoryId: 1,
+            munId: 5001
           }
         ])
       )

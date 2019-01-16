@@ -68,6 +68,8 @@ export class Event {
   timeStart: string;
   timeEnd: string;
   categoryId: number;
+  munId: number;
+  userId: number;
 
   /*constructor (    eventId: number, title: string, content: string, image: string, longitude: number, latitude: number, timeStart: string, timeEnd: string) {
         this.eventId = eventId
@@ -94,6 +96,7 @@ export class EventCategory {
 export class Municipal {
   munId: number;
   name: string;
+  municipalShield: string;
 
   /*
     constructor( munId: number, title: string){
