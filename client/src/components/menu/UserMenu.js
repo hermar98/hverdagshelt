@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import {DropdownDivider, DropdownFooter, DropdownHeader, DropdownItem, NavBar} from '../../widgets';
-import {User} from "../../models";
+import {User, Municipal} from "../../models";
 import {history} from "../../index";
 import {tokenManager} from "../../tokenManager";
 
