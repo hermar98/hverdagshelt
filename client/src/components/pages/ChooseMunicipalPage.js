@@ -10,6 +10,7 @@ import { Municipal } from '../../models';
 let municipalObjects;
 
 export class ChooseMunicipalPage extends Component {
+  munId = localStorage.getItem('munId');
   render() {
     return (
       <div className="img-container">
@@ -29,6 +30,10 @@ export class ChooseMunicipalPage extends Component {
     );
   }
   mounted() {
+
+    if(this.munId){
+      history.push('/municipal/' + this.munId);
+    }
     async function f() {
       municipalObjects = [];
       let promise = new Promise((resolve, reject) => {

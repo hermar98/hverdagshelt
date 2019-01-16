@@ -211,7 +211,7 @@ describe('EventCategory', () => {
     ).toEqual([
       {
         categoryId: 1,
-        name: 'PARTY'
+        name: 'Annet'
       }
     ]);
   });

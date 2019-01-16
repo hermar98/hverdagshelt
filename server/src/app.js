@@ -270,7 +270,7 @@ app.post('/secure/events', (req: Request, res: Response) => {
   // if (!(req.body instanceof Object)) return res.sendStatus(400);
   //Flow type checking mixed src: https://github.com/flow-typed/flow-typed/issues/812
   const body = req.body !== null && typeof req.body === 'object' ? req.body : {};
-  const { title, content, image, longitude, latitude, timeStart, timeEnd, categoryId } = body;
+  const { title, content, image, longitude, latitude, timeStart, timeEnd, categoryId, munId, userId } = body;
 
   return Event.create({
     title: title,
@@ -280,7 +280,9 @@ app.post('/secure/events', (req: Request, res: Response) => {
     latitude: latitude,
     timeStart: timeStart,
     timeEnd: timeEnd,
-    categoryId: categoryId
+    categoryId: categoryId,
+    munId: munId,
+    userId: userId
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 app.delete('/secure/events/:id', (req: Request, res: Response) => {
