@@ -364,7 +364,8 @@ app.put('/secure/issues/:id', (req: Request, res: Response) => {
       longitude: req.body.longitude,
       latitude: req.body.latitude,
       statusId: req.body.statusId,
-      date: req.body.date
+      date: req.body.date,
+      munId: req.body.munId
     },
     {
       where: {
@@ -383,7 +384,9 @@ app.post('/secure/issues', (req: Request, res: Response) => {
     latitude: req.body.latitude,
     status: req.body.status,
     statusId: req.body.statusId,
-    categoryId: req.body.categoryId
+    categoryId: req.body.categoryId,
+    munId: req.body.munId,
+    userId: req.body.userId
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 

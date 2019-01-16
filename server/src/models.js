@@ -47,8 +47,7 @@ export let Issue: Class<
     image: string,
     longitude: number,
     latitude: number,
-    date: Date,
-    statusId: number
+    statusId: number,
   }>
 > = sequelize.define('Issue', {
   issueId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
@@ -57,7 +56,6 @@ export let Issue: Class<
   image: Sequelize.STRING,
   longitude: Sequelize.DOUBLE,
   latitude: Sequelize.DOUBLE,
-  date: Sequelize.DATE,
   statusId: { type: Sequelize.INTEGER, defaultValue: 1 }
 });
 
