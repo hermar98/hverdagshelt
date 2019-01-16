@@ -139,7 +139,6 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
         feedback.content = '';
         feedback.issueId = this.issue.issueId;
         feedback.userId = tokenManager.getUserId()
-        console.log(feedback)
         feedbackService.addFeedback(feedback)
             .then(res => {
                 this.addFeedbackButton.current.classList.remove('show')
