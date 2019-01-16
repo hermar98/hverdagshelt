@@ -431,17 +431,15 @@ app.delete('/secure/issueCat/:id', function(req: Request, res: Response) {
 });
 
 app.get('/secure/userMun/:id', (req: Request, res: Response) => {
-  return User.find({
+  return Municipal.findAll({
     include: [
       {
-        model: Municipal,
-        as: 'Municipals',
-        attributes: ['munId', 'name'],
-        through: { model: UserMunicipal, as: 'UserMunicipals', attributes: [] }
+        model: User,
+        as: 'Users',
+        attributes: [],
+        where: { userId: Number(req.params.id) }
       }
     ],
-    attributes: [],
-    where: { userId: Number(req.params.id) }
   }).then(user => (user ? res.send(user) : res.sendStatus(404)));
 });
 
@@ -460,17 +458,16 @@ app.delete('/secure/user/:userId/mun/:munId', (req: Request, res: Response) => {
 });
 
 app.get('/secure/userIssue/:id', (req: Request, res: Response) => {
-  return User.findAll({
+  return Issue.findAll({
     include: [
       {
-        model: Issue,
-        as: 'Issues',
-        attributes: ['issueId', 'name'],
-        through: { model: UserIssue, as: 'UserIssues', attributes: [] }
+        model: User,
+        as: 'Users',
+        attributes: [],
+        where: { userId: Number(req.params.id) }
+        // through: { model: UserIssue, as: 'UserIssues' }
       }
     ],
-    attributes: [],
-    where: { userId: Number(req.params.id) }
   }).then(user => (user ? res.send(user) : res.sendStatus(404)));
 });
 
