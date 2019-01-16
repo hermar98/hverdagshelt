@@ -13,6 +13,7 @@ export default class NewPasswordForm extends Component {
   password = '2';
   passwordr = '';
   form = null;
+  munId = localStorage.getItem('munId');
 
   render() {
     return (
@@ -56,7 +57,7 @@ export default class NewPasswordForm extends Component {
       .newPassword(window.location.hash.slice(8), this.password)
       .then(token => {
         localStorage.setItem('token', JSON.stringify(token));
-        history.push('/issues');
+        history.push('/municipal/' + this.munId);
         console.log('Login ok');
       })
       .catch((error: Error) => Alert.danger(error.message));
