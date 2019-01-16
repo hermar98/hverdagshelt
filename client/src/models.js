@@ -8,6 +8,8 @@ export class User {
   rank: number;
   munId: number;
   password: string;
+    createdAt: number;
+    updatedAt: number;
 
   /*constructor (userId: number, firstName: string, lastName: string, email: string, rank: number, hash: string, salt: string) {
         this.userId = userId
@@ -31,6 +33,8 @@ export class Issue {
   categoryId: number;
   munId: number;
   useId: number;
+  createdAt: number;
+  updatedAt: number;
 
   /*constructor(issueId: number, title: string, content: string, image: string, longitude: number, latitude: number, status: number, date: Date){
         this.issueId = issueId

@@ -26,8 +26,11 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
     }
 
     issue = new Issue();
+    feedbackContent: string = '';
 
     render() {
+
+        console.log(this.state.clickedSend)
 
         if(!this.state.clickedStatus && this.statusSelect.current != null) {
             this.statusSelect.current.classList.add('show')
@@ -41,10 +44,10 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
                 <div className="issue-container">
                     <div className="issue-large">
                         <Status status={this.issue.statusId} id={this.issue.issueId}/>
-                        <div className="card">
+                        <div className="card issue-large-card">
                             <div className="card-body">
                                 <div className="d-flex flex-row">
-                                    <p className="date">{this.issue.date}</p>
+                                    <p className="date">{this.issue.createdAt}</p>
                                     <div className="options">
                                         <ImageButton source="../../images/cog.png" onclick="Edited" />
                                         <ImageButton source="../../images/trashcan.png" onclick="Deleted" />
@@ -62,12 +65,12 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
                                         <StatusButton status={3} onclick={() => this.onClick(3)} />
                                     </div>
                                 </div>
+                                <h5>Kategori</h5>
                                 <div className="card-text">
                                     <p id="issue-large-text">{this.issue.content}</p>
                                 </div>
-                                <h5>Kategori</h5>
                             </div>
-                            <div className="card-footer">
+                            <div className="card-footer issue-images">
                                 <h4>Bilder</h4>
                                 <div className="flex-container">
                                         <img className="issue-image" src="https://www.naf.no/globalassets/tips-rad/vei-trafikk/hull_i_veien_bil2.jpg?width=980&height=550&mode=max&anchor=middlecenter&scale=both&quality=85"/>
@@ -95,7 +98,9 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
                     </div>
                     <div ref={this.addFeedbackForm} className="feedback-container show">
                         <div className="form-group">
-                            <textarea className="form-control" placeholder="skriv feedback..." rows={8} />
+                            <textarea className="form-control" placeholder="skriv feedback..." rows={8} value={this.feedbackContent} onChange={
+                                event => (this.feedbackContent = event.target.value)
+                            } />
                         </div>
                             <HoverButton text="Send" onclick={() => this.onClickFeedback()} />
                     </div>
@@ -136,13 +141,19 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
     onClickFeedback () {
         let feedback = new Feedback();
         feedback.name = '';
-        feedback.content = '';
+        feedback.content = this.feedbackContent;
         feedback.issueId = this.issue.issueId;
         feedback.userId = tokenManager.getUserId()
         feedbackService.addFeedback(feedback)
             .then(res => {
                 this.addFeedbackButton.current.classList.remove('show')
                 this.addFeedbackForm.current.classList.add('show')
+                feedbackService.getFeedbacks(this.props.match.params.issueId)
+                    .then(data => {
+                        sharedFeedback.feedback = data;
+                    })
+                    .catch(error => console.error("Error: ", error))
+                this.feedbackContent = '';
             })
             .catch(error => console.error("Error: ", error))
     }
@@ -164,15 +175,15 @@ export class IssueNormal extends Component<{issue: Issue, munId: number}>{
                         <img className="issue-image-normal" src={this.props.issue.image}/>
                     </div>
                     <div id="issue-normal-text">
-                        <p id="issue-normal-content">{(this.props.issue.content).substring(0, 240) + " . . ."}</p>
+                        <p id="issue-normal-content">{(this.props.issue.content).substring(0, 136) + " . . ."}</p>
                         <div>
-                            <p id="date-normal" className="date">{this.props.issue.date}</p>
+                            <p id="date-normal" className="date">{this.props.issue.createdAt}</p>
                             <h5 id="issue-normal-title">
                                 Kategori
                             </h5>
                         </div>
                     </div>
-                    <p className="status-label">Status:&nbsp;&nbsp;</p>
+                    <p>Status:&nbsp;&nbsp;</p>
                     <StatusImage status={this.props.issue.statusId} />
                 </div>
             </div>
@@ -190,15 +201,17 @@ export class IssueSmall extends Component<{issue: Issue, munId: number}> {
                 <a id="a-hover" href={"#/municipal/" + this.props.munId + "/issues/" + this.props.issue.issueId}>
                     <img src="../../images/arrowRightTrans.png" />
                 </a>
-                <div className="d-flex flex-row issue-flex justify-content-between">
-                    <div className="view-text">
-                        <p className="date">{this.props.issue.date}</p>
-                        <h5>
-                            {this.props.issue.title}
-                        </h5>
+                <div>
+                    <div className="d-flex flex-row issue-flex justify-content-between">
+                        <div className="view-text">
+                            <p className="date">{this.props.issue.createdAt}</p>
+                            <h5>
+                                {this.props.issue.title}
+                            </h5>
+                        </div>
+                        <p>Status:&nbsp;&nbsp;</p>
+                        <StatusImage status={this.props.issue.statusId} />
                     </div>
-                    <p className="status-label">Status:&nbsp;&nbsp;</p>
-                    <StatusImage status={this.props.issue.statusId} />
                 </div>
             </div>
         )
@@ -264,7 +277,7 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
     render() {
         return (
             <div className="feedback" feedback={this.props.feedback}>
-                <div className="card feedback">
+                <div className="card">
                     <div className="card-body">
                         <div className="d-flex flex-row submitter">
                             <div className="p-2">
@@ -344,14 +357,14 @@ export class IssueOverviewNormal extends Component<{munId: number}> {
                 sharedIssues.issues = data;
             })
             .catch(error => console.error("Error: ", error))
-        sharedIssues.issues.sort((a, b) => a.date - b.date );
+        sharedIssues.issues.sort((a, b) => a.createdAt - b.createdAt );
     }
 
     onChange () {
         if(this.timesort == 1) {
-            sharedIssues.issues.sort((a, b) => b.date - a.date);
+            sharedIssues.issues.sort((a, b) => b.createdAt - a.createdAt);
         }else{
-            sharedIssues.issues.sort((a, b) => a.date - b.date );
+            sharedIssues.issues.sort((a, b) => a.createdAt - b.createdAt );
         }
     }
 }

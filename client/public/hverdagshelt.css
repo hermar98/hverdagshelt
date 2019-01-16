@@ -76,12 +76,13 @@ div.status > h4 {
     border: gray solid 1px;
     border-radius: 50%;
     height: 9vh;
-    width: auto;
+    width: 9vh;
     margin: 1vh 1vh 1vh 1vh;
 }
 
 .issue-large {
     margin-bottom: 10vh;
+    margin-top: 5%
 }
 
 .feedback-title {
@@ -182,8 +183,8 @@ div.feedback-button div {
 }
 
 .status-image {
-    width: 4vh;
-    height: 4vh;
+    width: 4.5vh;
+    height: 4.5vh;
 }
 
 .issue-normal {
@@ -195,18 +196,18 @@ div.feedback-button div {
 }
 
 #issue-normal-title {
-    font-size: 1.2vw;
+    font-size: 90%;
     font-weight: bold;
     letter-spacing: 1px;
 }
 
 #issue-normal-text {
-    margin: .6vw 0 .6vw 0;
+    margin: 1vh 2vh 1vh 0;
     flex: 1;
 }
 
 #date-normal {
-    font-size: 1vw;
+    font-size: 75%;
 }
 
 .status-selection {
@@ -243,7 +244,8 @@ div.feedback-button div {
 }
 
 #issue-large-text {
-    font-size: 120%;
+    font-size: 110%;
+    margin: 2% 0 2% 0;
 }
 
 .normal-list-item {
@@ -255,7 +257,7 @@ div.feedback-button div {
 }
 
 .status-label {
-    font-size: 85%;
+    font-size: 110%;
     opacity: 0.6;
 }
 .status-box {
@@ -265,4 +267,17 @@ div.feedback-button div {
 
 .issue-hover .status-image {
     margin-bottom: 1.5vh;
+}
+
+.issue-large-card {
+    padding: 2% 2% 2% 2%
+}
+
+.issue-images {
+    margin-top: 3%;
+}
+
+.feedback {
+    border-bottom: solid 2vh whitesmoke;
+    margin-bottom: 3%;
 }
