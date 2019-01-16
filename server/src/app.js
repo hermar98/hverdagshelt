@@ -109,7 +109,7 @@ app.post('/register', (req: Request, res: Response) => {
   // if (!(req.body instanceof Object)) return res.sendStatus(400);
   //Flow type checking mixed src: https://github.com/flow-typed/flow-typed/issues/812
   const body = req.body !== null && typeof req.body === 'object' ? req.body : {};
-  const { firstName, lastName, email, rank,password} = body;
+  const { firstName, lastName, email, rank, password } = body;
 
   User.findOne({ where: { email: email } }).then(user => {
     if (user) return res.sendStatus(409);
@@ -134,8 +134,8 @@ app.get('/secure/users', (req: Request, res: Response) => {
 });
 
 app.get('/secure/users/:id', (req: Request, res: Response) => {
-  return User.findOne({ where: { userId: Number(req.params.id) } }).then(
-    user => (user ? res.send(user) : res.sendStatus(404))
+  return User.findOne({ where: { userId: Number(req.params.id) } }).then(user =>
+    user ? res.send(user) : res.sendStatus(404)
   );
 });
 
@@ -206,20 +206,20 @@ app.get('/municipals', (req: Request, res: Response) => {
 });
 
 app.get('/municipals/:id', (req: Request, res: Response) => {
-  return Municipal.findOne({ where: { munId: Number(req.params.id) } }).then(
-    mun => (mun ? res.send(mun) : res.sendStatus(404))
+  return Municipal.findOne({ where: { munId: Number(req.params.id) } }).then(mun =>
+    mun ? res.send(mun) : res.sendStatus(404)
   );
 });
 
 app.get('/municipals/:id/issues', (req: Request, res: Response) => {
-  return Issue.findAll({ where: { munId: Number(req.params.id) } }).then(
-    issues => (issues ? res.send(issues) : res.sendStatus(404))
+  return Issue.findAll({ where: { munId: Number(req.params.id) } }).then(issues =>
+    issues ? res.send(issues) : res.sendStatus(404)
   );
 });
 
 app.get('/municipals/:id/events', (req: Request, res: Response) => {
-  return Event.findAll({ where: { munId: Number(req.params.id) } }).then(
-    events => (events ? res.send(events) : res.sendStatus(404))
+  return Event.findAll({ where: { munId: Number(req.params.id) } }).then(events =>
+    events ? res.send(events) : res.sendStatus(404)
   );
 });
 
@@ -229,8 +229,8 @@ app.get('/secure/county', (req: Request, res: Response) => {
 });
 
 app.get('/secure/county/:id', (req: Request, res: Response) => {
-  return County.findOne({ where: { countyId: Number(req.params.id) } }).then(
-    user => (user ? res.send(user) : res.sendStatus(404))
+  return County.findOne({ where: { countyId: Number(req.params.id) } }).then(user =>
+    user ? res.send(user) : res.sendStatus(404)
   );
 });
 
@@ -239,15 +239,15 @@ app.get('/secure/events', (req: Request, res: Response) => {
   return Event.findAll().then(events => res.send(events));
 });
 app.get('/secure/events/:id', (req: Request, res: Response) => {
-  return Event.findOne({ where: { eventId: Number(req.params.id) } }).then(
-    event => (event ? res.send(event) : res.sendStatus(404))
+  return Event.findOne({ where: { eventId: Number(req.params.id) } }).then(event =>
+    event ? res.send(event) : res.sendStatus(404)
   );
 });
 app.put('/secure/events/:id', (req: Request, res: Response) => {
   // if (!(req.body instanceof Object)) return res.sendStatus(400);
-    //Flow type checking mixed src: https://github.com/flow-typed/flow-typed/issues/812
-    const body = (req.body !== null && typeof req.body === 'object') ? req.body : {};
-    const {title,content,image,longitude,latitude,timeStart,timeEnd} = body;
+  //Flow type checking mixed src: https://github.com/flow-typed/flow-typed/issues/812
+  const body = req.body !== null && typeof req.body === 'object' ? req.body : {};
+  const { title, content, image, longitude, latitude, timeStart, timeEnd } = body;
 
   return Event.update(
     {
@@ -268,9 +268,9 @@ app.put('/secure/events/:id', (req: Request, res: Response) => {
 });
 app.post('/secure/events', (req: Request, res: Response) => {
   // if (!(req.body instanceof Object)) return res.sendStatus(400);
-    //Flow type checking mixed src: https://github.com/flow-typed/flow-typed/issues/812
-    const body = (req.body !== null && typeof req.body === 'object') ? req.body : {};
-    const {title,content,image,longitude,latitude,timeStart,timeEnd,categoryId} = body;
+  //Flow type checking mixed src: https://github.com/flow-typed/flow-typed/issues/812
+  const body = req.body !== null && typeof req.body === 'object' ? req.body : {};
+  const { title, content, image, longitude, latitude, timeStart, timeEnd, categoryId } = body;
 
   return Event.create({
     title: title,
@@ -297,8 +297,8 @@ app.get('/secure/eventCat', (req: Request, res: Response) => {
 });
 
 app.get('/secure/eventCat/:id', (req: Request, res: Response) => {
-  return EventCategory.findOne({ where: { categoryId: Number(req.params.id) } }).then(
-    eventCategory => (eventCategory ? res.send(eventCategory) : res.sendStatus(404))
+  return EventCategory.findOne({ where: { categoryId: Number(req.params.id) } }).then(eventCategory =>
+    eventCategory ? res.send(eventCategory) : res.sendStatus(404)
   );
 });
 
@@ -317,9 +317,9 @@ app.put('/secure/eventCat/:id', (req: Request, res: Response) => {
 });
 app.post('/secure/eventCat', (req: Request, res: Response) => {
   // if (!(req.body instanceof Object)) return res.sendStatus(400);
-    //Flow type checking mixed src: https://github.com/flow-typed/flow-typed/issues/812
-    const body = (req.body !== null && typeof req.body === 'object') ? req.body : {};
-    const {name} = body;
+  //Flow type checking mixed src: https://github.com/flow-typed/flow-typed/issues/812
+  const body = req.body !== null && typeof req.body === 'object' ? req.body : {};
+  const { name } = body;
 
   return EventCategory.create({
     name: name
@@ -339,18 +339,18 @@ app.get('/secure/issues', (req: Request, res: Response) => {
   return Issue.findAll().then(issues => res.send(issues));
 });
 app.get('/secure/issues/:id', (req: Request, res: Response) => {
-  return Issue.findOne({ where: { issueId: Number(req.params.id) } }).then(
-    issue => (issue ? res.send(issue) : res.sendStatus(404))
+  return Issue.findOne({ where: { issueId: Number(req.params.id) } }).then(issue =>
+    issue ? res.send(issue) : res.sendStatus(404)
   );
 });
 app.get('/secure/issues/:id/feedback', (req: Request, res: Response) => {
-  return Feedback.findAll({ where: { issueId: Number(req.params.id) } }).then(
-    issue => (issue ? res.send(issue) : res.sendStatus(404))
+  return Feedback.findAll({ where: { issueId: Number(req.params.id) } }).then(issue =>
+    issue ? res.send(issue) : res.sendStatus(404)
   );
 });
 app.get('/secure/users/:id/issues', (req: Request, res: Response) => {
-  return Issue.findAll({ where: { userId: Number(req.params.id) } }).then(
-    issue => (issue ? res.send(issue) : res.sendStatus(404))
+  return Issue.findAll({ where: { userId: Number(req.params.id) } }).then(issue =>
+    issue ? res.send(issue) : res.sendStatus(404)
   );
 });
 
@@ -399,8 +399,8 @@ app.get('/secure/issueCat', (req: Request, res: Response) => {
   return IssueCategory.findAll().then(issueCategories => res.send(issueCategories));
 });
 app.get('/secure/issueCat/:id', (req: Request, res: Response) => {
-  return IssueCategory.findOne({ where: { categoryId: Number(req.params.id) } }).then(
-    issueCategory => (issueCategory ? res.send(issueCategory) : res.sendStatus(404))
+  return IssueCategory.findOne({ where: { categoryId: Number(req.params.id) } }).then(issueCategory =>
+    issueCategory ? res.send(issueCategory) : res.sendStatus(404)
   );
 });
 app.put('/secure/issueCat/:id', (req: Request, res: Response) => {
@@ -454,8 +454,8 @@ app.post('/secure/user/:userId/mun/:munId', (req: Request, res: Response) => {
 });
 
 app.delete('/secure/user/:userId/mun/:munId', (req: Request, res: Response) => {
-  return UserMunicipal.destroy({ where: { userId: req.params.userId, munId: req.params.munId } }).then(
-    count => (count ? res.sendStatus(200) : res.sendStatus(404))
+  return UserMunicipal.destroy({ where: { userId: req.params.userId, munId: req.params.munId } }).then(count =>
+    count ? res.sendStatus(200) : res.sendStatus(404)
   );
 });
 
@@ -482,8 +482,8 @@ app.post('/secure/user/:userId/issue/:issueId', (req: Request, res: Response) =>
 });
 
 app.delete('/secure/user/:userId/issue/:issueId', (req: Request, res: Response) => {
-  return UserIssue.destroy({ where: { userId: req.params.userId, issueId: req.params.issueId } }).then(
-    count => (count ? res.sendStatus(200) : res.sendStatus(404))
+  return UserIssue.destroy({ where: { userId: req.params.userId, issueId: req.params.issueId } }).then(count =>
+    count ? res.sendStatus(200) : res.sendStatus(404)
   );
 });
 

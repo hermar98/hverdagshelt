@@ -57,14 +57,7 @@ export class UserProfilePage extends Component<{ match: { params: { userId: numb
   }
 
   handleAddMunicipal() {
-
-    //this.user.munId = this.municipals.find(mun => mun.name === this.newMunicipal).munId;
-
-    userMunicipalService.addUserMunicipal(1, 5001);
-    // let s = userMunicipalService.getUserMunicipals(1);
-    // userService.getUser(1);
-    userMunicipalService.anythingElse(5001,1);
-    console.log("s");
+    userMunicipalService.addUserMunicipal(1, 807);
   }
 
   delete(issueId: number) {
@@ -103,7 +96,9 @@ export class UserProfilePage extends Component<{ match: { params: { userId: numb
                   name="municipal"
                   onChange={event => (this.newMunicipal = event.target.value)}
                 />
-                <button type="submit" onClick={this.handleAddMunicipal}>Legg Til Kommune</button>
+                <button type="submit" onClick={this.handleAddMunicipal}>
+                  Legg Til Kommune
+                </button>
               </div>
             </form>
           </div>
