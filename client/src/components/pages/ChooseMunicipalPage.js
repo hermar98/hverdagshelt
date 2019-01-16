@@ -8,15 +8,15 @@ import { history } from '../../index';
 import { Municipal } from '../../models';
 
 let municipalObjects;
-
+//TODO: fix input
 export class ChooseMunicipalPage extends Component {
   munId = localStorage.getItem('munId');
   render() {
     return (
       <div className="img-container">
-          <div className="bg-text">
-              <h1>Hverdagshelt</h1>
-          </div>
+        <div className="bg-text">
+          <h1>Hverdagshelt</h1>
+        </div>
         <form autoComplete="off">
           <div className="autocomplete">
             <input id="municipalInput" type="text" name="municipal" placeholder="Velg kommune" />
@@ -30,8 +30,7 @@ export class ChooseMunicipalPage extends Component {
     );
   }
   mounted() {
-
-    if(this.munId){
+    if (this.munId) {
       history.push('/municipal/' + this.munId);
     }
     async function f() {
