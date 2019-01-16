@@ -86,7 +86,7 @@ class IssueService {
     });
   }
 
-  getIssuesByUser(userId: User): Promise<Issue[]> {
+  getIssuesByUser(userId: number): Promise<Issue[]> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
     return axios.get('/secure/users/' + userId + '/issues', {
@@ -284,6 +284,18 @@ class UserMunicipalService {
     return axios.post('/secure/user/' + userId + '/mun/' + munId, null, { headers: { 'x-access-token': token } });
   }
 
+  deleteUserMunicipal(userId: number, munId: number): Promise<void> {
+    let token = localStorage.getItem('token');
+    if (token) {
+      token = JSON.parse(token).jwt;
+    }
+    return axios.delete('/secure/user/' + userId + '/mun/' + munId, {
+      headers: {
+        'x-access-token': token
+      }
+    });
+  }
+
   // addUserMunicipal(userId: number, munId: number): Promise<void> {
   //   let token = localStorage.getItem('token');
   //   if (token) token = JSON.parse(token).jwt;
@@ -346,6 +358,15 @@ class FeedbackService {
       headers: { 'x-access-token': token }
     });
   }
+
+  addFeedback(feedback: Feedback): Promise<number> {
+      let token = localStorage.getItem('token');
+      if (token) token = JSON.parse(token).jwt;
+      return axios.post('/secure/feedback', feedback, {
+          headers: { 'x-access-token': token }
+      });
+  }
+
 }
 
 export let feedbackService = new FeedbackService();
