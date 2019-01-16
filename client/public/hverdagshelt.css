@@ -19,7 +19,7 @@
 div.status > h4 {
     font-size: 3vh;
 }
-.issue-container {margin: 5% 16% 2% 16%}
+.issue-container {margin: 2% 12% 2% 12%}
 .issue-image:hover {
     background-color: #b9bbbe;
 }
@@ -69,7 +69,7 @@ div.status > h4 {
 
 .list-group-item {
     margin-bottom: 10px;
-    padding: 0 0 0 0
+    padding: 1% 1% 1% 1%;
 }
 
 .profile-image {
@@ -113,7 +113,7 @@ div.status > h4 {
 .sort-box {
     padding: 1% 1% 0 1%;
     margin-bottom: 2%;
-    background-color: #32383e;
+    background-color: #3d3d3d;
 }
 
 .hover-button {
@@ -134,12 +134,8 @@ div.feedback-button div {
 
 #a-hover:hover {
     background-color: white;
-    opacity: 0.5;
-    border: solid whitesmoke .3vw;
-}
-
-.issue-hover:hover .status-image {
-    opacity: 0;
+    opacity: 0.6;
+    border: solid #d2d2d2 .8vh;
 }
 
 #a-hover {
@@ -147,15 +143,15 @@ div.feedback-button div {
     top: 0; left: 0;
     height: 100%; width: 100%;
     display: flex;
-    justify-content: end;
+    justify-content: center;
 }
 
 #a-hover img {
     opacity: 0;
     width: auto;
-    height: 4vw;
-    padding-left: 1vw;
-    margin-right: 1vw;
+    height: 5vh;
+    padding-left: 1vh;
+    margin-right: 5vh;
     align-self: center;
 }
 
@@ -164,7 +160,7 @@ div.feedback-button div {
 }
 
 #a-hover:hover img {
-    opacity: 0.5;
+    opacity: 0.6;
 }
 
 #image-hover {
@@ -186,8 +182,8 @@ div.feedback-button div {
 }
 
 .status-image {
-    width: 6vh;
-    height: 6vh;
+    width: 4vh;
+    height: 4vh;
 }
 
 .issue-normal {
@@ -243,9 +239,30 @@ div.feedback-button div {
 }
 
 .feedback-container {
-    margin: 0 16% 12% 16%;
+    margin: 0 12% 10% 12%;
 }
 
 #issue-large-text {
     font-size: 120%;
+}
+
+.normal-list-item {
+    padding: 0 0 0 0;
+}
+
+.view-text {
+    flex: 1
+}
+
+.status-label {
+    font-size: 85%;
+    opacity: 0.6;
+}
+.status-box {
+    border-bottom: lightgray 2px solid;
+    background-color: lightgray;
+}
+
+.issue-hover .status-image {
+    margin-bottom: 1.5vh;
 }
