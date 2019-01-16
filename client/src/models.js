@@ -116,4 +116,5 @@ export class Feedback {
   userId: number;
   issueId: number;
   user: User;
+  createdAt: Date;
 }

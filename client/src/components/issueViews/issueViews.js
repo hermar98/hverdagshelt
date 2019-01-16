@@ -52,10 +52,10 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                 <div className="issue-container">
                     <div className="issue-large">
                         <Status status={this.issue.statusId} id={this.issue.issueId}/>
-                        <div className="card issue-large-card">
-                            <div className="card-body">
+                        <div className="card">
+                            <div className="card-body issue-large-card">
                                 <div className="d-flex flex-row">
-                                    <p className="date">{this.issue.createdAt}</p>
+                                    <p id="date-large" className="date">{this.issue.createdAt}</p>
                                     <div className="options">
                                         <ImageButton source="../../images/cog.png" onclick="Edited" />
                                         <ImageButton source="../../images/trashcan.png" onclick={() => this.onDelete()} />
@@ -73,18 +73,15 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                         <StatusButton status={3} onclick={() => this.onClick(3)} />
                                     </div>
                                 </div>
+                                <h5>Kategori</h5>
                                 <div className="card-text">
                                     <p id="issue-large-text">{this.issue.content}</p>
                                 </div>
-                                <h5>Kategori</h5>
                             </div>
                             <div className="card-footer issue-images">
-                                <h4>Bilder</h4>
+                                <h4>&nbsp;Bilder</h4>
                                 <div className="flex-container">
-                                        <img className="issue-image" src="https://www.naf.no/globalassets/tips-rad/vei-trafikk/hull_i_veien_bil2.jpg?width=980&height=550&mode=max&anchor=middlecenter&scale=both&quality=85"/>
                                         <img className="issue-image" src={this.issue.image}/>
-                                        <img className="issue-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Pothole.jpg/250px-Pothole.jpg" />
-                                        <img className="issue-image" src="https://www.pengenytt.no/wp-content/uploads/2017/03/Hull-i-vei-Foto-Wikimedia-Commons-Editor5807.jpg"/>
                                 </div>
                             </div>
                         </div>
@@ -301,10 +298,11 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
                 <div className="card feedback-card">
                     <div className="card-body">
                         <div className="d-flex flex-row submitter">
-                            <div className="p-2">
-                                <img className="card-img profile-image" src={this.user.profilePicture}/>
-                            </div>
-                            <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{this.props.feedback.date}</p></div>
+
+                                <div className="p-2">
+                                    <img className="card-img profile-image" src={this.user.profilePicture}/>
+                                </div>
+                                <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{this.props.feedback.createdAt}</p></div>
                             <ImageButton source="../../images/cog.png" onclick="Edited" />
                             <ImageButton source="../../images/trashcan.png" onclick={() => this.onDelete()}/>
                         </div>

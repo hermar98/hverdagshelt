@@ -270,7 +270,7 @@ div.feedback-button div {
 }
 
 .issue-large-card {
-    padding: 1% 1% 1% 1%
+    padding: 6vh 6vh 6vh 6vh
 }
 
 .issue-images {
@@ -278,10 +278,15 @@ div.feedback-button div {
 }
 
 .feedback {
-    border-bottom: solid 2vh whitesmoke;
+    border-bottom: solid 1vh whitesmoke;
     margin-bottom: 3%;
 }
 
 .feedback-card {
     padding: 2% 2% 1% 2%;
 }
+
+#date-large {
+    margin-top: 1.5%;
+}
+
