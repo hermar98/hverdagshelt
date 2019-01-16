@@ -4,24 +4,48 @@ import axios from 'axios';
 import { Component } from 'react-simplified';
 import { Button } from '../../widgets';
 
-export default class UploadImageButton extends Component {
+export class UploadImageButton extends Component {
   state = {
-    selectedFile: null
+    selectedFile: null,
+    imagePreviewUrl: '',
+    isLoaded: false
   };
-  fileSelectedHandler = event => {
-    this.setState({
-      selectedFile: event.target.files[0]
-    });
-    const fd = new FormData();
-    fd.append('image', this.state.selectedFile, this.state.selectedFile.name);
-    axios.post('/images', fd).then(res => {
-      console.log(res);
-    });
-  };
+  fileSelectedHandler(e) {
+    e.preventDefault();
+
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({ selectedFile: file }),
+        this.setState({ imagePreviewUrl: reader.result }),
+        this.setState({ isLoaded: true });
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  handleSubmit() {
+    //Send inn bildeURL til database
+  }
+
   render() {
+    let { imagePreviewUrl } = this.state;
+    let $imagePreview = null;
+
+    if (imagePreviewUrl) {
+      $imagePreview = <img src={this.state.imagePreviewUrl} />;
+    } else {
+      $imagePreview = <div>Velg et bilde</div>;
+    }
+
     return (
       <div>
-        <input type="file" onChange={this.fileSelectedHandler} />
+        <form onSubmit={e => this.handleSubmit(e)}>
+          <input type="file" onChange={e => this.fileSelectedHandler(e)} />
+          <button type="submit">Lagre Bilde</button>
+        </form>
+        <div className="imgPreview">{$imagePreview}</div>
       </div>
     );
   }
