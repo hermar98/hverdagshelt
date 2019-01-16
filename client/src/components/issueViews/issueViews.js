@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 import {Redirect, NavLink} from 'react-router-dom'
 import { Issue, Feedback, User } from '../../models';
-import { issueService, userService, feedbackService } from "../../services";
+import {issueService, userService, feedbackService, issueCategoryService} from "../../services";
 import Menu from '../menu/Menu';
 import {tokenManager} from "../../tokenManager";
 
@@ -28,6 +28,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
 
     issue = new Issue();
     feedbackContent: string = '';
+    categoryName: string = '';
 
     render() {
 
@@ -73,7 +74,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                         <StatusButton status={3} onclick={() => this.onClick(3)} />
                                     </div>
                                 </div>
-                                <h5>Kategori</h5>
+                                <h5>{this.categoryName}</h5>
                                 <div className="card-text">
                                     <p id="issue-large-text">{this.issue.content}</p>
                                 </div>
@@ -125,6 +126,11 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
         feedbackService.getFeedbacks(this.props.match.params.issueId)
             .then(data => {
                 sharedFeedback.feedback = data;
+            })
+            .catch(error => console.error("Error: ", error))
+        issueCategoryService.getCategory(this.issue.categoryId)
+            .then(category => {
+                this.categoryName = category.name
             })
             .catch(error => console.error("Error: ", error))
     }
