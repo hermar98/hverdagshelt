@@ -319,7 +319,6 @@ export class IssueOverviewNormal extends Component {
     }
 
     mounted (){
-        console.log("asdasd")
         issueService.getIssues()
             .then(data => {
                 sharedIssues.issues = data;
