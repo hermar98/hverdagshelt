@@ -153,6 +153,16 @@ export class Card extends Component<{ title?: React.Node, children?: React.Node 
   }
 }
 
+class NavBarButton extends Component<{onClick: () => mixed, children?: React.Node}>{
+  render(){
+    return(
+    <form className="form-inline">
+      <button onClick={this.props.onClick} className="btn btn btn-outline-light">{this.props.children}</button>
+    </form>
+    );
+  }
+}
+
 class NavBarBrand extends Component<{ image?: React.Node, to?: string, children?: React.Node }> {
   render() {
     if (!this.props.children) return null;
@@ -276,12 +286,13 @@ export class DropdownItem extends Component<{
 }
 
 export class NavBar extends Component<{
-  children: React.Element<typeof NavBarBrand | typeof NavBarLink | typeof NavBarLogout | typeof NavBarDropdown>[]
+  children: React.Element<typeof NavBarBrand | typeof NavBarLink | typeof NavBarLogout | typeof NavBarDropdown | typeof NavBarButton>[]
 }> {
   static Brand = NavBarBrand;
   static Link = NavBarLink;
   static Logout = NavBarLogout;
   static Dropdown = NavBarDropdown;
+  static Button = NavBarButton;
 
   render() {
     return (
@@ -290,7 +301,7 @@ export class NavBar extends Component<{
           {this.props.children.filter(child => child.type == NavBarBrand)}
           <ul className="nav navbar-nav navbar-right">
             {this.props.children.filter(
-              child => child.type == NavBarLink || child.type == NavBarLogout || child.type == NavBarDropdown
+              child => child.type == NavBarLink || child.type == NavBarLogout || child.type == NavBarDropdown || child.type == NavBarButton
             )}
           </ul>
         </div>
