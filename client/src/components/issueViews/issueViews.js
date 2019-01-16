@@ -5,6 +5,7 @@ import {Redirect, NavLink} from 'react-router-dom'
 import { Issue, Feedback, User } from '../../models';
 import { issueService, userService, feedbackService } from "../../services";
 import Menu from '../menu/Menu';
+import {tokenManager} from "../../tokenManager";
 
 let sharedIssues = sharedComponentData({issues: []})
 let sharedFeedback = sharedComponentData({feedback: []})
@@ -18,6 +19,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
         super(props)
         this.statusSelect = React.createRef()
         this.addFeedbackButton = React.createRef()
+        this.addFeedbackForm = React.createRef()
         this.state = {
             clickedStatus: false
         }
@@ -31,12 +33,6 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
             this.statusSelect.current.classList.add('show')
         }else if(this.statusSelect.current != null){
             this.statusSelect.current.classList.remove('show')
-        }
-
-        if(this.addFeedbackButton.current != null && this.addFeedbackButton.current.classList.contains('show')){
-            this.addFeedbackButton.current.classList.remove('show')
-        }else if(this.addFeedbackButton.current != null){
-            this.addFeedbackButton.current.classList.add('show')
         }
 
         return (
@@ -88,14 +84,20 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
                     })}
                     <div className="feedback-button">
                         <div>
-                            <a id="feedback-link" href={"#issues/" + this.issue.issueId + "/feedback"} >
-                                <button ref={this.addFeedbackButton} className="btn image-button" type="button" onClick={() => {
-
-                                }}>
-                                    <img id="image-button-image" src="../../images/add.png" />
-                                </button>
-                            </a>
+                            <button ref={this.addFeedbackButton} className="btn image-button" type="button" onClick={() => {
+                                this.addFeedbackButton.current.classList.add('show')
+                                this.addFeedbackForm.current.classList.remove('show')
+                                window.scrollTo(0, document.body.scrollHeight);
+                            }}>
+                                <img id="image-button-image" src="../../images/add.png" />
+                            </button>
                         </div>
+                    </div>
+                    <div ref={this.addFeedbackForm} className="feedback-container show">
+                        <div className="form-group">
+                            <textarea className="form-control" placeholder="skriv feedback..." rows={8} />
+                        </div>
+                            <HoverButton text="Send" onclick={() => this.onClickFeedback()} />
                     </div>
                 </div>
             </div>
@@ -129,6 +131,21 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
                     .catch(error => console.error("Error: ", error))
             })
             .catch(error => console.error("Error"))
+    }
+
+    onClickFeedback () {
+        let feedback = new Feedback();
+        feedback.name = '';
+        feedback.content = '';
+        feedback.issueId = this.issue.issueId;
+        feedback.userId = tokenManager.getUserId()
+        console.log(feedback)
+        feedbackService.addFeedback(feedback)
+            .then(res => {
+                this.addFeedbackButton.current.classList.remove('show')
+                this.addFeedbackForm.current.classList.add('show')
+            })
+            .catch(error => console.error("Error: ", error))
     }
 }
 
@@ -431,27 +448,3 @@ class HoverButton extends Component<{onclick: function, text: string}> {
         )
     }
 }
-
-export class AddFeedback extends Component<{match: {params: {issueId: number}}}> {
-    render() {
-        return (
-            <div className="feedback-container">
-                <div className="form-group">
-                    <textarea className="form-control" placeholder="skriv feedback..." rows={8} />
-                </div>
-                <a href={"/#/issues/" + this.props.match.params.issueId}>
-                    <HoverButton text="Send" onclick={() => this.onClick()} />
-                </a>
-            </div>
-        )
-    }
-
-    mounted () {
-        window.scrollTo(0, document.body.scrollHeight);
-    }
-
-    onClick() {
-
-    }
-}
-
