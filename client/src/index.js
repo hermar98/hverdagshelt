@@ -5,8 +5,8 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { BrowserRouter, HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from './widgets';
-import { MenuLoggedIn } from './components/menu/MenuLoggedIn';
-import { MenuMunicipalWorker } from './components/menu/MenuMunicipalWorker';
+import { UserMenu } from './components/menu/UserMenu';
+import { MunicipalMenu } from './components/menu/MunicipalMenu';
 import Menu from './components/menu/Menu';
 import { FileIssuePage } from './components/pages/FileIssuePage';
 import { LoginPage } from './components/pages/LoginPage';
@@ -52,9 +52,9 @@ if (root)
         <Route exact path="/forgotPassword" component={ForgotPassword} />
         <Route exact path="/reset/:userId" component={NewPasswordPage} />
         <Route exact path="/municipal/:munId/events" component={EventPage} />
-        <Route exact path="/municipal/:munId/events/registerEvent" component={RegisterEventPage} />
+        <Route exact path="/municipal/:munId/registerEvent" component={RegisterEventPage} />
         <Route exact path="/municipal/:munId/issues" component={IssuePage} />
-        <Route exact path="/municipal/:munId/issues/fileIssue" component={FileIssuePage} />
+        <Route exact path="/municipal/:munId/fileIssue" component={FileIssuePage} />
         <Route exact path="/municipal/:munId/issues/:issueId" component={IssueLarge} />
       </div>
     </HashRouter>,

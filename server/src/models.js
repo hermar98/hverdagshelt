@@ -4,13 +4,13 @@ require('dotenv').config({ path: 'C:\\hverdagshelt_Team_3\\.env' });
 
 let sequelize = new Sequelize(
   process.env.CI ? 'database' : 'hverdagshelt',
-  process.env.CI ? 'root' : 'vegard',
-  process.env.CI ? '' : '1234',
+  process.env.CI ? 'root' : 'user',
+  process.env.CI ? '' : 'password',
   // process.env.CI ? 'database' : 'sebasman',
   // process.env.CI ? 'root' : 'sebasman',
   // process.env.CI ? '' : 'GSBLuzbB',
   {
-    host: process.env.CI ? 'mysql' : 'mysql.stud.iie.ntnu.no',
+    host: process.env.CI ? 'mysql' : 'localhost',
     dialect: 'mysql',
     pool: {
       max: 5,
@@ -339,7 +339,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
               firstName: 'Vegard',
               lastName: 'Andersson',
               email: 'test@test.no',
-              rank: 1,
+              rank: 2,
               salt: 'a83f4da094cc247b',
               hashStr:
                 '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
