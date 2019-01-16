@@ -7,6 +7,7 @@ import { Issue } from '../../models.js';
 import { issueService, issueCategoryService } from '../../services.js';
 import { Alert, Form, Card, Button } from '../../widgets';
 import { history } from '../../index';
+import { tokenManager } from '../../tokenManager';
 
 export default class RegisterIssue extends Component {
   issue = new Issue();
@@ -65,6 +66,7 @@ export default class RegisterIssue extends Component {
   save() {
     if (!this.form || !this.form.checkValidity()) return;
 
+    this.issue.userId = tokenManager.getUserId();
     this.issue.munId = this.munId;
     this.issue.latitude = 0.1;
     this.issue.longitude = 0.2;

@@ -30,6 +30,7 @@ export class Issue {
   status: number;
   categoryId: number;
   munId: number;
+  useId: number;
 
   /*constructor(issueId: number, title: string, content: string, image: string, longitude: number, latitude: number, status: number, date: Date){
         this.issueId = issueId

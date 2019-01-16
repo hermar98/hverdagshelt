@@ -13,6 +13,9 @@ export class ChooseMunicipalPage extends Component {
   render() {
     return (
       <div className="img-container">
+          <div className="bg-text">
+              <h1>Hverdagshelt</h1>
+          </div>
         <form autoComplete="off">
           <div className="autocomplete">
             <input id="municipalInput" type="text" name="municipal" placeholder="Velg kommune" />
