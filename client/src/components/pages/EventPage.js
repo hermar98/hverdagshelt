@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Event } from '../../models.js';
-import { eventService} from '../../services';
+import { Event, EventCategory } from '../../models.js';
+import {eventService, eventCategoryService} from '../../services';
 import {Alert, DisplayEvent} from '../../widgets';
 import {Issue} from "../../models";
 import {Status} from "../issueViews/issueViews";
@@ -91,4 +91,46 @@ export class EventLarge extends Component<{ event: Event }> {
         </div>
     )
   }
+}
+
+export class EventInfo extends Component<{match: {params: {eventId: number}}}> {
+    event = null;
+    eventCategory = null;
+
+    render() {
+        if (!this.event) return null;
+        if (!this.eventCategory) return null;
+
+        return (
+            <div className="container my-4">
+                <div className="card">
+                    <img className="card-img-top" src={this.event.image}/>
+                    <h2 className="card-title">{this.event.title}</h2>
+                    <p className="card-text">
+                        <small>
+                            <b>Category: </b>
+                            {this.eventCategory.name}
+                            <br/><b>From: </b>
+                            {moment(this.event.timeStart).format('DD.MM.YYYY HH:mm')}
+                            <br/><b>To: </b>
+                            {moment(this.event.timeEnd).format('DD.MM.YYYY HH:mm')}
+                            <br/><b>Location: </b>
+                            {this.event.latitude + ' ' + this.event.longitude}
+                        </small>
+                    </p>
+                    <p className="card-text">{this.event.content}</p>
+                </div>
+            </div>
+        );
+    }
+
+    mounted() {
+        eventService.getEvent(this.props.match.params.eventId)
+            .then(event => {
+                this.event = event;
+                eventCategoryService.getCategory(event.categoryId)
+                    .then(eventCategory => this.eventCategory = eventCategory)
+                    .catch((error: Error) => Alert.danger(error.message))
+            }).catch((error: Error) => Alert.danger(error.message));
+    }
 }

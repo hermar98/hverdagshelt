@@ -35,7 +35,7 @@ let secretKey = fs.readFileSync('./secret.key', 'utf8');
 
 app.use('/secure', (req: Request, res: Response, next) => {
   let token = req.headers['x-access-token'];
-  console.log(token);
+  console.log('dick');
   jwt.verify(token, secretKey, err => {
     if (err) {
       res.sendStatus(401);
