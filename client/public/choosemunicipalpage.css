@@ -107,3 +107,13 @@ ul {
 .logo{
     max-width: 100%;
 }
+
+#event-image-small{
+    margin-left: auto;
+    height: 100px;
+    width: 100px;
+}
+
+#event-content{
+    margin-right: auto;
+}

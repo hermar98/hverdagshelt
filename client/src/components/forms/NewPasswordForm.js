@@ -56,10 +56,10 @@ export default class NewPasswordForm extends Component {
     userService
       .newPassword(window.location.hash.slice(8), this.password)
       .then(token => {
-        localStorage.setItem('token', token);
+        localStorage.setItem('token', JSON.stringify(token));
         history.push('/municipal/' + this.munId);
         console.log('Login ok');
-        console.log(token);
+        console.log(this.password + 'form');
       })
       .catch((error: Error) => Alert.danger(error.message));
   }
