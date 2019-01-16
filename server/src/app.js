@@ -73,20 +73,20 @@ app.put('/reset/:id', (req: Request, res: Response) => {
   const { password } = body;
 
   let token = req.params.id;
-  console.log(token);
+  console.log(password);
   User.findOne({ where: { resetPasswordToken: token } }).then(user => {
     if (user) {
       console.log(user.userId);
       let passwordSalt = passwordHash.genRandomString(16);
       let passwordData = passwordHash.sha512(password, passwordSalt);
-      // console.log('Password' + password);
+      let token = jwt.sign({ email: user.email }, secretKey, { expiresIn: 4000 });
       return User.update(
         {
           salt: passwordSalt,
-          hash_str: passwordData.passwordHash
+          hashStr: passwordData.passwordHash
         },
         { where: { userId: user.userId } }
-      ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+      ).then(count => (count ? res.json({ userId: user.userId, jwt: token }) : res.sendStatus(404)));
     }
   });
 });
@@ -444,7 +444,7 @@ app.get('/secure/userMun/:id', (req: Request, res: Response) => {
         attributes: [],
         where: { userId: Number(req.params.id) }
       }
-    ],
+    ]
   }).then(user => (user ? res.send(user) : res.sendStatus(404)));
 });
 
@@ -472,7 +472,7 @@ app.get('/secure/userIssue/:id', (req: Request, res: Response) => {
         where: { userId: Number(req.params.id) }
         // through: { model: UserIssue, as: 'UserIssues' }
       }
-    ],
+    ]
   }).then(user => (user ? res.send(user) : res.sendStatus(404)));
 });
 

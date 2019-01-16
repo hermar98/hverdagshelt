@@ -62,7 +62,6 @@ export class MunicipalPage extends Component <{match: {params: {munId: number}}}
   mounted() {
     issueService
       .getIssuesByMunicipal(this.props.match.params.munId)
-      // .getIssues()
       .then(issues => {
         this.issues = issues;
       })
@@ -70,7 +69,6 @@ export class MunicipalPage extends Component <{match: {params: {munId: number}}}
 
     eventService
       .getEventsByMunicipal(this.props.match.params.munId)
-      // .getEvents()
       .then(events => (this.events = events))
       .catch((error: Error) => Alert.danger(error.message));
   }
