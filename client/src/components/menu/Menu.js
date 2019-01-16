@@ -54,6 +54,36 @@ export default class Menu extends Component {
                         </NavBar.Dropdown>
                     </NavBar>
                 );
+            } else if (this.user.rank === 3) {
+                return (
+                    <NavBar>
+                        <NavBar.Brand image={this.municipal.municipalShield} to={'/municipal/' + this.munId}>{this.municipal.name + ' kommune'}</NavBar.Brand>
+                        <NavBar.Link to={'/municipal/' + this.munId + '/fileIssue'}>Registrer sak</NavBar.Link>
+                        <NavBar.Link to={'/municipal/' + this.munId + '/registerEvent'}>Registrer event</NavBar.Link>
+                        <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
+                            <DropdownHeader>{this.user.email}</DropdownHeader>
+                            <DropdownFooter>Bedriftsbruker</DropdownFooter>
+                            <DropdownDivider/>
+                            <DropdownItem onClick={this.toProfile}>Min profil</DropdownItem>
+                            <DropdownItem onClick={this.logout}>Logg ut</DropdownItem>
+                        </NavBar.Dropdown>
+                    </NavBar>
+                );
+            } else if (this.user.rank === 4) {
+                return (
+                    <NavBar>
+                        <NavBar.Brand image={this.municipal.municipalShield} to={'/municipal/' + this.munId}>{this.municipal.name + ' kommune'}</NavBar.Brand>
+                        <NavBar.Link to={'/municipal/' + this.munId + '/fileIssue'}>Registrer sak</NavBar.Link>
+                        <NavBar.Link to={'/municipal/' + this.munId + '/registerEvent'}>Registrer event</NavBar.Link>
+                        <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
+                            <DropdownHeader>{this.user.email}</DropdownHeader>
+                            <DropdownFooter>Admin</DropdownFooter>
+                            <DropdownDivider/>
+                            <DropdownItem onClick={this.toProfile}>Min profil</DropdownItem>
+                            <DropdownItem onClick={this.logout}>Logg ut</DropdownItem>
+                        </NavBar.Dropdown>
+                    </NavBar>
+                );
             }
         }
         return (
