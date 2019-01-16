@@ -29,7 +29,7 @@ export default class Menu extends Component {
         return (
           <NavBar>
             <NavBar.Brand image={this.municipal.municipalShield} to={'/municipal/' + this.munId}>
-              {this.municipal.name + ' kommune'}
+              {' ' + this.municipal.name + ' kommune'}
             </NavBar.Brand>
             <NavBar.Link to={'/municipal/' + this.munId + '/fileIssue'}>Registrer sak</NavBar.Link>
             <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
@@ -45,7 +45,7 @@ export default class Menu extends Component {
         return (
           <NavBar>
             <NavBar.Brand image={this.municipal.municipalShield} to={'/municipal/' + this.munId}>
-              {this.municipal.name + ' kommune'}
+              {' ' + this.municipal.name + ' kommune'}
             </NavBar.Brand>
             <NavBar.Link to={'/municipal/' + this.munId + '/fileIssue'}>Registrer sak</NavBar.Link>
             <NavBar.Link to={'/municipal/' + this.munId + '/registerEvent'}>Registrer event</NavBar.Link>
@@ -62,7 +62,7 @@ export default class Menu extends Component {
         return (
           <NavBar>
             <NavBar.Brand image={this.municipal.municipalShield} to={'/municipal/' + this.munId}>
-              {this.municipal.name + ' kommune'}
+              {' ' + this.municipal.name + ' kommune'}
             </NavBar.Brand>
             <NavBar.Link to={'/municipal/' + this.munId + '/fileIssue'}>Registrer sak</NavBar.Link>
             <NavBar.Link to={'/municipal/' + this.munId + '/registerEvent'}>Registrer event</NavBar.Link>
@@ -79,7 +79,7 @@ export default class Menu extends Component {
         return (
           <NavBar>
             <NavBar.Brand image={this.municipal.municipalShield} to={'/municipal/' + this.munId}>
-              {this.municipal.name + ' kommune'}
+              {' ' + this.municipal.name + ' kommune'}
             </NavBar.Brand>
             <NavBar.Link to={'/municipal/' + this.munId + '/fileIssue'}>Registrer sak</NavBar.Link>
             <NavBar.Link to={'/municipal/' + this.munId + '/registerEvent'}>Registrer event</NavBar.Link>
