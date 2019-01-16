@@ -50,7 +50,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
                                     <p className="date">{this.issue.createdAt}</p>
                                     <div className="options">
                                         <ImageButton source="../../images/cog.png" onclick="Edited" />
-                                        <ImageButton source="../../images/trashcan.png" onclick="Deleted" />
+                                        <ImageButton source="../../images/trashcan.png" onclick={() => this.onDelete()} />
                                     </div>
                                     <StatusButton status={this.issue.statusId} onclick={() => {
                                         this.setState({
@@ -65,10 +65,10 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
                                         <StatusButton status={3} onclick={() => this.onClick(3)} />
                                     </div>
                                 </div>
-                                <h5>Kategori</h5>
                                 <div className="card-text">
                                     <p id="issue-large-text">{this.issue.content}</p>
                                 </div>
+                                <h5>Kategori</h5>
                             </div>
                             <div className="card-footer issue-images">
                                 <h4>Bilder</h4>
@@ -157,6 +157,11 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
             })
             .catch(error => console.error("Error: ", error))
     }
+
+    onDelete() {
+
+    }
+
 }
 
 /*
@@ -285,7 +290,7 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
                             </div>
                             <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{this.props.feedback.date}</p></div>
                             <ImageButton source="../../images/cog.png" onclick="Edited" />
-                            <ImageButton source="../../images/trashcan.png" onclick="Deleted" />
+                            <ImageButton source="../../images/trashcan.png" onclick={() => this.onDelete()}/>
                         </div>
                         <div id="feedback-text" className="card-text">
                             {this.props.feedback.content}
@@ -303,6 +308,15 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
                 console.log(JSON.stringify(this.user))
             })
             .catch(error => console.error("Error", error))
+    }
+
+    onDelete() {
+        console.log("1")
+        feedbackService.deleteFeedback(this.props.feedback.feedbackId)
+            .then(res => {
+                sharedFeedback.feedback.splice(sharedFeedback.feedback.indexOf(this.props.feedback), 1)
+            })
+            .catch(error => console.error("Error: ", error))
     }
 }
 
