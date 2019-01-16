@@ -291,7 +291,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           { munId: 935, name: 'Iveland', countyId: 9 },
           { munId: 532, name: 'Jevnaker', countyId: 5 },
           { munId: 1227, name: 'Jondal', countyId: 12 },
-          { munId: 1431, name: 'Jølster', countyId: 14 },
+          { munId: 1850, name: 'Tysfjord', countyId: 18, municipalShield:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Tysfjord_komm.svg/800px-Tysfjord_komm.svg.png' },
           { munId: 2021, name: 'Karasjok', countyId: 20 },
           { munId: 1120, name: 'Klepp', countyId: 11 },
           { munId: 5030, name: 'Klæbu', countyId: 50 },
