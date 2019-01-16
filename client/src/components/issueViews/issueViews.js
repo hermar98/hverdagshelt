@@ -13,7 +13,7 @@ let sharedFeedback = sharedComponentData({feedback: []})
 /*
 Large view of an issue, which includes the title, content, image and status.
  */
-export class IssueLarge extends Component<{match: {params: {issueId: number}}}> {
+export class IssueLarge extends Component<{match: {params: {issueId: number, munId: number}}}> {
 
     constructor (props) {
         super(props)
@@ -21,7 +21,8 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
         this.addFeedbackButton = React.createRef()
         this.addFeedbackForm = React.createRef()
         this.state = {
-            clickedStatus: false
+            clickedStatus: false,
+            clickedDelete: false
         }
     }
 
@@ -36,6 +37,13 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
             this.statusSelect.current.classList.add('show')
         }else if(this.statusSelect.current != null){
             this.statusSelect.current.classList.remove('show')
+        }
+
+        if(this.state.clickedDelete){
+            this.setState({
+                clickedDelete: false
+            })
+            return <Redirect to={"/municipal/" + this.props.match.params.munId + "/issues"} />
         }
 
         return (
@@ -159,7 +167,15 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
     }
 
     onDelete() {
-
+        if(confirm("Are you sure?")) {
+            issueService.deleteIssue(this.issue.issueId)
+                .then(res => {
+                    this.setState({
+                        clickedDelete: true
+                    })
+                })
+                .catch(error => console.error("Error: ", error))
+        }
     }
 
 }
@@ -311,12 +327,13 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
     }
 
     onDelete() {
-        console.log("1")
-        feedbackService.deleteFeedback(this.props.feedback.feedbackId)
-            .then(res => {
-                sharedFeedback.feedback.splice(sharedFeedback.feedback.indexOf(this.props.feedback), 1)
-            })
-            .catch(error => console.error("Error: ", error))
+        if(confirm("Are you sure?")) {
+            feedbackService.deleteFeedback(this.props.feedback.feedbackId)
+                .then(res => {
+                    sharedFeedback.feedback.splice(sharedFeedback.feedback.indexOf(this.props.feedback), 1)
+                })
+                .catch(error => console.error("Error: ", error))
+        }
     }
 }
 

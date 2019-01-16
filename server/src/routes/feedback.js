@@ -57,7 +57,6 @@ app.get('/feedback/:id', (req: Request, res: Response) => {
 });
 
 app.delete('/feedback/:id', (req: Request, res: Response) => {
-    console.log("3")
     return Feedback.destroy({
         where: {
             feedbackId: req.params.id
