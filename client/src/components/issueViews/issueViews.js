@@ -4,6 +4,8 @@ import { Component, sharedComponentData } from 'react-simplified';
 import {Redirect, NavLink} from 'react-router-dom'
 import { Issue, Feedback, User } from '../../models';
 import { issueService, userService, feedbackService } from "../../services";
+import Menu from '../menu/Menu';
+import {tokenManager} from "../../tokenManager";
 
 let sharedIssues = sharedComponentData({issues: []})
 let sharedFeedback = sharedComponentData({feedback: []})
@@ -17,6 +19,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
         super(props)
         this.statusSelect = React.createRef()
         this.addFeedbackButton = React.createRef()
+        this.addFeedbackForm = React.createRef()
         this.state = {
             clickedStatus: false
         }
@@ -32,66 +35,69 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
             this.statusSelect.current.classList.remove('show')
         }
 
-        if(this.addFeedbackButton.current != null && this.addFeedbackButton.current.classList.contains('show')){
-            this.addFeedbackButton.current.classList.remove('show')
-        }else if(this.addFeedbackButton.current != null){
-            this.addFeedbackButton.current.classList.add('show')
-        }
-
         return (
-            <div className="issue-container">
-                <div className="issue-large">
-                    <Status status={this.issue.statusId} id={this.issue.issueId}/>
-                    <div className="card">
-                        <div className="card-body">
-                            <div className="d-flex flex-row">
-                                <p className="date">{this.issue.date}</p>
-                                <div className="options">
-                                    <ImageButton source="../../images/cog.png" onclick="Edited" />
-                                    <ImageButton source="../../images/trashcan.png" onclick="Deleted" />
+            <div>
+                <Menu />
+                <div className="issue-container">
+                    <div className="issue-large">
+                        <Status status={this.issue.statusId} id={this.issue.issueId}/>
+                        <div className="card">
+                            <div className="card-body">
+                                <div className="d-flex flex-row">
+                                    <p className="date">{this.issue.date}</p>
+                                    <div className="options">
+                                        <ImageButton source="../../images/cog.png" onclick="Edited" />
+                                        <ImageButton source="../../images/trashcan.png" onclick="Deleted" />
+                                    </div>
+                                    <StatusButton status={this.issue.statusId} onclick={() => {
+                                        this.setState({
+                                            clickedStatus: !this.state.clickedStatus
+                                        })
+                                    }}/>
                                 </div>
-                                <StatusButton status={this.issue.statusId} onclick={() => {
-                                    this.setState({
-                                        clickedStatus: !this.state.clickedStatus
-                                    })
-                                }}/>
-                            </div>
-                            <div className="d-flex flex-row justify-content-end">
-                                <div className="status-selection" ref={this.statusSelect}>
-                                    <StatusButton status={1} onclick={() => this.onClick(1)} />
-                                    <StatusButton status={2} onclick={() => this.onClick(2)} />
-                                    <StatusButton status={3} onclick={() => this.onClick(3)} />
+                                <div className="d-flex flex-row justify-content-end">
+                                    <div className="status-selection" ref={this.statusSelect}>
+                                        <StatusButton status={1} onclick={() => this.onClick(1)} />
+                                        <StatusButton status={2} onclick={() => this.onClick(2)} />
+                                        <StatusButton status={3} onclick={() => this.onClick(3)} />
+                                    </div>
                                 </div>
+                                <div className="card-text">
+                                    <p id="issue-large-text">{this.issue.content}</p>
+                                </div>
+                                <h5>Kategori</h5>
                             </div>
-                            <div className="card-text">
-                                <p id="issue-large-text">{this.issue.content}</p>
-                            </div>
-                            <h5>Kategori</h5>
-                        </div>
-                        <div className="card-footer">
-                            <h4>Bilder</h4>
-                            <div className="flex-container">
-                                    <img className="issue-image" src="https://www.naf.no/globalassets/tips-rad/vei-trafikk/hull_i_veien_bil2.jpg?width=980&height=550&mode=max&anchor=middlecenter&scale=both&quality=85"/>
-                                    <img className="issue-image" src={this.issue.image}/>
-                                    <img className="issue-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Pothole.jpg/250px-Pothole.jpg" />
-                                    <img className="issue-image" src="https://www.pengenytt.no/wp-content/uploads/2017/03/Hull-i-vei-Foto-Wikimedia-Commons-Editor5807.jpg"/>
+                            <div className="card-footer">
+                                <h4>Bilder</h4>
+                                <div className="flex-container">
+                                        <img className="issue-image" src="https://www.naf.no/globalassets/tips-rad/vei-trafikk/hull_i_veien_bil2.jpg?width=980&height=550&mode=max&anchor=middlecenter&scale=both&quality=85"/>
+                                        <img className="issue-image" src={this.issue.image}/>
+                                        <img className="issue-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Pothole.jpg/250px-Pothole.jpg" />
+                                        <img className="issue-image" src="https://www.pengenytt.no/wp-content/uploads/2017/03/Hull-i-vei-Foto-Wikimedia-Commons-Editor5807.jpg"/>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <h4 className="feedback-title">Oppdateringer</h4>
-                {sharedFeedback.feedback.map(feedback => {
-                    return <IssueFeedback feedback={feedback}/>
-                })}
-                <div className="feedback-button">
-                    <div>
-                        <a id="feedback-link" href={"#issues/" + this.issue.issueId + "/feedback"} >
+                    <h4 className="feedback-title">Oppdateringer</h4>
+                    {sharedFeedback.feedback.map(feedback => {
+                        return <IssueFeedback feedback={feedback}/>
+                    })}
+                    <div className="feedback-button">
+                        <div>
                             <button ref={this.addFeedbackButton} className="btn image-button" type="button" onClick={() => {
-
+                                this.addFeedbackButton.current.classList.add('show')
+                                this.addFeedbackForm.current.classList.remove('show')
+                                window.scrollTo(0, document.body.scrollHeight);
                             }}>
                                 <img id="image-button-image" src="../../images/add.png" />
                             </button>
-                        </a>
+                        </div>
+                    </div>
+                    <div ref={this.addFeedbackForm} className="feedback-container show">
+                        <div className="form-group">
+                            <textarea className="form-control" placeholder="skriv feedback..." rows={8} />
+                        </div>
+                            <HoverButton text="Send" onclick={() => this.onClickFeedback()} />
                     </div>
                 </div>
             </div>
@@ -126,17 +132,31 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
             })
             .catch(error => console.error("Error"))
     }
+
+    onClickFeedback () {
+        let feedback = new Feedback();
+        feedback.name = '';
+        feedback.content = '';
+        feedback.issueId = this.issue.issueId;
+        feedback.userId = tokenManager.getUserId()
+        feedbackService.addFeedback(feedback)
+            .then(res => {
+                this.addFeedbackButton.current.classList.remove('show')
+                this.addFeedbackForm.current.classList.add('show')
+            })
+            .catch(error => console.error("Error: ", error))
+    }
 }
 
 /*
 A regular view of the issue, intended to be stacked.
 Includes the title and the picture
  */
-export class IssueNormal extends Component<{issue: Issue}>{
+export class IssueNormal extends Component<{issue: Issue, munId: number}>{
     render () {
         return (
             <div className="issue-normal issue-hover" issue={this.props.issue}>
-                <a id="a-hover" href={"#issues/" + this.props.issue.issueId}>
+                <a id="a-hover" href={"#/municipal/" + this.props.munId + "/issues/" + this.props.issue.issueId}>
                     <img src="../../images/arrowRightTrans.png" />
                 </a>
                 <div className="d-flex flex-row issue-flex">
@@ -152,9 +172,8 @@ export class IssueNormal extends Component<{issue: Issue}>{
                             </h5>
                         </div>
                     </div>
-                    <div>
-                        <StatusImage status={this.props.issue.statusId} />
-                    </div>
+                    <p className="status-label">Status:&nbsp;&nbsp;</p>
+                    <StatusImage status={this.props.issue.statusId} />
                 </div>
             </div>
         )
@@ -164,20 +183,21 @@ export class IssueNormal extends Component<{issue: Issue}>{
 /*
 Small view of an issue that displays only the title and the status
  */
-export class IssueSmall extends Component<{issue: Issue}> {
+export class IssueSmall extends Component<{issue: Issue, munId: number}> {
     render() {
         return (
             <div className="issue-small issue-hover" issue={this.props.issue}>
-                <a id="a-hover" href={"#issues/" + this.props.issue.issueId}>
+                <a id="a-hover" href={"#/municipal/" + this.props.munId + "/issues/" + this.props.issue.issueId}>
                     <img src="../../images/arrowRightTrans.png" />
                 </a>
-                <div className="d-flex flex-row justify-content-between">
-                    <div>
+                <div className="d-flex flex-row issue-flex justify-content-between">
+                    <div className="view-text">
                         <p className="date">{this.props.issue.date}</p>
                         <h5>
                             {this.props.issue.title}
                         </h5>
                     </div>
+                    <p className="status-label">Status:&nbsp;&nbsp;</p>
                     <StatusImage status={this.props.issue.statusId} />
                 </div>
             </div>
@@ -188,15 +208,15 @@ export class IssueSmall extends Component<{issue: Issue}> {
 /*
 A list of issues in small view
  */
-export class IssueOverviewSmall extends Component {
+export class IssueOverviewSmall extends Component<{munId: number}> {
 
     status: number = 0;
     timesort: string = "Nyeste";
 
     render () {
         return (
-            <div className="issue-overview-small issue-container">
-                <div className="d-flex flex-row sort-box justify-content-between">
+            <div className="issue-overview-small">
+                <div className="d-flex flex-row sort-box card-header justify-content-between">
                     <div className="form-group">
                         <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
                         <option value={0}>Alle</option>
@@ -217,7 +237,7 @@ export class IssueOverviewSmall extends Component {
                         if (this.status == issue.statusId || this.status == 0) {
                             return(
                                 <li className="list-group-item">
-                                    <IssueSmall issue={issue}/>
+                                    <IssueSmall issue={issue} munId={this.props.munId}/>
                                 </li>
                             )
                         }
@@ -276,7 +296,7 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
 /*
 A list of issues in normal view
  */
-export class IssueOverviewNormal extends Component {
+export class IssueOverviewNormal extends Component<{munId: number}> {
 
     status: number = 0;
     timesort: number = 0;
@@ -307,8 +327,8 @@ export class IssueOverviewNormal extends Component {
                     {sharedIssues.issues.map(issue => {
                         if (this.status == issue.statusId || this.status == 0) {
                             return (
-                                <li className="list-group-item">
-                                    <IssueNormal issue={issue}/>
+                                <li className="list-group-item normal-list-item">
+                                    <IssueNormal issue={issue} munId={this.props.munId}/>
                                 </li>
                             )
                         }
@@ -369,7 +389,9 @@ class StatusImage extends Component<{status: number}> {
     render () {
         switch (this.props.status){
             case 1: return (
-                <img className="status-image" src="../../images/blockedTrans.png" />
+                <div>
+                    <img className="status-image" src="../../images/blockedTrans.png" />
+                </div>
             )
                 break;
             case 2: return (
@@ -424,27 +446,3 @@ class HoverButton extends Component<{onclick: function, text: string}> {
         )
     }
 }
-
-export class AddFeedback extends Component<{match: {params: {issueId: number}}}> {
-    render() {
-        return (
-            <div className="feedback-container">
-                <div className="form-group">
-                    <textarea className="form-control" placeholder="skriv feedback..." rows={8} />
-                </div>
-                <a href={"/#/issues/" + this.props.match.params.issueId}>
-                    <HoverButton text="Send" onclick={() => this.onClick()} />
-                </a>
-            </div>
-        )
-    }
-
-    mounted () {
-        window.scrollTo(0, document.body.scrollHeight);
-    }
-
-    onClick() {
-
-    }
-}
-

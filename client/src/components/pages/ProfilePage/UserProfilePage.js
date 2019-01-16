@@ -6,24 +6,24 @@ import { Alert, NavBar, Form, Card, Button } from '../../../widgets';
 import MenuLoggedIn from '../../../components/menu/Menu.js';
 import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
 import { userService, municipalService, issueService, userMunicipalService } from '../../../services';
-import { autocomplete } from '../../../../public/autocomplete';
+import { autocomplete, glob } from '../../../../public/autocomplete';
 import { User, Issue, Municipal, UserMunicipal } from '../../../models';
 import { IssueSmall, IssueNormal, IssueOverviewSmall } from '../../issueViews/issueViews';
+import { tokenManager } from '../../../tokenManager';
 
-export class UserProfilePage extends Component<{ match: { params: { userId: number } } }> {
-  state = {
-    isLoaded: false
-  };
-  user: User = new User(0, '', '', '', 0, 0, '');
+let municipalObjects;
+
+export class UserProfilePage extends Component {
+  user: User = new User();
   issues: Issue[] = [];
-  allMunicipals: Municipal[] = new UserMunicipal();
+
   newMunicipalName: string = '';
   newMunicipalId: number = 0;
   userMunicipals: Municipal[] = [];
 
   mounted() {
     async function f() {
-      let municipalObjects = [];
+      municipalObjects = [];
       let promise = new Promise((resolve, reject) => {
         resolve(municipalService.getMunicipals().then(municipals => (municipalObjects = municipals)));
       });
@@ -37,37 +37,31 @@ export class UserProfilePage extends Component<{ match: { params: { userId: numb
     f();
 
     userService
-      // .getUser(this.props.match.params.userId)
-      .getUser(1)
+
+      .getUser(tokenManager.getUserId())
       .then(rows => (this.user = rows))
       .catch(error => console.log(error));
 
     issueService
-      // .getIssuesByUser(this.props.match.params.userId)
-      .getIssuesByUser(1)
+
+      .getIssuesByUser(tokenManager.getUserId())
       .then(rows => (this.issues = rows))
       .catch(error => console.log(error));
 
-    municipalService
-      .getMunicipals()
-      .then(rows => {
-        this.allMunicipals = rows;
-      })
-      .catch(error => console.log(error));
-
     userMunicipalService
-      .getUserMunicipals(1)
+      .getUserMunicipals(tokenManager.getUserId())
       .then(rows => {
         this.userMunicipals = rows;
-        this.isLoaded = true;
       })
       .catch(error => console.log(error));
   }
 
   handleAddMunicipal() {
-    this.newMunicipalId = this.allMunicipals.find(mun => mun.name === this.newMunicipalName).munId;
+    let municipal = municipalObjects.find(e => e.name == glob);
+    console.log(municipal);
 
-    userMunicipalService.addUserMunicipal(1, this.newMunicipalId);
+    this.newMunicipalId = municipal.munId;
+    userMunicipalService.addUserMunicipal(tokenManager.getUserId(), this.newMunicipalId);
   }
 
   delete(issueId: number) {
@@ -114,12 +108,7 @@ export class UserProfilePage extends Component<{ match: { params: { userId: numb
           <div>
             <form autoComplete="off">
               <div className="autocomplete">
-                <input
-                  id="municipalInput"
-                  type="text"
-                  name="municipal"
-                  onChange={event => (this.newMunicipalName = event.target.value)}
-                />
+                <input id="municipalInput" type="text" name="municipal" />
                 <button type="submit" onClick={this.handleAddMunicipal}>
                   Legg Til Kommune
                 </button>
