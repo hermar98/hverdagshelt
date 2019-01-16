@@ -92,3 +92,36 @@ export class EventLarge extends Component<{ event: Event }> {
     )
   }
 }
+
+export class EventSmall extends Component<{ event: Event }> {
+
+  textLength = 50;
+
+  render() {
+    return (
+      <div className="card mb-2">
+        <a id="a-hover" href={"#/municipal/" + this.props.event.munId + "/events/" + this.props.event.eventId}>
+          <img src="../../images/arrowRightTrans.png" />
+        </a>
+        <div className="card-body">
+          <div className="row">
+            <h5 className="card-title">{this.props.event.title}</h5>
+            <img id="event-image-small" src={this.props.event.image} alt={"Bildetekst"}/>
+          </div>
+        </div>
+        <div>
+          {(this.props.event.content <= this.textLength ? (this.props.event.content):
+            (this.props.event.content.substring(0, this.textLength) + "..."))}
+        </div>
+        <div className="card-footer">
+          <small className="text-muted-left">{"Starter: " + moment(this.props.event.timeStart).format("DD.MM HH:mm")}</small>
+          <small className="text-muted-right">{"Slutter: " + moment(this.props.event.timeEnd).format("DD.MM HH:mm")}</small>
+        </div>
+      </div>
+    )
+  }
+
+  mounted(){
+
+  }
+}
