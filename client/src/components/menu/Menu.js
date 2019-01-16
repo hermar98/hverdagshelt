@@ -16,8 +16,6 @@ import {
 import { userService, municipalService } from '../../services.js';
 import { tokenManager } from '../../tokenManager';
 import { history } from '../../index';
-import { UserMenu } from './UserMenu';
-import { MunicipalMenu } from './MunicipalMenu';
 import { Municipal } from '../../models';
 
 export default class Menu extends Component {
@@ -59,5 +57,14 @@ export default class Menu extends Component {
       .getMunicipal(this.munId)
       .then(municipal => (this.municipal = municipal))
       .catch((error: Error) => console.log(error));
+  }
+
+  toProfile() {
+    history.push('/municipal/' + this.munId + '/profile');
+  }
+
+  logout() {
+    tokenManager.deleteToken();
+    history.push('/municipal/' + this.munId + '/login');
   }
 }

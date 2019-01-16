@@ -7,6 +7,7 @@ import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
 import { User, Issue } from '../../models.js';
 import { userService, issueService } from '../../services.js';
+import { tokenManager } from '../../tokenManager';
 
 type P = { userId: number };
 type S = {};
@@ -18,7 +19,7 @@ export default class ChangePasswordForm extends Component<P, S> {
 
   mounted() {
     userService
-      .getUser(1) //TODO: check who is logged in.
+      .getUser(tokenManager.getUserId())
       .then(rows => {
         this.user = rows;
       })
@@ -29,13 +30,19 @@ export default class ChangePasswordForm extends Component<P, S> {
     e.preventDefault();
     console.log(this.newPassword);
     console.log(this.newPasswordRepeated);
-    if (this.newPassword != this.newPasswordRepeated) {
-      console.log('Passordene er ikke like');
-    } else {
-      this.user.password = this.newPassword;
-      console.log(this.user);
-      userService.updateUser(this.user);
-    }
+    userService
+      .login(this.user.email, this.currentPassword)
+      .then(() => {
+        if (this.newPassword != this.newPasswordRepeated) {
+          console.log('Passordene er ikke like');
+        } else {
+          this.user.password = this.newPassword;
+          console.log(this.user);
+          userService.updateUser(this.user);
+          Alert();
+        }
+      })
+      .catch(error => console.log('Nåverende passord er feil'));
   }
 
   render() {
