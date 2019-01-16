@@ -86,7 +86,7 @@ class IssueService {
     });
   }
 
-  getIssuesByUser(userId: User): Promise<Issue[]> {
+  getIssuesByUser(userId: number): Promise<Issue[]> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
     return axios.get('/secure/users/' + userId + '/issues', {

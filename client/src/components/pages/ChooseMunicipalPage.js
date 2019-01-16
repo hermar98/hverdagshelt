@@ -5,6 +5,7 @@ import { Component } from 'react-simplified';
 import { autocomplete, glob } from '../../../public/autocomplete';
 import { municipalService } from '../../services';
 import { history } from '../../index';
+import { Municipal } from '../../models';
 
 let municipalObjects;
 
@@ -28,7 +29,7 @@ export class ChooseMunicipalPage extends Component {
     async function f() {
       municipalObjects = [];
       let promise = new Promise((resolve, reject) => {
-        resolve(municipalService.getMunicipals().then(municipals => (municipalObjects = municipals)));
+        resolve(municipalService.getMunicipals().then((municipals: Municipal) => (municipalObjects = municipals)));
       });
 
       let result = await promise;
@@ -41,11 +42,10 @@ export class ChooseMunicipalPage extends Component {
   }
 
   async go() {
-    let municipal = municipalObjects.find(e => e.name == glob);
-    console.log(municipal);
+    let municipal = municipalObjects.find(e => e.name == glob).munId;
     if (municipal) {
-      localStorage.setItem('munId', municipal.munId);
-      history.push('/municipal/' + municipal.munId);
+      localStorage.setItem('munId', municipal.toString());
+      history.push('/municipal/' + municipal);
     }
   }
 }
