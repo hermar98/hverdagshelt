@@ -87,7 +87,7 @@ describe('User tests', () => {
     expect(response.body.firstName).toBe('Vegard');
     expect(response.body.lastName).toBe('Andersson');
     expect(response.body.email).toBe('test@test.no');
-    expect(response.body.rank).toBe(1);
+    expect(response.body.rank).toBe(2);
     expect(response.body.salt).toBe('a83f4da094cc247b');
     expect(response.body.hashStr).toBe(
       '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722'
@@ -122,7 +122,7 @@ describe('User tests', () => {
     expect(response.body.firstName).toBe('Jørgen');
     expect(response.body.lastName).toBe('Andersson');
     expect(response.body.email).toBe('test@test.no');
-    expect(response.body.rank).toBe(1);
+    expect(response.body.rank).toBe(2);
     expect(response.body.salt).toBe('a83f4da094cc247b');
     expect(response.body.hashStr).toBe(
       '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722'
@@ -144,7 +144,7 @@ describe('User tests', () => {
 
     expect(response.body.firstName).toBe('Jørgen');
     expect(response.body.email).toBe('j@j.j');
-    expect(response.body.rank).toBe(1);
+    expect(response.body.rank).toBe(2);
   });
 
   //Delete user
