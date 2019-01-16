@@ -113,7 +113,6 @@ describe('Issue tests', () => {
         .map(e => ({
           issueId: e.issueId,
           title: e.title,
-          content: e.content,
           longitude: e.longitude,
           latitude: e.latitude
         }))
@@ -121,7 +120,6 @@ describe('Issue tests', () => {
       {
         issueId: 1,
         title: 'Dumme folk ødeleger lømp',
-        content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
         latitude: 10.824107,
         longitude: 60.656877
       }
