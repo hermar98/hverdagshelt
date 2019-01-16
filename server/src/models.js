@@ -3,14 +3,14 @@ import type { Model } from 'sequelize';
 require('dotenv').config({ path: 'C:\\hverdagshelt_Team_3\\.env' });
 
 let sequelize = new Sequelize(
-  process.env.CI ? 'database' : 'hverdagshelt',
-  process.env.CI ? 'root' : 'user',
-  process.env.CI ? '' : 'password',
+  process.env.CI ? 'database' : 'hermanc',
+  process.env.CI ? 'root' : 'hermanc',
+  process.env.CI ? '' : '7GUbgG3Y',
   // process.env.CI ? 'database' : 'sebasman',
   // process.env.CI ? 'root' : 'sebasman',
   // process.env.CI ? '' : 'GSBLuzbB',
   {
-    host: process.env.CI ? 'mysql' : 'localhost',
+    host: process.env.CI ? 'mysql' : 'mysql.stud.iie.ntnu.no',
     dialect: 'mysql',
     pool: {
       max: 5,
@@ -47,7 +47,7 @@ export let Issue: Class<
     image: string,
     longitude: number,
     latitude: number,
-    statusId: number,
+    statusId: number
   }>
 > = sequelize.define('Issue', {
   issueId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
