@@ -6,8 +6,6 @@ import { Alert, NavBar, Form, Card, Button, DropdownHeader, DropdownFooter, Drop
 import {userService, municipalService} from '../../services.js';
 import {tokenManager} from '../../tokenManager';
 import {history} from "../../index";
-import {UserMenu} from './UserMenu';
-import {MunicipalMenu} from './MunicipalMenu';
 import { Municipal } from '../../models';
 
 export default class Menu extends Component {
@@ -18,9 +16,34 @@ export default class Menu extends Component {
     render() {
         if (this.user) {
             if (this.user.rank === 1) {
-                return <UserMenu user={this.user} municipal={this.municipal}/>;
+                return (
+                    <NavBar>
+                        <NavBar.Brand image={this.municipal.municipalShield} to={'/municipal/' + this.munId}>{this.municipal.name + ' kommune'}</NavBar.Brand>
+                        <NavBar.Link to={'/municipal/' + this.munId + '/fileIssue'}>Registrer sak</NavBar.Link>
+                        <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
+                            <DropdownHeader>{this.user.email}</DropdownHeader>
+                            <DropdownFooter>Privatperson</DropdownFooter>
+                            <DropdownDivider/>
+                            <DropdownItem onClick={this.toProfile}>Min profil</DropdownItem>
+                            <DropdownItem onClick={this.logout}>Logg ut</DropdownItem>
+                        </NavBar.Dropdown>
+                    </NavBar>
+                );
             } else if (this.user.rank === 2) {
-                return <MunicipalMenu user={this.user} municipal={this.municipal}/>
+                return (
+                    <NavBar>
+                        <NavBar.Brand image={this.municipal.municipalShield} to={'/municipal/' + this.munId}>{this.municipal.name + ' kommune'}</NavBar.Brand>
+                        <NavBar.Link to={'/municipal/' + this.munId + '/fileIssue'}>Registrer sak</NavBar.Link>
+                        <NavBar.Link to={'/municipal/' + this.munId + '/registerEvent'}>Registrer event</NavBar.Link>
+                        <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
+                            <DropdownHeader>{this.user.email}</DropdownHeader>
+                            <DropdownFooter>Kommuneansatt</DropdownFooter>
+                            <DropdownDivider/>
+                            <DropdownItem onClick={this.toProfile}>Min profil</DropdownItem>
+                            <DropdownItem onClick={this.logout}>Logg ut</DropdownItem>
+                        </NavBar.Dropdown>
+                    </NavBar>
+                );
             }
         }
         return (
@@ -44,5 +67,14 @@ export default class Menu extends Component {
         municipalService.getMunicipal(this.munId)
             .then(municipal => this.municipal = municipal)
             .catch((error: Error) => console.log(error));
+    }
+
+    toProfile() {
+        history.push('/municipal/' + this.munId + '/profile');
+    }
+
+    logout() {
+        tokenManager.deleteToken();
+        history.push('/municipal/' + this.munId + '/login');
     }
 }
