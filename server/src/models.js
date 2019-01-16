@@ -3,9 +3,9 @@ import type { Model } from 'sequelize';
 require('dotenv').config({ path: 'C:\\hverdagshelt_Team_3\\.env' });
 
 let sequelize = new Sequelize(
-  process.env.CI ? 'database' : 'hermanc',
-  process.env.CI ? 'root' : 'hermanc',
-  process.env.CI ? '' : '7GUbgG3Y',
+  process.env.CI ? 'database' : 'hverdagshelt',
+  process.env.CI ? 'root' : 'vegard',
+  process.env.CI ? '' : '1234',
   // process.env.CI ? 'database' : 'sebasman',
   // process.env.CI ? 'root' : 'sebasman',
   // process.env.CI ? '' : 'GSBLuzbB',
