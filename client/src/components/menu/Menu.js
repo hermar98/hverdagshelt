@@ -36,6 +36,7 @@ export default class Menu extends Component {
               <DropdownHeader>{this.user.email}</DropdownHeader>
               <DropdownFooter>Privatperson</DropdownFooter>
               <DropdownDivider />
+              <DropdownItem onClick={this.changeMunicipal}>Endre kommune</DropdownItem>
               <DropdownItem onClick={this.toProfile}>Min profil</DropdownItem>
               <DropdownItem onClick={this.logout}>Logg ut</DropdownItem>
             </NavBar.Dropdown>
@@ -53,6 +54,7 @@ export default class Menu extends Component {
               <DropdownHeader>{this.user.email}</DropdownHeader>
               <DropdownFooter>Kommuneansatt</DropdownFooter>
               <DropdownDivider />
+              <DropdownItem onClick={this.changeMunicipal}>Endre kommune</DropdownItem>
               <DropdownItem onClick={this.toProfile}>Min profil</DropdownItem>
               <DropdownItem onClick={this.logout}>Logg ut</DropdownItem>
             </NavBar.Dropdown>
@@ -70,6 +72,7 @@ export default class Menu extends Component {
               <DropdownHeader>{this.user.email}</DropdownHeader>
               <DropdownFooter>Bedriftsbruker</DropdownFooter>
               <DropdownDivider />
+              <DropdownItem onClick={this.changeMunicipal}>Endre kommune</DropdownItem>
               <DropdownItem onClick={this.toProfile}>Min profil</DropdownItem>
               <DropdownItem onClick={this.logout}>Logg ut</DropdownItem>
             </NavBar.Dropdown>
@@ -87,6 +90,7 @@ export default class Menu extends Component {
               <DropdownHeader>{this.user.email}</DropdownHeader>
               <DropdownFooter>Admin</DropdownFooter>
               <DropdownDivider />
+              <DropdownItem onClick={this.changeMunicipal}>Endre kommune</DropdownItem>
               <DropdownItem onClick={this.toProfile}>Min profil</DropdownItem>
               <DropdownItem onClick={this.logout}>Logg ut</DropdownItem>
             </NavBar.Dropdown>
@@ -100,6 +104,7 @@ export default class Menu extends Component {
         <NavBar.Brand image={this.municipal.municipalShield}>{this.municipal.name + ' kommune'}</NavBar.Brand>
         <NavBar.Link to={'/municipal/' + this.munId + '/login'}>Logg inn</NavBar.Link>
         <NavBar.Link to={'/municipal/' + this.munId + '/register'}>Registrer bruker</NavBar.Link>
+        <NavBar.Button onClick={this.changeMunicipal}>Endre kommune </NavBar.Button>
       </NavBar>
     );
   }
@@ -130,5 +135,10 @@ export default class Menu extends Component {
   logout() {
     tokenManager.deleteToken();
     history.push('/municipal/' + this.munId + '/login');
+  }
+
+  changeMunicipal(){
+    localStorage.removeItem('munId');
+    history.push('/')
   }
 }
