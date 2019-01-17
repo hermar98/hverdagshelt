@@ -21,7 +21,7 @@ import { NewPasswordPage } from './components/pages/NewPasswordPage.js';
 import { UploadImageTest } from './components/image/UploadImageTest.js';
 
 import { MunicipalPage } from './components/pages/MunicipalPage';
-import { Issue } from './models.js';
+import { Issue } from './models/Issue.js';
 
 // Reload application when not in production environment
 
@@ -42,20 +42,48 @@ if (root)
     <HashRouter>
       <div>
         <Alert />
-        <Route exact path="/" component={ChooseMunicipalPage} />
-        <Route exact path="/municipal/:munId" component={MunicipalPage} />
-        <Route exact path="/municipal/:munId/login" component={LoginPage} />
-        <Route exact path="/municipal/:munId/register" component={RegisterPage} />
-        <Route exact path="/municipal/:munId/profile" component={UserProfilePage} />
-        <Route exact path="/forgotPassword" component={ForgotPassword} />
-        <Route exact path="/reset/:userId" component={NewPasswordPage} />
-        <Route exact path="/municipal/:munId/events" component={EventPage} />
-          <Route exact path="/municipal/:munId/events/:eventId" component={EventInfo} />
-        <Route exact path="/municipal/:munId/registerEvent" component={RegisterEventPage} />
-        <Route exact path="/municipal/:munId/issues" component={IssuePage} />
-        <Route exact path="/municipal/:munId/fileIssue" component={FileIssuePage} />
-        <Route exact path="/municipal/:munId/issues/:issueId" component={IssueLarge} />
+          <!-- Hverdagshelt sider -->
+          <!-- TODO: Header, footer  -->
+          <Route exact path="/" component={ChooseMunicipalPage} /> <!-- Forside  -->
+
+          <!-- TODO: Småfiks på profilsiden  -->
+          <Route exact path="/profil" component={UserProfilePage} /> <!-- Profilside -->
+
+          <!-- TODO: Få inn saker og events fra valgte kommuner -->
+          <Route exact path="/feed" component={} /> <!-- Din feed -->
+
+          <!-- TODO: Legg til kart  -->
+          <Route exact path="/registrerSak" component={} /> <!-- Registrer sak -->
+
+          <!-- TODO: Bedriftsbruker skal kun se saker han er tildelt  -->
+          <Route exact path="/bedrift" component={} /> <!-- Bedriftsbruker feed -->
+
+          <!-- TODO: Alle privilegier, liste over alle brukere, legge/fjerne til kommuneansatte + bedriftsansatte  -->
+          <Route exact path="/admin" component={} /> <!-- Administratorside -->
+
+          <!-- TODO: Alt av statistikk  -->
+          <Route exact path="/statistikk" component={} /> <!-- Statistikk -->
+
+          <!-- Kommunesider -->
+          <!-- TODO: Hjemmeside for kommunen  -->
+          <Route exact path="/kommune/:munId" component={} /> <!-- Hjemmeside -->
+
+          <!-- TODO: Vis alle saker i en kommune  -->
+          <Route exact path="/kommune/:munId/sak" component={} /> <!-- Saker (for kommuneansatt?) -->
+
+          <!-- TODO: Viser en spesifikk sak i en kommune  -->
+          <Route exact path="/kommune/:munId/sak/:issueId" component={} /> <!-- Spesifikk sak -->
+
+          <!-- TODO: Vis alle events i en kommune  -->
+          <Route exact path="/kommune/:munId/hendelse" component={} /> <!-- Events -->
+
+          <!-- TODO: Viser en spesifikk sak i en kommune  -->
+          <Route exact path="/kommune/:munId/hendelse/:eventId" component={} /> <!-- Events -->
+
+          <!-- TODO: Kommuneansatt sin side. Vis alle saker for godkjenning  -->
+          <Route exact path="/kommune/:munId/ansatt" component={} /> <!-- Ansattside -->
       </div>
     </HashRouter>,
     root
   );
+

@@ -9,9 +9,9 @@ import { userService } from '../../../services';
 import { issueService } from '../../../services';
 import { municipalService } from '../../../services';
 import { autocomplete } from '../../../../public/autocomplete';
-import { User } from '../../../models';
-import { Issue } from '../../../models';
-import { Municipal } from '../../../models';
+import { User } from '../../../models/User';
+import { Issue } from '../../../models/Issue';
+import { Municipal } from '../../../models/Municipal';
 //import styles from './ProfilePage.css';
 
 export class AdminProfilePage extends Component {

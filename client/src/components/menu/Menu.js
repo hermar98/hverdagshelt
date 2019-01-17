@@ -16,7 +16,7 @@ import {
 import { userService, municipalService } from '../../services.js';
 import { tokenManager } from '../../tokenManager';
 import { history } from '../../index';
-import { Municipal } from '../../models';
+import { Municipal } from '../../models/Municipal';
 
 export default class Menu extends Component {
   user = null;

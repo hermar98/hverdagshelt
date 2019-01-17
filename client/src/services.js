@@ -1,7 +1,13 @@
 // @flow
 import axios from 'axios';
-import { User, Issue, IssueCategory, Event, Municipal, UserMunicipal } from './models.js';
-import { EventCategory, Feedback } from './models';
+import { UserMunicipal } from './models/UserMunicipal.js';
+import { Feedback } from './models/Feedback';
+import {User} from "./models/User";
+import {Issue} from "./models/Issue";
+import {IssueCategory} from "./models/IssueCategory";
+import {Event} from "./models/Event";
+import {EventCategory} from "./models/EventCategory";
+import {Municipal} from "./models/Municipal";
 
 axios.interceptors.response.use(response => response.data);
 

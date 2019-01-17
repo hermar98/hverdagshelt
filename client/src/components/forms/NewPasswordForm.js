@@ -5,9 +5,10 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
-import { User, Issue } from '../../models.js';
+import { Issue } from '../../models/Issue.js';
 import { userService, issueService } from '../../services.js';
 import { history } from '../../index';
+import {User} from "../../models/User";
 
 export default class NewPasswordForm extends Component {
   password = '2';

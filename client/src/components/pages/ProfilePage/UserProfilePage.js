@@ -7,9 +7,12 @@ import MenuLoggedIn from '../../../components/menu/Menu.js';
 import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
 import { userService, municipalService, issueService, userMunicipalService } from '../../../services';
 import { autocomplete, glob } from '../../../../public/autocomplete';
-import { User, Issue, Municipal, UserMunicipal } from '../../../models';
+import { UserMunicipal } from '../../../models/UserMunicipal';
 import { IssueSmall, IssueNormal, IssueOverviewSmall } from '../../issueViews/issueViews';
 import { tokenManager } from '../../../tokenManager';
+import {User} from "../../../models/User";
+import {Issue} from "../../../models/Issue";
+import {Municipal} from "../../../models/Municipal";
 
 let municipalObjects;
 
