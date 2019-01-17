@@ -5,3 +5,4 @@ client/.DS_Store
 .idea
 server/coverage
 client/coverage
+.env

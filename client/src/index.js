@@ -19,6 +19,7 @@ import { IssueLarge, IssueOverviewNormal, IssueNormal, IssueOverviewSmall } from
 import { ForgotPassword } from './components/pages/ForgotPassword.js';
 import { NewPasswordPage } from './components/pages/NewPasswordPage.js';
 import { UploadImageTest } from './components/image/UploadImageTest.js';
+import  {AlternativeUpload } from './components/image/AlternativeUpload.js';
 
 import { MunicipalPage } from './components/pages/MunicipalPage';
 import { Issue } from './models.js';
@@ -55,6 +56,7 @@ if (root)
         <Route exact path="/municipal/:munId/issues" component={IssuePage} />
         <Route exact path="/municipal/:munId/fileIssue" component={FileIssuePage} />
         <Route exact path="/municipal/:munId/issues/:issueId" component={IssueLarge} />
+        <Route exact path="/image" component={AlternativeUpload} />
       </div>
     </HashRouter>,
     root

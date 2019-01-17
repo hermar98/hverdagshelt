@@ -7,6 +7,7 @@ const public_path = path.join(__dirname, '/../../client/public');
 
 const app = require('./app');
 
+
 require('./routes/forgotPassword');
 require('./routes/issues');
 require('./routes/eventCategory');
