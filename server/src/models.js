@@ -35,7 +35,7 @@ export let Feedback: Class<
 > = sequelize.define('Feedback', {
   feedbackId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
   name: Sequelize.STRING,
-  content: Sequelize.STRING,
+  content: Sequelize.STRING(2000),
   date: Sequelize.DATE
 });
 
@@ -47,17 +47,15 @@ export let Issue: Class<
     image: string,
     longitude: number,
     latitude: number,
-    date: Date,
     statusId: number
   }>
 > = sequelize.define('Issue', {
   issueId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
   title: Sequelize.STRING,
-  content: Sequelize.STRING,
+  content: Sequelize.STRING(2500),
   image: Sequelize.STRING,
   longitude: Sequelize.DOUBLE,
   latitude: Sequelize.DOUBLE,
-  date: Sequelize.DATE,
   statusId: { type: Sequelize.INTEGER, defaultValue: 1 }
 });
 

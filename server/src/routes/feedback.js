@@ -1,4 +1,4 @@
-import {Feedback} from "../models";
+import {Feedback, Issue} from "../models";
 require('dotenv').config();
 
 type Request = express$Request;
@@ -54,4 +54,12 @@ app.get('/feedback/:id', (req: Request, res: Response) => {
     }).then(
         feedbak => (feedbak ? res.send(feedbak) : res.sendStatus(404))
     );
+});
+
+app.delete('/feedback/:id', (req: Request, res: Response) => {
+    return Feedback.destroy({
+        where: {
+            feedbackId: req.params.id
+        }
+    }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });

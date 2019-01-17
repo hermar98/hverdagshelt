@@ -39,7 +39,7 @@ describe('User tests', () => {
         firstName: 'Vegard',
         lastName: 'Andersson',
         email: 'test@test.no',
-        rank: 1,
+        rank: 2,
         salt: 'a83f4da094cc247b',
         hashStr:
           '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722'
@@ -113,7 +113,6 @@ describe('Issue tests', () => {
         .map(e => ({
           issueId: e.issueId,
           title: e.title,
-          content: e.content,
           longitude: e.longitude,
           latitude: e.latitude
         }))
@@ -121,7 +120,6 @@ describe('Issue tests', () => {
       {
         issueId: 1,
         title: 'Dumme folk ødeleger lømp',
-        content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
         latitude: 10.824107,
         longitude: 60.656877
       }
@@ -168,8 +166,8 @@ describe('Event tests', () => {
     ).toEqual([
       {
         eventId: 1,
-        title: 'party at the house man!',
-        content: 'Det skal være party at the house!',
+        title: 'Konsert i Trondheim',
+        content: 'Det skal være party at the house etterpå!',
         longitude: 60.652168,
         latitude: 10.822102
       }
@@ -191,7 +189,7 @@ describe('IssueCategory tests', () => {
     ).toEqual([
       {
         categoryId: 1,
-        name: 'Fyllikere på gata som ødeleger lamper'
+        name: 'Fyllikere på gata som ødelegger lamper'
       }
     ]);
   });
@@ -211,7 +209,7 @@ describe('EventCategory', () => {
     ).toEqual([
       {
         categoryId: 1,
-        name: 'PARTY'
+        name: 'Annet'
       }
     ]);
   });

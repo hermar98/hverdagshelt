@@ -35,7 +35,7 @@ let secretKey = fs.readFileSync('./secret.key', 'utf8');
 
 app.use('/secure', (req: Request, res: Response, next) => {
   let token = req.headers['x-access-token'];
-  console.log(token);
+  console.log('dick');
   jwt.verify(token, secretKey, err => {
     if (err) {
       res.sendStatus(401);
@@ -73,20 +73,20 @@ app.put('/reset/:id', (req: Request, res: Response) => {
   const { password } = body;
 
   let token = req.params.id;
-  console.log(token);
+  console.log(password);
   User.findOne({ where: { resetPasswordToken: token } }).then(user => {
     if (user) {
       console.log(user.userId);
       let passwordSalt = passwordHash.genRandomString(16);
       let passwordData = passwordHash.sha512(password, passwordSalt);
-      // console.log('Password' + password);
+      let token = jwt.sign({ email: user.email }, secretKey, { expiresIn: 4000 });
       return User.update(
         {
           salt: passwordSalt,
-          hash_str: passwordData.passwordHash
+          hashStr: passwordData.passwordHash
         },
         { where: { userId: user.userId } }
-      ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+      ).then(count => (count ? res.json({ userId: user.userId, jwt: token }) : res.sendStatus(404)));
     }
   });
 });
@@ -270,7 +270,7 @@ app.post('/secure/events', (req: Request, res: Response) => {
   // if (!(req.body instanceof Object)) return res.sendStatus(400);
   //Flow type checking mixed src: https://github.com/flow-typed/flow-typed/issues/812
   const body = req.body !== null && typeof req.body === 'object' ? req.body : {};
-  const { title, content, image, longitude, latitude, timeStart, timeEnd, categoryId } = body;
+  const { title, content, image, longitude, latitude, timeStart, timeEnd, categoryId, munId, userId } = body;
 
   return Event.create({
     title: title,
@@ -280,7 +280,9 @@ app.post('/secure/events', (req: Request, res: Response) => {
     latitude: latitude,
     timeStart: timeStart,
     timeEnd: timeEnd,
-    categoryId: categoryId
+    categoryId: categoryId,
+    munId: munId,
+    userId: userId
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 app.delete('/secure/events/:id', (req: Request, res: Response) => {
@@ -364,7 +366,8 @@ app.put('/secure/issues/:id', (req: Request, res: Response) => {
       longitude: req.body.longitude,
       latitude: req.body.latitude,
       statusId: req.body.statusId,
-      date: req.body.date
+      date: req.body.date,
+      munId: req.body.munId
     },
     {
       where: {
@@ -383,7 +386,9 @@ app.post('/secure/issues', (req: Request, res: Response) => {
     latitude: req.body.latitude,
     status: req.body.status,
     statusId: req.body.statusId,
-    categoryId: req.body.categoryId
+    categoryId: req.body.categoryId,
+    munId: req.body.munId,
+    userId: req.body.userId
   }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
@@ -431,17 +436,15 @@ app.delete('/secure/issueCat/:id', function(req: Request, res: Response) {
 });
 
 app.get('/secure/userMun/:id', (req: Request, res: Response) => {
-  return User.find({
+  return Municipal.findAll({
     include: [
       {
-        model: Municipal,
-        as: 'Municipals',
-        attributes: ['munId', 'name'],
-        through: { model: UserMunicipal, as: 'UserMunicipals', attributes: [] }
+        model: User,
+        as: 'Users',
+        attributes: [],
+        where: { userId: Number(req.params.id) }
       }
-    ],
-    attributes: [],
-    where: { userId: Number(req.params.id) }
+    ]
   }).then(user => (user ? res.send(user) : res.sendStatus(404)));
 });
 
@@ -460,17 +463,16 @@ app.delete('/secure/user/:userId/mun/:munId', (req: Request, res: Response) => {
 });
 
 app.get('/secure/userIssue/:id', (req: Request, res: Response) => {
-  return User.findAll({
+  return Issue.findAll({
     include: [
       {
-        model: Issue,
-        as: 'Issues',
-        attributes: ['issueId', 'name'],
-        through: { model: UserIssue, as: 'UserIssues', attributes: [] }
+        model: User,
+        as: 'Users',
+        attributes: [],
+        where: { userId: Number(req.params.id) }
+        // through: { model: UserIssue, as: 'UserIssues' }
       }
-    ],
-    attributes: [],
-    where: { userId: Number(req.params.id) }
+    ]
   }).then(user => (user ? res.send(user) : res.sendStatus(404)));
 });
 

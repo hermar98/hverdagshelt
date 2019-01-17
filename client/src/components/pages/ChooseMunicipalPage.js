@@ -5,13 +5,18 @@ import { Component } from 'react-simplified';
 import { autocomplete, glob } from '../../../public/autocomplete';
 import { municipalService } from '../../services';
 import { history } from '../../index';
+import { Municipal } from '../../models';
 
 let municipalObjects;
-
+//TODO: fix input
 export class ChooseMunicipalPage extends Component {
+  munId = localStorage.getItem('munId');
   render() {
     return (
       <div className="img-container">
+        <div className="bg-text">
+          <h1>Hverdagshelt</h1>
+        </div>
         <form autoComplete="off">
           <div className="autocomplete">
             <input id="municipalInput" type="text" name="municipal" placeholder="Velg kommune" />
@@ -25,10 +30,13 @@ export class ChooseMunicipalPage extends Component {
     );
   }
   mounted() {
+    if (this.munId) {
+      history.push('/municipal/' + this.munId);
+    }
     async function f() {
       municipalObjects = [];
       let promise = new Promise((resolve, reject) => {
-        resolve(municipalService.getMunicipals().then(municipals => (municipalObjects = municipals)));
+        resolve(municipalService.getMunicipals().then((municipals: Municipal) => (municipalObjects = municipals)));
       });
 
       let result = await promise;
@@ -41,11 +49,11 @@ export class ChooseMunicipalPage extends Component {
   }
 
   async go() {
-    let municipal = municipalObjects.find(e => e.name == glob);
-    console.log(municipal);
+    //$FlowFixMe
+    let municipal = municipalObjects.find(e => e.name == glob).munId;
     if (municipal) {
-      localStorage.setItem('munId', municipal.munId);
-      history.push('/municipal/' + municipal.munId);
+      localStorage.setItem('munId', municipal.toString());
+      history.push('/municipal/' + municipal);
     }
   }
 }

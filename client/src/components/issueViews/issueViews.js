@@ -3,95 +3,120 @@ import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 import {Redirect, NavLink} from 'react-router-dom'
 import { Issue, Feedback, User } from '../../models';
-import { issueService, userService, feedbackService } from "../../services";
+import {issueService, userService, feedbackService, issueCategoryService} from "../../services";
+import Menu from '../menu/Menu';
+import {tokenManager} from "../../tokenManager";
 
 let sharedIssues = sharedComponentData({issues: []})
 let sharedFeedback = sharedComponentData({feedback: []})
 
+let formatDate = function (date: Date) {
+    if(date != null) {
+        let str: string = date
+        str = str.substring(0, str.length - 8)
+        str = str.replace("T", " KL. ")
+        return str;
+    }
+    return;
+}
+
+
 /*
 Large view of an issue, which includes the title, content, image and status.
  */
-export class IssueLarge extends Component<{match: {params: {issueId: number}}}> {
+export class IssueLarge extends Component<{match: {params: {issueId: number, munId: number}}}> {
 
     constructor (props) {
         super(props)
         this.statusSelect = React.createRef()
         this.addFeedbackButton = React.createRef()
+        this.addFeedbackForm = React.createRef()
         this.state = {
-            clickedStatus: false
+            clickedStatus: false,
+            clickedDelete: false
         }
     }
 
     issue = new Issue();
+    feedbackContent: string = '';
+    categoryName: string = '';
 
     render() {
-
         if(!this.state.clickedStatus && this.statusSelect.current != null) {
             this.statusSelect.current.classList.add('show')
         }else if(this.statusSelect.current != null){
             this.statusSelect.current.classList.remove('show')
         }
 
-        if(this.addFeedbackButton.current != null && this.addFeedbackButton.current.classList.contains('show')){
-            this.addFeedbackButton.current.classList.remove('show')
-        }else if(this.addFeedbackButton.current != null){
-            this.addFeedbackButton.current.classList.add('show')
+        if(this.state.clickedDelete){
+            this.setState({
+                clickedDelete: false
+            })
+            return <Redirect to={"/municipal/" + this.props.match.params.munId + "/issues"} />
         }
 
         return (
-            <div className="issue-container">
-                <div className="issue-large">
-                    <Status status={this.issue.statusId} id={this.issue.issueId}/>
-                    <div className="card">
-                        <div className="card-body">
-                            <div className="d-flex flex-row">
-                                <p className="date">{this.issue.date}</p>
-                                <div className="options">
-                                    <ImageButton source="../../images/cog.png" onclick="Edited" />
-                                    <ImageButton source="../../images/trashcan.png" onclick="Deleted" />
+            <div>
+                <Menu />
+                <div className="issue-container">
+                    <div className="issue-large">
+                        <Status status={this.issue.statusId} id={this.issue.issueId}/>
+                        <div className="card">
+                            <div className="card-body issue-large-card">
+                                <div className="d-flex flex-row">
+                                    <p id="date-large" className="date">{formatDate(this.issue.createdAt)}</p>
+                                    <div className="options">
+                                        <ImageButton source="../../images/cog.png" onclick="Edited" />
+                                        <ImageButton source="../../images/trashcan.png" onclick={() => this.onDelete()} />
+                                    </div>
+                                    <StatusButton status={this.issue.statusId} onclick={() => {
+                                        this.setState({
+                                            clickedStatus: !this.state.clickedStatus
+                                        })
+                                    }}/>
                                 </div>
-                                <StatusButton status={this.issue.statusId} onclick={() => {
-                                    this.setState({
-                                        clickedStatus: !this.state.clickedStatus
-                                    })
-                                }}/>
-                            </div>
-                            <div className="d-flex flex-row justify-content-end">
-                                <div className="status-selection" ref={this.statusSelect}>
-                                    <StatusButton status={1} onclick={() => this.onClick(1)} />
-                                    <StatusButton status={2} onclick={() => this.onClick(2)} />
-                                    <StatusButton status={3} onclick={() => this.onClick(3)} />
+                                <div className="d-flex flex-row justify-content-end">
+                                    <div className="status-selection" ref={this.statusSelect}>
+                                        <StatusButton status={1} onclick={() => this.onClick(1)} />
+                                        <StatusButton status={2} onclick={() => this.onClick(2)} />
+                                        <StatusButton status={3} onclick={() => this.onClick(3)} />
+                                    </div>
+                                </div>
+                                <h5>{this.categoryName}</h5>
+                                <div className="card-text">
+                                    <p id="issue-large-text">{this.issue.content}</p>
                                 </div>
                             </div>
-                            <div className="card-text">
-                                <p id="issue-large-text">{this.issue.content}</p>
-                            </div>
-                            <h5>Kategori</h5>
-                        </div>
-                        <div className="card-footer">
-                            <h4>Bilder</h4>
-                            <div className="flex-container">
-                                    <img className="issue-image" src="https://www.naf.no/globalassets/tips-rad/vei-trafikk/hull_i_veien_bil2.jpg?width=980&height=550&mode=max&anchor=middlecenter&scale=both&quality=85"/>
-                                    <img className="issue-image" src={this.issue.image}/>
-                                    <img className="issue-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Pothole.jpg/250px-Pothole.jpg" />
-                                    <img className="issue-image" src="https://www.pengenytt.no/wp-content/uploads/2017/03/Hull-i-vei-Foto-Wikimedia-Commons-Editor5807.jpg"/>
+                            <div className="card-footer issue-images">
+                                <h4>&nbsp;Bilder</h4>
+                                <div className="flex-container">
+                                        <img className="issue-image" src={this.issue.image}/>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <h4 className="feedback-title">Oppdateringer</h4>
-                {sharedFeedback.feedback.map(feedback => {
-                    return <IssueFeedback feedback={feedback}/>
-                })}
-                <div className="feedback-button">
-                    <div>
-                        <a id="feedback-link" href={"#issues/" + this.issue.issueId + "/feedback"} >
+                    <h4 className="feedback-title">Oppdateringer</h4>
+                    {sharedFeedback.feedback.map(feedback => {
+                        return <IssueFeedback feedback={feedback}/>
+                    })}
+                    <div className="feedback-button">
+                        <div>
                             <button ref={this.addFeedbackButton} className="btn image-button" type="button" onClick={() => {
-
+                                this.addFeedbackButton.current.classList.add('show')
+                                this.addFeedbackForm.current.classList.remove('show')
+                                window.scrollTo(0, document.body.scrollHeight);
                             }}>
                                 <img id="image-button-image" src="../../images/add.png" />
                             </button>
-                        </a>
+                        </div>
+                    </div>
+                    <div ref={this.addFeedbackForm} className="feedback-container show">
+                        <div className="form-group">
+                            <textarea className="form-control" placeholder="skriv feedback..." rows={8} value={this.feedbackContent} onChange={
+                                event => (this.feedbackContent = event.target.value)
+                            } />
+                        </div>
+                            <HoverButton text="Send" onclick={() => this.onClickFeedback()} />
                     </div>
                 </div>
             </div>
@@ -104,6 +129,11 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
         issueService.getIssue(this.props.match.params.issueId)
             .then(issue => {
                 this.issue = issue;
+                issueCategoryService.getCategory(this.issue.categoryId)
+                    .then(category => {
+                        this.categoryName = category.name
+                    })
+                    .catch(error => console.error("Error: ", error))
             })
             .catch(error => console.error("Error: ", error))
         feedbackService.getFeedbacks(this.props.match.params.issueId)
@@ -126,17 +156,53 @@ export class IssueLarge extends Component<{match: {params: {issueId: number}}}> 
             })
             .catch(error => console.error("Error"))
     }
+
+    onClickFeedback () {
+        let feedback = new Feedback();
+        feedback.name = '';
+        feedback.content = this.feedbackContent;
+        feedback.issueId = this.issue.issueId;
+        feedback.userId = tokenManager.getUserId()
+        feedbackService.addFeedback(feedback)
+            .then(res => {
+                this.addFeedbackButton.current.classList.remove('show')
+                this.addFeedbackForm.current.classList.add('show')
+                feedbackService.getFeedbacks(this.props.match.params.issueId)
+                    .then(data => {
+                        sharedFeedback.feedback = data;
+                    })
+                    .catch(error => console.error("Error: ", error))
+                this.feedbackContent = '';
+            })
+            .catch(error => console.error("Error: ", error))
+    }
+
+    onDelete() {
+        if(confirm("Are you sure?")) {
+            issueService.deleteIssue(this.issue.issueId)
+                .then(res => {
+                    this.setState({
+                        clickedDelete: true
+                    })
+                })
+                .catch(error => console.error("Error: ", error))
+        }
+    }
+
 }
 
 /*
 A regular view of the issue, intended to be stacked.
 Includes the title and the picture
  */
-export class IssueNormal extends Component<{issue: Issue}>{
+export class IssueNormal extends Component<{issue: Issue, munId: number}>{
+
+    categoryName: string = '';
+
     render () {
         return (
             <div className="issue-normal issue-hover" issue={this.props.issue}>
-                <a id="a-hover" href={"#issues/" + this.props.issue.issueId}>
+                <a id="a-hover" href={"#/municipal/" + this.props.munId + "/issues/" + this.props.issue.issueId}>
                     <img src="../../images/arrowRightTrans.png" />
                 </a>
                 <div className="d-flex flex-row issue-flex">
@@ -144,59 +210,80 @@ export class IssueNormal extends Component<{issue: Issue}>{
                         <img className="issue-image-normal" src={this.props.issue.image}/>
                     </div>
                     <div id="issue-normal-text">
-                        <p id="issue-normal-content">{(this.props.issue.content).substring(0, 240) + " . . ."}</p>
+                        <p id="issue-normal-content">{(this.props.issue.content).substring(0, 136) + " . . ."}</p>
                         <div>
-                            <p id="date-normal" className="date">{this.props.issue.date}</p>
+                            <p id="date-normal" className="date">{formatDate(this.props.issue.createdAt)}</p>
                             <h5 id="issue-normal-title">
-                                Kategori
+                                {this.categoryName}
                             </h5>
                         </div>
                     </div>
-                    <div>
-                        <StatusImage status={this.props.issue.statusId} />
-                    </div>
+                    <p>Status:&nbsp;&nbsp;</p>
+                    <StatusImage status={this.props.issue.statusId} />
                 </div>
             </div>
         )
+    }
+
+    mounted () {
+        issueCategoryService.getCategory(this.props.issue.categoryId)
+            .then(category => {
+                this.categoryName = category.name
+            })
+            .catch(error => console.error("Error: ", error))
     }
 }
 
 /*
 Small view of an issue that displays only the title and the status
  */
-export class IssueSmall extends Component<{issue: Issue}> {
+export class IssueSmall extends Component<{issue: Issue, munId: number}> {
+
+    categoryName: string = '';
+
     render() {
         return (
             <div className="issue-small issue-hover" issue={this.props.issue}>
-                <a id="a-hover" href={"#issues/" + this.props.issue.issueId}>
+                <a id="a-hover" href={"#/municipal/" + this.props.munId + "/issues/" + this.props.issue.issueId}>
                     <img src="../../images/arrowRightTrans.png" />
                 </a>
-                <div className="d-flex flex-row justify-content-between">
-                    <div>
-                        <p className="date">{this.props.issue.date}</p>
-                        <h5>
-                            {this.props.issue.title}
-                        </h5>
+                <div>
+                    <div className="d-flex flex-row issue-flex justify-content-between">
+                        <div className="view-text">
+                            <p className="date">{formatDate(this.props.issue.createdAt)}</p>
+                            <h5>
+                                {this.categoryName}
+                            </h5>
+                        </div>
+                        <p>Status:&nbsp;&nbsp;</p>
+                        <StatusImage status={this.props.issue.statusId} />
                     </div>
-                    <StatusImage status={this.props.issue.statusId} />
                 </div>
             </div>
         )
+    }
+
+    mounted () {
+        issueCategoryService.getCategory(this.props.issue.categoryId)
+            .then(category => {
+                this.categoryName = category.name
+            })
+            .catch(error => console.error("Error: ", error))
     }
 }
 
 /*
 A list of issues in small view
  */
-export class IssueOverviewSmall extends Component {
+export class IssueOverviewSmall extends Component<{munId: number}> {
 
     status: number = 0;
     timesort: string = "Nyeste";
 
     render () {
         return (
-            <div className="issue-overview-small issue-container">
-                <div className="d-flex flex-row sort-box justify-content-between">
+            <div className="issue-overview-small">
+                <div className="d-flex flex-row sort-box card-header justify-content-between">
                     <div className="form-group">
                         <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
                         <option value={0}>Alle</option>
@@ -213,11 +300,11 @@ export class IssueOverviewSmall extends Component {
                     </div>
                 </div>
                 <ul className="list-group">
-                    {sharedIssues.issues.map(issue => {
+                    {sharedIssues.issues.map((issue,index) => {
                         if (this.status == issue.statusId || this.status == 0) {
                             return(
-                                <li className="list-group-item">
-                                    <IssueSmall issue={issue}/>
+                                <li key={index} className="list-group-item">
+                                    <IssueSmall issue={issue} munId={this.props.munId}/>
                                 </li>
                             )
                         }
@@ -229,7 +316,7 @@ export class IssueOverviewSmall extends Component {
 
     mounted (){
         window.scrollTo(0, 0);
-        issueService.getIssues()
+        issueService.getIssuesByMunicipal(window.location.hash.slice(12))
             .then(data => {
                 sharedIssues.issues = data;
             })
@@ -244,15 +331,16 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
     render() {
         return (
             <div className="feedback" feedback={this.props.feedback}>
-                <div className="card feedback">
+                <div className="card feedback-card">
                     <div className="card-body">
                         <div className="d-flex flex-row submitter">
-                            <div className="p-2">
-                                <img className="card-img profile-image" src={this.user.profilePicture}/>
-                            </div>
-                            <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{this.props.feedback.date}</p></div>
+
+                                <div className="p-2">
+                                    <img className="card-img profile-image" src={this.user.profilePicture}/>
+                                </div>
+                                <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{formatDate(this.props.feedback.createdAt)}</p></div>
                             <ImageButton source="../../images/cog.png" onclick="Edited" />
-                            <ImageButton source="../../images/trashcan.png" onclick="Deleted" />
+                            <ImageButton source="../../images/trashcan.png" onclick={() => this.onDelete()}/>
                         </div>
                         <div id="feedback-text" className="card-text">
                             {this.props.feedback.content}
@@ -271,12 +359,22 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
             })
             .catch(error => console.error("Error", error))
     }
+
+    onDelete() {
+        if(confirm("Are you sure?")) {
+            feedbackService.deleteFeedback(this.props.feedback.feedbackId)
+                .then(res => {
+                    sharedFeedback.feedback.splice(sharedFeedback.feedback.indexOf(this.props.feedback), 1)
+                })
+                .catch(error => console.error("Error: ", error))
+        }
+    }
 }
 
 /*
 A list of issues in normal view
  */
-export class IssueOverviewNormal extends Component {
+export class IssueOverviewNormal extends Component<{munId: number}> {
 
     status: number = 0;
     timesort: number = 0;
@@ -307,8 +405,8 @@ export class IssueOverviewNormal extends Component {
                     {sharedIssues.issues.map(issue => {
                         if (this.status == issue.statusId || this.status == 0) {
                             return (
-                                <li className="list-group-item">
-                                    <IssueNormal issue={issue}/>
+                                <li className="list-group-item normal-list-item">
+                                    <IssueNormal issue={issue} munId={this.props.munId}/>
                                 </li>
                             )
                         }
@@ -319,20 +417,19 @@ export class IssueOverviewNormal extends Component {
     }
 
     mounted (){
-        console.log("asdasd")
         issueService.getIssues()
             .then(data => {
                 sharedIssues.issues = data;
             })
             .catch(error => console.error("Error: ", error))
-        sharedIssues.issues.sort((a, b) => a.date - b.date );
+        sharedIssues.issues.sort((a, b) => a.createdAt - b.createdAt );
     }
 
     onChange () {
         if(this.timesort == 1) {
-            sharedIssues.issues.sort((a, b) => b.date - a.date);
+            sharedIssues.issues.sort((a, b) => b.createdAt - a.createdAt);
         }else{
-            sharedIssues.issues.sort((a, b) => a.date - b.date );
+            sharedIssues.issues.sort((a, b) => a.createdAt - b.createdAt );
         }
     }
 }
@@ -370,7 +467,9 @@ class StatusImage extends Component<{status: number}> {
     render () {
         switch (this.props.status){
             case 1: return (
-                <img className="status-image" src="../../images/blockedTrans.png" />
+                <div>
+                    <img className="status-image" src="../../images/blockedTrans.png" />
+                </div>
             )
                 break;
             case 2: return (
@@ -425,27 +524,3 @@ class HoverButton extends Component<{onclick: function, text: string}> {
         )
     }
 }
-
-export class AddFeedback extends Component<{match: {params: {issueId: number}}}> {
-    render() {
-        return (
-            <div className="feedback-container">
-                <div className="form-group">
-                    <textarea className="form-control" placeholder="skriv feedback..." rows={8} />
-                </div>
-                <a href={"/#/issues/" + this.props.match.params.issueId}>
-                    <HoverButton text="Send" onclick={() => this.onClick()} />
-                </a>
-            </div>
-        )
-    }
-
-    mounted () {
-        window.scrollTo(0, document.body.scrollHeight);
-    }
-
-    onClick() {
-
-    }
-}
-

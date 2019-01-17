@@ -8,6 +8,8 @@ export class User {
   rank: number;
   munId: number;
   password: string;
+    createdAt: number;
+    updatedAt: number;
 
   /*constructor (userId: number, firstName: string, lastName: string, email: string, rank: number, hash: string, salt: string) {
         this.userId = userId
@@ -30,6 +32,9 @@ export class Issue {
   status: number;
   categoryId: number;
   munId: number;
+  useId: number;
+  createdAt: number;
+  updatedAt: number;
 
   /*constructor(issueId: number, title: string, content: string, image: string, longitude: number, latitude: number, status: number, date: Date){
         this.issueId = issueId
@@ -63,6 +68,8 @@ export class Event {
   timeStart: string;
   timeEnd: string;
   categoryId: number;
+  munId: number;
+  userId: number;
 
   /*constructor (    eventId: number, title: string, content: string, image: string, longitude: number, latitude: number, timeStart: string, timeEnd: string) {
         this.eventId = eventId
@@ -89,6 +96,7 @@ export class EventCategory {
 export class Municipal {
   munId: number;
   name: string;
+  municipalShield: string;
 
   /*
     constructor( munId: number, title: string){
@@ -111,4 +119,5 @@ export class Feedback {
   userId: number;
   issueId: number;
   user: User;
+  createdAt: Date;
 }
