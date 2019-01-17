@@ -63,4 +63,3 @@ app.delete('/feedback/:id', (req: Request, res: Response) => {
         }
     }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
-
