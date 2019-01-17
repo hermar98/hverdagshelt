@@ -58,7 +58,7 @@ export default class NewPasswordForm extends Component {
       .newPassword(window.location.hash.slice(8), this.password)
       .then(token => {
         localStorage.setItem('token', JSON.stringify(token));
-        history.push('/municipal/' + this.munId);
+        history.push('/kommune/' + this.munId);
         console.log('Login ok');
         console.log(this.password + 'form');
       })

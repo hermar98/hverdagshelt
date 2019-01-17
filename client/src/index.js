@@ -50,9 +50,9 @@ if (root)
 
           <Route exact path="/register" component={RegisterPage} /> <!-- Registreringsside -->
 
-          <Route exact path="/forgotPassword" component={ForgotPassword} /> <!-- Glemt passord -->
+          <Route exact path="/glemtPassord" component={ForgotPassword} /> <!-- Glemt passord -->
 
-          <Route exact path="/forgotPassword/reset" component={NewPasswordPage} /> <!-- Resett passord -->
+          <Route exact path="/glemtPassord/reset" component={NewPasswordPage} /> <!-- Resett passord -->
 
           <!-- TODO: Småfiks på profilsiden  -->
           <Route exact path="/profil" component={UserProfilePage} /> <!-- Profilside -->

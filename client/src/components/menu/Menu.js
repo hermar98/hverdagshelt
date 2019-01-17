@@ -129,12 +129,12 @@ export default class Menu extends Component {
   }
 
   toProfile() {
-    history.push('/municipal/' + this.munId + '/profile');
+    history.push('profil');
   }
 
   logout() {
     tokenManager.deleteToken();
-    history.push('/municipal/' + this.munId + '/login');
+    history.push('/');
   }
 
   changeMunicipal(){

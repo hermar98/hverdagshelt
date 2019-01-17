@@ -59,7 +59,7 @@ export default class Login extends Component {
       .getToken()
       .then(token => {
         console.log(token);
-        history.push('/municipal/' + this.munId);
+        history.push('/kommune/' + this.munId);
       })
       .catch((error: Error) => console.log(error));
   }
@@ -73,7 +73,7 @@ export default class Login extends Component {
       .login(this.email, this.password)
       .then(token => {
         tokenManager.addToken(token);
-        history.push('/municipal/' + this.munId);
+        history.push('/kommune/' + this.munId);
       })
       .catch((error: Error) => {
         console.log(error);
@@ -82,6 +82,6 @@ export default class Login extends Component {
   }
 
   goTo() {
-    history.push('/forgotPassword');
+    history.push('/glemtPassord');
   }
 }

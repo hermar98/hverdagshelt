@@ -31,7 +31,7 @@ export class ChooseMunicipalPage extends Component {
   }
   mounted() {
     if (this.munId) {
-      history.push('/municipal/' + this.munId);
+      history.push('/kommune/' + this.munId);
     }
     async function f() {
       municipalObjects = [];
@@ -50,10 +50,10 @@ export class ChooseMunicipalPage extends Component {
 
   async go() {
     //$FlowFixMe
-    let municipal = municipalObjects.find(e => e.name == glob).munId;
-    if (municipal) {
-      localStorage.setItem('munId', municipal.toString());
-      history.push('/municipal/' + municipal);
+    let municipalId = municipalObjects.find(e => e.name == glob).munId;
+    if (municipalId) {
+      localStorage.setItem('munId', municipalId.toString());
+      history.push('/kommune/' + municipalId);
     }
   }
 }
