@@ -46,6 +46,14 @@ if (root)
           <!-- TODO: Header, footer  -->
           <Route exact path="/" component={ChooseMunicipalPage} /> <!-- Forside  -->
 
+          <Route exact path="/login" component={LoginPage} /> <!-- Innloggingsside -->
+
+          <Route exact path="/register" component={RegisterPage} /> <!-- Registreringsside -->
+
+          <Route exact path="/forgotPassword" component={ForgotPassword} /> <!-- Registreringsside -->
+
+          <Route exact path="/forgotPassword/reset" component={NewPasswordPage} /> <!-- Registreringsside -->
+
           <!-- TODO: Småfiks på profilsiden  -->
           <Route exact path="/profil" component={UserProfilePage} /> <!-- Profilside -->
 
@@ -53,7 +61,7 @@ if (root)
           <Route exact path="/feed" component={} /> <!-- Din feed -->
 
           <!-- TODO: Legg til kart  -->
-          <Route exact path="/registrerSak" component={} /> <!-- Registrer sak -->
+          <Route exact path="/registrerSak" component={FileIssuePage} /> <!-- Registrer sak -->
 
           <!-- TODO: Bedriftsbruker skal kun se saker han er tildelt  -->
           <Route exact path="/bedrift" component={} /> <!-- Bedriftsbruker feed -->
@@ -66,19 +74,19 @@ if (root)
 
           <!-- Kommunesider -->
           <!-- TODO: Hjemmeside for kommunen  -->
-          <Route exact path="/kommune/:munId" component={} /> <!-- Hjemmeside -->
+          <Route exact path="/kommune/:munId" component={MunicipalPage} /> <!-- Hjemmeside -->
 
           <!-- TODO: Vis alle saker i en kommune  -->
-          <Route exact path="/kommune/:munId/sak" component={} /> <!-- Saker (for kommuneansatt?) -->
+          <Route exact path="/kommune/:munId/sak" component={IssuePage} /> <!-- Saker (for kommuneansatt?) -->
 
           <!-- TODO: Viser en spesifikk sak i en kommune  -->
-          <Route exact path="/kommune/:munId/sak/:issueId" component={} /> <!-- Spesifikk sak -->
+          <Route exact path="/kommune/:munId/sak/:issueId" component={IssueLarge} /> <!-- Spesifikk sak -->
 
           <!-- TODO: Vis alle events i en kommune  -->
-          <Route exact path="/kommune/:munId/hendelse" component={} /> <!-- Events -->
+          <Route exact path="/kommune/:munId/hendelse" component={EventPage} /> <!-- Events -->
 
           <!-- TODO: Viser en spesifikk sak i en kommune  -->
-          <Route exact path="/kommune/:munId/hendelse/:eventId" component={} /> <!-- Events -->
+          <Route exact path="/kommune/:munId/hendelse/:eventId" component={EventInfo} /> <!-- Events -->
 
           <!-- TODO: Kommuneansatt sin side. Vis alle saker for godkjenning  -->
           <Route exact path="/kommune/:munId/ansatt" component={} /> <!-- Ansattside -->
