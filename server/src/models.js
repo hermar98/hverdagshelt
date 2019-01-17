@@ -4,8 +4,8 @@ require('dotenv').config({ path: 'C:\\hverdagshelt_Team_3\\.env' });
 
 let sequelize = new Sequelize(
   process.env.CI ? 'database' : 'hverdagshelt',
-  process.env.CI ? 'root' : 'vegard',
-  process.env.CI ? '' : '1234',
+  process.env.CI ? 'root' : 'user',
+  process.env.CI ? '' : 'password',
   // process.env.CI ? 'database' : 'sebasman',
   // process.env.CI ? 'root' : 'sebasman',
   // process.env.CI ? '' : 'GSBLuzbB',
@@ -392,8 +392,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
               hashStr:
                 '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
               munId: 528,
-              profilePicture:
-                'https://internationalwim.org/wp-content/uploads/2018/05/JulieBaxter1-393x500.jpg'
+              profilePicture: 'https://internationalwim.org/wp-content/uploads/2018/05/JulieBaxter1-393x500.jpg'
             },
             {
               firstName: 'Sebastian',
@@ -521,7 +520,8 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           {
             issueId: 1,
             title: 'Dumme folk ødeleger lømp',
-            content: 'Ein artikkel er ein sakprosasjanger som legg vekt på saksinnhaldet medan personlege trekk ved teksten er nedtona. Oppbygginga av ein artikkel er logisk og velordna og følgjer ofte ei klassisk tredeling med innleiing, midtdel og konklusjon. Språket er normalprosa med moderat bruk av litterære verkemiddel. Det er stort spenn i meiningsinnhald innan undersjangrane av artikkelen, frå den nøytrale og informative leksikonartikkelen til artiklar som inneheld spissformulerte meiningsytringar, t.d. leiarartikkelen eller lesarbrevet i ei avis. Artikkelsjangrane varierer også mykje i lengde og informasjonsmengde. Her utgjer den minste nyhendeartikkelen i ei avis, notisen, eit ytterpunkt, medan fagartikkelen er døme på artiklar som kan vera lange og innhaldsrike',
+            content:
+              'Ein artikkel er ein sakprosasjanger som legg vekt på saksinnhaldet medan personlege trekk ved teksten er nedtona. Oppbygginga av ein artikkel er logisk og velordna og følgjer ofte ei klassisk tredeling med innleiing, midtdel og konklusjon. Språket er normalprosa med moderat bruk av litterære verkemiddel. Det er stort spenn i meiningsinnhald innan undersjangrane av artikkelen, frå den nøytrale og informative leksikonartikkelen til artiklar som inneheld spissformulerte meiningsytringar, t.d. leiarartikkelen eller lesarbrevet i ei avis. Artikkelsjangrane varierer også mykje i lengde og informasjonsmengde. Her utgjer den minste nyhendeartikkelen i ei avis, notisen, eit ytterpunkt, medan fagartikkelen er døme på artiklar som kan vera lange og innhaldsrike',
             image:
               'https://www.thesun.co.uk/wp-content/uploads/2018/07/AF-COMPOSITE-FIGHT.jpg?strip=all&quality=100&w=750&h=500&crop=1',
             longitude: 60.656877,
@@ -536,7 +536,8 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           {
             issueId: 2,
             title: 'Veilys på gata hjemme er ødelagt',
-            content: 'Ein artikkel er ein sakprosasjanger som legg vekt på saksinnhaldet medan personlege trekk ved teksten er nedtona. Oppbygginga av ein artikkel er logisk og velordna og følgjer ofte ei klassisk tredeling med innleiing, midtdel og konklusjon. Språket er normalprosa med moderat bruk av litterære verkemiddel. Det er stort spenn i meiningsinnhald innan undersjangrane av artikkelen, frå den nøytrale og informative leksikonartikkelen til artiklar som inneheld spissformulerte meiningsytringar, t.d. leiarartikkelen eller lesarbrevet i ei avis. Artikkelsjangrane varierer også mykje i lengde og informasjonsmengde. Her utgjer den minste nyhendeartikkelen i ei avis, notisen, eit ytterpunkt, medan fagartikkelen er døme på artiklar som kan vera lange og innhaldsrike',
+            content:
+              'Ein artikkel er ein sakprosasjanger som legg vekt på saksinnhaldet medan personlege trekk ved teksten er nedtona. Oppbygginga av ein artikkel er logisk og velordna og følgjer ofte ei klassisk tredeling med innleiing, midtdel og konklusjon. Språket er normalprosa med moderat bruk av litterære verkemiddel. Det er stort spenn i meiningsinnhald innan undersjangrane av artikkelen, frå den nøytrale og informative leksikonartikkelen til artiklar som inneheld spissformulerte meiningsytringar, t.d. leiarartikkelen eller lesarbrevet i ei avis. Artikkelsjangrane varierer også mykje i lengde og informasjonsmengde. Her utgjer den minste nyhendeartikkelen i ei avis, notisen, eit ytterpunkt, medan fagartikkelen er døme på artiklar som kan vera lange og innhaldsrike',
             image: 'http://www.otera.no/image/20111206015-kopi.jpeg?w=1200',
             longitude: 60.661293,
             latitude: 10.828996,
@@ -550,7 +551,8 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           {
             issueId: 3,
             title: 'Dårlig grafitti på skole veggen',
-            content: 'Ein artikkel er ein sakprosasjanger som legg vekt på saksinnhaldet medan personlege trekk ved teksten er nedtona. Oppbygginga av ein artikkel er logisk og velordna og følgjer ofte ei klassisk tredeling med innleiing, midtdel og konklusjon. Språket er normalprosa med moderat bruk av litterære verkemiddel. Det er stort spenn i meiningsinnhald innan undersjangrane av artikkelen, frå den nøytrale og informative leksikonartikkelen til artiklar som inneheld spissformulerte meiningsytringar, t.d. leiarartikkelen eller lesarbrevet i ei avis. Artikkelsjangrane varierer også mykje i lengde og informasjonsmengde. Her utgjer den minste nyhendeartikkelen i ei avis, notisen, eit ytterpunkt, medan fagartikkelen er døme på artiklar som kan vera lange og innhaldsrike',
+            content:
+              'Ein artikkel er ein sakprosasjanger som legg vekt på saksinnhaldet medan personlege trekk ved teksten er nedtona. Oppbygginga av ein artikkel er logisk og velordna og følgjer ofte ei klassisk tredeling med innleiing, midtdel og konklusjon. Språket er normalprosa med moderat bruk av litterære verkemiddel. Det er stort spenn i meiningsinnhald innan undersjangrane av artikkelen, frå den nøytrale og informative leksikonartikkelen til artiklar som inneheld spissformulerte meiningsytringar, t.d. leiarartikkelen eller lesarbrevet i ei avis. Artikkelsjangrane varierer også mykje i lengde og informasjonsmengde. Her utgjer den minste nyhendeartikkelen i ei avis, notisen, eit ytterpunkt, medan fagartikkelen er døme på artiklar som kan vera lange og innhaldsrike',
             image: 'http://i.imgur.com/so8Ea.jpg',
             longitude: 60.684721,
             latitude: 10.841522,
@@ -564,7 +566,8 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           {
             issueId: 4,
             title: 'Veilys ødelagt på 33',
-            content: 'Ein artikkel er ein sakprosasjanger som legg vekt på saksinnhaldet medan personlege trekk ved teksten er nedtona. Oppbygginga av ein artikkel er logisk og velordna og følgjer ofte ei klassisk tredeling med innleiing, midtdel og konklusjon. Språket er normalprosa med moderat bruk av litterære verkemiddel. Det er stort spenn i meiningsinnhald innan undersjangrane av artikkelen, frå den nøytrale og informative leksikonartikkelen til artiklar som inneheld spissformulerte meiningsytringar, t.d. leiarartikkelen eller lesarbrevet i ei avis. Artikkelsjangrane varierer også mykje i lengde og informasjonsmengde. Her utgjer den minste nyhendeartikkelen i ei avis, notisen, eit ytterpunkt, medan fagartikkelen er døme på artiklar som kan vera lange og innhaldsrike',
+            content:
+              'Ein artikkel er ein sakprosasjanger som legg vekt på saksinnhaldet medan personlege trekk ved teksten er nedtona. Oppbygginga av ein artikkel er logisk og velordna og følgjer ofte ei klassisk tredeling med innleiing, midtdel og konklusjon. Språket er normalprosa med moderat bruk av litterære verkemiddel. Det er stort spenn i meiningsinnhald innan undersjangrane av artikkelen, frå den nøytrale og informative leksikonartikkelen til artiklar som inneheld spissformulerte meiningsytringar, t.d. leiarartikkelen eller lesarbrevet i ei avis. Artikkelsjangrane varierer også mykje i lengde og informasjonsmengde. Her utgjer den minste nyhendeartikkelen i ei avis, notisen, eit ytterpunkt, medan fagartikkelen er døme på artiklar som kan vera lange og innhaldsrike',
             image: 'https://i.ytimg.com/vi/MPNN_nVwG5w/maxresdefault.jpg',
             longitude: 60.68273,
             latitude: 10.831514,
@@ -587,7 +590,8 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           },
           {
             name: 'Veilyset på 33 er fisket!',
-            content: 'Oppbygginga av ein artikkel er logisk og velordna og følgjer ofte ei klassisk tredeling med innleiing, midtdel og konklusjon. Språket er normalprosa med moderat bruk av litterære verkemiddel. Det er stort spenn i meiningsinnhald innan undersjangrane av artikkelen, frå den nøytrale og informative leksikonartikkelen til artiklar som inneheld spissformulerte meiningsytringar, t.d. leiarartikkelen eller lesarbrevet i ei avis. Artikkelsjangrane varierer også mykje i lengde og informasjonsmengde. Her utgjer den minste nyhendeartikkelen i ei avis, notisen, eit ytterpunkt, medan fagartikkelen er døme på artiklar som kan vera lange og innhaldsrike',
+            content:
+              'Oppbygginga av ein artikkel er logisk og velordna og følgjer ofte ei klassisk tredeling med innleiing, midtdel og konklusjon. Språket er normalprosa med moderat bruk av litterære verkemiddel. Det er stort spenn i meiningsinnhald innan undersjangrane av artikkelen, frå den nøytrale og informative leksikonartikkelen til artiklar som inneheld spissformulerte meiningsytringar, t.d. leiarartikkelen eller lesarbrevet i ei avis. Artikkelsjangrane varierer også mykje i lengde og informasjonsmengde. Her utgjer den minste nyhendeartikkelen i ei avis, notisen, eit ytterpunkt, medan fagartikkelen er døme på artiklar som kan vera lange og innhaldsrike',
             date: new Date(Date.now()),
             userId: '2',
             issueId: '4'
