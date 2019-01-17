@@ -345,8 +345,8 @@ describe('Event tests', () => {
     expect(response.statusCode).toBe(200);
     expect(response.type).toEqual('application/json');
 
-    expect(response.body.title).toBe('party at the house man!');
-    expect(response.body.content).toBe('Det skal være party at the house!');
+    expect(response.body.title).toBe('Konsert i Trondheim');
+    expect(response.body.content).toBe('Det skal være party at the house etterpå!');
     expect(response.body.longitude).toBe(60.652168);
     expect(response.body.latitude).toBe(10.822102);
     expect(response.body.userId).toBe(1);

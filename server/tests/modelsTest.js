@@ -166,8 +166,8 @@ describe('Event tests', () => {
     ).toEqual([
       {
         eventId: 1,
-        title: 'party at the house man!',
-        content: 'Det skal være party at the house!',
+        title: 'Konsert i Trondheim',
+        content: 'Det skal være party at the house etterpå!',
         longitude: 60.652168,
         latitude: 10.822102
       }
@@ -189,7 +189,7 @@ describe('IssueCategory tests', () => {
     ).toEqual([
       {
         categoryId: 1,
-        name: 'Fyllikere på gata som ødeleger lamper'
+        name: 'Fyllikere på gata som ødelegger lamper'
       }
     ]);
   });

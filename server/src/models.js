@@ -507,11 +507,11 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
       )
       .then(() =>
         IssueCategory.bulkCreate([
-          { name: 'Fyllikere på gata som ødeleger lamper' },
+          { name: 'Fyllikere på gata som ødelegger lamper' },
           { name: 'En veilys er ødelagt' },
-          { name: 'Et veihul på gata' },
-          { name: 'Grafitti på offentlig bygning' },
-          { name: 'Sømpel dumpet' },
+          { name: 'Et veihull på gata' },
+          { name: 'Grafiti på offentlig bygning' },
+          { name: 'Søppel dumpet' },
           { name: 'Forlatt Sykkel' }
         ])
       )
@@ -527,7 +527,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             longitude: 60.656877,
             latitude: 10.824107,
             date: new Date(Date.now()),
-            munId: 528,
+            munId: 5001,
             userId: 1,
             categoryId: 1,
             statusId: 1
@@ -542,7 +542,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             longitude: 60.661293,
             latitude: 10.828996,
             date: new Date(Date.now()),
-            munId: 528,
+            munId: 5001,
             userId: 3,
             categoryId: 2,
             statusId: 2
@@ -557,7 +557,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             longitude: 60.684721,
             latitude: 10.841522,
             date: new Date(Date.now()),
-            munId: 528,
+            munId: 5001,
             userId: 2,
             categoryId: 4,
             statusId: 1
@@ -572,7 +572,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             longitude: 60.68273,
             latitude: 10.831514,
             date: new Date(Date.now()),
-            munId: 528,
+            munId: 5001,
             userId: 6,
             categoryId: 2,
             statusId: 3
@@ -617,8 +617,8 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
       .then(() =>
         Event.bulkCreate([
           {
-            title: 'party at the house man!',
-            content: 'Det skal være party at the house!',
+            title: 'Konsert i Trondheim',
+            content: 'Det skal være party at the house etterpå!',
             image: 'http://www.hollandevenementengroep.nl/foto/11902/1000/files/Accent%20Fotos/the_party.jpg',
             longitude: 60.652168,
             latitude: 10.822102,
@@ -629,8 +629,8 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
             munId: 5001
           },
           {
-            title: 'PARTIET FORSETTER!',
-            content: 'DET FORRIGE PARTY FORSETTER HOS ANDERS!',
+            title: 'PARTIET I TRONDHEIM FORSETTER!',
+            content: 'DET FORRIGE PARTY FORSETTER HOS ANDERS I DAG!',
             image: 'http://www.chinatownfair.biz/party.gif',
             longitude: 60.655754,
             latitude: 10.817339,
