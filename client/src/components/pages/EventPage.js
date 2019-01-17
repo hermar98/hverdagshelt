@@ -136,23 +136,28 @@ export class EventInfo extends Component<{match: {params: {eventId: number}}}> {
         if (!this.eventCategory) return null;
 
         return (
-            <div className="container my-4">
-                <div className="card">
-                    <img className="card-img-top" src={this.event.image}/>
-                    <h2 className="card-title">{this.event.title}</h2>
-                    <p className="card-text">
-                        <small>
-                            <b>Category: </b>
-                            {this.eventCategory.name}
-                            <br/><b>From: </b>
-                            {moment(this.event.timeStart).format('DD.MM.YYYY HH:mm')}
-                            <br/><b>To: </b>
-                            {moment(this.event.timeEnd).format('DD.MM.YYYY HH:mm')}
-                            <br/><b>Location: </b>
-                            {this.event.latitude + ' ' + this.event.longitude}
-                        </small>
-                    </p>
-                    <p className="card-text">{this.event.content}</p>
+            <div>
+                <Menu/>
+                <div className="container my-4">
+                    <div className="card">
+                        <img className="card-img-top" src={this.event.image}/>
+                        <div className="card-body">
+                            <h2 className="card-title">{this.event.title}</h2>
+                            <p className="card-text">
+                                <small>
+                                    <b>Kategori: </b>
+                                    {this.eventCategory.name}
+                                    <br/><b>Fra: </b>
+                                    {moment(this.event.timeStart).format('DD.MM.YYYY HH:mm')}
+                                    <br/><b>Til: </b>
+                                    {moment(this.event.timeEnd).format('DD.MM.YYYY HH:mm')}
+                                    <br/><b>Sted (koordinater): </b>
+                                    {this.event.latitude + ', ' + this.event.longitude}
+                                </small>
+                            </p>
+                            <p className="card-text">{this.event.content}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
