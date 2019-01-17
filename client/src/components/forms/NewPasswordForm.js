@@ -13,7 +13,8 @@ export default class NewPasswordForm extends Component {
   password = '2';
   passwordr = '';
   form = null;
-
+  munId = localStorage.getItem('munId');
+  //TODO: pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
   render() {
     return (
       <Card title="Nytt Passord">
@@ -23,7 +24,7 @@ export default class NewPasswordForm extends Component {
             onChange={event => (this.password = event.target.value)}
             required
             placeholder="Nytt Passord"
-            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            pattern=".{8,}"
           />
           <Form.Input
             type="password"
@@ -56,8 +57,9 @@ export default class NewPasswordForm extends Component {
       .newPassword(window.location.hash.slice(8), this.password)
       .then(token => {
         localStorage.setItem('token', JSON.stringify(token));
-        history.push('/issues');
+        history.push('/municipal/' + this.munId);
         console.log('Login ok');
+        console.log(this.password + 'form');
       })
       .catch((error: Error) => Alert.danger(error.message));
   }

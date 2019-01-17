@@ -19,7 +19,7 @@
 div.status > h4 {
     font-size: 3vh;
 }
-.issue-container {margin: 5% 16% 2% 16%}
+.issue-container {margin: 2% 12% 10% 12%}
 .issue-image:hover {
     background-color: #b9bbbe;
 }
@@ -69,19 +69,20 @@ div.status > h4 {
 
 .list-group-item {
     margin-bottom: 10px;
-    padding: 0 0 0 0
+    padding: 1% 1% 1% 1%;
 }
 
 .profile-image {
     border: gray solid 1px;
     border-radius: 50%;
     height: 9vh;
-    width: auto;
+    width: 9vh;
     margin: 1vh 1vh 1vh 1vh;
 }
 
 .issue-large {
     margin-bottom: 10vh;
+    margin-top: 5%
 }
 
 .feedback-title {
@@ -113,7 +114,7 @@ div.status > h4 {
 .sort-box {
     padding: 1% 1% 0 1%;
     margin-bottom: 2%;
-    background-color: #32383e;
+    background-color: #3d3d3d;
 }
 
 .hover-button {
@@ -134,12 +135,8 @@ div.feedback-button div {
 
 #a-hover:hover {
     background-color: white;
-    opacity: 0.5;
-    border: solid whitesmoke .3vw;
-}
-
-.issue-hover:hover .status-image {
-    opacity: 0;
+    opacity: 0.6;
+    border: solid #d2d2d2 .8vh;
 }
 
 #a-hover {
@@ -147,15 +144,15 @@ div.feedback-button div {
     top: 0; left: 0;
     height: 100%; width: 100%;
     display: flex;
-    justify-content: end;
+    justify-content: center;
 }
 
 #a-hover img {
     opacity: 0;
     width: auto;
-    height: 4vw;
-    padding-left: 1vw;
-    margin-right: 1vw;
+    height: 5vh;
+    padding-left: 1vh;
+    margin-right: 5vh;
     align-self: center;
 }
 
@@ -164,7 +161,7 @@ div.feedback-button div {
 }
 
 #a-hover:hover img {
-    opacity: 0.5;
+    opacity: 0.6;
 }
 
 #image-hover {
@@ -186,8 +183,8 @@ div.feedback-button div {
 }
 
 .status-image {
-    width: 6vh;
-    height: 6vh;
+    width: 4.5vh;
+    height: 4.5vh;
 }
 
 .issue-normal {
@@ -199,18 +196,18 @@ div.feedback-button div {
 }
 
 #issue-normal-title {
-    font-size: 1.2vw;
+    font-size: 90%;
     font-weight: bold;
     letter-spacing: 1px;
 }
 
 #issue-normal-text {
-    margin: .6vw 0 .6vw 0;
+    margin: 1vh 2vh 1vh 0;
     flex: 1;
 }
 
 #date-normal {
-    font-size: 1vw;
+    font-size: 75%;
 }
 
 .status-selection {
@@ -223,7 +220,7 @@ div.feedback-button div {
 }
 
 #feedback-text {
-    margin: 2% 0 0 0;
+    margin: 3% 0 2% 0;
 }
 
 .submitter {
@@ -243,9 +240,53 @@ div.feedback-button div {
 }
 
 .feedback-container {
-    margin: 0 16% 12% 16%;
+    margin: 2% 0 5% 0
 }
 
 #issue-large-text {
-    font-size: 120%;
+    font-size: 110%;
+    margin: 2% 0 2% 0;
 }
+
+.normal-list-item {
+    padding: 0 0 0 0;
+}
+
+.view-text {
+    flex: 1
+}
+
+.status-label {
+    font-size: 110%;
+    opacity: 0.6;
+}
+.status-box {
+    border-bottom: lightgray 2px solid;
+    background-color: lightgray;
+}
+
+.issue-hover .status-image {
+    margin-bottom: 1.5vh;
+}
+
+.issue-large-card {
+    padding: 6vh 6vh 6vh 6vh
+}
+
+.issue-images {
+    margin-top: 3%;
+}
+
+.feedback {
+    border-bottom: solid 1vh whitesmoke;
+    margin-bottom: 3%;
+}
+
+.feedback-card {
+    padding: 2% 2% 1% 2%;
+}
+
+#date-large {
+    margin-top: 1.5%;
+}
+

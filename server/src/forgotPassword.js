@@ -12,9 +12,9 @@ type Response = express$Response;
 const app = require('./app');
 
 app.post('/forgotPassword', (req: Request, res: Response) => {
-    //Flow type checking mixed src: https://github.com/flow-typed/flow-typed/issues/812
-    const body = (req.body !== null && typeof req.body === 'object') ? req.body : {};
-    const {email} = body;
+  //Flow type checking mixed src: https://github.com/flow-typed/flow-typed/issues/812
+  const body = req.body !== null && typeof req.body === 'object' ? req.body : {};
+  const { email } = body;
   // if (!req.body || !(typeof req.body.email === 'string')) return res.sendStatus(400);
   if (!email) {
     res.json('email er påkrevd');
@@ -61,7 +61,7 @@ app.post('/forgotPassword', (req: Request, res: Response) => {
         text:
           `Du har fått denne emailen etter din (eller noen andres) forespørsel om resetting av passordet for din bruker.\n\n` +
           `Venligst klikk på denne linken, eller kopier og lim den in til din søker for å fullføre prossesen, helst innen en time etter du fikk den:\n\n` +
-          `http://localhost:3031/reset/${token}\n\n` +
+          `http://localhost:3000/#/reset/${token}\n\n` +
           `Hvis du ikke har forespurt denne passord endringen så bare ignorer denne emailen og din passord vil ikke endres:\n\n`
       };
 

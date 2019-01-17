@@ -10,7 +10,6 @@ export class ForgotPassword extends Component {
   render() {
     return (
       <div>
-        <Menu />
         <ForgotPasswordForm />
       </div>
     );

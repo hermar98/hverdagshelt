@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Event } from '../../models.js';
-import { eventService} from '../../services';
+import { Event, EventCategory } from '../../models.js';
+import {eventService, eventCategoryService} from '../../services';
 import {Alert, DisplayEvent} from '../../widgets';
 import {Issue} from "../../models";
 import {Status} from "../issueViews/issueViews";
@@ -91,4 +91,85 @@ export class EventLarge extends Component<{ event: Event }> {
         </div>
     )
   }
+}
+
+export class EventSmall extends Component<{ event: Event }> {
+
+  textLength = 50;
+
+  render() {
+    return (
+      <div className="card mb-2">
+        <a id="a-hover" href={"#/municipal/" + this.props.event.munId + "/events/" + this.props.event.eventId}>
+          <img src="../../images/arrowRightTrans.png" />
+        </a>
+        <div className="card-body">
+          <div className="row">
+            <h5 className="card-title">{this.props.event.title}</h5>
+            <img id="event-image-small" src={this.props.event.image} alt={"Bildetekst"}/>
+          </div>
+        </div>
+        <div>
+          {(this.props.event.content <= this.textLength ? (this.props.event.content):
+            (this.props.event.content.substring(0, this.textLength) + "..."))}
+        </div>
+        <div className="card-footer">
+          <small className="text-muted-left">{"Starter: " + moment(this.props.event.timeStart).format("DD.MM HH:mm")}</small>
+          <small className="text-muted-right">{"Slutter: " + moment(this.props.event.timeEnd).format("DD.MM HH:mm")}</small>
+        </div>
+      </div>
+    )
+  }
+
+  mounted(){
+
+  }
+}
+
+
+export class EventInfo extends Component<{match: {params: {eventId: number}}}> {
+    event = null;
+    eventCategory = null;
+
+    render() {
+        if (!this.event) return null;
+        if (!this.eventCategory) return null;
+
+        return (
+            <div>
+                <Menu/>
+                <div className="container my-4">
+                    <div className="card">
+                        <img className="card-img-top" src={this.event.image}/>
+                        <div className="card-body">
+                            <h2 className="card-title">{this.event.title}</h2>
+                            <p className="card-text">
+                                <small>
+                                    <b>Kategori: </b>
+                                    {this.eventCategory.name}
+                                    <br/><b>Fra: </b>
+                                    {moment(this.event.timeStart).format('DD.MM.YYYY HH:mm')}
+                                    <br/><b>Til: </b>
+                                    {moment(this.event.timeEnd).format('DD.MM.YYYY HH:mm')}
+                                    <br/><b>Sted (koordinater): </b>
+                                    {this.event.latitude + ', ' + this.event.longitude}
+                                </small>
+                            </p>
+                            <p className="card-text">{this.event.content}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    mounted() {
+        eventService.getEvent(this.props.match.params.eventId)
+            .then(event => {
+                this.event = event;
+                eventCategoryService.getCategory(event.categoryId)
+                    .then(eventCategory => this.eventCategory = eventCategory)
+                    .catch((error: Error) => Alert.danger(error.message))
+            }).catch((error: Error) => Alert.danger(error.message));
+    }
 }

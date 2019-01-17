@@ -12,10 +12,13 @@ require('./routes/feedback');
 require('./routes/issues');
 require('./routes/image');
 require('./forgotPassword');
+require('./routes/feedback');
+require('./routes/issues');
+require('./forgotPassword');
 
-const googleMapsClient = require('@google/maps').createClient({
-  key: 'AIzaSyA1yYbq9zX4FeY6oCLLASJEkqjvL9Rakok'
-});
+// const googleMapsClient = require('@google/maps').createClient({
+//   key: 'AIzaSyA1yYbq9zX4FeY6oCLLASJEkqjvL9Rakok'
+// });
 
 // Hot reload application when not in production environment
 if (process.env.NODE_ENV !== 'production') {
