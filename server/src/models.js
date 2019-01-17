@@ -4,11 +4,16 @@ require('dotenv').config({ path: 'C:\\hverdagshelt_Team_3\\.env' });
 
 let sequelize = new Sequelize(
   process.env.CI ? 'database' : 'hverdagshelt',
+<<<<<<< HEAD
   process.env.CI ? 'root' : 'user',
   process.env.CI ? '' : 'password',
   // process.env.CI ? 'database' : 'sebasman',
   // process.env.CI ? 'root' : 'sebasman',
   // process.env.CI ? '' : 'GSBLuzbB',
+=======
+  process.env.CI ? 'root' : 'vegard',
+  process.env.CI ? '' : '1234',
+>>>>>>> ba0d4a4ce2c1b363ec00533a5abc37c3ea023ed2
   {
     host: process.env.CI ? 'mysql' : 'localhost',
     dialect: 'mysql',
