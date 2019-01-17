@@ -3,12 +3,23 @@ import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 import {Redirect, NavLink} from 'react-router-dom'
 import { Issue, Feedback, User } from '../../models';
-import { issueService, userService, feedbackService } from "../../services";
+import {issueService, userService, feedbackService, issueCategoryService} from "../../services";
 import Menu from '../menu/Menu';
 import {tokenManager} from "../../tokenManager";
 
 let sharedIssues = sharedComponentData({issues: []})
 let sharedFeedback = sharedComponentData({feedback: []})
+
+let formatDate = function (date: Date) {
+    if(date != null) {
+        let str: string = date
+        str = str.substring(0, str.length - 8)
+        str = str.replace("T", " KL. ")
+        return str;
+    }
+    return;
+}
+
 
 /*
 Large view of an issue, which includes the title, content, image and status.
@@ -28,11 +39,9 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
 
     issue = new Issue();
     feedbackContent: string = '';
+    categoryName: string = '';
 
     render() {
-
-        console.log(this.state.clickedSend)
-
         if(!this.state.clickedStatus && this.statusSelect.current != null) {
             this.statusSelect.current.classList.add('show')
         }else if(this.statusSelect.current != null){
@@ -55,7 +64,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                         <div className="card">
                             <div className="card-body issue-large-card">
                                 <div className="d-flex flex-row">
-                                    <p id="date-large" className="date">{this.issue.createdAt}</p>
+                                    <p id="date-large" className="date">{formatDate(this.issue.createdAt)}</p>
                                     <div className="options">
                                         <ImageButton source="../../images/cog.png" onclick="Edited" />
                                         <ImageButton source="../../images/trashcan.png" onclick={() => this.onDelete()} />
@@ -73,7 +82,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                         <StatusButton status={3} onclick={() => this.onClick(3)} />
                                     </div>
                                 </div>
-                                <h5>Kategori</h5>
+                                <h5>{this.categoryName}</h5>
                                 <div className="card-text">
                                     <p id="issue-large-text">{this.issue.content}</p>
                                 </div>
@@ -120,6 +129,11 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
         issueService.getIssue(this.props.match.params.issueId)
             .then(issue => {
                 this.issue = issue;
+                issueCategoryService.getCategory(this.issue.categoryId)
+                    .then(category => {
+                        this.categoryName = category.name
+                    })
+                    .catch(error => console.error("Error: ", error))
             })
             .catch(error => console.error("Error: ", error))
         feedbackService.getFeedbacks(this.props.match.params.issueId)
@@ -182,6 +196,9 @@ A regular view of the issue, intended to be stacked.
 Includes the title and the picture
  */
 export class IssueNormal extends Component<{issue: Issue, munId: number}>{
+
+    categoryName: string = '';
+
     render () {
         return (
             <div className="issue-normal issue-hover" issue={this.props.issue}>
@@ -195,9 +212,9 @@ export class IssueNormal extends Component<{issue: Issue, munId: number}>{
                     <div id="issue-normal-text">
                         <p id="issue-normal-content">{(this.props.issue.content).substring(0, 136) + " . . ."}</p>
                         <div>
-                            <p id="date-normal" className="date">{this.props.issue.createdAt}</p>
+                            <p id="date-normal" className="date">{formatDate(this.props.issue.createdAt)}</p>
                             <h5 id="issue-normal-title">
-                                Kategori
+                                {this.categoryName}
                             </h5>
                         </div>
                     </div>
@@ -207,12 +224,23 @@ export class IssueNormal extends Component<{issue: Issue, munId: number}>{
             </div>
         )
     }
+
+    mounted () {
+        issueCategoryService.getCategory(this.props.issue.categoryId)
+            .then(category => {
+                this.categoryName = category.name
+            })
+            .catch(error => console.error("Error: ", error))
+    }
 }
 
 /*
 Small view of an issue that displays only the title and the status
  */
 export class IssueSmall extends Component<{issue: Issue, munId: number}> {
+
+    categoryName: string = '';
+
     render() {
         return (
             <div className="issue-small issue-hover" issue={this.props.issue}>
@@ -222,9 +250,9 @@ export class IssueSmall extends Component<{issue: Issue, munId: number}> {
                 <div>
                     <div className="d-flex flex-row issue-flex justify-content-between">
                         <div className="view-text">
-                            <p className="date">{this.props.issue.createdAt}</p>
+                            <p className="date">{formatDate(this.props.issue.createdAt)}</p>
                             <h5>
-                                {this.props.issue.title}
+                                {this.categoryName}
                             </h5>
                         </div>
                         <p>Status:&nbsp;&nbsp;</p>
@@ -233,6 +261,14 @@ export class IssueSmall extends Component<{issue: Issue, munId: number}> {
                 </div>
             </div>
         )
+    }
+
+    mounted () {
+        issueCategoryService.getCategory(this.props.issue.categoryId)
+            .then(category => {
+                this.categoryName = category.name
+            })
+            .catch(error => console.error("Error: ", error))
     }
 }
 
@@ -302,7 +338,7 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
                                 <div className="p-2">
                                     <img className="card-img profile-image" src={this.user.profilePicture}/>
                                 </div>
-                                <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{this.props.feedback.createdAt}</p></div>
+                                <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{formatDate(this.props.feedback.createdAt)}</p></div>
                             <ImageButton source="../../images/cog.png" onclick="Edited" />
                             <ImageButton source="../../images/trashcan.png" onclick={() => this.onDelete()}/>
                         </div>

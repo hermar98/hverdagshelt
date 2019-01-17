@@ -19,7 +19,7 @@
 div.status > h4 {
     font-size: 3vh;
 }
-.issue-container {margin: 2% 12% 2% 12%}
+.issue-container {margin: 2% 12% 10% 12%}
 .issue-image:hover {
     background-color: #b9bbbe;
 }
