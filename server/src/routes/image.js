@@ -1,5 +1,8 @@
 import * as IssuePicture from "sequelize";
 
+const app = require('../app');
+
+
 app.get('/secure/image//:id', (req: Request, res: Response) => {
     return IssuePicture.findAll({
         where: { imageId: Number(req.params.id) }

@@ -7,10 +7,18 @@ const public_path = path.join(__dirname, '/../../client/public');
 
 const app = require('./app');
 
-require('./forgotPassword');
-require('./routes/feedback');
+require('./routes/forgotPassword');
 require('./routes/issues');
-require('./forgotPassword');
+require('./routes/eventCategory');
+require('./routes/county');
+require('./routes/feedback');
+require('./routes/image');
+require('./routes/issueCategory');
+require('./routes/municipal');
+require('./routes/userIssue');
+require('./routes/userMunicipal');
+require('./routes/users');
+require('./routes/events');
 
 // const googleMapsClient = require('@google/maps').createClient({
 //   key: 'AIzaSyA1yYbq9zX4FeY6oCLLASJEkqjvL9Rakok'

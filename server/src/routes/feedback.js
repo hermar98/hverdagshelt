@@ -1,11 +1,11 @@
-import {Feedback, Issue} from "../models";
+import {Feedback} from "../models";
 require('dotenv').config();
 
 type Request = express$Request;
 type Response = express$Response;
 
 const app = require('../app');
-
+//POST one feedback
 app.post('/secure/feedback', (req: Request, res: Response) => {
     if (!(req.body instanceof Object)) return res.sendStatus(400);
     return Feedback.create({
@@ -16,6 +16,7 @@ app.post('/secure/feedback', (req: Request, res: Response) => {
     }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
 });
 
+//GET all feedback for one issue, ordered ascending
 app.get('/issues/:id/feedback/:lim/limit/:off/offset/asc', (req: Request, res: Response) => {
     return Feedback.findAll({
         where: {
@@ -30,7 +31,7 @@ app.get('/issues/:id/feedback/:lim/limit/:off/offset/asc', (req: Request, res: R
         issue => (issue ? res.send(issue) : res.sendStatus(404))
     );
 });
-
+//GET all feedback for one issue, ordered descending
 app.get('/issues/:id/feedback/:lim/limit/:offs/offset/desc', (req: Request, res: Response) => {
     return Feedback.findAll({
         where: {
@@ -45,7 +46,7 @@ app.get('/issues/:id/feedback/:lim/limit/:offs/offset/desc', (req: Request, res:
         issue => (issue ? res.send(issue) : res.sendStatus(404))
     );
 });
-
+//GET one feedback with id
 app.get('/feedback/:id', (req: Request, res: Response) => {
     return Feedback.findOne({
         where: {
@@ -55,7 +56,7 @@ app.get('/feedback/:id', (req: Request, res: Response) => {
         feedbak => (feedbak ? res.send(feedbak) : res.sendStatus(404))
     );
 });
-
+//DELETE one feedback with id
 app.delete('/feedback/:id', (req: Request, res: Response) => {
     return Feedback.destroy({
         where: {
