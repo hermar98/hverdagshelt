@@ -1,15 +1,6 @@
 // @flow
 import {
-    UserIssue,
-    UserMunicipal,
-    // Feedback,
-    IssueCategory,
-    EventCategory,
-    Event,
-    Issue,
     County,
-    Municipal,
-    User,
     sync
 } from '../../src/models';
 
