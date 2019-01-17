@@ -335,7 +335,11 @@ class EventCategoryService {
   }
 
   getCategory(categoryId: number): Promise<EventCategory> {
-    return axios.get('/secure/eventCat/' + categoryId);
+    let token = localStorage.getItem('token');
+    if (token) token = JSON.parse(token).jwt;
+    return axios.get('/secure/eventCat/' + categoryId, {
+        headers: { 'x-access-token': token }
+    });
   }
 
   updateCategory(category: EventCategory): Promise<void> {

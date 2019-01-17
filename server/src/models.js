@@ -624,7 +624,7 @@ export let sync = sequelize.sync({ force: production ? false : true }).then(() =
           {
             title: 'party at the house man!',
             content: 'Det skal være party at the house!',
-            image: 'https://www.rosannadavisonnutrition.com/wp-content/uploads/2018/01/Party.png',
+            image: 'http://www.hollandevenementengroep.nl/foto/11902/1000/files/Accent%20Fotos/the_party.jpg',
             longitude: 60.652168,
             latitude: 10.822102,
             timeStart: new Date(Date.now()),
