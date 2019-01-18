@@ -4,8 +4,9 @@ import { eventService } from '../src/services/EventService';
 import { Issue, User, Event } from '../src/models';
 import {userService} from "../src/services/UserService";
 import {issueService} from "../src/services/IssueService";
+import service from "../src/services/Service";
 
-let mock = new MockAdapter(axios);
+let mock = new MockAdapter(service);
 let user = {
   userId: 1,
   firstName: 'Jimmy',
