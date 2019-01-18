@@ -18,6 +18,7 @@ import { IssuePage } from './components/pages/IssuePage';
 import { IssueLarge, IssueOverviewNormal, IssueNormal, IssueOverviewSmall } from './components/issueViews/issueViews';
 import { ForgotPassword } from './components/pages/ForgotPassword.js';
 import { NewPasswordPage } from './components/pages/NewPasswordPage.js';
+import { StatisticsPage } from './components/pages/StatisticsPage.js';
 import { UploadImageTest } from './components/image/UploadImageTest.js';
 
 import { MunicipalPage } from './components/pages/MunicipalPage';
@@ -50,11 +51,12 @@ if (root)
         <Route exact path="/forgotPassword" component={ForgotPassword} />
         <Route exact path="/reset/:userId" component={NewPasswordPage} />
         <Route exact path="/municipal/:munId/events" component={EventPage} />
-          <Route exact path="/municipal/:munId/events/:eventId" component={EventInfo} />
+        <Route exact path="/municipal/:munId/events/:eventId" component={EventInfo} />
         <Route exact path="/municipal/:munId/registerEvent" component={RegisterEventPage} />
         <Route exact path="/municipal/:munId/issues" component={IssuePage} />
         <Route exact path="/municipal/:munId/fileIssue" component={FileIssuePage} />
         <Route exact path="/municipal/:munId/issues/:issueId" component={IssueLarge} />
+        <Route exact path="/statistics" component={StatisticsPage} />
       </div>
     </HashRouter>,
     root
