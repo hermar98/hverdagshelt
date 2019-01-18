@@ -3,13 +3,14 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { autocomplete, glob } from '../../../public/autocomplete';
-import { eventService, issueService } from '../../services';
+import { eventService} from '../../services/EventService';
 import { Alert, Card } from '../../widgets';
 import { history } from '../../index';
 import {IssueOverviewSmall, IssueSmall} from '../issueViews/issueViews';
 import {DisplayEvent2, EventLarge, EventSmall} from "./EventPage";
 import Menu from "../menu/Menu";
 import NavLink from "react-router-dom/es/NavLink";
+import {issueService} from "../../services/IssueService";
 
 export class MunicipalPage extends Component <{match: {params: {munId: number}}}>{ //TODO: FIX select by category and date for events
     issues = [];

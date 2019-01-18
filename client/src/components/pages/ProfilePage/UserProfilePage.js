@@ -5,11 +5,14 @@ import { Component } from 'react-simplified';
 import { Alert, NavBar, Form, Card, Button } from '../../../widgets';
 import MenuLoggedIn from '../../../components/menu/Menu.js';
 import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
-import { userService, municipalService, issueService, userMunicipalService } from '../../../services';
+import { userMunicipalService } from '../../../services/UserMunicipalService';
 import { autocomplete, glob } from '../../../../public/autocomplete';
 import { User, Issue, Municipal, UserMunicipal } from '../../../models';
 import { IssueSmall, IssueNormal, IssueOverviewSmall } from '../../issueViews/issueViews';
 import { tokenManager } from '../../../tokenManager';
+import {userService} from "../../../services/UserService";
+import {issueService} from "../../../services/IssueService";
+import {municipalService} from "../../../services/MunicipalService";
 
 let municipalObjects;
 
