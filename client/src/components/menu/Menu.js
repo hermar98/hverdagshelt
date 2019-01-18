@@ -13,10 +13,11 @@ import {
   DropdownDivider,
   DropdownItem
 } from '../../widgets';
-import { userService, municipalService } from '../../services.js';
+import { municipalService } from '../../services/MunicipalService.js';
 import { tokenManager } from '../../tokenManager';
 import { history } from '../../index';
 import { Municipal } from '../../models';
+import {userService} from "../../services/UserService";
 
 export default class Menu extends Component {
   user = null;

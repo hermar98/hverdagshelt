@@ -3,9 +3,12 @@ import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 import {Redirect, NavLink} from 'react-router-dom'
 import { Issue, Feedback, User } from '../../models';
-import {issueService, userService, feedbackService, issueCategoryService} from "../../services";
+import {feedbackService} from "../../services/FeedbackService";
 import Menu from '../menu/Menu';
 import {tokenManager} from "../../tokenManager";
+import {userService} from "../../services/UserService";
+import {issueService} from "../../services/IssueService";
+import {issueCategoryService} from "../../services/IssueCategoryService";
 
 let sharedIssues = sharedComponentData({issues: []})
 let sharedFeedback = sharedComponentData({feedback: []})

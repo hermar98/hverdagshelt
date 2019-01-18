@@ -1,5 +1,5 @@
 // @flow
-import { User } from '../src/models';
+import { User } from '../models';
 require('dotenv').config();
 
 const crypto = require('crypto');
@@ -9,7 +9,7 @@ const nodemailer = require('nodemailer');
 type Request = express$Request;
 type Response = express$Response;
 
-const app = require('./app');
+const app = require('../app');
 
 app.post('/forgotPassword', (req: Request, res: Response) => {
   //Flow type checking mixed src: https://github.com/flow-typed/flow-typed/issues/812
@@ -78,5 +78,3 @@ app.post('/forgotPassword', (req: Request, res: Response) => {
     }
   });
 });
-
-// module.exports = app;
