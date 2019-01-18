@@ -90,6 +90,7 @@ export class UserProfilePage extends Component {
     return (
       <div>
         <MenuLoggedIn />
+          <h4 className="row justify-content-center my-profile">Min Profil</h4>
         <div className="profile-page-container page-container">
           <div className="profile-left">
             <div className="profile-info">
