@@ -6,6 +6,7 @@ import { Component } from 'react-simplified';
 import { BrowserRouter, HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from './widgets';
 import Menu from './components/menu/Menu';
+import { Footer } from './components/menu/Footer';
 import { FileIssuePage } from './components/pages/FileIssuePage';
 import { LoginPage } from './components/pages/LoginPage';
 import { UserProfilePage } from './components/pages/ProfilePage/UserProfilePage';
@@ -18,6 +19,7 @@ import { IssuePage } from './components/pages/IssuePage';
 import { IssueLarge, IssueOverviewNormal, IssueNormal, IssueOverviewSmall } from './components/issueViews/issueViews';
 import { ForgotPassword } from './components/pages/ForgotPassword.js';
 import { NewPasswordPage } from './components/pages/NewPasswordPage.js';
+import { TermsOfService } from './components/pages/TermsOfServicePage.js';
 import { UploadImageTest } from './components/image/UploadImageTest.js';
 
 import { MunicipalPage } from './components/pages/MunicipalPage';
@@ -42,54 +44,26 @@ if (root)
     <HashRouter>
       <div>
         <Alert />
-          <!-- Hverdagshelt sider -->
-          <!-- TODO: Header, footer  -->
-          <Route exact path="/" component={ChooseMunicipalPage} /> <!-- Forside  -->
+        <Route exact path="/" component={ChooseMunicipalPage} /> <!-- Forside  -->
+        <Route exact path="/login" component={LoginPage} /> <!-- Innloggingsside -->
+        <Route exact path="/register" component={RegisterPage} /> <!-- Registreringsside -->
+        <Route exact path="/glemtPassord" component={ForgotPassword} /> <!-- Glemt passord -->
+        <Route exact path="/glemtPassord/reset" component={NewPasswordPage} /> <!-- Resett passord -->
+        <Route exact path="/vilkår" component={TermsOfService} /> <!-- Vilkår for bruk -->
+        <Route exact path="/profil" component={UserProfilePage} /> <!-- Profilside -->
+        <Route exact path="/feed" component={} /> <!-- Din feed -->
+        <Route exact path="/registrerSak" component={FileIssuePage} /> <!-- Registrer sak -->
+        <Route exact path="/bedrift" component={} /> <!-- Bedriftsbruker feed -->
+        <Route exact path="/admin" component={} /> <!-- Administratorside -->
+        <Route exact path="/statistikk" component={} /> <!-- Statistikk -->
 
-          <Route exact path="/login" component={LoginPage} /> <!-- Innloggingsside -->
-
-          <Route exact path="/register" component={RegisterPage} /> <!-- Registreringsside -->
-
-          <Route exact path="/glemtPassord" component={ForgotPassword} /> <!-- Glemt passord -->
-
-          <Route exact path="/glemtPassord/reset" component={NewPasswordPage} /> <!-- Resett passord -->
-
-          <!-- TODO: Småfiks på profilsiden  -->
-          <Route exact path="/profil" component={UserProfilePage} /> <!-- Profilside -->
-
-          <!-- TODO: Få inn saker og events fra valgte kommuner -->
-          <Route exact path="/feed" component={} /> <!-- Din feed -->
-
-          <!-- TODO: Legg til kart  -->
-          <Route exact path="/registrerSak" component={FileIssuePage} /> <!-- Registrer sak -->
-
-          <!-- TODO: Bedriftsbruker skal kun se saker han er tildelt  -->
-          <Route exact path="/bedrift" component={} /> <!-- Bedriftsbruker feed -->
-
-          <!-- TODO: Alle privilegier, liste over alle brukere, legge/fjerne til kommuneansatte + bedriftsansatte  -->
-          <Route exact path="/admin" component={} /> <!-- Administratorside -->
-
-          <!-- TODO: Alt av statistikk  -->
-          <Route exact path="/statistikk" component={} /> <!-- Statistikk -->
-
-          <!-- Kommunesider -->
-          <!-- TODO: Hjemmeside for kommunen  -->
-          <Route exact path="/kommune/:munId" component={MunicipalPage} /> <!-- Hjemmeside -->
-
-          <!-- TODO: Vis alle saker i en kommune  -->
-          <Route exact path="/kommune/:munId/sak" component={IssuePage} /> <!-- Saker (for kommuneansatt?) -->
-
-          <!-- TODO: Viser en spesifikk sak i en kommune  -->
-          <Route exact path="/kommune/:munId/sak/:issueId" component={IssueLarge} /> <!-- Spesifikk sak -->
-
-          <!-- TODO: Vis alle events i en kommune  -->
-          <Route exact path="/kommune/:munId/hendelse" component={EventPage} /> <!-- Events -->
-
-          <!-- TODO: Viser en spesifikk sak i en kommune  -->
-          <Route exact path="/kommune/:munId/hendelse/:eventId" component={EventInfo} /> <!-- Events -->
-
-          <!-- TODO: Kommuneansatt sin side. Vis alle saker for godkjenning  -->
-          <Route exact path="/kommune/:munId/ansatt" component={} /> <!-- Ansattside -->
+        <Route exact path="/kommune/:munId" component={MunicipalPage} /> <!-- Hjemmeside -->
+        <Route exact path="/kommune/:munId/sak" component={IssuePage} /> <!-- Saker (for kommuneansatt?) -->
+        <Route exact path="/kommune/:munId/sak/:issueId" component={IssueLarge} /> <!-- Spesifikk sak -->
+        <Route exact path="/kommune/:munId/hendelse" component={EventPage} /> <!-- Events -->
+        <Route exact path="/kommune/:munId/hendelse/:eventId" component={EventInfo} /> <!-- Events -->
+        <Route exact path="/kommune/:munId/ansatt" component={} /> <!-- Ansattside -->
+        <Footer />
       </div>
     </HashRouter>,
     root
