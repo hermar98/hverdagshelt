@@ -1,5 +1,5 @@
 //@flow
-import {Municipal, User, UserMunicipal} from '../models';
+import { Municipal, User, UserMunicipal } from '../models';
 
 type Request = express$Request;
 type Response = express$Response;

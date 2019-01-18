@@ -13,6 +13,7 @@ import { UserProfilePage } from './components/pages/ProfilePage/UserProfilePage'
 import { AdminProfilePage } from './components/pages/ProfilePage/AdminProfilePage';
 import { RegisterPage } from './components/pages/RegisterPage';
 import { EventPage, EventInfo } from './components/pages/EventPage';
+import { FeedPage } from './components/pages/FeedPage';
 import { ChooseMunicipalPage } from './components/pages/ChooseMunicipalPage';
 import { RegisterEventPage } from './components/pages/RegisterEventPage';
 import { IssuePage } from './components/pages/IssuePage';
@@ -45,27 +46,40 @@ if (root)
     <HashRouter>
       <div>
         <Alert />
-        <Route exact path="/" component={ChooseMunicipalPage} /> <!-- Forside  -->
-        <Route exact path="/login" component={LoginPage} /> <!-- Innloggingsside -->
-        <Route exact path="/register" component={RegisterPage} /> <!-- Registreringsside -->
-        <Route exact path="/glemtPassord" component={ForgotPassword} /> <!-- Glemt passord -->
-        <Route exact path="/glemtPassord/reset" component={NewPasswordPage} /> <!-- Resett passord -->
-        <Route exact path="/vilkår" component={TermsOfService} /> <!-- Vilkår for bruk -->
-        <Route exact path="/profil" component={UserProfilePage} /> <!-- Profilside -->
-        <Route exact path="/feed" component={} /> <!-- Din feed -->
-        <Route exact path="/registrerSak" component={FileIssuePage} /> <!-- Registrer sak -->
-        <Route exact path="/bedrift" component={} /> <!-- Bedriftsbruker feed -->
-        <Route exact path="/admin" component={} /> <!-- Administratorside -->
-        <Route exact path="/statistikk" component={} /> <!-- Statistikk -->
+        <Route exact path="/" component={ChooseMunicipalPage} />
+        <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/register" component={RegisterPage} />
+        <Route exact path="/glemtPassord" component={ForgotPassword} />
+        <Route exact path="/glemtPassord/reset" component={NewPasswordPage} />
+        <Route exact path="/vilkår" component={TermsOfService} />
+        <Route exact path="/profil" component={UserProfilePage} />
+        <Route exact path="/registrerSak" component={FileIssuePage} />
+        <Route exact path="/feed" component={FeedPage} />
+        <Route exact path="/kommune/:munId" component={MunicipalPage} />
 
-        <Route exact path="/kommune/:munId" component={MunicipalPage} /> <!-- Hjemmeside -->
-        <Route exact path="/kommune/:munId/sak" component={IssuePage} /> <!-- Saker (for kommuneansatt?) -->
-        <Route exact path="/kommune/:munId/sak/:issueId" component={IssueLarge} /> <!-- Spesifikk sak -->
-        <Route exact path="/kommune/:munId/hendelse" component={EventPage} /> <!-- Events -->
-        <Route exact path="/kommune/:munId/hendelse/:eventId" component={EventInfo} /> <!-- Events -->
-        <Route exact path="/kommune/:munId/ansatt" component={} /> <!-- Ansattside -->
         <Footer />
       </div>
     </HashRouter>,
     root
   );
+/*
+        <Route exact path="/" component={ChooseMunicipalPage} />
+        <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/register" component={RegisterPage} />
+        <Route exact path="/glemtPassord" component={ForgotPassword} />
+        <Route exact path="/glemtPassord/reset" component={NewPasswordPage} />
+        <Route exact path="/vilkår" component={TermsOfService} />
+        <Route exact path="/profil" component={UserProfilePage} />
+        <Route exact path="/feed" component={} />
+        <Route exact path="/registrerSak" component={FileIssuePage} />
+        <Route exact path="/bedrift" component={} />
+        <Route exact path="/admin" component={} />
+        <Route exact path="/statistikk" component={} />
+
+        <Route exact path="/kommune/:munId" component={MunicipalPage} />
+        <Route exact path="/kommune/:munId/sak" component={IssuePage} />
+        <Route exact path="/kommune/:munId/sak/:issueId" component={IssueLarge} />
+        <Route exact path="/kommune/:munId/hendelse" component={EventPage} />
+        <Route exact path="/kommune/:munId/hendelse/:eventId" component={EventInfo} />
+        <Route exact path="/kommune/:munId/ansatt" component={} />
+ */

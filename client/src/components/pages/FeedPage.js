@@ -62,7 +62,7 @@ export class FeedPage extends Component {
                 {this.municipals.map(e =>
                 <li key={e.munId}>
                   <IssueOverviewSmall munid={e.munId}/>
-                </li>).filter(e => e.munId == this.munId || e.categoryId == this.categoryId)}
+                </li>)}
               </ul>
             </Card>
           </div>
@@ -114,7 +114,10 @@ export class FeedPage extends Component {
 
     userMunicipalService
       .getUserMunicipals(tokenManager.getUserId())
-      .then(municipals => (this.municipals = municipals)).catch((error: Error) => Alert.danger(error.message));
+      .then(console.log(tokenManager.getUserId()))
+      .then(municipals => (this.municipals = municipals))
+      .then(console.log(this.municipals))
+      .catch((error: Error) => Alert.danger(error.message));
 
     issueCategoryService
       .getCategories()

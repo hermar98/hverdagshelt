@@ -287,23 +287,7 @@ export class IssueOverviewSmall extends Component<{munId: number}> {
 
     render () {
         return (
-            <div className="issue-overview-small">
-                <div className="d-flex flex-row sort-box card-header justify-content-between">
-                    <div className="form-group">
-                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
-                        <option value={0}>Alle</option>
-                        <option value={1}>Ikke behandlet</option>
-                        <option value={2}>Under behandling</option>
-                        <option value={3}>Behandlet</option>
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.timesort = event.target.value)}>
-                            <option>Nyeste</option>
-                            <option>Eldste</option>
-                        </select>
-                    </div>
-                </div>
+            <div>
                 <ul className="list-group">
                     {sharedIssues.issues.map((issue,index) => {
                         if (this.status == issue.statusId || this.status == 0) {
@@ -320,8 +304,7 @@ export class IssueOverviewSmall extends Component<{munId: number}> {
     }
 
     mounted (){
-        window.scrollTo(0, 0);
-        issueService.getIssuesByMunicipal(window.location.hash.slice(12))
+        issueService.getIssuesByMunicipal(this.props.munId)
             .then(data => {
                 sharedIssues.issues = data;
             })

@@ -75,7 +75,7 @@ export default class Login extends Component {
       .login(this.email, this.password)
       .then(token => {
         tokenManager.addToken(token);
-        history.push('/kommune/' + this.munId);
+        history.push('/feed');
       })
       .catch((error: Error) => {
         console.log(error);

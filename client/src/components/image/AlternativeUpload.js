@@ -1,7 +1,7 @@
 import React from 'react'
 import { Component } from 'react-simplified';
 import axios from 'axios';
-import {User} from "../../models";
+import {User} from "../../models/User";
 // import { API_URL } from './config'
 
 axios.interceptors.response.use(response => response.data);
