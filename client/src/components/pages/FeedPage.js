@@ -23,11 +23,6 @@ export class FeedPage extends Component {
   events = [];
   categories = [];
 
-  status: number = 0;
-  munId: number = 0;
-  categoryId: number = 0;
-  timesort: string = "Nyeste";
-
   render() {
     return(
       <div>
@@ -114,12 +109,11 @@ export class FeedPage extends Component {
 
     userMunicipalService
       .getUserMunicipals(tokenManager.getUserId())
-      .then(console.log(tokenManager.getUserId()))
       .then(municipals => (this.municipals = municipals))
       .then(console.log(this.municipals))
       .catch((error: Error) => Alert.danger(error.message));
 
-    issueCategoryService
+    /*issueCategoryService
       .getCategories()
       .then(cat => (this.categories = cat))
       .catch((error: Error) => Alert.danger(error.message));
@@ -134,6 +128,6 @@ export class FeedPage extends Component {
       .then(events => {
         this.events = events
       })
-      .catch((error: Error) => Alert.danger(error.message))));
+      .catch((error: Error) => Alert.danger(error.message))));*/
   }
 }

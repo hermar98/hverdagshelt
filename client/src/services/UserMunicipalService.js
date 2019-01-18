@@ -6,7 +6,7 @@ class UserMunicipalService {
   getUserMunicipals(userId: number): Promise<Municipal[]> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return service.get('/secure/users/'+ userId + '/mun', {
+    return service.get('/secure/userMun/' + userId, {
       headers: {'x-access-token': token}
     });
   }
