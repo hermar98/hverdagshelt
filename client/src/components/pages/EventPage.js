@@ -2,12 +2,13 @@ import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { EventCategory } from '../../models/EventCategory.js';
-import {eventService, eventCategoryService} from '../../services';
+import {eventCategoryService} from '../../services/EventCategoryService';
 import {Alert, DisplayEvent} from '../../widgets';
 import {Issue} from "../../models/Issue";
 import {Status} from "../issueViews/issueViews";
 import moment from "moment";
 import Menu from "../menu/Menu";
+import {eventService} from "../../services/EventService";
 import {Event} from "../../models/Event";
 
 

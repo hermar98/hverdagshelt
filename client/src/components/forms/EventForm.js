@@ -7,7 +7,7 @@ import { Alert, NavBar, Form, Card, Button } from '../../widgets';
 import { history } from '../../index';
 import { myFunction } from '../../../public/AddEventCategory';
 import { tokenManager } from '../../tokenManager';
-import {Event} from "../../models/Event";
+import {eventService} from "../../services/EventService";
 //import { UploadImageButton } from '../../components/image/UploadImageButton';
 
 export default class EventForm extends Component {

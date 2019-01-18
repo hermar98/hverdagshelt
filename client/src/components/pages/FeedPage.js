@@ -2,19 +2,32 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { autocomplete, glob } from '../../../public/autocomplete';
-import { eventService, issueService } from '../../services';
+import { eventService } from '../../services/EventService';
+import { issueService } from '../../services/IssueService';
+import { userMunicipalService } from '../../services/UserMunicipalService';
+import { issueCategoryService } from '../../services/IssueCategoryService';
 import { Alert, Card } from '../../widgets';
-import { history } from '../../index';
 import {IssueOverviewSmall, IssueSmall} from '../issueViews/issueViews';
 import {DisplayEvent2, EventLarge, EventSmall} from "./EventPage";
 import Menu from "../menu/Menu";
 import NavLink from "react-router-dom/es/NavLink";
+import { userService } from '../../services/UserService';
+import { tokenManager } from '../../tokenManager';
+import { User } from '../../models/User';
 
-export class FeedPage extends Component <{match: {params: {userId: number}}}>{
+export class FeedPage extends Component {
   // date for events
+  user = new User();
+  municipals = [];
   issues = [];
   events = [];
+  categories = [];
+
+  status: number = 0;
+  munId: number = 0;
+  categoryId: number = 0;
+  timesort: string = "Nyeste";
+
   render() {
     return(
       <div>
@@ -22,15 +35,41 @@ export class FeedPage extends Component <{match: {params: {userId: number}}}>{
         <div className="row">
           <div className="col-lg-6">
             <Card title="Feil/mangler">
+              <div className="issue-overview-small">
+                <div className="d-flex flex-row sort-box card-header justify-content-between">
+                  <div className="form-group mt-2 ml-1">
+                    <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.munId = event.target.value)}>
+                      {this.municipals.map(mun =>
+                        <option key={mun.munId} value={mun.munId}>{mun.name}</option>)}
+                    </select>
+                  </div>
+                  <div className="form-group mt-2">
+                    <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.categoryId = event.target.value)}>
+                      {this.categories.map(cat =>
+                        <option key={cat.categoryId} value={cat.categoryId}>{cat.name}</option>)}
+                    </select>
+                  </div>
+                  <div className="form-group mt-2 mr-1">
+                    <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.timesort = event.target.value)}>
+                      <option>Nyeste</option>
+                      <option>Eldste</option>
+                    </select>
+                  </div>
+                </div>
+
+              </div>
               <ul className="container-fluid">
-                <IssueOverviewSmall munId={this.props.match.params.munId}/>
+                {this.municipals.map(e =>
+                <li key={e.munId}>
+                  <IssueOverviewSmall munid={e.munId}/>
+                </li>).filter(e => e.munId == this.munId || e.categoryId == this.categoryId)}
               </ul>
             </Card>
           </div>
           <div className="col-lg-6">
             <Card title="Events" id="event-cards">
               <div className="d-flex flex-row sort-box card-header justify-content-between">
-                <div className="form-group">
+                <div className="form-group mt-2 ml-1">
                   <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
                     <option value={0}>Alle kategorier</option>
                     <option value={2}>Party</option>
@@ -39,7 +78,7 @@ export class FeedPage extends Component <{match: {params: {userId: number}}}>{
                     <option value={1}>Annet</option>
                   </select>
                 </div>
-                <div className="form-group">
+                <div className="form-group mt-2 mr-1">
                   <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.timesort = event.target.value)}>
                     <option>Nyeste</option>
                     <option>Eldste</option>
@@ -61,16 +100,37 @@ export class FeedPage extends Component <{match: {params: {userId: number}}}>{
   }
 
   mounted() {
-    issueService
-      .getIssuesByMunicipal(this.props.match.params.munId)
-      .then(issues => {
-        this.issues = issues;
+    userService
+      .getToken()
+      .then(() => {
+        userService
+          .getUser(tokenManager.getUserId())
+          .then(user => {
+            this.user = user;
+          })
+          .catch((error: Error) => console.log(error));
       })
+      .catch((error: Error) => console.log(error));
+
+    userMunicipalService
+      .getUserMunicipals(tokenManager.getUserId())
+      .then(municipals => (this.municipals = municipals)).catch((error: Error) => Alert.danger(error.message));
+
+    issueCategoryService
+      .getCategories()
+      .then(cat => (this.categories = cat))
       .catch((error: Error) => Alert.danger(error.message));
 
-    eventService
-      .getEventsByMunicipal(this.props.match.params.munId)
-      .then(events => (this.events = events))
-      .catch((error: Error) => Alert.danger(error.message));
+    this.municipals.map(mun => (issueService.getIssuesByMunicipal(tokenManager.getUserId())
+      .then(issues => {
+        this.issues = issues
+      })
+      .catch((error: Error) => Alert.danger(error.message))));
+
+    this.municipals.map(mun => (eventService.getEventsByMunicipal(tokenManager.getUserId())
+      .then(events => {
+        this.events = events
+      })
+      .catch((error: Error) => Alert.danger(error.message))));
   }
 }

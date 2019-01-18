@@ -21,6 +21,7 @@ import { ForgotPassword } from './components/pages/ForgotPassword.js';
 import { NewPasswordPage } from './components/pages/NewPasswordPage.js';
 import { TermsOfService } from './components/pages/TermsOfServicePage.js';
 import { UploadImageTest } from './components/image/UploadImageTest.js';
+import  {AlternativeUpload } from './components/image/AlternativeUpload.js';
 
 import { MunicipalPage } from './components/pages/MunicipalPage';
 import { Issue } from './models/Issue.js';
@@ -68,4 +69,3 @@ if (root)
     </HashRouter>,
     root
   );
-

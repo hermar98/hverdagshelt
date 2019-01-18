@@ -1,9 +1,10 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { userService, issueService, eventService } from '../src/services';
 import { Event } from '../src/models/Event';
 import {User} from "../src/models/User";
 import {Issue} from "../src/models/Issue";
+import {userService} from "../src/services/UserService";
+import {issueService} from "../src/services/IssueService";
 
 let mock = new MockAdapter(axios);
 let user = {

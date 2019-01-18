@@ -9,6 +9,7 @@ import { Issue } from '../../models/Issue.js';
 import { userService, issueService } from '../../services.js';
 import { tokenManager } from '../../tokenManager';
 import {User} from "../../models/User";
+import {userService} from "../../services/UserService";
 
 type P = { userId: number };
 type S = {};

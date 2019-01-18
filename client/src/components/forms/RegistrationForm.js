@@ -5,7 +5,7 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { User } from '../../models/User.js';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
-import { userService } from '../../services.js';
+import { userService } from '../../services/UserService.js';
 import { history } from '../../index.js';
 
 export default class RegistrationForm extends Component {

@@ -4,10 +4,11 @@ import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Issue } from '../../models/Issue.js';
-import { issueService, issueCategoryService } from '../../services.js';
+import { issueCategoryService } from '../../services/IssueCategoryService.js';
 import { Alert, Form, Card, Button } from '../../widgets';
 import { history } from '../../index';
 import { tokenManager } from '../../tokenManager';
+import {issueService} from "../../services/IssueService";
 
 export default class RegisterIssue extends Component {
   issue = new Issue();

@@ -5,8 +5,8 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
-import { userService } from '../../services.js';
-import { Issue } from '../../models/Issue.js';
+import { userService } from '../../services.js/UserService.js';
+import { Issue } from '../../models.js/Issue';
 import { history } from '../../index';
 import {User} from "../../models/User";
 

@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { autocomplete, glob } from '../../../public/autocomplete';
-import { municipalService } from '../../services';
+import { municipalService } from '../../services/MunicipalService';
 import { history } from '../../index';
 import { Municipal } from '../../models/Municipal';
 
