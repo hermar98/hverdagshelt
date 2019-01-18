@@ -306,7 +306,7 @@ export class IssueOverviewSmall extends Component<{munId: number}> {
                     {sharedIssues.issues.map((issue,index) => {
                         if (this.status == issue.statusId || this.status == 0) {
                             return(
-                                <li key={index} className="list-group-item">
+                                <li key={index} className="list-group-item issue-item">
                                     <IssueSmall issue={issue} munId={this.props.munId}/>
                                 </li>
                             )
@@ -319,7 +319,7 @@ export class IssueOverviewSmall extends Component<{munId: number}> {
 
     mounted (){
         window.scrollTo(0, 0);
-        issueService.getIssuesByMunicipal(window.location.hash.slice(12))
+        issueService.getIssues()
             .then(data => {
                 sharedIssues.issues = data;
             })
@@ -337,7 +337,6 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
                 <div className="card feedback-card">
                     <div className="card-body">
                         <div className="d-flex flex-row submitter">
-
                                 <div className="p-2">
                                     <img className="card-img profile-image" src={this.user.profilePicture}/>
                                 </div>
@@ -408,7 +407,7 @@ export class IssueOverviewNormal extends Component<{munId: number}> {
                     {sharedIssues.issues.map(issue => {
                         if (this.status == issue.statusId || this.status == 0) {
                             return (
-                                <li className="list-group-item normal-list-item">
+                                <li className="list-group-item  issue-item normal-list-item">
                                     <IssueNormal issue={issue} munId={this.props.munId}/>
                                 </li>
                             )
@@ -508,7 +507,7 @@ class StatusButton extends Component<{status: number, onclick: function}> {
     }
 }
 
-class ImageButton extends Component<{source: string, onclick: function}> {
+export class ImageButton extends Component<{source: string, onclick: function}> {
     render() {
         return(
             <button className="btn image-button" type="button" onClick={this.props.onclick} >
@@ -518,7 +517,7 @@ class ImageButton extends Component<{source: string, onclick: function}> {
     }
 }
 
-class HoverButton extends Component<{onclick: function, text: string}> {
+export class HoverButton extends Component<{onclick: function, text: string}> {
     render () {
         return (
             <button className="btn hover-button" type="button" onClick={this.props.onclick} >

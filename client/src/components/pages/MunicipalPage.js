@@ -17,9 +17,9 @@ export class MunicipalPage extends Component <{match: {params: {munId: number}}}
     events = [];
     render() {
         return(
-            <div>
+            <div >
                 <Menu />
-                <div className="row">
+                <div className="row page-container">
                     <div className="col-lg-6">
                         <Card title="Feil/mangler">
                             <ul className="container-fluid">

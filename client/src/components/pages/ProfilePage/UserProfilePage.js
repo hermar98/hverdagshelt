@@ -8,7 +8,7 @@ import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
 import { userMunicipalService } from '../../../services/UserMunicipalService';
 import { autocomplete, glob } from '../../../../public/autocomplete';
 import { User, Issue, Municipal, UserMunicipal } from '../../../models';
-import { IssueSmall, IssueNormal, IssueOverviewSmall } from '../../issueViews/issueViews';
+import {IssueSmall, IssueNormal, IssueOverviewSmall, ImageButton} from '../../issueViews/issueViews';
 import { tokenManager } from '../../../tokenManager';
 import {userService} from "../../../services/UserService";
 import {issueService} from "../../../services/IssueService";
@@ -23,6 +23,7 @@ export class UserProfilePage extends Component {
   newMunicipalName: string = '';
   newMunicipalId: number = 0;
   userMunicipals: Municipal[] = [];
+  munId: number = -1;
 
   mounted() {
     async function f() {
@@ -89,49 +90,42 @@ export class UserProfilePage extends Component {
     return (
       <div>
         <MenuLoggedIn />
-        <Card title="Min Profil">
-          <Card title="">
-            <div className="info">
-              <p>
-                Navn: {this.user.firstName} {this.user.lastName}
-              </p>
-              <p>Email: {this.user.email}</p>
-              <p>Kommuner:</p>
-              <Card>
-                {this.userMunicipals.map((mun, index) => (
-                  <p key={index}>
-                    {mun.name}
-                    <button onClick={this.deleteUserMunicipal.bind(this, this.user.userId, mun.munId)}>Slett</button>
-                  </p>
-                ))}
+        <div className="profile-page-container page-container">
+          <div className="profile-left">
+            <div className="profile-info">
+              <Card title="Info">
+                <p>
+                  Navn: {this.user.firstName} {this.user.lastName}
+                </p>
+                <p>Email: {this.user.email}</p>
               </Card>
             </div>
-          </Card>
-          <br />
-          <div>
-            <form autoComplete="off">
-              <div className="autocomplete">
-                <input id="municipalInput" type="text" name="municipal" />
-                <button type="submit" onClick={this.handleAddMunicipal}>
-                  Legg Til Kommune
-                </button>
+              <div className="card municipal">
+                  <h5 id="municipal-title">Kommuner</h5>
+                    <div className="add-municipal-field justify-content-between d-flex flex-row">
+                        <div cassName="autocomplete"></div>
+                        <input className="form-control" id="mun-input" type="text" placeholder="Legg til kommune..." />
+                        <ImageButton source="../../images/add.png" onclick={this.handleAddMunicipal}/>
+                    </div>
+                    <ul className="list-group mun-list">
+                        {this.userMunicipals.map((mun, index) => (
+                            <li className="list-group-item">{mun.name}</li>
+                        ))}
+                        <li className="list-group-item municipal-item"><div className="d-flex flex-row justify-content-between align-items-center"> Hello<ImageButton source="../../images/trashcan.png" onclick={
+                            this.deleteUserMunicipal}/></div></li>
+                    </ul>
               </div>
-            </form>
-          </div>
-        </Card>
-        <Card title="">
-          <ChangePasswordForm />
-        </Card>
-        <Card className="issues" title="Mine Saker">
-          {this.issues.map((issue, index) => (
-            <div key={index}>
-              <IssueNormal issue={issue} />
-              <button className="btn btn-danger" onClick={this.delete.bind(this, issue.issueId)}>
-                Delete
-              </button>
+            <br />
+            <div className="change-password-profile">
+              <ChangePasswordForm />
             </div>
-          ))}
-        </Card>
+          </div>
+          <div className="profile-issues">
+            <Card className="issues" title="Dine Innmeldte Saker">
+                <IssueOverviewSmall />
+            </Card>
+          </div>
+        </div>
       </div>
     );
   }
