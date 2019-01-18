@@ -6,8 +6,9 @@ import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
 import { User, Issue } from '../../models.js';
-import { userService, issueService } from '../../services.js';
+import { issueService } from '../../services/IssueService.js';
 import { history } from '../../index';
+import {userService} from "../../services/UserService";
 
 export default class NewPasswordForm extends Component {
   password = '2';

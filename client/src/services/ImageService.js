@@ -1,7 +1,6 @@
+//@flow
 import axios from 'axios';
 import {Image} from "../models/Image.js";
-
-axios.interceptors.response.use(response => response.data);
 
 class ImageService{
     static getImage(imageId: number): Promise<Image> {

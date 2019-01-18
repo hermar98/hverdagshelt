@@ -2,11 +2,12 @@ import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Event, EventCategory } from '../../models.js';
-import { eventCategoryService, eventService } from '../../services';
+import { eventCategoryService} from '../../services/EventCategoryService';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
 import { history } from '../../index';
 import { myFunction } from '../../../public/AddEventCategory';
 import { tokenManager } from '../../tokenManager';
+import {eventService} from "../../services/EventService";
 //import { UploadImageButton } from '../../components/image/UploadImageButton';
 
 export default class EventForm extends Component {
