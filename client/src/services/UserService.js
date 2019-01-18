@@ -1,12 +1,12 @@
 //@flow
 import {User} from "../models";
-import axios from "axios";
+import service from "./Service";
 
 class UserService {
   getUsers(): Promise<User[]> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.get('/secure/users', {
+    return service.get('/secure/users', {
       headers: {'x-access-token': token}
     });
   }
@@ -14,7 +14,7 @@ class UserService {
   getUser(userId: number): Promise<User> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.get('/secure/users/' + userId, {
+    return service.get('/secure/users/' + userId, {
       headers: {'x-access-token': token}
     });
   }
@@ -22,37 +22,37 @@ class UserService {
   updateUser(user: User): Promise<void> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.put('/secure/users/' + user.userId, user, {
+    return service.put('/secure/users/' + user.userId, user, {
       headers: {'x-access-token': token}
     });
   }
 
   addUser(user: User): Promise<number> {
-    return axios.post('/register', user);
+    return service.post('/register', user);
   }
 
   deleteUser(userId: number): Promise<void> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.delete('/secure/users/' + userId, {
+    return service.delete('/secure/users/' + userId, {
       headers: {'x-access-token': token}
     });
   }
 
   login(email: string, password: string): Promise<JSON> {
-    return axios.post('/login', {email: email, password: password});
+    return service.post('/login', {email: email, password: password});
   }
 
   getToken(): Promise<JSON> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.get('/token', {
+    return service.get('/token', {
       headers: {'x-access-token': token}
     });
   }
 
   forgotPassword(email: string): Promise<Object> {
-    return axios
+    return service
       .post('/forgotPassword', {
         email: email
       })
@@ -63,7 +63,7 @@ class UserService {
 
   newPassword(token: string, password: string): Promise<JSON> {
     console.log(password + 'serivee');
-    return axios
+    return service
       .put('/reset/' + token, {
         password: password
       })

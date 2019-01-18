@@ -1,12 +1,12 @@
 //@flow
 import {EventCategory} from "../models";
-import axios from "axios";
+import service from "./Service";
 
 class EventCategoryService {
   getCategories(): Promise<EventCategory[]> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.get('/secure/eventCat', {
+    return service.get('/secure/eventCat', {
       headers: {'x-access-token': token}
     });
   }
@@ -14,21 +14,21 @@ class EventCategoryService {
   getCategory(categoryId: number): Promise<EventCategory> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.get('/secure/eventCat/' + categoryId, {
+    return service.get('/secure/eventCat/' + categoryId, {
       headers: {'x-access-token': token}
     });
   }
 
   updateCategory(category: EventCategory): Promise<void> {
-    return axios.put('/secure/eventCat/' + category.categoryId, category);
+    return service.put('/secure/eventCat/' + category.categoryId, category);
   }
 
   addCategory(category: EventCategory): Promise<number> {
-    return axios.post('/secure/eventCat', category);
+    return service.post('/secure/eventCat', category);
   }
 
   deleteCategory(categoryId: number): Promise<void> {
-    return axios.delete('/secure/eventCat/' + categoryId);
+    return service.delete('/secure/eventCat/' + categoryId);
   }
 }
 

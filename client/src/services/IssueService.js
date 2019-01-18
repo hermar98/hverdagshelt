@@ -1,14 +1,14 @@
 //@flow
 
 import {Issue} from "../models";
-import axios from "axios";
+import service from "./Service";
 
 
 class IssueService {
   getIssues(): Promise<Issue[]> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.get('/secure/issues', {
+    return service.get('/secure/issues', {
       headers: {'x-access-token': token}
     });
   }
@@ -16,7 +16,7 @@ class IssueService {
   getIssuesByUser(userId: number): Promise<Issue[]> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.get('/secure/users/' + userId + '/issues', {
+    return service.get('/secure/users/' + userId + '/issues', {
       headers: {'x-access-token': token}
     });
   }
@@ -24,7 +24,7 @@ class IssueService {
   getIssue(issueId: number): Promise<Issue> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.get('/secure/issues/' + issueId, {
+    return service.get('/secure/issues/' + issueId, {
       headers: {'x-access-token': token}
     });
   }
@@ -34,7 +34,7 @@ class IssueService {
     if (token) token = JSON.parse(token).jwt;
     console.log(munId);
     console.log('s');
-    return axios.get('/municipals/' + munId + '/issues', {
+    return service.get('/municipals/' + munId + '/issues', {
       headers: {'x-access-token': token}
     });
   }
@@ -42,7 +42,7 @@ class IssueService {
   updateIssue(issue: Issue): Promise<void> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.put('/secure/issues/' + issue.issueId, issue, {
+    return service.put('/secure/issues/' + issue.issueId, issue, {
       headers: {'x-access-token': token}
     });
   }
@@ -50,7 +50,7 @@ class IssueService {
   addIssue(issue: Issue): Promise<number> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.post('/secure/issues', issue, {
+    return service.post('/secure/issues', issue, {
       headers: {'x-access-token': token}
     });
   }
@@ -58,7 +58,7 @@ class IssueService {
   deleteIssue(issueId: number): Promise<void> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.delete('/secure/issues/' + issueId, {
+    return service.delete('/secure/issues/' + issueId, {
       headers: {'x-access-token': token}
     });
   }

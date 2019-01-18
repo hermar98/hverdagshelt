@@ -1,24 +1,24 @@
 //@flow
-import axios from 'axios';
+import service from './Service';
 import {Image} from "../models/Image.js";
 
 class ImageService{
     static getImage(imageId: number): Promise<Image> {
         let token = localStorage.getItem('token');
         if (token) token = JSON.parse(token).jwt;
-        return axios.get('/secure/image/' + imageId, {
+        return service.get('/secure/image/' + imageId, {
             headers: { 'x-access-token': token }
         });
     }
 
     static addImage(image: Image): Promise<number> {
-        return axios.post('/secure/image', image);
+        return service.post('/secure/image', image);
     }
 
     static deleteImage(imageId: number): Promise<void> {
         let token = localStorage.getItem('token');
         if (token) token = JSON.parse(token).jwt;
-        return axios.delete('/secure/image/' + imageId, {
+        return service.delete('/secure/image/' + imageId, {
             headers: { 'x-access-token': token }
         });
     }

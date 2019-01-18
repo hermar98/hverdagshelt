@@ -1,12 +1,12 @@
 //@flow
 import {Municipal} from "../models";
-import axios from "axios";
+import service from './Service';
 
 class UserMunicipalService {
   getUserMunicipals(userId: number): Promise<Municipal[]> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.get('/secure/userMun/' + userId, {
+    return service.get('/secure/userMun/' + userId, {
       headers: {'x-access-token': token}
     });
   }
@@ -15,7 +15,7 @@ class UserMunicipalService {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
     console.log(token);
-    return axios.post('/secure/user/' + userId + '/mun/' + munId, null, {headers: {'x-access-token': token}});
+    return service.post('/secure/user/' + userId + '/mun/' + munId, null, {headers: {'x-access-token': token}});
   }
 
   deleteUserMunicipal(userId: number, munId: number): Promise<void> {
@@ -23,7 +23,7 @@ class UserMunicipalService {
     if (token) {
       token = JSON.parse(token).jwt;
     }
-    return axios.delete('/secure/user/' + userId + '/mun/' + munId, {
+    return service.delete('/secure/user/' + userId + '/mun/' + munId, {
       headers: {
         'x-access-token': token
       }
@@ -34,7 +34,7 @@ class UserMunicipalService {
   //   let token = localStorage.getItem('token');
   //   if (token) token = JSON.parse(token).jwt;
   //   console.log('pener');
-  //   return axios({
+  //   return Service({
   //     method: 'post',
   //     url: 'http://127.0.0.1:8000/api/login',
   //     data: bodyFormData,
@@ -48,7 +48,7 @@ class UserMunicipalService {
   //       //handle error
   //       console.log(response);
   //     });
-  //   return axios.post('/secure/user/' + userId + '/mun/' + munId, {
+  //   return Service.post('/secure/user/' + userId + '/mun/' + munId, {
   //     headers: { 'x-access-token': token }
   //   });
   // }

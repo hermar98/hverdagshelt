@@ -1,6 +1,6 @@
 //@flow
 import {Event} from "../models";
-import axios from "axios";
+import service from "./Service";
 
 class EventService {
   getEvents(): Promise<Event[]> {
@@ -8,7 +8,7 @@ class EventService {
     if (token) {
       token = JSON.parse(token).jwt;
     }
-    return axios.get('/secure/events', {
+    return service.get('/secure/events', {
       headers: {
         'x-access-token': token
       }
@@ -20,7 +20,7 @@ class EventService {
     if (token) {
       token = JSON.parse(token).jwt;
     }
-    return axios.get('/secure/events/' + eventId, {
+    return service.get('/secure/events/' + eventId, {
       headers: {
         'x-access-token': token
       }
@@ -30,7 +30,7 @@ class EventService {
   getEventsByMunicipal(munId: number): Promise<Event[]> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return axios.get('/municipals/' + munId + '/events', {
+    return service.get('/municipals/' + munId + '/events', {
       headers: {
         'x-access-token': token
       }
@@ -42,7 +42,7 @@ class EventService {
     if (token) {
       token = JSON.parse(token).jwt;
     }
-    return axios.put('/secure/events/' + event.eventId, event, {
+    return service.put('/secure/events/' + event.eventId, event, {
       headers: {
         'x-access-token': token
       }
@@ -54,7 +54,7 @@ class EventService {
     if (token) {
       token = JSON.parse(token).jwt;
     }
-    return axios.post('/secure/events', event, {
+    return service.post('/secure/events', event, {
       headers: {
         'x-access-token': token
       }
@@ -66,7 +66,7 @@ class EventService {
     if (token) {
       token = JSON.parse(token).jwt;
     }
-    return axios.delete('/secure/events/' + eventId, {
+    return service.delete('/secure/events/' + eventId, {
       headers: {
         'x-access-token': token
       }
