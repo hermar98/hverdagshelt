@@ -1,5 +1,5 @@
 //@flow
-import {Feedback} from "../models";
+import {Feedback} from "../models/Feedback";
 import service from "./Service";
 
 class FeedbackService {

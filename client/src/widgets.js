@@ -350,9 +350,9 @@ class FormInputBig extends Component<{
 }> {
   render() {
     return (
-      <div className="form-group row">
-        <label className="col-sm-4 col-form-label">{this.props.label}</label>
-        <div className="col-sm-4">
+      <div className="form-group row justify-content-center">
+        <div className="col-sm-4 col-sm-offset-4">
+          <label>{this.props.label}</label>
           <textarea
             rows="8"
             id="content"

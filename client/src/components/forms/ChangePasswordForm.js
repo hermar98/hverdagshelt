@@ -5,10 +5,11 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
-import { User, Issue } from '../../models.js';
-import { issueService } from '../../services/IssueService.js';
+import { Issue } from '../../models/Issue.js';
+import { issueService } from '../../services/IssueService';
 import { tokenManager } from '../../tokenManager';
-import { userService } from '../../services/UserService';
+import {User} from "../../models/User";
+import {userService} from "../../services/UserService";
 
 type P = { userId: number };
 type S = {};

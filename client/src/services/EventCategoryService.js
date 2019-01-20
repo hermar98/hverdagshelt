@@ -1,5 +1,5 @@
 //@flow
-import {EventCategory} from "../models";
+import {EventCategory} from "../models/EventCategory";
 import service from "./Service";
 
 class EventCategoryService {
