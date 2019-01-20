@@ -1,7 +1,7 @@
 // @flow
 import {
     User,
-    sync
+    syncSmall
 } from '../src/models';
 
 const request = require('supertest');
@@ -11,10 +11,10 @@ const app = require('../src/app');
 
 let useremail = 'test@test.no';
 let pw = '1';
-let token = 'noe';
+let token = '';
 
 beforeAll(async () => {
-  await sync;
+  await syncSmall;
   const response = await request(app)
     .post('/login')
     .send({ email: useremail, password: pw });

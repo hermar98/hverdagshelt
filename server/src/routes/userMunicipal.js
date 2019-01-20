@@ -7,7 +7,7 @@ type Response = express$Response;
 const app = require('../app');
 
 
-app.get('/secure/users/:id/mun', (req: Request, res: Response) => {
+app.get('/secure/users/:id/mun', (req: Request, res: Response) => { //userMun
     return Municipal.findAll({
         include: [
             {
