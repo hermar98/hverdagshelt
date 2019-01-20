@@ -1,19 +1,19 @@
 // @flow
 import {
-    sync
+    syncSmall
 } from '../../src/models';
 
 const request = require('supertest');
 const app = require('../../src/app');
 
-require('../../src/routes/feedback');
+require('../../src/routes/image');
 
 let useremail = 'test@test.no';
 let pw = '1';
 let token = 'noe';
 
 beforeAll(async () => {
-    await sync;
+    await syncSmall;
     const response = await request(app)
         .post('/login')
         .send({ email: useremail, password: pw });
@@ -22,7 +22,7 @@ beforeAll(async () => {
     //gå til /login
 });
 
-//TODO: Tests for feedback
+//TODO: Tests for image
 describe('NEED TEST', () => {
     test('1 TEST', async () => {
         expect(1).toBe(1);
