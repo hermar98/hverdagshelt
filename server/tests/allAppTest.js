@@ -557,11 +557,11 @@ describe('userIssues tests',() => {
 describe('userMunicipals tests',() => {
     //GET /secure/userMun/:id
     test('GET /secure/users/:id/mun', async ()=>{
-        const r1 = await request(app).post('/secure/users/1/mun/5001').set({ 'x-access-token': token });
-        const r2 = await request(app).post('/secure/users/1/mun/807').set({ 'x-access-token': token });
+        const r1 = await request(app).post('/secure/users/1/mun/101').set({ 'x-access-token': token });
+        const r2 = await request(app).post('/secure/users/1/mun/216').set({ 'x-access-token': token });
         expect(r1.statusCode).toBe(200);
         expect(r2.statusCode).toBe(200);
-
+        // console.log('POST FINISHED')
         const response = await request(app).get('/secure/users/1/mun').set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
