@@ -8,10 +8,11 @@ import { Alert, NavBar, Form, Card, Button } from '../../widgets';
 import { User, Issue } from '../../models.js';
 import { issueService } from '../../services/IssueService.js';
 import { tokenManager } from '../../tokenManager';
-import {userService} from "../../services/UserService";
+import { userService } from '../../services/UserService';
 
 type P = { userId: number };
 type S = {};
+
 export default class ChangePasswordForm extends Component<P, S> {
   user = new User();
   currentPassword = '';
@@ -29,8 +30,7 @@ export default class ChangePasswordForm extends Component<P, S> {
 
   handleChangePassword(e: Object) {
     e.preventDefault();
-    console.log(this.newPassword);
-    console.log(this.newPasswordRepeated);
+
     userService
       .login(this.user.email, this.currentPassword)
       .then(() => {
@@ -40,7 +40,6 @@ export default class ChangePasswordForm extends Component<P, S> {
           this.user.password = this.newPassword;
           console.log(this.user);
           userService.updateUser(this.user);
-          Alert();
         }
       })
       .catch(error => console.log('Nåverende passord er feil'));
@@ -64,6 +63,8 @@ export default class ChangePasswordForm extends Component<P, S> {
               type="password"
               onChange={event => (this.newPassword = event.target.value)}
               required
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              title="Passordet må inneholde minst én liten og én stor bokstav, og minst 8 karakterer"
               placeholder="Nytt passord"
             />
           </div>
@@ -73,6 +74,8 @@ export default class ChangePasswordForm extends Component<P, S> {
               type="password"
               onChange={event => (this.newPasswordRepeated = event.target.value)}
               required
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              title="Passordet må inneholde minst én liten og én stor bokstav, og minst 8 karakterer"
               placeholder="Gjenta passord"
             />
           </div>
