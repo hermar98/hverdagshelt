@@ -1,12 +1,12 @@
 //@flow
-import {Municipal} from "../models";
+import {Municipal} from "../models/Municipal";
 import service from './Service';
 
 class UserMunicipalService {
   getUserMunicipals(userId: number): Promise<Municipal[]> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return service.get('/secure/userMun/' + userId, {
+    return service.get('/secure/users/'+ userId + '/mun', {
       headers: {'x-access-token': token}
     });
   }

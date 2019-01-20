@@ -1,7 +1,8 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { eventService } from '../src/services/EventService';
-import { Issue, User, Event } from '../src/models';
+import { Event } from '../src/models/Event';
+import {User} from "../src/models/User";
+import {Issue} from "../src/models/Issue";
 import {userService} from "../src/services/UserService";
 import {issueService} from "../src/services/IssueService";
 import service from "../src/services/Service";

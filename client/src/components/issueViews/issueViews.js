@@ -2,13 +2,15 @@
 import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 import {Redirect, NavLink} from 'react-router-dom'
-import { Issue, Feedback, User } from '../../models';
-import {feedbackService} from "../../services/FeedbackService";
+import { Feedback} from '../../models/Feedback';
 import Menu from '../menu/Menu';
 import {tokenManager} from "../../tokenManager";
+import {User} from "../../models/User";
+import {Issue} from "../../models/Issue";
 import {userService} from "../../services/UserService";
 import {issueService} from "../../services/IssueService";
 import {issueCategoryService} from "../../services/IssueCategoryService";
+import {feedbackService} from "../../services/FeedbackService";
 
 let sharedIssues = sharedComponentData({issues: []})
 let sharedFeedback = sharedComponentData({feedback: []})
@@ -285,23 +287,7 @@ export class IssueOverviewSmall extends Component<{munId: number}> {
 
     render () {
         return (
-            <div className="issue-overview-small">
-                <div className="d-flex flex-row sort-box card-header justify-content-between">
-                    <div className="form-group">
-                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
-                        <option value={0}>Alle</option>
-                        <option value={1}>Ikke behandlet</option>
-                        <option value={2}>Under behandling</option>
-                        <option value={3}>Behandlet</option>
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.timesort = event.target.value)}>
-                            <option>Nyeste</option>
-                            <option>Eldste</option>
-                        </select>
-                    </div>
-                </div>
+            <div>
                 <ul className="list-group">
                     {sharedIssues.issues.map((issue,index) => {
                         if (this.status == issue.statusId || this.status == 0) {
@@ -318,8 +304,7 @@ export class IssueOverviewSmall extends Component<{munId: number}> {
     }
 
     mounted (){
-        window.scrollTo(0, 0);
-        issueService.getIssuesByMunicipal(window.location.hash.slice(12))
+        issueService.getIssuesByMunicipal(this.props.munId)
             .then(data => {
                 sharedIssues.issues = data;
             })
