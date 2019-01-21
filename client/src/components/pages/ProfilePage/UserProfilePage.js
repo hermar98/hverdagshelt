@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
-import { Component } from 'react-simplified';
+import { Component, sharedComponentData } from 'react-simplified';
 
 import { Alert, NavBar, Form, Card, Button } from '../../../widgets';
 import MenuLoggedIn from '../../../components/menu/Menu.js';
@@ -18,6 +18,7 @@ import {Issue} from "../../../models/Issue";
 import {Municipal} from "../../../models/Municipal";
 
 let municipalObjects;
+let sharedMunicipals = sharedComponentData({municipals: []})
 
 export class UserProfilePage extends Component {
   user: User = new User();
@@ -25,7 +26,6 @@ export class UserProfilePage extends Component {
 
   newMunicipalName: string = '';
   newMunicipalId: number = 0;
-  userMunicipals: Municipal[] = [];
   munId: number = -1;
 
   mounted() {
@@ -58,17 +58,23 @@ export class UserProfilePage extends Component {
     userMunicipalService
       .getUserMunicipals(tokenManager.getUserId())
       .then(rows => {
-        this.userMunicipals = rows;
+        sharedMunicipals.municipals = rows;
       })
       .catch(error => console.log(error));
   }
 
   handleAddMunicipal() {
-    let municipal = municipalObjects.find(e => e.name == glob);
-    console.log(municipal);
+    let municipal = municipalObjects.find(e => e.name == this.newMunicipalName);
+    if(municipal == null) {
+        municipal = municipalObjects.find(e => e.name == glob);
+    }
 
-    this.newMunicipalId = municipal.munId;
-    userMunicipalService.addUserMunicipal(tokenManager.getUserId(), this.newMunicipalId);
+      if(municipal != null){
+          this.newMunicipalId = municipal.munId;
+          userMunicipalService.addUserMunicipal(tokenManager.getUserId(), this.newMunicipalId);
+          sharedMunicipals.municipals.push(municipal)
+          this.newMunicipalName = ''
+      }
   }
 
   delete(issueId: number) {
@@ -82,14 +88,17 @@ export class UserProfilePage extends Component {
     }
   }
 
-  deleteUserMunicipal(userId: number, munId: number) {
+  deleteUserMunicipal(munId: number) {
     userMunicipalService
-      .deleteUserMunicipal(userId, munId)
-      .then(rows => (this.userMunicipals = this.userMunicipals.filter(e => e.munId !== munId)))
+      .deleteUserMunicipal(tokenManager.getUserId(), munId)
+      .then(rows => (sharedMunicipals.municipals = sharedMunicipals.municipals.filter(e => e.munId !== munId)))
       .catch(error => console.log(error));
   }
 
   render() {
+
+    sharedMunicipals.municipals.sort((a, b) => a.name > b.name)
+
     return (
       <div>
         <MenuLoggedIn />
@@ -112,16 +121,16 @@ export class UserProfilePage extends Component {
               <div className="card municipal">
                   <h5 id="municipal-title">Kommuner</h5>
                     <div className="add-municipal-field justify-content-between d-flex flex-row">
-                        <div cassName="autocomplete"></div>
-                        <input className="form-control" id="mun-input" type="text" placeholder="Legg til kommune..." />
-                        <ImageButton source="../../images/add.png" onclick={this.handleAddMunicipal}/>
+                        <input className="form-control" id="municipalInput" type="text" value={this.newMunicipalName} placeholder="Legg til kommune..." onChange={
+                          event => this.newMunicipalName = event.target.value
+                        }/>
+                        <ImageButton source="../../images/add.png" onclick={() => this.handleAddMunicipal()}/>
                     </div>
                     <ul className="list-group mun-list">
-                        {this.userMunicipals.map((mun, index) => (
-                            <li className="list-group-item">{mun.name}</li>
+                        {sharedMunicipals.municipals.map((mun, index) => (
+                            <li className="list-group-item municipal-item"><div className="d-flex flex-row justify-content-between align-items-center"> {mun.name}<ImageButton source="../../images/trashcan.png" onclick={
+                                () => this.deleteUserMunicipal(mun.munId)}/></div></li>
                         ))}
-                        <li className="list-group-item municipal-item"><div className="d-flex flex-row justify-content-between align-items-center"> Hello<ImageButton source="../../images/trashcan.png" onclick={
-                            this.deleteUserMunicipal}/></div></li>
                     </ul>
               </div>
             <br />
@@ -138,6 +147,4 @@ export class UserProfilePage extends Component {
       </div>
     );
   }
-
-
 }
