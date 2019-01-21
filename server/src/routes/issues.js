@@ -1,5 +1,6 @@
-import {Issue, Feedback} from "../models";
+import {Issue, Feedback, User} from "../models";
 import Sequelize from "../../flow-typed/npm/sequelize_v4.x.x";
+import {mailSender} from '../MailSender';
 
 type Request = express$Request;
 type Response = express$Response;
@@ -171,7 +172,25 @@ app.post('/secure/issues', (req: Request, res: Response) => {
         categoryId: req.body.categoryId,
         munId: req.body.munId,
         userId: req.body.userId
-    }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+    }).then(count => {
+        if(!count){
+          console.log("halla balla")
+
+          res.sendStatus(404);
+        }else{
+          console.log("halla balla");
+
+          res.sendStatus(200);
+              User.findOne({
+                where: {
+                  userId: req.body.userId
+                }
+              }).then(user => mailSender.sendEmail(user.email, "Din sak har blitt registrert!", "Heisann " + user.firstName + " " +
+              user.lastName + ".\n\nDin sak: " + req.body.title + " har nå blitt registrert i systemet, og en av våre fremste ansatte vil så fort" +
+                " som mulig begynne med saksbehandlingen. Tusen takk for at du melder inn feil, og bidrar til å gjøre vår kommune et bedre sted!\n\nMed vennlig hilsen\n\n" +
+                "Ya boi mr Gayman, Aka young fleinar kokt i fleinsuppe\nShoutout til min boi young thuggers, som er fast as fucc boi"));
+        }
+    });
 });
 
 app.delete('/secure/issues/:id', (req: Request, res: Response) => {

@@ -1,6 +1,6 @@
 //@flow
 
-import {Issue} from "../models";
+import {Issue} from "../models/Issue";
 import service from "./Service";
 
 
@@ -32,8 +32,6 @@ class IssueService {
   getIssuesByMunicipal(munId: number): Promise<Issue[]> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    console.log(munId);
-    console.log('s');
     return service.get('/municipals/' + munId + '/issues', {
       headers: {'x-access-token': token}
     });
