@@ -16,7 +16,7 @@ import {
 import { municipalService } from '../../services/MunicipalService.js';
 import { tokenManager } from '../../tokenManager';
 import { history } from '../../index';
-import { Municipal } from '../../models';
+import { Municipal } from '../../models/Municipal';
 import {userService} from "../../services/UserService";
 
 export default class Menu extends Component {
@@ -32,7 +32,7 @@ export default class Menu extends Component {
             <NavBar.Brand image={this.municipal.municipalShield} to={'/municipal/' + this.munId}>
               {' ' + this.municipal.name + ' kommune'}
             </NavBar.Brand>
-            <NavBar.Link to={'/municipal/' + this.munId + '/fileIssue'}>Registrer sak</NavBar.Link>
+            <NavBar.Link to={'/registrerSak'}>Registrer sak</NavBar.Link>
             <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
               <DropdownHeader>{this.user.email}</DropdownHeader>
               <DropdownFooter>Privatperson</DropdownFooter>
@@ -103,8 +103,8 @@ export default class Menu extends Component {
     return (
       <NavBar>
         <NavBar.Brand image={this.municipal.municipalShield}>{this.municipal.name + ' kommune'}</NavBar.Brand>
-        <NavBar.Link to={'/municipal/' + this.munId + '/login'}>Logg inn</NavBar.Link>
-        <NavBar.Link to={'/municipal/' + this.munId + '/register'}>Registrer bruker</NavBar.Link>
+        <NavBar.Link to={'/login'}>Logg inn</NavBar.Link>
+        <NavBar.Link to={'/registrer'}>Registrer bruker</NavBar.Link>
         <NavBar.Button onClick={this.changeMunicipal}>Endre kommune </NavBar.Button>
       </NavBar>
     );
@@ -130,12 +130,12 @@ export default class Menu extends Component {
   }
 
   toProfile() {
-    history.push('/municipal/' + this.munId + '/profile');
+    history.push('profil');
   }
 
   logout() {
     tokenManager.deleteToken();
-    history.push('/municipal/' + this.munId + '/login');
+    history.push('/');
   }
 
   changeMunicipal(){

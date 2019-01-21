@@ -668,7 +668,7 @@ class ModelsTestData {
                     lastName: 'Aasvestad',
                     email: 'jorgaas@stud.ntnu.no',
                     rank: 1,
-                    salt: 'b79ryp98',
+                    salt: 'a83f4da094cc247b',
                     hashStr: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
                     munId: 528,
                     profilePicture:
@@ -679,8 +679,8 @@ class ModelsTestData {
                     lastName: 'Martinsen',
                     email: 'HermanRM@stud.ntnu.no',
                     rank: 1,
-                    salt: 'b79ryp98',
-                    hashStr: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
+                    salt: 'a83f4da094cc247b',
+                    hashStr: '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
                     munId: 528,
                     profilePicture:
                         'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
@@ -853,7 +853,8 @@ class ModelsTestData {
                 timeStart: new Date(Date.now()),
                 timeEnd: new Date(Date.now()),
                 userId: '1',
-                categoryId: 1
+                categoryId: 1,
+                munId: 5001
             },
             {
                 title: 'PARTIET FORSETTER!',
@@ -864,7 +865,8 @@ class ModelsTestData {
                 timeStart: new Date(Date.now()),
                 timeEnd: new Date(Date.now()),
                 userId: '2',
-                categoryId: 1
+                categoryId: 1,
+                munId: 5001
             }
         ])
     }
@@ -872,11 +874,11 @@ class ModelsTestData {
     createUserMunicipal() {
         return UserMunicipal.bulkCreate([
             {
-                munId: 101,
+                munId: 5001,
                 userId: 1
             },
             {
-                munId: 514,
+                munId: 528,
                 userId: 1
             }
         ])

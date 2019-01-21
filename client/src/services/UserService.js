@@ -1,5 +1,5 @@
 //@flow
-import {User} from "../models";
+import {User} from "../models/User";
 import service from "./Service";
 
 class UserService {

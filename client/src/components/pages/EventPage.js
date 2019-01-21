@@ -1,14 +1,15 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Event, EventCategory } from '../../models.js';
+import { EventCategory } from '../../models/EventCategory.js';
 import {eventCategoryService} from '../../services/EventCategoryService';
 import {Alert, DisplayEvent} from '../../widgets';
-import {Issue} from "../../models";
+import {Issue} from "../../models/Issue";
 import {Status} from "../issueViews/issueViews";
 import moment from "moment";
 import Menu from "../menu/Menu";
 import {eventService} from "../../services/EventService";
+import {Event} from "../../models/Event";
 
 
 export class EventPage extends Component {

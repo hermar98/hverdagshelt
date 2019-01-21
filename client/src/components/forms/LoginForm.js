@@ -5,11 +5,13 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
-import { User, Issue } from '../../models.js';
-import { issueService } from '../../services/IssueService.js';
+import { Issue } from '../../models/Issue.js';
 import { tokenManager } from '../../tokenManager.js';
 import { history } from '../../index';
-import { userService } from '../../services/UserService';
+import {User} from "../../models/User";
+import {userService} from "../../services/UserService";
+import { issueService } from '../../services/IssueService.js';
+
 
 export default class Login extends Component {
   email = '';
@@ -73,7 +75,7 @@ export default class Login extends Component {
       .login(this.email, this.password)
       .then(token => {
         tokenManager.addToken(token);
-        history.push('/');
+        history.push('/feed');
       })
       .catch((error: Error) => {
         console.log(error);
@@ -82,6 +84,6 @@ export default class Login extends Component {
   }
 
   goTo() {
-    history.push('/forgotPassword');
+    history.push('/glemtPassord');
   }
 }

@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { User } from '../../models.js';
+import { User } from '../../models/User.js';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
 import RegistrationForm from '../../components/forms/RegistrationForm';
 import { NewMenu } from '../menu/NewMenu';
