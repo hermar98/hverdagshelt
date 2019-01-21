@@ -129,6 +129,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     }
 
     mounted () {
+        console.log("1")
         window.scrollTo(0, 0);
         console.log(this.props.match.params.issueId)
         issueService.getIssue(this.props.match.params.issueId)
@@ -207,7 +208,7 @@ export class IssueNormal extends Component<{issue: Issue, munId: number}>{
     render () {
         return (
             <div className="issue-normal issue-hover" issue={this.props.issue}>
-                <a id="a-hover" href={"#/municipal/" + this.props.munId + "/issues/" + this.props.issue.issueId}>
+                <a id="a-hover" href={"/#/saker/" + this.props.issue.issueId}>
                     <img src="../../images/arrowRightTrans.png" />
                 </a>
                 <div className="d-flex flex-row issue-flex">
@@ -249,7 +250,7 @@ export class IssueSmall extends Component<{issue: Issue, munId: number}> {
     render() {
         return (
             <div className="issue-small issue-hover" issue={this.props.issue}>
-                <a id="a-hover" href={"#/municipal/" + this.props.munId + "/issues/" + this.props.issue.issueId}>
+                <a id="a-hover" href={"/#/saker/" + this.props.issue.issueId}>
                     <img src="../../images/arrowRightTrans.png" />
                 </a>
                 <div>
@@ -308,52 +309,6 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
     }
 }
 
-export class IssueFeedback extends Component<{feedback: Feedback}> {
-
-    user = new User()
-
-    render() {
-        return (
-            <div className="feedback" feedback={this.props.feedback}>
-                <div className="card feedback-card">
-                    <div className="card-body">
-                        <div className="d-flex flex-row submitter">
-
-                                <div className="p-2">
-                                    <img className="card-img profile-image" src={this.user.profilePicture}/>
-                                </div>
-                                <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{formatDate(this.props.feedback.createdAt)}</p></div>
-                            <ImageButton source="../../images/cog.png" onclick="Edited" />
-                            <ImageButton source="../../images/trashcan.png" onclick={() => this.onDelete()}/>
-                        </div>
-                        <div id="feedback-text" className="card-text">
-                            {this.props.feedback.content}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-    mounted () {
-        userService.getUser(this.props.feedback.userId)
-            .then(user => {
-                this.user = user
-                console.log(JSON.stringify(this.user))
-            })
-            .catch(error => console.error("Error", error))
-    }
-
-    onDelete() {
-        if(confirm("Are you sure?")) {
-            feedbackService.deleteFeedback(this.props.feedback.feedbackId)
-                .then(res => {
-                    sharedFeedback.feedback.splice(sharedFeedback.feedback.indexOf(this.props.feedback), 1)
-                })
-                .catch(error => console.error("Error: ", error))
-        }
-    }
-}
 /*
 A list of issues in normal view
  */
