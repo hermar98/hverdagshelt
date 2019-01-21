@@ -11,7 +11,7 @@ let sequelize = new Sequelize(
   process.env.CI ? 'root' : process.env.DB_USERNAME,
   process.env.CI ? '' : process.env.DB_PASSWORD,
   {
-    host: process.env.CI ? 'mysql' : 'localhost',
+    host: process.env.CI ? 'mysql' : process.env.DB_HOST,
     dialect: 'mysql',
     pool: {
       max: 5,
