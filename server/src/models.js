@@ -8,8 +8,8 @@ console.log(process.env.DATA_USERNAME);
 
 let sequelize = new Sequelize(
   process.env.CI ? 'database' : process.env.DATA_BASE,
-  process.env.CI ? 'root' : 'vegard',
-  process.env.CI ? '' : '1234',
+  process.env.CI ? 'root' : process.env.DB_USERNAME,
+  process.env.CI ? '' : process.env.DB_PASSWORD,
   {
     host: process.env.CI ? 'mysql' : 'localhost',
     dialect: 'mysql',
