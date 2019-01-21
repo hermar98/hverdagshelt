@@ -94,8 +94,6 @@ export default class EventForm extends Component {
     this.event.munId = this.munId;
     this.event.userId = this.userId;
 
-    console
-
     eventService
       .addEvent(this.event)
       .then(history.push('/municipal/' + this.munId))
@@ -111,13 +109,5 @@ export default class EventForm extends Component {
         this.categories.push(first);
       })
       .catch((error: Error) => Alert.danger(error.message));
-  }
-
-  update(){
-    if(this.dropdownToggle === ("")){
-      this.dropdownToggle = " show";
-    }else{
-      this.dropdownToggle = "";
-    }
   }
 }
