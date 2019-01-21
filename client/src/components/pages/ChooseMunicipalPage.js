@@ -5,7 +5,8 @@ import { Component } from 'react-simplified';
 import { autocomplete, glob } from '../../../public/autocomplete';
 import { municipalService } from '../../services/MunicipalService';
 import { history } from '../../index';
-import { Municipal } from '../../models/Municipal';
+import { Municipal } from '../../models';
+import { NewMenu } from '../../components/menu/NewMenu';
 
 let municipalObjects;
 //TODO: fix input
@@ -13,26 +14,28 @@ export class ChooseMunicipalPage extends Component {
   munId = localStorage.getItem('munId');
   render() {
     return (
-      <div className="img-container">
-        <div className="bg-text">
-          <h1>Hverdagshelt</h1>
+      <div>
+        <div>
+          <NewMenu />
         </div>
-        <form autoComplete="off">
-          <div className="autocomplete">
-            <input id="municipalInput" type="text" name="municipal" placeholder="Velg kommune" />
-            <button value="" type="button" onClick={this.go}>
-              Gå
-            </button>
+        <div className="img-container">
+          <div className="bg-text">
+            <h1>Hverdagshelt</h1>
           </div>
-        </form>
-        <img className="bg-image" src={'../../images/Trolltunga.jpg'} alt="Trolltunga" />
+          <form autoComplete="off">
+            <div className="autocomplete">
+              <input id="municipalInput" type="text" name="municipal" placeholder="Velg kommune" />
+              <button value="" type="button" onClick={this.go}>
+                Gå
+              </button>
+            </div>
+          </form>
+          <img className="bg-image" src={'../../images/Trolltunga.jpg'} alt="Trolltunga" />
+        </div>
       </div>
     );
   }
   mounted() {
-    if (this.munId) {
-      history.push('/kommune/' + this.munId);
-    }
     async function f() {
       municipalObjects = [];
       let promise = new Promise((resolve, reject) => {
@@ -55,5 +58,10 @@ export class ChooseMunicipalPage extends Component {
       localStorage.setItem('munId', municipalId.toString());
       history.push('/kommune/' + municipalId);
     }
+  }
+
+  logout() {
+    tokenManager.deleteToken();
+    history.push('/login');
   }
 }

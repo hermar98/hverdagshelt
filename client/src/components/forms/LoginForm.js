@@ -61,7 +61,7 @@ export default class Login extends Component {
       .getToken()
       .then(token => {
         console.log(token);
-        history.push('/kommune/' + this.munId);
+        history.push('/');
       })
       .catch((error: Error) => console.log(error));
   }
