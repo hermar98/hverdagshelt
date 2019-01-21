@@ -109,9 +109,10 @@ export class UserProfilePage extends Component {
               <div className="card municipal">
                   <h5 id="municipal-title">Kommuner</h5>
                     <div className="add-municipal-field justify-content-between d-flex flex-row">
-                        <div cassName="autocomplete"></div>
-                        <input className="form-control" id="mun-input" type="text" placeholder="Legg til kommune..." />
-                        <ImageButton source="../../images/add.png" onclick={this.handleAddMunicipal}/>
+                        <input className="form-control" id="municipalInput" type="text" value={this.newMunicipalName} placeholder="Legg til kommune..." onChange={
+                          event => this.newMunicipalName = event.target.value
+                        }/>
+                        <ImageButton source="../../images/add.png" onclick={() => this.handleAddMunicipal()}/>
                     </div>
                     <ul className="list-group mun-list">
                         {this.userMunicipals.map((mun, index) => (
