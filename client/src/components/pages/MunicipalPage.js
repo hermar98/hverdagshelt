@@ -15,6 +15,7 @@ import {issueService} from "../../services/IssueService";
 export class MunicipalPage extends Component <{match: {params: {munId: number}}}>{ //TODO: FIX select by category and date for events
     issues = [];
     events = [];
+
     render() {
         return(
             <div >
@@ -23,7 +24,7 @@ export class MunicipalPage extends Component <{match: {params: {munId: number}}}
                     <div className="col-lg-6">
                         <Card title="Feil/mangler">
                             <ul className="container-fluid">
-                                <IssueOverviewSmall munId={this.props.match.params.munId}/>
+                                <IssueOverviewSmall issues={this.issues}/>
                             </ul>
                         </Card>
                     </div>
