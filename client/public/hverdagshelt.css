@@ -376,3 +376,16 @@ Profile-page
 .my-profile {
     margin: 2% 0 1% 0
 }
+
+/*
+random
+ */
+.footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+#log-in {
+    margin-top: 7%;
+}

@@ -22,6 +22,7 @@ export default class Login extends Component {
 
   render() {
     return (
+        <div id="log-in">
       <Card title="Logg inn">
         <form ref={e => (this.form = e)} onSubmit={e => e.preventDefault()}>
           <Form.Input
@@ -53,6 +54,7 @@ export default class Login extends Component {
           </div>
         </div>
       </Card>
+        </div>
     );
   }
 

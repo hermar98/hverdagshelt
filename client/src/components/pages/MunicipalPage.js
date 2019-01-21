@@ -8,7 +8,7 @@ import { Alert, Card } from '../../widgets';
 import { history } from '../../index';
 import {IssueOverviewSmall, IssueSmall} from '../issueViews/issueViews';
 import {DisplayEvent2, EventLarge, EventSmall} from "./EventPage";
-import Menu from "../menu/Menu";
+import {NewMenu} from "../menu/NewMenu";
 import NavLink from "react-router-dom/es/NavLink";
 import {issueService} from "../../services/IssueService";
 
@@ -19,7 +19,7 @@ export class MunicipalPage extends Component <{match: {params: {munId: number}}}
     render() {
         return(
             <div >
-                <Menu />
+                <NewMenu />
                 <div className="row page-container">
                     <div className="col-lg-6">
                         <Card title="Feil/mangler">
