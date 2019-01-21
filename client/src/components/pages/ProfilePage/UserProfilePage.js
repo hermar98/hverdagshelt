@@ -61,9 +61,9 @@ export class UserProfilePage extends Component {
   }
 
   handleAddMunicipal() {
-    let municipal = municipalObjects.find(e => e.name == glob);
+    let municipal = municipalObjects.find(e => e.name == this.newMunicipalName);
     if(municipal == null) {
-        municipal = municipalObjects.find(e => e.name == this.newMunicipalName);
+        municipal = municipalObjects.find(e => e.name == glob);
     }
 
       if(municipal != null){
