@@ -82,14 +82,14 @@ export class NewMenu extends Component {
   }
 
   toLogin() {
-    history.push('/login');
+    history.push('/loggInn');
   }
   toRegister() {
-    history.push('/register');
+    history.push('/registrer');
   }
   toLogout() {
     tokenManager.deleteToken();
-    history.push('/login');
+    history.push('/loggInn');
   }
 
   changeMunicipal() {
