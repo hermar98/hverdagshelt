@@ -102,7 +102,7 @@ export default class RegistrationForm extends Component {
 
     userService
       .addUser(this.user)
-      .then(() => history.push('/municipal/' + this.munId+ '/login'))
+      .then(() => history.push('/login'))
       .catch((error: Error) => {
         console.log(error);
         this.emailRegistered = true;

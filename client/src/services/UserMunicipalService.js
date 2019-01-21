@@ -6,7 +6,7 @@ class UserMunicipalService {
   getUserMunicipals(userId: number): Promise<Municipal[]> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
-    return service.get('/secure/userMun/' + userId, {
+    return service.get('/secure/users/' + userId + '/mun', {
       headers: {'x-access-token': token}
     });
   }
@@ -15,7 +15,7 @@ class UserMunicipalService {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
     console.log(token);
-    return service.post('/secure/user/' + userId + '/mun/' + munId, null, {headers: {'x-access-token': token}});
+    return service.post('/secure/users/' + userId + '/mun/' + munId, null, {headers: {'x-access-token': token}});
   }
 
   deleteUserMunicipal(userId: number, munId: number): Promise<void> {
@@ -23,7 +23,7 @@ class UserMunicipalService {
     if (token) {
       token = JSON.parse(token).jwt;
     }
-    return service.delete('/secure/user/' + userId + '/mun/' + munId, {
+    return service.delete('/secure/users/' + userId + '/mun/' + munId, {
       headers: {
         'x-access-token': token
       }

@@ -51,7 +51,6 @@ export class FeedPage extends Component {
                     </select>
                   </div>
                 </div>
-
               </div>
               <ul className="container-fluid">
                 {this.municipals.map(e =>
@@ -109,11 +108,11 @@ export class FeedPage extends Component {
 
     userMunicipalService
       .getUserMunicipals(tokenManager.getUserId())
-      .then(municipals => (this.municipals = municipals))
-      .then(console.log(this.municipals))
+      .then(muns => this.municipals = muns)
       .catch((error: Error) => Alert.danger(error.message));
 
-    /*issueCategoryService
+
+    issueCategoryService
       .getCategories()
       .then(cat => (this.categories = cat))
       .catch((error: Error) => Alert.danger(error.message));
@@ -128,6 +127,6 @@ export class FeedPage extends Component {
       .then(events => {
         this.events = events
       })
-      .catch((error: Error) => Alert.danger(error.message))));*/
+      .catch((error: Error) => Alert.danger(error.message))));
   }
 }
