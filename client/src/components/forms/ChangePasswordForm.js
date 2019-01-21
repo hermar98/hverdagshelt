@@ -10,6 +10,7 @@ import { issueService } from '../../services/IssueService';
 import { tokenManager } from '../../tokenManager';
 import {User} from "../../models/User";
 import {userService} from "../../services/UserService";
+import {HoverButton} from "../issueViews/issueViews";
 
 type P = { userId: number };
 type S = {};
@@ -49,8 +50,8 @@ export default class ChangePasswordForm extends Component<P, S> {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleChangePassword}>
-          <div>
+        <form className="change-password-form">
+          <div className="justify-content-center align-items-center row">
             <input
               type="password"
               onChange={event => (this.currentPassword = event.target.value)}
@@ -59,7 +60,7 @@ export default class ChangePasswordForm extends Component<P, S> {
             />
           </div>
 
-          <div>
+          <div className="justify-content-center align-items-center row">
             <input
               type="password"
               onChange={event => (this.newPassword = event.target.value)}
@@ -70,7 +71,7 @@ export default class ChangePasswordForm extends Component<P, S> {
             />
           </div>
 
-          <div>
+          <div className="justify-content-center align-items-center row">
             <input
               type="password"
               onChange={event => (this.newPasswordRepeated = event.target.value)}
@@ -83,7 +84,7 @@ export default class ChangePasswordForm extends Component<P, S> {
 
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
-              <button type="submit">Endre Passord</button>
+              <HoverButton onclick={this.handleChangePassword} text="Endre passord"/>
             </div>
           </div>
         </form>

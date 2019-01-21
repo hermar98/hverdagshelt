@@ -280,7 +280,7 @@ export class IssueSmall extends Component<{issue: Issue, munId: number}> {
 /*
 A list of issues in small view
  */
-export class IssueOverviewSmall extends Component<{munId: number}> {
+export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[]}> {
 
     status: number = 0;
     timesort: string = "Nyeste";
@@ -289,10 +289,10 @@ export class IssueOverviewSmall extends Component<{munId: number}> {
         return (
             <div>
                 <ul className="list-group">
-                    {sharedIssues.issues.map((issue,index) => {
+                    {this.props.issues.map((issue,index) => {
                         if (this.status == issue.statusId || this.status == 0) {
                             return(
-                                <li key={index} className="list-group-item">
+                                <li key={index} className="list-group-item issue-item">
                                     <IssueSmall issue={issue} munId={this.props.munId}/>
                                 </li>
                             )
@@ -304,11 +304,7 @@ export class IssueOverviewSmall extends Component<{munId: number}> {
     }
 
     mounted (){
-        issueService.getIssuesByMunicipal(this.props.munId)
-            .then(data => {
-                sharedIssues.issues = data;
-            })
-            .catch(error => console.error("Error: ", error))
+        window.scrollTo(0, 0);
     }
 }
 
@@ -358,11 +354,10 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
         }
     }
 }
-
 /*
 A list of issues in normal view
  */
-export class IssueOverviewNormal extends Component<{munId: number}> {
+export class IssueOverviewNormal extends Component<{munId: number, issues: Issue[]}> {
 
     status: number = 0;
     timesort: number = 0;
@@ -390,10 +385,10 @@ export class IssueOverviewNormal extends Component<{munId: number}> {
                     </div>
                 </div>
                 <ul className="list-group">
-                    {sharedIssues.issues.map(issue => {
+                    {this.props.issues.map(issue => {
                         if (this.status == issue.statusId || this.status == 0) {
                             return (
-                                <li className="list-group-item normal-list-item">
+                                <li className="list-group-item  issue-item normal-list-item">
                                     <IssueNormal issue={issue} munId={this.props.munId}/>
                                 </li>
                             )
@@ -404,23 +399,61 @@ export class IssueOverviewNormal extends Component<{munId: number}> {
         )
     }
 
-    mounted (){
-        issueService.getIssues()
-            .then(data => {
-                sharedIssues.issues = data;
-            })
-            .catch(error => console.error("Error: ", error))
-        sharedIssues.issues.sort((a, b) => a.createdAt - b.createdAt );
+    onChange () {
+        console.log("sort")
+    }
+}
+
+/*
+Widget for displaying a single feedback-card with name, date, profile-picture and content
+ */
+export class IssueFeedback extends Component<{feedback: Feedback}> {
+
+    user = new User()
+
+    render() {
+        return (
+            <div className="feedback" feedback={this.props.feedback}>
+                <div className="card feedback-card">
+                    <div className="card-body">
+                        <div className="d-flex flex-row submitter">
+                                <div className="p-2">
+                                    <img className="card-img profile-image" src={this.user.profilePicture}/>
+                                </div>
+                                <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{formatDate(this.props.feedback.createdAt)}</p></div>
+                            <ImageButton source="../../images/cog.png" onclick="Edited" />
+                            <ImageButton source="../../images/trashcan.png" onclick={() => this.onDelete()}/>
+                        </div>
+                        <div id="feedback-text" className="card-text">
+                            {this.props.feedback.content}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
     }
 
-    onChange () {
-        if(this.timesort == 1) {
-            sharedIssues.issues.sort((a, b) => b.createdAt - a.createdAt);
-        }else{
-            sharedIssues.issues.sort((a, b) => a.createdAt - b.createdAt );
+    mounted () {
+        userService.getUser(this.props.feedback.userId)
+            .then(user => {
+                this.user = user
+                console.log(JSON.stringify(this.user))
+            })
+            .catch(error => console.error("Error", error))
+    }
+
+    onDelete() {
+        if(confirm("Are you sure?")) {
+            feedbackService.deleteFeedback(this.props.feedback.feedbackId)
+                .then(res => {
+                    sharedFeedback.feedback.splice(sharedFeedback.feedback.indexOf(this.props.feedback), 1)
+                })
+                .catch(error => console.error("Error: ", error))
         }
     }
 }
+
+
 
 /*
 A colored status-bar. The number decides which status is rendered
@@ -451,6 +484,10 @@ class Status extends Component<{status: number, id: number}> {
     }
 }
 
+
+/*
+Widget for displaying the image of a status
+ */
 class StatusImage extends Component<{status: number}> {
     render () {
         switch (this.props.status){
@@ -473,6 +510,10 @@ class StatusImage extends Component<{status: number}> {
     }
 }
 
+
+/*
+An image-button with the image of a status
+ */
 class StatusButton extends Component<{status: number, onclick: function}> {
     render () {
         switch (this.props.status){
@@ -493,7 +534,10 @@ class StatusButton extends Component<{status: number, onclick: function}> {
     }
 }
 
-class ImageButton extends Component<{source: string, onclick: function}> {
+/*
+A button with an image and a function as arguments
+ */
+export class ImageButton extends Component<{source: string, onclick: function}> {
     render() {
         return(
             <button className="btn image-button" type="button" onClick={this.props.onclick} >
@@ -503,7 +547,10 @@ class ImageButton extends Component<{source: string, onclick: function}> {
     }
 }
 
-class HoverButton extends Component<{onclick: function, text: string}> {
+/*
+A button which goes from black to white on hover
+ */
+export class HoverButton extends Component<{onclick: function, text: string}> {
     render () {
         return (
             <button className="btn hover-button" type="button" onClick={this.props.onclick} >
