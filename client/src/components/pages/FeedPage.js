@@ -23,6 +23,10 @@ export class FeedPage extends Component {
   events = [];
   categories = [];
 
+  munId: number = 0;
+  categoryId: number = 0;
+  timesort: string = "Nyeste";
+
   render() {
     return(
       <div>
@@ -34,12 +38,14 @@ export class FeedPage extends Component {
                 <div className="d-flex flex-row sort-box card-header justify-content-between">
                   <div className="form-group mt-2 ml-1">
                     <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.munId = event.target.value)}>
+                      <option value={0}>Alle kommuner</option>
                       {this.municipals.map(mun =>
                         <option key={mun.munId} value={mun.munId}>{mun.name}</option>)}
                     </select>
                   </div>
                   <div className="form-group mt-2">
                     <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.categoryId = event.target.value)}>
+                      <option value={0}>Alle kategorier</option>
                       {this.categories.map(cat =>
                         <option key={cat.categoryId} value={cat.categoryId}>{cat.name}</option>)}
                     </select>
