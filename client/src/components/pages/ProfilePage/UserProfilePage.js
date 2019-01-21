@@ -3,16 +3,16 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 
 import { Alert, NavBar, Form, Card, Button } from '../../../widgets';
-import MenuLoggedIn from '../../../components/menu/Menu.js';
+import { ProfileMenu } from '../../../components/menu/ProfileMenu.js';
 import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
 import { userMunicipalService } from '../../../services/UserMunicipalService';
 import { autocomplete, glob } from '../../../../public/autocomplete';
 import { User, Issue, Municipal, UserMunicipal } from '../../../models';
 import { IssueSmall, IssueNormal, IssueOverviewSmall } from '../../issueViews/issueViews';
 import { tokenManager } from '../../../tokenManager';
-import {userService} from "../../../services/UserService";
-import {issueService} from "../../../services/IssueService";
-import {municipalService} from "../../../services/MunicipalService";
+import { userService } from '../../../services/UserService';
+import { issueService } from '../../../services/IssueService';
+import { municipalService } from '../../../services/MunicipalService';
 
 let municipalObjects;
 
@@ -88,7 +88,9 @@ export class UserProfilePage extends Component {
   render() {
     return (
       <div>
-        <MenuLoggedIn />
+        <div>
+          <ProfileMenu />
+        </div>
         <Card title="Min Profil">
           <Card title="">
             <div className="info">

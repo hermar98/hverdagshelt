@@ -9,7 +9,7 @@ import { User, Issue } from '../../models.js';
 import { issueService } from '../../services/IssueService.js';
 import { tokenManager } from '../../tokenManager.js';
 import { history } from '../../index';
-import {userService} from "../../services/UserService";
+import { userService } from '../../services/UserService';
 
 export default class Login extends Component {
   email = '';
@@ -59,7 +59,7 @@ export default class Login extends Component {
       .getToken()
       .then(token => {
         console.log(token);
-        history.push('/municipal/' + this.munId);
+        history.push('/');
       })
       .catch((error: Error) => console.log(error));
   }
@@ -73,7 +73,7 @@ export default class Login extends Component {
       .login(this.email, this.password)
       .then(token => {
         tokenManager.addToken(token);
-        history.push('/municipal/' + this.munId);
+        history.push('/');
       })
       .catch((error: Error) => {
         console.log(error);

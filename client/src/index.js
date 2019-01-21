@@ -19,7 +19,7 @@ import { IssueLarge, IssueOverviewNormal, IssueNormal, IssueOverviewSmall } from
 import { ForgotPassword } from './components/pages/ForgotPassword.js';
 import { NewPasswordPage } from './components/pages/NewPasswordPage.js';
 import { UploadImageTest } from './components/image/UploadImageTest.js';
-import  {AlternativeUpload } from './components/image/AlternativeUpload.js';
+import { AlternativeUpload } from './components/image/AlternativeUpload.js';
 
 import { MunicipalPage } from './components/pages/MunicipalPage';
 import { Issue } from './models.js';
@@ -45,13 +45,13 @@ if (root)
         <Alert />
         <Route exact path="/" component={ChooseMunicipalPage} />
         <Route exact path="/municipal/:munId" component={MunicipalPage} />
-        <Route exact path="/municipal/:munId/login" component={LoginPage} />
-        <Route exact path="/municipal/:munId/register" component={RegisterPage} />
-        <Route exact path="/municipal/:munId/profile" component={UserProfilePage} />
+        <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/register" component={RegisterPage} />
+        <Route exact path="/profile" component={UserProfilePage} />
         <Route exact path="/forgotPassword" component={ForgotPassword} />
         <Route exact path="/reset/:userId" component={NewPasswordPage} />
         <Route exact path="/municipal/:munId/events" component={EventPage} />
-          <Route exact path="/municipal/:munId/events/:eventId" component={EventInfo} />
+        <Route exact path="/municipal/:munId/events/:eventId" component={EventInfo} />
         <Route exact path="/municipal/:munId/registerEvent" component={RegisterEventPage} />
         <Route exact path="/municipal/:munId/issues" component={IssuePage} />
         <Route exact path="/municipal/:munId/fileIssue" component={FileIssuePage} />

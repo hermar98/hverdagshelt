@@ -153,12 +153,14 @@ export class Card extends Component<{ title?: React.Node, children?: React.Node 
   }
 }
 
-class NavBarButton extends Component<{onClick: () => mixed, children?: React.Node}>{
-  render(){
-    return(
-    <form className="form-inline">
-      <button onClick={this.props.onClick} className="btn btn btn-outline-light">{this.props.children}</button>
-    </form>
+class NavBarButton extends Component<{ onClick: () => mixed, children?: React.Node }> {
+  render() {
+    return (
+      <form className="form-inline">
+        <button onClick={this.props.onClick} className="custom-nav-btn btn btn btn-outline-light">
+          {this.props.children}
+        </button>
+      </form>
     );
   }
 }
@@ -180,9 +182,14 @@ class NavBarLink extends Component<{ to: string, exact?: boolean, children?: Rea
   render() {
     if (!this.props.children) return null;
     return (
-      <NavLink className="nav-link" activeClassName="active" exact={this.props.exact} to={this.props.to}>
+      <NavLink
+        className="custom-nav-link nav-link"
+        activeClassName="active"
+        exact={this.props.exact}
+        to={this.props.to}
+      >
         <form className="form-inline">
-          <button className="btn btn btn-outline-light">{this.props.children}</button>
+          <button className="custom-nav-btn btn btn btn-outline-light">{this.props.children}</button>
         </form>
       </NavLink>
     );
@@ -229,7 +236,7 @@ class NavBarDropdown extends Component<
     return (
       <div className="dropdown form-inline ml-2" onClick={this.toggleOpen}>
         <button
-          className="btn btn-info dropdown-toggle"
+          className="custom-nav-btn btn btn-info dropdown-toggle"
           type="button"
           id="dropdownMenuButton"
           data-toggle="dropdown"
@@ -286,7 +293,9 @@ export class DropdownItem extends Component<{
 }
 
 export class NavBar extends Component<{
-  children: React.Element<typeof NavBarBrand | typeof NavBarLink | typeof NavBarLogout | typeof NavBarDropdown | typeof NavBarButton>[]
+  children: React.Element<
+    typeof NavBarBrand | typeof NavBarLink | typeof NavBarLogout | typeof NavBarDropdown | typeof NavBarButton
+  >[]
 }> {
   static Brand = NavBarBrand;
   static Link = NavBarLink;
@@ -301,7 +310,11 @@ export class NavBar extends Component<{
           {this.props.children.filter(child => child.type == NavBarBrand)}
           <ul className="nav navbar-nav navbar-right">
             {this.props.children.filter(
-              child => child.type == NavBarLink || child.type == NavBarLogout || child.type == NavBarDropdown || child.type == NavBarButton
+              child =>
+                child.type == NavBarLink ||
+                child.type == NavBarLogout ||
+                child.type == NavBarDropdown ||
+                child.type == NavBarButton
             )}
           </ul>
         </div>
