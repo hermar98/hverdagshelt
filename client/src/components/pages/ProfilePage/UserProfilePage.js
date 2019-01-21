@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 
 import { Alert, NavBar, Form, Card, Button } from '../../../widgets';
-import MenuLoggedIn from '../../../components/menu/Menu.js';
+import { ProfileMenu } from '../../../components/menu/ProfileMenu.js';
 import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
 import { userMunicipalService } from '../../../services/UserMunicipalService';
 import { autocomplete, glob } from '../../../../public/autocomplete';
