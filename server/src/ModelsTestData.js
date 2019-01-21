@@ -758,8 +758,8 @@ class ModelsTestData {
                     'https://www.thesun.co.uk/wp-content/uploads/2018/07/AF-COMPOSITE-FIGHT.jpg?strip=all&quality=100&w=750&h=500&crop=1',
                 longitude: 60.656877,
                 latitude: 10.824107,
-                date: new Date(Date.now()),
-                munId: 528,
+                date: '2019-01-21',
+                munId: 5001,
                 userId: 1,
                 categoryId: 1,
                 statusId: 1
@@ -772,8 +772,8 @@ class ModelsTestData {
                 image: 'http://www.otera.no/image/20111206015-kopi.jpeg?w=1200',
                 longitude: 60.661293,
                 latitude: 10.828996,
-                date: new Date(Date.now()),
-                munId: 528,
+                createdAt: '2018-04-12',
+                munId: 101,
                 userId: 3,
                 categoryId: 2,
                 statusId: 2
@@ -786,8 +786,8 @@ class ModelsTestData {
                 image: 'http://i.imgur.com/so8Ea.jpg',
                 longitude: 60.684721,
                 latitude: 10.841522,
-                date: new Date(Date.now()),
-                munId: 528,
+                createdAt: '2018-04-12',
+                munId: 101,
                 userId: 2,
                 categoryId: 4,
                 statusId: 6
@@ -800,8 +800,175 @@ class ModelsTestData {
                 image: 'https://i.ytimg.com/vi/MPNN_nVwG5w/maxresdefault.jpg',
                 longitude: 60.68273,
                 latitude: 10.831514,
-                date: new Date(Date.now()),
+                createdAt: '2018-06-01',
+                munId: 101,
+                userId: 6,
+                categoryId: 2,
+                statusId: 3
+            },
+            {
+                issueId: 5,
+                title: 'Dumme folk ødeleger lømp',
+                content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
+                image:
+                    'https://www.thesun.co.uk/wp-content/uploads/2018/07/AF-COMPOSITE-FIGHT.jpg?strip=all&quality=100&w=750&h=500&crop=1',
+                longitude: 60.656877,
+                latitude: 10.824107,
+                createdAt: '2018-10-10',
+                munId: 101,
+                userId: 1,
+                categoryId: 1,
+                statusId: 1
+            },
+
+            {
+                issueId: 6,
+                title: 'Veilys på gata hjemme er ødelagt',
+                content: 'Et veilys på gata har blitt ødelagt',
+                image: 'http://www.otera.no/image/20111206015-kopi.jpeg?w=1200',
+                longitude: 60.661293,
+                latitude: 10.828996,
+                createdAt: '2019-01-01',
+                munId: 101,
+                userId: 3,
+                categoryId: 2,
+                statusId: 2
+            },
+
+            {
+                issueId: 7,
+                title: 'Dårlig grafitti på skole veggen',
+                content: 'Det er dårlig grafitti på skole veggen',
+                image: 'http://i.imgur.com/so8Ea.jpg',
+                longitude: 60.684721,
+                latitude: 10.841522,
+                createdAt: '2018-02-12',
                 munId: 528,
+                userId: 2,
+                categoryId: 4,
+                statusId: 6
+            },
+
+            {
+                issueId: 8,
+                title: 'Veilys ødelagt på 33',
+                content: 'I have a question for god. WHYYYYYYYYYYY. Is this light broken',
+                image: 'https://i.ytimg.com/vi/MPNN_nVwG5w/maxresdefault.jpg',
+                longitude: 60.68273,
+                latitude: 10.831514,
+                createdAt: '2019-01-01',
+                munId: 528,
+                userId: 6,
+                categoryId: 2,
+                statusId: 3
+            },{
+                issueId: 9,
+                title: 'Dumme folk ødeleger lømp',
+                content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
+                image:
+                    'https://www.thesun.co.uk/wp-content/uploads/2018/07/AF-COMPOSITE-FIGHT.jpg?strip=all&quality=100&w=750&h=500&crop=1',
+                longitude: 60.656877,
+                latitude: 10.824107,
+                createdAt: '2019-01-01',
+                munId: 528,
+                userId: 1,
+                categoryId: 1,
+                statusId: 1
+            },
+
+            {
+                issueId: 10,
+                title: 'Veilys på gata hjemme er ødelagt',
+                content: 'Et veilys på gata har blitt ødelagt',
+                image: 'http://www.otera.no/image/20111206015-kopi.jpeg?w=1200',
+                longitude: 60.661293,
+                latitude: 10.828996,
+                createdAt: '2019-01-01',
+                munId: 528,
+                userId: 3,
+                categoryId: 2,
+                statusId: 2
+            },
+
+            {
+                issueId: 11,
+                title: 'Dårlig grafitti på skole veggen',
+                content: 'Det er dårlig grafitti på skole veggen',
+                image: 'http://i.imgur.com/so8Ea.jpg',
+                longitude: 60.684721,
+                latitude: 10.841522,
+                createdAt: '2018-12-12',
+                munId: 5001,
+                userId: 2,
+                categoryId: 4,
+                statusId: 6
+            },
+
+            {
+                issueId: 12,
+                title: 'Veilys ødelagt på 33',
+                content: 'I have a question for god. WHYYYYYYYYYYY. Is this light broken',
+                image: 'https://i.ytimg.com/vi/MPNN_nVwG5w/maxresdefault.jpg',
+                longitude: 60.68273,
+                latitude: 10.831514,
+                createdAt: '2018-03-05',
+                munId: 5001,
+                userId: 6,
+                categoryId: 2,
+                statusId: 3
+            },
+            {
+                issueId: 13,
+                title: 'Dumme folk ødeleger lømp',
+                content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
+                image:
+                    'https://www.thesun.co.uk/wp-content/uploads/2018/07/AF-COMPOSITE-FIGHT.jpg?strip=all&quality=100&w=750&h=500&crop=1',
+                longitude: 60.656877,
+                latitude: 10.824107,
+                createdAt: '2018-03-05',
+                munId: 5001,
+                userId: 1,
+                categoryId: 1,
+                statusId: 1
+            },
+
+            {
+                issueId: 14,
+                title: 'Veilys på gata hjemme er ødelagt',
+                content: 'Et veilys på gata har blitt ødelagt',
+                image: 'http://www.otera.no/image/20111206015-kopi.jpeg?w=1200',
+                longitude: 60.661293,
+                latitude: 10.828996,
+                createdAt: '2018-05-12',
+                munId: 5001,
+                userId: 3,
+                categoryId: 2,
+                statusId: 2
+            },
+
+            {
+                issueId: 15,
+                title: 'Dårlig grafitti på skole veggen',
+                content: 'Det er dårlig grafitti på skole veggen',
+                image: 'http://i.imgur.com/so8Ea.jpg',
+                longitude: 60.684721,
+                latitude: 10.841522,
+                createdAt: '2018-05-12',
+                munId: 5001,
+                userId: 2,
+                categoryId: 4,
+                statusId: 6
+            },
+
+            {
+                issueId: 16,
+                title: 'Veilys ødelagt på 33',
+                content: 'I have a question for god. WHYYYYYYYYYYY. Is this light broken',
+                image: 'https://i.ytimg.com/vi/MPNN_nVwG5w/maxresdefault.jpg',
+                longitude: 60.68273,
+                latitude: 10.831514,
+                createdAt: '2018-05-12',
+                munId: 5001,
                 userId: 6,
                 categoryId: 2,
                 statusId: 3

@@ -1,5 +1,5 @@
 import {Issue, Feedback} from "../models";
-import Sequelize from "../../flow-typed/npm/sequelize_v4.x.x";
+import {sequelize} from '../models.js';
 
 type Request = express$Request;
 type Response = express$Response;
@@ -112,6 +112,13 @@ app.get('/municipals/:id/issues', (req: Request, res: Response) => {
     return Issue.findAll({ where: { munId: Number(req.params.id) } }).then(issues =>
         issues ? res.send(issues) : res.sendStatus(404)
     );
+});
+
+app.get('/municipals/:id/issues/count', (req: Request, res: Response) => {
+    return sequelize.query(
+        'SELECT COUNT(*) AS numberOfIssues, MONTH(createdAt) AS month FROM Issues WHERE munId = :munId AND YEAR(createdAt) = :year GROUP BY MONTH(createdAt)',
+        {replacements: {munId: Number(req.params.id), year: Number(req.query.year)}, type: sequelize.QueryTypes.SELECT}
+    ).then(count => count ? res.send(count) : res.sendStatus(404));
 });
 
 app.get('/secure/users/:id/issues', (req: Request, res: Response) => {

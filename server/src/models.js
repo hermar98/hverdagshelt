@@ -5,7 +5,7 @@ require('dotenv').config({ path: '../.env' });
 
 console.log(process.env.DATA_USERNAME);
 
-let sequelize = new Sequelize(
+export let sequelize = new Sequelize(
   process.env.CI ? 'database' : process.env.DATA_BASE,
   process.env.CI ? 'root' : process.env.DB_USERNAME,
   process.env.CI ? '' : process.env.DB_PASSWORD,

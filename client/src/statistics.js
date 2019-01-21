@@ -5,11 +5,14 @@ class Statistics {
 
     getLineChart(xAxisTitle: string, yAxisTitle: string, data: []) {
 
+        let max = Math.max.apply(Math, data.map(function(obj) { return obj.y; }));
+
         return (
             <XYPlot
                 xType="ordinal"
-                width={1000}
-                height={500}>
+                width={800}
+                height={400}
+            yDomain={[0, 2*max]}>
                 <XAxis/>
                 <YAxis/>
                 <VerticalBarSeries data={data}/>
