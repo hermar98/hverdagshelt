@@ -278,7 +278,7 @@ export class IssueSmall extends Component<{issue: Issue, munId: number}> {
 /*
 A list of issues in small view
  */
-export class IssueOverviewSmall extends Component<{munId: number}> {
+export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[]}> {
 
     status: number = 0;
     timesort: string = "Nyeste";
@@ -303,7 +303,7 @@ export class IssueOverviewSmall extends Component<{munId: number}> {
                     </div>
                 </div>
                 <ul className="list-group">
-                    {sharedIssues.issues.map((issue,index) => {
+                    {this.props.issues.map((issue,index) => {
                         if (this.status == issue.statusId || this.status == 0) {
                             return(
                                 <li key={index} className="list-group-item issue-item">
@@ -319,14 +319,61 @@ export class IssueOverviewSmall extends Component<{munId: number}> {
 
     mounted (){
         window.scrollTo(0, 0);
-        issueService.getIssues()
-            .then(data => {
-                sharedIssues.issues = data;
-            })
-            .catch(error => console.error("Error: ", error))
+    }
+}
+/*
+A list of issues in normal view
+ */
+export class IssueOverviewNormal extends Component<{munId: number, issues: Issue[]}> {
+
+    status: number = 0;
+    timesort: number = 0;
+
+    render () {
+        return (
+            <div className="issue-overview-normal issue-container">
+                <div className="d-flex flex-row sort-box justify-content-between">
+                    <div className="form-group">
+                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
+                            <option value={0}>Alle</option>
+                            <option value={1}>Ikke behandlet</option>
+                            <option value={2}>Under behandling</option>
+                            <option value={3}>Behandlet</option>
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
+                            this.timesort = event.target.value;
+                            this.onChange();
+                        }}>
+                            <option value={0}>Nyeste</option>
+                            <option value={1}>Eldste</option>
+                        </select>
+                    </div>
+                </div>
+                <ul className="list-group">
+                    {this.props.issues.map(issue => {
+                        if (this.status == issue.statusId || this.status == 0) {
+                            return (
+                                <li className="list-group-item  issue-item normal-list-item">
+                                    <IssueNormal issue={issue} munId={this.props.munId}/>
+                                </li>
+                            )
+                        }
+                    })}
+                </ul>
+            </div>
+        )
+    }
+
+    onChange () {
+        console.log("sort")
     }
 }
 
+/*
+Widget for displaying a single feedback-card with name, date, profile-picture and content
+ */
 export class IssueFeedback extends Component<{feedback: Feedback}> {
 
     user = new User()
@@ -373,68 +420,7 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
     }
 }
 
-/*
-A list of issues in normal view
- */
-export class IssueOverviewNormal extends Component<{munId: number}> {
 
-    status: number = 0;
-    timesort: number = 0;
-
-    render () {
-        return (
-            <div className="issue-overview-normal issue-container">
-                <div className="d-flex flex-row sort-box justify-content-between">
-                    <div className="form-group">
-                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
-                            <option value={0}>Alle</option>
-                            <option value={1}>Ikke behandlet</option>
-                            <option value={2}>Under behandling</option>
-                            <option value={3}>Behandlet</option>
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
-                            this.timesort = event.target.value;
-                            this.onChange();
-                        }}>
-                            <option value={0}>Nyeste</option>
-                            <option value={1}>Eldste</option>
-                        </select>
-                    </div>
-                </div>
-                <ul className="list-group">
-                    {sharedIssues.issues.map(issue => {
-                        if (this.status == issue.statusId || this.status == 0) {
-                            return (
-                                <li className="list-group-item  issue-item normal-list-item">
-                                    <IssueNormal issue={issue} munId={this.props.munId}/>
-                                </li>
-                            )
-                        }
-                    })}
-                </ul>
-            </div>
-        )
-    }
-
-    mounted (){
-        issueService.getIssues()
-            .then(data => {
-                sharedIssues.issues = data;
-            })
-            .catch(error => console.error("Error: ", error))
-        sharedIssues.issues.sort((a, b) => a.createdAt - b.createdAt );
-    }
-
-    onChange () {
-        if(this.timesort == 1) {
-            sharedIssues.issues.sort((a, b) => b.createdAt - a.createdAt);
-        }else{
-            sharedIssues.issues.sort((a, b) => a.createdAt - b.createdAt );
-        }
-    }
-}
 
 /*
 A colored status-bar. The number decides which status is rendered
@@ -465,6 +451,10 @@ class Status extends Component<{status: number, id: number}> {
     }
 }
 
+
+/*
+Widget for displaying the image of a status
+ */
 class StatusImage extends Component<{status: number}> {
     render () {
         switch (this.props.status){
@@ -487,6 +477,10 @@ class StatusImage extends Component<{status: number}> {
     }
 }
 
+
+/*
+An image-button with the image of a status
+ */
 class StatusButton extends Component<{status: number, onclick: function}> {
     render () {
         switch (this.props.status){
@@ -507,6 +501,9 @@ class StatusButton extends Component<{status: number, onclick: function}> {
     }
 }
 
+/*
+A button with an image and a function as arguments
+ */
 export class ImageButton extends Component<{source: string, onclick: function}> {
     render() {
         return(
@@ -517,6 +514,9 @@ export class ImageButton extends Component<{source: string, onclick: function}> 
     }
 }
 
+/*
+A button which goes from black to white on hover
+ */
 export class HoverButton extends Component<{onclick: function, text: string}> {
     render () {
         return (

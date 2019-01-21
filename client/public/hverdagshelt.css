@@ -306,7 +306,7 @@ Profile-page
 
 .profile-page-container {
     display: grid;
-    grid-template-columns: 52% 4% 44%;
+    grid-template-columns: 48% 4% 48%;
 }
 
 .profile-issues {

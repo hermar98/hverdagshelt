@@ -93,13 +93,18 @@ export class UserProfilePage extends Component {
           <h4 className="row justify-content-center my-profile">Min Profil</h4>
         <div className="profile-page-container page-container">
           <div className="profile-left">
-            <div className="profile-info">
-              <Card title="Info">
+            <div className="card profile-info">
+              <div className="card-body">
+                  <div className="container">
+                      <div className="row justify-content-center align-items-center">
+                          <h5 className="card-title">Info</h5>
+                      </div>
+                  </div>
                 <p>
                   Navn: {this.user.firstName} {this.user.lastName}
                 </p>
                 <p>Email: {this.user.email}</p>
-              </Card>
+              </div>
             </div>
               <div className="card municipal">
                   <h5 id="municipal-title">Kommuner</h5>
@@ -123,11 +128,13 @@ export class UserProfilePage extends Component {
           </div>
           <div className="profile-issues">
             <Card className="issues" title="Dine Innmeldte Saker">
-                <IssueOverviewSmall />
+                <IssueOverviewSmall issues={this.issues}/>
             </Card>
           </div>
         </div>
       </div>
     );
   }
+
+
 }
