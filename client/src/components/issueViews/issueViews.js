@@ -2,13 +2,15 @@
 import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 import {Redirect, NavLink} from 'react-router-dom'
-import { Issue, Feedback, User } from '../../models';
-import {feedbackService} from "../../services/FeedbackService";
+import { Feedback} from '../../models/Feedback';
 import Menu from '../menu/Menu';
 import {tokenManager} from "../../tokenManager";
+import {User} from "../../models/User";
+import {Issue} from "../../models/Issue";
 import {userService} from "../../services/UserService";
 import {issueService} from "../../services/IssueService";
 import {issueCategoryService} from "../../services/IssueCategoryService";
+import {feedbackService} from "../../services/FeedbackService";
 
 let sharedIssues = sharedComponentData({issues: []})
 let sharedFeedback = sharedComponentData({feedback: []})
@@ -285,23 +287,7 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
 
     render () {
         return (
-            <div className="issue-overview-small">
-                <div className="d-flex flex-row sort-box card-header justify-content-between">
-                    <div className="form-group">
-                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
-                        <option value={0}>Alle</option>
-                        <option value={1}>Ikke behandlet</option>
-                        <option value={2}>Under behandling</option>
-                        <option value={3}>Behandlet</option>
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.timesort = event.target.value)}>
-                            <option>Nyeste</option>
-                            <option>Eldste</option>
-                        </select>
-                    </div>
-                </div>
+            <div>
                 <ul className="list-group">
                     {this.props.issues.map((issue,index) => {
                         if (this.status == issue.statusId || this.status == 0) {
@@ -319,6 +305,53 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
 
     mounted (){
         window.scrollTo(0, 0);
+    }
+}
+
+export class IssueFeedback extends Component<{feedback: Feedback}> {
+
+    user = new User()
+
+    render() {
+        return (
+            <div className="feedback" feedback={this.props.feedback}>
+                <div className="card feedback-card">
+                    <div className="card-body">
+                        <div className="d-flex flex-row submitter">
+
+                                <div className="p-2">
+                                    <img className="card-img profile-image" src={this.user.profilePicture}/>
+                                </div>
+                                <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{formatDate(this.props.feedback.createdAt)}</p></div>
+                            <ImageButton source="../../images/cog.png" onclick="Edited" />
+                            <ImageButton source="../../images/trashcan.png" onclick={() => this.onDelete()}/>
+                        </div>
+                        <div id="feedback-text" className="card-text">
+                            {this.props.feedback.content}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    mounted () {
+        userService.getUser(this.props.feedback.userId)
+            .then(user => {
+                this.user = user
+                console.log(JSON.stringify(this.user))
+            })
+            .catch(error => console.error("Error", error))
+    }
+
+    onDelete() {
+        if(confirm("Are you sure?")) {
+            feedbackService.deleteFeedback(this.props.feedback.feedbackId)
+                .then(res => {
+                    sharedFeedback.feedback.splice(sharedFeedback.feedback.indexOf(this.props.feedback), 1)
+                })
+                .catch(error => console.error("Error: ", error))
+        }
     }
 }
 /*
