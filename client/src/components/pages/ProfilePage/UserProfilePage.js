@@ -62,12 +62,16 @@ export class UserProfilePage extends Component {
 
   handleAddMunicipal() {
     let municipal = municipalObjects.find(e => e.name == glob);
-    console.log(municipal);
+    if(municipal == null) {
+        municipal = municipalObjects.find(e => e.name == this.newMunicipalName);
+    }
 
-    this.newMunicipalId = municipal.munId;
-    userMunicipalService.addUserMunicipal(tokenManager.getUserId(), this.newMunicipalId);
-    sharedMunicipals.municipals.push(municipal)
-    this.newMunicipalName = ''
+      if(municipal != null){
+          this.newMunicipalId = municipal.munId;
+          userMunicipalService.addUserMunicipal(tokenManager.getUserId(), this.newMunicipalId);
+          sharedMunicipals.municipals.push(municipal)
+          this.newMunicipalName = ''
+      }
   }
 
   delete(issueId: number) {
