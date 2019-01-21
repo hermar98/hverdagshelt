@@ -15,7 +15,6 @@ import {municipalService} from "../../../services/MunicipalService";
 import {User} from "../../../models/User";
 import {Issue} from "../../../models/Issue";
 import {Municipal} from "../../../models/Municipal";
-import {ProfileMenu} from "../menu/ProfileMenu";
 
 let municipalObjects;
 let sharedMunicipals = sharedComponentData({municipals: []})

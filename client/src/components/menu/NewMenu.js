@@ -16,7 +16,7 @@ import {
 import { municipalService } from '../../services/MunicipalService.js';
 import { tokenManager } from '../../tokenManager';
 import { history } from '../../index';
-import { Municipal } from '../../models';
+import { Municipal } from '../../models/Municipal';
 import { userService } from '../../services/UserService';
 
 export class NewMenu extends Component {
@@ -74,7 +74,7 @@ export class NewMenu extends Component {
   }
 
   toProfile() {
-    history.push('/profile');
+    history.push('/profil');
   }
 
   toFeed() {

@@ -110,7 +110,7 @@ export default class EventForm extends Component {
 
     eventService
       .addEvent(this.event)
-      .then(history.push('/municipal/' + this.munId))
+      .then(history.push('/kommune/' + this.munId))
       .catch((error: Error) => Alert.danger(error.message));
   }
 

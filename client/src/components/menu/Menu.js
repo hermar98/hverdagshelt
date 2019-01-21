@@ -29,7 +29,7 @@ export default class Menu extends Component {
       if (this.user.rank === 1) {
         return (
           <NavBar>
-            <NavBar.Brand image={this.municipal.municipalShield} to={'/municipal/' + this.munId}>
+            <NavBar.Brand image={this.municipal.municipalShield} to={'/kommune/' + this.munId}>
               {' ' + this.municipal.name + ' kommune'}
             </NavBar.Brand>
             <NavBar.Link to={'/registrerSak'}>Registrer sak</NavBar.Link>
@@ -46,11 +46,11 @@ export default class Menu extends Component {
       } else if (this.user.rank === 2) {
         return (
           <NavBar>
-            <NavBar.Brand image={this.municipal.municipalShield} to={'/municipal/' + this.munId}>
+            <NavBar.Brand image={this.municipal.municipalShield} to={'/kommune/' + this.munId}>
               {' ' + this.municipal.name + ' kommune'}
             </NavBar.Brand>
-            <NavBar.Link to={'/municipal/' + this.munId + '/fileIssue'}>Registrer sak</NavBar.Link>
-            <NavBar.Link to={'/municipal/' + this.munId + '/registerEvent'}>Registrer event</NavBar.Link>
+            <NavBar.Link to={'/kommune/' + this.munId + '/fileIssue'}>Registrer sak</NavBar.Link>
+            <NavBar.Link to={'/kommune/' + this.munId + '/registerEvent'}>Registrer event</NavBar.Link>
             <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
               <DropdownHeader>{this.user.email}</DropdownHeader>
               <DropdownFooter>Kommuneansatt</DropdownFooter>
@@ -64,11 +64,11 @@ export default class Menu extends Component {
       } else if (this.user.rank === 3) {
         return (
           <NavBar>
-            <NavBar.Brand image={this.municipal.municipalShield} to={'/municipal/' + this.munId}>
+            <NavBar.Brand image={this.municipal.municipalShield} to={'/kommune/' + this.munId}>
               {' ' + this.municipal.name + ' kommune'}
             </NavBar.Brand>
-            <NavBar.Link to={'/municipal/' + this.munId + '/fileIssue'}>Registrer sak</NavBar.Link>
-            <NavBar.Link to={'/municipal/' + this.munId + '/registerEvent'}>Registrer event</NavBar.Link>
+            <NavBar.Link to={'/kommune/' + this.munId + '/fileIssue'}>Registrer sak</NavBar.Link>
+            <NavBar.Link to={'/kommune/' + this.munId + '/registerEvent'}>Registrer event</NavBar.Link>
             <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
               <DropdownHeader>{this.user.email}</DropdownHeader>
               <DropdownFooter>Bedriftsbruker</DropdownFooter>
@@ -82,11 +82,11 @@ export default class Menu extends Component {
       } else if (this.user.rank === 4) {
         return (
           <NavBar>
-            <NavBar.Brand image={this.municipal.municipalShield} to={'/municipal/' + this.munId}>
+            <NavBar.Brand image={this.municipal.municipalShield} to={'/kommune/' + this.munId}>
               {' ' + this.municipal.name + ' kommune'}
             </NavBar.Brand>
-            <NavBar.Link to={'/municipal/' + this.munId + '/fileIssue'}>Registrer sak</NavBar.Link>
-            <NavBar.Link to={'/municipal/' + this.munId + '/registerEvent'}>Registrer event</NavBar.Link>
+            <NavBar.Link to={'/kommune/' + this.munId + '/fileIssue'}>Registrer sak</NavBar.Link>
+            <NavBar.Link to={'/kommune/' + this.munId + '/registerEvent'}>Registrer event</NavBar.Link>
             <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
               <DropdownHeader>{this.user.email}</DropdownHeader>
               <DropdownFooter>Admin</DropdownFooter>

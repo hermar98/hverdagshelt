@@ -57,7 +57,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
             this.setState({
                 clickedDelete: false
             })
-            return <Redirect to={"/municipal/" + this.props.match.params.munId + "/issues"} />
+            return <Redirect to={"/kommune/" + this.props.match.params.munId + "/issues"} />
         }
 
         return (

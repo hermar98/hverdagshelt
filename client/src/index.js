@@ -53,7 +53,7 @@ if (root)
         <Route exact path="/glemtPassord/reset" component={NewPasswordPage} />
         <Route exact path="/vilkår" component={TermsOfService} />
         <Route exact path="/profil" component={UserProfilePage} />
-        <Route path="/saker/:issueId" component={IssueLarge} />
+        <Route exact path="/saker/:issueId" component={IssueLarge} />
         <Route exact path="/registrerSak" component={FileIssuePage} />
         <Route exact path="/feed" component={FeedPage} />
         <Route exact path="/kommune/:munId" component={MunicipalPage} />

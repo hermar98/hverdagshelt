@@ -5,7 +5,7 @@ import { Component } from 'react-simplified';
 import { autocomplete, glob } from '../../../public/autocomplete';
 import { municipalService } from '../../services/MunicipalService';
 import { history } from '../../index';
-import { Municipal } from '../../models';
+import { Municipal } from '../../models/Municipal';
 import { NewMenu } from '../../components/menu/NewMenu';
 
 let municipalObjects;
