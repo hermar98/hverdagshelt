@@ -8,6 +8,7 @@ import { history } from '../../index';
 import { myFunction } from '../../../public/AddEventCategory';
 import { tokenManager } from '../../tokenManager';
 import {eventService} from "../../services/EventService";
+import moment from "moment";
 //import { UploadImageButton } from '../../components/image/UploadImageButton';
 
 export default class EventForm extends Component {
@@ -19,6 +20,10 @@ export default class EventForm extends Component {
   munId = localStorage.getItem('munId');
   userId = tokenManager.getUserId();
   dropdownToggle = "";
+  startDate = Date;
+  startTime = null;
+  endDate = Date;
+  endTime = null;
 
   render() {
     return (
@@ -53,37 +58,16 @@ export default class EventForm extends Component {
             required
             placeholder="Innhold/forklarende tekst"
           />
-          <Form.Input
-            label="Start"
-            type="datetime-local"
-            onChange={e => (this.event.timeStart = e.target.value)}
-            required
-            placeholder="Fra dato & tidspunkt"
-          />
-          <Form.Input
-            label="Slutt"
-            type="datetime-local"
-            onChange={e => (this.event.timeEnd = e.target.value)} //TODO
-            required
-            placeholder="Til date & tidspunkt"
-          />
+          <Form.InputDateTime label="Startdato" label2="Tidspunkt" required
+                              onChange={e => this.startDate = e.target.value} onChange2={e => this.startTime = e.target.value}/>
+          <Form.InputDateTime label="Sluttdato" label2="Tidspunkt" required
+                              onChange={e => this.endDate = e.target.value} onChange2={e => this.endTime = e.target.value}/>
           <Form.Input
             label="Sted"
             type="text"
             required
             placeholder="Adresse"
           />
-          <div className="dropdown">
-            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={this.update}>
-              Dropdown button
-            </button>
-            <div className={"dropdown-menu" + this.dropdownToggle} aria-labelledby="dropdownMenuButton">
-              <a className="dropdown-item" href="#">Action</a>
-              <a className="dropdown-item" href="#">Another action</a>
-              <a className="dropdown-item" href="#">Something else here</a>
-            </div>
-          </div>
           <Form.FileInput>Legg til bilde (valgfritt) </Form.FileInput>
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
@@ -105,8 +89,12 @@ export default class EventForm extends Component {
     this.event.image = 'imagefile.img';
     this.event.longitude = 1234;
     this.event.latitude = 5678;
+    this.event.timeStart = moment(this.startDate + " " + this.startTime);
+    this.event.timeEnd = moment(this.endDate + " " + this.endTime);
     this.event.munId = this.munId;
     this.event.userId = this.userId;
+
+    console
 
     eventService
       .addEvent(this.event)
