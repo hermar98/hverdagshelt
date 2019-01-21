@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
-import { Component } from 'react-simplified';
+import { Component, sharedComponentData } from 'react-simplified';
 
 import { Alert, NavBar, Form, Card, Button } from '../../../widgets';
 import MenuLoggedIn from '../../../components/menu/Menu.js';
@@ -8,13 +8,17 @@ import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
 import { userMunicipalService } from '../../../services/UserMunicipalService';
 import { autocomplete, glob } from '../../../../public/autocomplete';
 import { User, Issue, Municipal, UserMunicipal } from '../../../models';
-import { IssueSmall, IssueNormal, IssueOverviewSmall } from '../../issueViews/issueViews';
+import {IssueSmall, IssueNormal, IssueOverviewSmall, ImageButton} from '../../issueViews/issueViews';
 import { tokenManager } from '../../../tokenManager';
 import {userService} from "../../../services/UserService";
 import {issueService} from "../../../services/IssueService";
 import {municipalService} from "../../../services/MunicipalService";
+import {User} from "../../../models/User";
+import {Issue} from "../../../models/Issue";
+import {Municipal} from "../../../models/Municipal";
 
 let municipalObjects;
+let sharedMunicipals = sharedComponentData({municipals: []})
 
 export class UserProfilePage extends Component {
   user: User = new User();
@@ -22,7 +26,7 @@ export class UserProfilePage extends Component {
 
   newMunicipalName: string = '';
   newMunicipalId: number = 0;
-  userMunicipals: Municipal[] = [];
+  munId: number = -1;
 
   mounted() {
     async function f() {
@@ -54,17 +58,23 @@ export class UserProfilePage extends Component {
     userMunicipalService
       .getUserMunicipals(tokenManager.getUserId())
       .then(rows => {
-        this.userMunicipals = rows;
+        sharedMunicipals.municipals = rows;
       })
       .catch(error => console.log(error));
   }
 
   handleAddMunicipal() {
-    let municipal = municipalObjects.find(e => e.name == glob);
-    console.log(municipal);
+    let municipal = municipalObjects.find(e => e.name == this.newMunicipalName);
+    if(municipal == null) {
+        municipal = municipalObjects.find(e => e.name == glob);
+    }
 
-    this.newMunicipalId = municipal.munId;
-    userMunicipalService.addUserMunicipal(tokenManager.getUserId(), this.newMunicipalId);
+      if(municipal != null){
+          this.newMunicipalId = municipal.munId;
+          userMunicipalService.addUserMunicipal(tokenManager.getUserId(), this.newMunicipalId);
+          sharedMunicipals.municipals.push(municipal)
+          this.newMunicipalName = ''
+      }
   }
 
   delete(issueId: number) {
@@ -78,60 +88,62 @@ export class UserProfilePage extends Component {
     }
   }
 
-  deleteUserMunicipal(userId: number, munId: number) {
+  deleteUserMunicipal(munId: number) {
     userMunicipalService
-      .deleteUserMunicipal(userId, munId)
-      .then(rows => (this.userMunicipals = this.userMunicipals.filter(e => e.munId !== munId)))
+      .deleteUserMunicipal(tokenManager.getUserId(), munId)
+      .then(rows => (sharedMunicipals.municipals = sharedMunicipals.municipals.filter(e => e.munId !== munId)))
       .catch(error => console.log(error));
   }
 
   render() {
+
+    sharedMunicipals.municipals.sort((a, b) => a.name > b.name)
+
     return (
       <div>
         <MenuLoggedIn />
-        <Card title="Min Profil">
-          <Card title="">
-            <div className="info">
-              <p>
-                Navn: {this.user.firstName} {this.user.lastName}
-              </p>
-              <p>Email: {this.user.email}</p>
-              <p>Kommuner:</p>
-              <Card>
-                {this.userMunicipals.map((mun, index) => (
-                  <p key={index}>
-                    {mun.name}
-                    <button onClick={this.deleteUserMunicipal.bind(this, this.user.userId, mun.munId)}>Slett</button>
-                  </p>
-                ))}
-              </Card>
-            </div>
-          </Card>
-          <br />
-          <div>
-            <form autoComplete="off">
-              <div className="autocomplete">
-                <input id="municipalInput" type="text" name="municipal" />
-                <button type="submit" onClick={this.handleAddMunicipal}>
-                  Legg Til Kommune
-                </button>
+          <h4 className="row justify-content-center my-profile">Min Profil</h4>
+        <div className="profile-page-container page-container">
+          <div className="profile-left">
+            <div className="card profile-info">
+              <div className="card-body">
+                  <div className="container">
+                      <div className="row justify-content-center align-items-center">
+                          <h5 className="card-title">Info</h5>
+                      </div>
+                  </div>
+                <p>
+                  Navn: {this.user.firstName} {this.user.lastName}
+                </p>
+                <p>Email: {this.user.email}</p>
               </div>
-            </form>
-          </div>
-        </Card>
-        <Card title="">
-          <ChangePasswordForm />
-        </Card>
-        <Card className="issues" title="Mine Saker">
-          {this.issues.map((issue, index) => (
-            <div key={index}>
-              <IssueNormal issue={issue} />
-              <button className="btn btn-danger" onClick={this.delete.bind(this, issue.issueId)}>
-                Delete
-              </button>
             </div>
-          ))}
-        </Card>
+              <div className="card municipal">
+                  <h5 id="municipal-title">Kommuner</h5>
+                    <div className="add-municipal-field justify-content-between d-flex flex-row">
+                        <input className="form-control" id="municipalInput" type="text" value={this.newMunicipalName} placeholder="Legg til kommune..." onChange={
+                          event => this.newMunicipalName = event.target.value
+                        }/>
+                        <ImageButton source="../../images/add.png" onclick={() => this.handleAddMunicipal()}/>
+                    </div>
+                    <ul className="list-group mun-list">
+                        {sharedMunicipals.municipals.map((mun, index) => (
+                            <li className="list-group-item municipal-item"><div className="d-flex flex-row justify-content-between align-items-center"> {mun.name}<ImageButton source="../../images/trashcan.png" onclick={
+                                () => this.deleteUserMunicipal(mun.munId)}/></div></li>
+                        ))}
+                    </ul>
+              </div>
+            <br />
+            <div className="change-password-profile">
+              <ChangePasswordForm />
+            </div>
+          </div>
+          <div className="profile-issues">
+            <Card className="issues" title="Dine Innmeldte Saker">
+                <IssueOverviewSmall issues={this.issues}/>
+            </Card>
+          </div>
+        </div>
       </div>
     );
   }

@@ -3,7 +3,7 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Issue } from '../../models.js';
+import { Issue } from '../../models/Issue.js';
 import { issueCategoryService } from '../../services/IssueCategoryService.js';
 import { Alert, Form, Card, Button } from '../../widgets';
 import { history } from '../../index';
@@ -75,7 +75,7 @@ export default class RegisterIssue extends Component {
 
     issueService
       .addIssue(this.issue)
-      .then(history.push('/municipal/' + this.munId + '/issues'))
+      .then(history.push('/kommune/' + this.munId + '/sak'))
       .catch((error: Error) => Alert.danger(error.message));
 
     console.log(this.issue);

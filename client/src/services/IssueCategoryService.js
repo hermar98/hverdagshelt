@@ -1,5 +1,5 @@
 //@flow
-import {IssueCategory} from "../models";
+import {IssueCategory} from "../models/IssueCategory";
 import service from "./Service";
 
 class IssueCategoryService {
