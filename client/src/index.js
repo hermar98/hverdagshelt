@@ -33,6 +33,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 import createHashHistory from 'history/createHashHistory';
+import {ActivateAccountPage} from "./components/pages/ActivateAccountPage";
 
 export const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after
 // successfully saving a student
@@ -57,6 +58,7 @@ if (root)
         <Route exact path="/municipal/:munId/fileIssue" component={FileIssuePage} />
         <Route exact path="/municipal/:munId/issues/:issueId" component={IssueLarge} />
         <Route exact path="/image" component={AlternativeUpload} />
+        <Route exact path="/activate/:tokenId" component={ActivateAccountPage}/>
       </div>
     </HashRouter>,
     root

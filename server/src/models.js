@@ -105,7 +105,8 @@ export let User: Class<
     munId: number,
     profilePicture?: string,
     resetPasswordToken?: string,
-    resetPasswordExpires?: Date
+    resetPasswordExpires?: Date,
+    activateAccountToken?: string
   }>
 > = sequelize.define('User', {
   userId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
@@ -117,7 +118,8 @@ export let User: Class<
   hashStr: Sequelize.STRING,
   profilePicture: Sequelize.STRING,
   resetPasswordToken: { type: Sequelize.STRING, notNull: false },
-  resetPasswordExpires: { type: Sequelize.DATE, notNull: false }
+  resetPasswordExpires: { type: Sequelize.DATE, notNull: false },
+  activateAccountToken: { type: Sequelize.STRING, notNull: false }
 });
 
 export let Municipal: Class<Model<{ munId?: number, name: string, municipalShield?: string }>> = sequelize.define(

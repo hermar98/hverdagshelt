@@ -71,6 +71,10 @@ class UserService {
         console.log(error);
       });
   }
+
+  activateAccount(token: string): Promise<JSON>{
+    return service.put('/activate/' + token);
+  }
 }
 
 export let userService = new UserService();
