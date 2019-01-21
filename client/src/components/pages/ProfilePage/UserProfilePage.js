@@ -3,19 +3,16 @@ import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 
 import { Alert, NavBar, Form, Card, Button } from '../../../widgets';
-import MenuLoggedIn from '../../../components/menu/Menu.js';
+import { ProfileMenu } from '../../../components/menu/ProfileMenu.js';
 import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
 import { userMunicipalService } from '../../../services/UserMunicipalService';
 import { autocomplete, glob } from '../../../../public/autocomplete';
 import { User, Issue, Municipal, UserMunicipal } from '../../../models';
 import {IssueSmall, IssueNormal, IssueOverviewSmall, ImageButton} from '../../issueViews/issueViews';
 import { tokenManager } from '../../../tokenManager';
-import {userService} from "../../../services/UserService";
-import {issueService} from "../../../services/IssueService";
-import {municipalService} from "../../../services/MunicipalService";
-import {User} from "../../../models/User";
-import {Issue} from "../../../models/Issue";
-import {Municipal} from "../../../models/Municipal";
+import { userService } from '../../../services/UserService';
+import { issueService } from '../../../services/IssueService';
+import { municipalService } from '../../../services/MunicipalService';
 
 let municipalObjects;
 let sharedMunicipals = sharedComponentData({municipals: []})
@@ -101,22 +98,25 @@ export class UserProfilePage extends Component {
 
     return (
       <div>
-        <MenuLoggedIn />
-          <h4 className="row justify-content-center my-profile">Min Profil</h4>
-        <div className="profile-page-container page-container">
-          <div className="profile-left">
-            <div className="card profile-info">
-              <div className="card-body">
-                  <div className="container">
-                      <div className="row justify-content-center align-items-center">
-                          <h5 className="card-title">Info</h5>
-                      </div>
-                  </div>
-                <p>
-                  Navn: {this.user.firstName} {this.user.lastName}
-                </p>
-                <p>Email: {this.user.email}</p>
-              </div>
+        <div>
+          <ProfileMenu />
+        </div>
+        <Card title="Min Profil">
+          <Card title="">
+            <div className="info">
+              <p>
+                Navn: {this.user.firstName} {this.user.lastName}
+              </p>
+              <p>Email: {this.user.email}</p>
+              <p>Kommuner:</p>
+              <Card>
+                {this.userMunicipals.map((mun, index) => (
+                  <p key={index}>
+                    {mun.name}
+                    <button onClick={this.deleteUserMunicipal.bind(this, this.user.userId, mun.munId)}>Slett</button>
+                  </p>
+                ))}
+              </Card>
             </div>
               <div className="card municipal">
                   <h5 id="municipal-title">Kommuner</h5>
