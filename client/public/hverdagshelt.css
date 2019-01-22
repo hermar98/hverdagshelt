@@ -135,7 +135,7 @@ div.status > h4 {
 div.feedback-button {
     margin-top: 4vh;
     display: grid;
-    grid-template-columns: 42% 16% 42%;
+    grid-template-columns: 44% 10% 44%;
 }
 
 div.feedback-button div {
