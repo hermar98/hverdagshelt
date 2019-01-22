@@ -3,9 +3,8 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { BrowserRouter, HashRouter, Route, NavLink,Switch } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, NavLink, Switch } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from './widgets';
-import NewMenu from './components/menu/Menu';
 import { Footer } from './components/menu/Footer';
 import { FileIssuePage } from './components/pages/FileIssuePage';
 import { LoginPage } from './components/pages/LoginPage';
@@ -25,10 +24,9 @@ import { UploadImageTest } from './components/image/UploadImageTest.js';
 import { AlternativeUpload } from './components/image/AlternativeUpload.js';
 
 import { MunicipalPage } from './components/pages/MunicipalPage';
-import { NotFound } from "./components/pages/NotFound";
+import { NotFound } from './components/pages/NotFound';
 import { IssueView } from './components/pages/IssueOverviewPage';
 import { ContractorView } from './components/pages/ContractorIssuePage';
-
 
 // Reload application when not in production environment
 
@@ -39,10 +37,9 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 import createHashHistory from 'history/createHashHistory';
-import {ActivateAccountPage} from "./components/pages/ActivateAccountPage";
+import { ActivateAccountPage } from './components/pages/ActivateAccountPage';
 
 export const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after
-
 
 const root = document.getElementById('root');
 if (root)

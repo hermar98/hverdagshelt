@@ -8,8 +8,8 @@ import { issueCategoryService } from '../../services/IssueCategoryService.js';
 import { Alert, Form, Card, Button } from '../../widgets';
 import { history } from '../../index';
 import { tokenManager } from '../../tokenManager';
-import {issueService} from "../../services/IssueService";
-import UploadImageButton from "../image/UploadImageButton";
+import { issueService } from '../../services/IssueService';
+import UploadImageButton from '../image/UploadImageButton';
 
 export default class RegisterIssue extends Component {
   issue = new Issue();
@@ -55,7 +55,11 @@ export default class RegisterIssue extends Component {
             required
             placeholder="Skriv innholdet i saken"
           />
-            <UploadImageButton ref={(boy) => { this.upload = boy; }}/>
+          <UploadImageButton
+            ref={boy => {
+              this.upload = boy;
+            }}
+          />
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
               <Button.Basic onClick={this.save}>Send inn</Button.Basic>
