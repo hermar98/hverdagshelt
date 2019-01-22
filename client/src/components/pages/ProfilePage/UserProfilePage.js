@@ -7,6 +7,7 @@ import { ProfileMenu } from '../../../components/menu/ProfileMenu.js';
 import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
 import { userMunicipalService } from '../../../services/UserMunicipalService';
 import { autocomplete, glob } from '../../../../public/autocomplete';
+import { UserMunicipal } from '../../../models/UserMunicipal';
 import {IssueSmall, IssueNormal, IssueOverviewSmall, ImageButton} from '../../issueViews/issueViews';
 import { tokenManager } from '../../../tokenManager';
 import {userService} from "../../../services/UserService";
