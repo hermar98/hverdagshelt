@@ -6,7 +6,7 @@ import {HoverButton, IssueOverviewSmall, IssueOverviewNormal} from "../issueView
 import {issueService} from "../../services/IssueService";
 import {NewMenu} from "../menu/NewMenu";
 
-export class IssueView extends Component<{match: { params: { munId: number}}}> {
+export class ContractorView extends Component<{match: { params: { munId: number}}}> {
 
     issues: [] = []
 
