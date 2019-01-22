@@ -7,6 +7,8 @@ import { municipalService } from '../../services/MunicipalService';
 import { history } from '../../index';
 import { Municipal } from '../../models/Municipal';
 import { NewMenu } from '../../components/menu/NewMenu';
+import { tokenManager } from "../../tokenManager";
+
 
 let municipalObjects;
 //TODO: fix input
@@ -19,8 +21,8 @@ export class ChooseMunicipalPage extends Component {
           <NewMenu />
         </div>
         <div className="img-container">
-          <div className="bg-text">
-            <h1>Hverdagshelt</h1>
+          <div className="fg-image">
+              <img src={'../../images/hverdagshelt-logo-tekst-fix.svg'} alt='HverdagsHelt Logo' />
           </div>
           <form autoComplete="off">
             <div className="autocomplete">
@@ -39,7 +41,7 @@ export class ChooseMunicipalPage extends Component {
     async function f() {
       municipalObjects = [];
       let promise = new Promise((resolve, reject) => {
-        resolve(municipalService.getMunicipals().then((municipals: Municipal) => (municipalObjects = municipals)));
+        resolve(municipalService.getMunicipals().then((municipals: Municipal[]) => (municipalObjects = municipals)));
       });
 
       let result = await promise;
