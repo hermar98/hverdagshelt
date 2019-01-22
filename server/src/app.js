@@ -146,10 +146,13 @@ app.put('/activate/:token', (req: Request, res: Response) => {
       token = jwt.sign({ email: user.email }, secretKey, { expiresIn: 4000 });
       return User.update(
         {
-          rank: 1
+          rank: 1,
+          activateAccountToken: null
         },
         { where: { userId: user.userId } }
       ).then(count => (count ? res.json({ userId: user.userId, jwt: token }) : res.sendStatus(404)));
+    }else{
+      res.sendStatus(404);
     }
   });
 });

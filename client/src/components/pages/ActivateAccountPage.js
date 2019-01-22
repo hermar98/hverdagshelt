@@ -8,12 +8,13 @@ import {tokenManager} from "../../tokenManager";
 import Menu from "../menu/Menu";
 
 export class ActivateAccountPage extends Component {
+  isActivated: boolean = false;
 
   render() {
     return (
       <div>
       <Menu/>
-        <div>Brukeren er nå aktivert!</div>
+        {this.isActivated ? <div>Brukeren din er nå aktivert, BRO!</div> : <div>Din bruker er ikke aktivert. Vennligst sjekk din epost for aktiverings-link.</div>}
       </div>
     );
   }
@@ -23,7 +24,10 @@ export class ActivateAccountPage extends Component {
       .activateAccount(window.location.hash.slice(11))
       .then(token => {
         tokenManager.addToken(token)
+        this.isActivated = true;
       })
-      .catch((error: Error) => Alert.danger(error.message));
+      .catch((error: Error) => {
+        console.log(error)
+      });
   }
 }

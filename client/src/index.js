@@ -39,6 +39,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 import createHashHistory from 'history/createHashHistory';
 import {ActivateAccountPage} from "./components/pages/ActivateAccountPage";
+import ProfilePage from "./components/pages/ProfilePage/ProfilePage";
 
 export const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after
 
@@ -57,7 +58,7 @@ if (root)
         <Route exact path="/glemtPassord" component={ForgotPassword} />
         <Route exact path="/glemtPassord/nullstill" component={NewPasswordPage} />
         <Route exact path="/vilkår" component={TermsOfService} />
-        <Route exact path="/profil" component={UserProfilePage} />
+        <Route exact path="/profil" component={ProfilePage} />
         <Route exact path="/saker/:issueId" component={IssueLarge} />
         <Route exact path="/registrerSak" component={FileIssuePage} />
         <Route exact path="/feed" component={FeedPage} />
