@@ -38,6 +38,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 import createHashHistory from 'history/createHashHistory';
+import {ActivateAccountPage} from "./components/pages/ActivateAccountPage";
 
 export const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after
 // successfully saving a student
@@ -51,10 +52,10 @@ if (root)
           <Alert />
           <Switch>
             <Route exact path="/" component={ChooseMunicipalPage} />
-            <Route exact path="/login" component={LoginPage} />
-            <Route exact path="/register" component={RegisterPage} />
+        <Route exact path="/loggInn" component={LoginPage} />
+        <Route exact path="/register" component={RegisterPage} />
             <Route exact path="/glemtPassord" component={ForgotPassword} />
-            <Route exact path="/glemtPassord/reset" component={NewPasswordPage} />
+        <Route exact path="/glemtPassord/nullstill" component={NewPasswordPage} />
             <Route exact path="/vilkår" component={TermsOfService} />
             <Route exact path="/profil" component={UserProfilePage} />
             <Route exact path="/saker/:issueId" component={IssueLarge} />
@@ -72,10 +73,10 @@ if (root)
   );
 /*
         <Route exact path="/" component={ChooseMunicipalPage} />
-        <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/register" component={RegisterPage} />
+        <Route exact path="/loggInn" component={LoginPage} />
+        <Route exact path="/registrer" component={RegisterPage} />
         <Route exact path="/glemtPassord" component={ForgotPassword} />
-        <Route exact path="/glemtPassord/reset" component={NewPasswordPage} />
+        <Route exact path="/glemtPassord/nullstill" component={NewPasswordPage} />
         <Route exact path="/vilkår" component={TermsOfService} />
         <Route exact path="/profil" component={UserProfilePage} />
         <Route exact path="/feed" component={} />

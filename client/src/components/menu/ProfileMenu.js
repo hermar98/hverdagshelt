@@ -70,12 +70,12 @@ export class ProfileMenu extends Component {
   }
 
   toProfile() {
-    history.push('/profil');
+    history.push('/profile');
   }
 
   toLogout() {
     tokenManager.deleteToken();
-    history.push('/login');
+    history.push('/loggInn');
   }
 
   toFeed() {

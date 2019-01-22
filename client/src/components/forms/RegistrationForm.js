@@ -93,11 +93,11 @@ export default class RegistrationForm extends Component {
       this.passwordsMatch = true;
     }
 
-    this.user.rank = 1;
+    this.user.rank = 0;
 
     userService
       .addUser(this.user)
-      .then(() => history.push('/kommune/' + this.munId + '/login'))
+      .then(() => history.push('/kommune/' + this.munId + '/loggInn'))
       .catch((error: Error) => {
         console.log(error);
         this.emailRegistered = true;

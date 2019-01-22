@@ -64,6 +64,6 @@ export class ChooseMunicipalPage extends Component {
 
   logout() {
     tokenManager.deleteToken();
-    history.push('/login');
+    history.push('/loggInn');
   }
 }

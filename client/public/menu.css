@@ -22,9 +22,9 @@
 .dropdown {
   margin-left: 0px !important;
 }
-/*ul .active {
-  background-color: #917aba;
-  color: white;
+
+/*.custom-nav-btn:focus {
+  background-color: #58b355;
 }
 ul .btn:hover:not(.active) {
   background-color: #917aba;
@@ -45,8 +45,7 @@ ul .btn:hover:not(.active) {
   padding-right: 0px !important;
   border-radius: 0px !important;
 }
-
-.container-fluid {
+.custom-container-fluid {
   padding-top: 0px !important;
   padding-bottom: 0px !important;
   padding-left: 5px !important;
