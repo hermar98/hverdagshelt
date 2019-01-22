@@ -6,10 +6,9 @@ import { autocomplete, glob } from '../../../public/autocomplete';
 import { municipalService } from '../../services/MunicipalService';
 import { history } from '../../index';
 import { Municipal } from '../../models/Municipal';
-import { NewMenu } from '../../components/menu/NewMenu';
-import { tokenManager } from "../../tokenManager";
-import { Card} from "../../widgets";
-
+import { ChooseMunicipalPageMenu } from '../../components/menu/ChooseMunicipalPageMenu';
+import { tokenManager } from '../../tokenManager';
+import { Card } from '../../widgets';
 
 let municipalObjects;
 //TODO: fix input
@@ -18,26 +17,29 @@ export class ChooseMunicipalPage extends Component {
   render() {
     return (
       <div>
-        <div className="bg-image"></div>
+        <div className="bg-image" />
         <div>
-          <NewMenu />
+          <ChooseMunicipalPageMenu />
         </div>
 
         <div className="fg">
           <Card>
             <div className="fg-grid">
               <div className="fg-logo">
-                <img src={"../../images/hverdagshelt-logo-lightblue.svg"}width='100px'/><p>HverdagsHelt</p>
+                <img src={'../../images/hverdagshelt-logo-lightblue.svg'} width="100px" />
+                <p>HverdagsHelt</p>
               </div>
               <div className="fg-input autocomplete">
                 <form autoComplete="off">
                   <div>
                     <input id="municipalInput" type="text" name="municipal" placeholder="Velg kommune" />
-                    <button value="" type="button" onClick={this.go}>Gå</button>
+                    <button value="" type="button" onClick={this.go}>
+                      Gå
+                    </button>
                   </div>
                 </form>
               </div>
-          </div>
+            </div>
           </Card>
         </div>
       </div>

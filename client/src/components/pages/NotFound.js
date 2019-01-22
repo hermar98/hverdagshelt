@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { NewMenu } from '../menu/NewMenu';
+import { NotLoggedInMenu } from '../menu/NotLoggedInMenu';
 
 
 
@@ -12,7 +12,7 @@ export class NotFound extends Component
         return(
 
             <div>
-                <NewMenu />
+                <NotLoggedInMenu />
                 <div className='notfound-container'>
                 <div className="card">
                     <div className="card-body issue-large-card">

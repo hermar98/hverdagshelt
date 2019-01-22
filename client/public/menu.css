@@ -23,9 +23,10 @@
   margin-left: 0px !important;
 }
 
-/*.custom-nav-btn:focus {
+.custom-nav-btn:focus {
   background-color: #58b355;
 }
+/*
 ul .btn:hover:not(.active) {
   background-color: #917aba;
   color: white;

@@ -5,13 +5,13 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { User } from '../../models/User.js';
 import LoginForm from '../../components/forms/LoginForm';
-import { NewMenu } from '../../components/menu/NewMenu.js';
+import { NotLoggedInMenu } from '../../components/menu/NotLoggedInMenu.js';
 
 export class LoginPage extends Component {
   render() {
     return (
       <div>
-        <NewMenu />
+        <NotLoggedInMenu />
         <LoginForm />
       </div>
     );

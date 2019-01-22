@@ -3,11 +3,11 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 
 import { Alert, NavBar, Form, Card, Button } from '../../../widgets';
-import MenuLoggedIn from '../../../components/menu/Menu.js';
+import { ProfileMenu } from '../../../components/menu/ProfileMenu';
 import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
 import { userService } from '../../../services/UserService';
 import { User } from '../../../models/User';
-import {tokenManager} from '../../../tokenManager.js'
+import { tokenManager } from '../../../tokenManager.js';
 //import styles from './ProfilePage.css';
 
 export class AdminProfilePage extends Component {
@@ -26,7 +26,7 @@ export class AdminProfilePage extends Component {
   render() {
     return (
       <div>
-        <MenuLoggedIn/>
+        <ProfileMenu />
         <Card title="Min Profil">
           <p>
             Navn: {this.user.firstName} {this.user.lastName}
