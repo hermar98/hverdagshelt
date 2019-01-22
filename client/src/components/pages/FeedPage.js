@@ -127,6 +127,11 @@ export class FeedPage extends Component {
       .getUserMunicipals(tokenManager.getUserId())
       .then(muns => {
         sharedMunicipals.municipals = muns;
+        sharedMunicipals.municipals.map(e => issueService.getIssuesByMunicipal(e.munId)
+          .then(issues => {
+            Array.prototype.push.apply(sharedIssues.issues, issues)
+          })
+          .catch((error: Error) => Alert.danger(error.message)));
       })
       .then(()=> console.log(sharedMunicipals.municipals))
       .catch((error: Error) => Alert.danger(error.message));
@@ -139,11 +144,6 @@ export class FeedPage extends Component {
 
 
     //GET all Issues registered on the municipals
-    sharedMunicipals.municipals.map(e => issueService.getIssuesByMunicipal(e.munId)
-      .then(issues => {
-        sharedIssues.issues = issues;
-      })
-      .catch((error: Error) => Alert.danger(error.message)));
 
 
     //GET all events registered on the municipals
