@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 import {Redirect, NavLink} from 'react-router-dom'
@@ -283,31 +282,46 @@ A list of issues in small view
  */
 export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[]}> {
 
-    status: number = 0;
-    timesort: string = "Nyeste";
+    status: number = 1;
+    timesort: number = 0;
+    category: number = 0;
+    categories: [] = []
 
     render () {
         return (
-            <div className="issue-overview-small">
-                <div className="d-flex flex-row sort-box card-header justify-content-between">
-                    <div className="form-group">
-                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
-                        <option value={0}>Alle</option>
-                        <option value={1}>Ikke behandlet</option>
-                        <option value={2}>Under behandling</option>
-                        <option value={3}>Behandlet</option>
-                        </select>
+            <div>
+                <div className="d-flex flex-row sort-box justify-content-between">
+                    <div className="d-flex flex-row justify-content-start">
+                        <div id="sort-push" className="form-group">
+                            <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
+                                <option value={0}>Alle</option>
+                                <option value={1}>Ikke behandlet</option>
+                                <option value={2}>Under behandling</option>
+                                <option value={3}>Behandlet</option>
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <select className="form-control" value={this.category} onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.category = event.target.value)}>
+                                <option value={0}>Alle</option>
+                                {this.categories.map(cat => {
+                                    return <option value={cat.categoryId}>{cat.name}</option>
+                                })}
+                            </select>
+                        </div>
                     </div>
                     <div className="form-group">
-                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.timesort = event.target.value)}>
-                            <option>Nyeste</option>
-                            <option>Eldste</option>
+                        <select className="form-control" id="statusSelect" value={this.timesort} onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
+                            this.timesort = event.target.value;
+                            this.handleOnChange()
+                        }}>
+                            <option value={0}>Nyeste</option>
+                            <option value={1}>Eldste</option>
                         </select>
                     </div>
                 </div>
                 <ul className="list-group">
-                    {sharedIssues.issues.map((issue,index) => {
-                        if (this.status == issue.statusId || this.status == 0) {
+                    {this.props.issues.map((issue,index) => {
+                        if ((this.status == issue.statusId || this.status == 0) && (this.category == issue.categoryId || this.category == 0)) {
                             return(
                                 <li key={index} className="list-group-item">
                                     <IssueSmall issue={issue} munId={this.props.munId}/>
@@ -322,6 +336,17 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
 
     mounted (){
         window.scrollTo(0, 0);
+        issueCategoryService.getCategories()
+            .then(res => this.categories = res)
+            .catch(error => console.error("Error: ", error))
+    }
+
+    handleOnChange () {
+        if(this.timesort == 0) {
+            this.props.issues.sort((a, b) => a.createdAt < b.createdAt)
+        }else if (this.timesort == 1) {
+            this.props.issues.sort((a, b) => a.createdAt > b.createdAt)
+        }
     }
 }
 

@@ -5,7 +5,7 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { BrowserRouter, HashRouter, Route, NavLink,Switch } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from './widgets';
-import Menu from './components/menu/Menu';
+import NewMenu from './components/menu/Menu';
 import { Footer } from './components/menu/Footer';
 import { FileIssuePage } from './components/pages/FileIssuePage';
 import { LoginPage } from './components/pages/LoginPage';
@@ -26,7 +26,7 @@ import { AlternativeUpload } from './components/image/AlternativeUpload.js';
 
 import { MunicipalPage } from './components/pages/MunicipalPage';
 import { NotFound } from "./components/pages/NotFound";
-import { Issue } from './models/Issue.js';
+import { IssueView } from './components/pages/IssueOverviewPage';
 
 
 // Reload application when not in production environment
@@ -52,19 +52,20 @@ if (root)
           <Alert />
           <Switch>
             <Route exact path="/" component={ChooseMunicipalPage} />
-        <Route exact path="/loggInn" component={LoginPage} />
-        <Route exact path="/registrer" component={RegisterPage} />
-        <Route exact path="/glemtPassord" component={ForgotPassword} />
-        <Route exact path="/glemtPassord/nullstill" component={NewPasswordPage} />
-        <Route exact path="/vilkår" component={TermsOfService} />
-        <Route exact path="/profil" component={UserProfilePage} />
-        <Route exact path="/saker/:issueId" component={IssueLarge} />
-        <Route exact path="/registrerSak" component={FileIssuePage} />
-        <Route exact path="/feed" component={FeedPage} />
-        <Route exact path="/kommune/:munId" component={MunicipalPage} />
-          <Route exact path="/image" component={AlternativeUpload} />
-          <Route exact path="/activate/:tokenId" component={ActivateAccountPage}/>
-          <Route path="" component={NotFound}/>
+            <Route exact path="/loggInn" component={LoginPage} />
+            <Route exact path="/registrer" component={RegisterPage} />
+            <Route exact path="/glemtPassord" component={ForgotPassword} />
+            <Route exact path="/glemtPassord/nullstill" component={NewPasswordPage} />
+            <Route exact path="/vilkår" component={TermsOfService} />
+            <Route exact path="/profil" component={UserProfilePage} />
+            <Route exact path="/saker/:issueId" component={IssueLarge} />
+            <Route exact path="/registrerSak" component={FileIssuePage} />
+            <Route exact path="/feed" component={FeedPage} />
+            <Route exact path="/kommune/:munId" component={MunicipalPage} />
+            <Route exact path="/image" component={AlternativeUpload} />
+            <Route exact path="/activate/:tokenId" component={ActivateAccountPage}/>
+            <Route exact path="/kommune/:munId/saker" component={IssueView} />
+            <Route path="" component={NotFound}/>
           </Switch>
           <Footer />
       </div>

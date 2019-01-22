@@ -7,7 +7,7 @@ import {Alert, DisplayEvent} from '../../widgets';
 import {Issue} from "../../models/Issue";
 import {Status} from "../issueViews/issueViews";
 import moment from "moment";
-import Menu from "../menu/Menu";
+import NewMenu from "../menu/Menu";
 import {eventService} from "../../services/EventService";
 import {Event} from "../../models/Event";
 
@@ -18,7 +18,7 @@ export class EventPage extends Component {
   render() {
     return (
       <div>
-      <Menu/>
+      <NewMenu/>
       <div className="container col-10 mt-4 h-100">
         <div className="row h-100">
         {this.events.map(e =>
@@ -141,7 +141,7 @@ export class EventInfo extends Component<{match: {params: {eventId: number}}}> {
 
         return (
             <div>
-                <Menu/>
+                <NewMenu/>
                 <div className="container my-4">
                     <div className="card">
                         <img className="card-img-top" src={this.event.image}/>
