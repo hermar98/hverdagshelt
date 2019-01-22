@@ -116,6 +116,13 @@ app.get('/municipals/:id/issues', (req: Request, res: Response) => {
     );
 });
 
+app.get('/municipals/:id/issues/count', (req: Request, res: Response) => {
+    return sequelize.query(
+        'SELECT COUNT(*) AS numberOfIssues, MONTH(createdAt) AS month FROM Issues WHERE munId = :munId AND YEAR(createdAt) = :year GROUP BY MONTH(createdAt)',
+        {replacements: {munId: Number(req.params.id), year: Number(req.query.year)}, type: sequelize.QueryTypes.SELECT}
+    ).then(count => count ? res.send(count) : res.sendStatus(404));
+});
+
 app.get('/secure/users/:id/issues', (req: Request, res: Response) => {
     return Issue.findAll({ where: { userId: Number(req.params.id) } }).then(issue =>
         issue ? res.send(issue) : res.sendStatus(404)

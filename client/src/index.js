@@ -19,6 +19,7 @@ import { IssuePage } from './components/pages/IssuePage';
 import { IssueLarge, IssueOverviewNormal, IssueNormal, IssueOverviewSmall } from './components/issueViews/issueViews';
 import { ForgotPassword } from './components/pages/ForgotPassword.js';
 import { NewPasswordPage } from './components/pages/NewPasswordPage.js';
+import { StatisticsPage } from './components/pages/StatisticsPage.js';
 import { TermsOfService } from './components/pages/TermsOfServicePage.js';
 import { UploadImageTest } from './components/image/UploadImageTest.js';
 import { AlternativeUpload } from './components/image/AlternativeUpload.js';
@@ -46,6 +47,7 @@ if (root)
   ReactDOM.render(
     <HashRouter>
       <div>
+      <Route exact path="/image" component={AlternativeUpload} />
           <Alert />
               <Switch>
                 <Route exact path="/" component={ChooseMunicipalPage} />
@@ -63,6 +65,7 @@ if (root)
                 <Route exact path="/activate/:tokenId" component={ActivateAccountPage}/>
                 <Route exact path="/kommune/:munId/saker" component={IssueView} />
                 <Route exact path="/saker" component={ContractorView} />
+                <Route exact path="/statistics" component={StatisticsPage} />
                 <Route path="" component={NotFound}/>
               </Switch>
           <Footer />

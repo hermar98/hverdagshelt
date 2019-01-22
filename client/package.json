@@ -16,11 +16,15 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "axios": "^0.18.0",
+    "css-loader": "^2.1.0",
     "moment": "^2.23.0",
     "react": "^16.7.0",
     "react-bootstrap": "^0.32.4",
     "react-router-dom": "^4.3.1",
-    "react-simplified": "^1.5.2"
+    "react-simplified": "^1.5.2",
+    "react-vis": "^1.11.6",
+    "react-year-picker": "^0.3.7",
+    "style-loader": "^0.23.1"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",

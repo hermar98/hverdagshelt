@@ -802,6 +802,104 @@ class ModelsTestData {
                 latitude: 10.831514,
                 createdAt: new Date(2018, 12, 27, 12),
                 munId: 528,
+                userId: 1,
+                categoryId: 1,
+                statusId: 1
+            },
+
+            {
+                issueId: 5,
+                title: 'Veilys på gata hjemme er ødelagt',
+                content: 'Et veilys på gata har blitt ødelagt',
+                image: 'http://www.otera.no/image/20111206015-kopi.jpeg?w=1200',
+                longitude: 60.661293,
+                latitude: 10.828996,
+                createdAt: new Date(2018, 12, 27, 12),
+                munId: 528,
+                userId: 3,
+                categoryId: 2,
+                statusId: 2
+            },
+
+            {
+                issueId: 6,
+                title: 'Dårlig grafitti på skole veggen',
+                content: 'Det er dårlig grafitti på skole veggen',
+                image: 'http://i.imgur.com/so8Ea.jpg',
+                longitude: 60.684721,
+                latitude: 10.841522,
+                createdAt: new Date(2018, 12, 27, 12),
+                munId: 5001,
+                userId: 2,
+                categoryId: 4,
+                statusId: 6
+            },
+
+            {
+                issueId: 7,
+                title: 'Veilys ødelagt på 33',
+                content: 'I have a question for god. WHYYYYYYYYYYY. Is this light broken',
+                image: 'https://i.ytimg.com/vi/MPNN_nVwG5w/maxresdefault.jpg',
+                longitude: 60.68273,
+                latitude: 10.831514,
+                createdAt: new Date(2018, 12, 27, 12),
+                munId: 5001,
+                userId: 6,
+                categoryId: 2,
+                statusId: 3
+            },
+            {
+                issueId: 8,
+                title: 'Dumme folk ødeleger lømp',
+                content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
+                image:
+                    'https://www.thesun.co.uk/wp-content/uploads/2018/07/AF-COMPOSITE-FIGHT.jpg?strip=all&quality=100&w=750&h=500&crop=1',
+                longitude: 60.656877,
+                latitude: 10.824107,
+                createdAt: new Date(2018, 12, 27, 12),
+                munId: 5001,
+                userId: 1,
+                categoryId: 1,
+                statusId: 1
+            },
+
+            {
+                issueId: 9,
+                title: 'Veilys på gata hjemme er ødelagt',
+                content: 'Et veilys på gata har blitt ødelagt',
+                image: 'http://www.otera.no/image/20111206015-kopi.jpeg?w=1200',
+                longitude: 60.661293,
+                latitude: 10.828996,
+                createdAt: new Date(2018, 12, 27, 12),
+                munId: 5001,
+                userId: 3,
+                categoryId: 2,
+                statusId: 2
+            },
+
+            {
+                issueId: 10,
+                title: 'Dårlig grafitti på skole veggen',
+                content: 'Det er dårlig grafitti på skole veggen',
+                image: 'http://i.imgur.com/so8Ea.jpg',
+                longitude: 60.684721,
+                latitude: 10.841522,
+                createdAt: new Date(2018, 12, 27, 12),
+                munId: 5001,
+                userId: 2,
+                categoryId: 4,
+                statusId: 6
+            },
+
+            {
+                issueId: 11,
+                title: 'Veilys ødelagt på 33',
+                content: 'I have a question for god. WHYYYYYYYYYYY. Is this light broken',
+                image: 'https://i.ytimg.com/vi/MPNN_nVwG5w/maxresdefault.jpg',
+                longitude: 60.68273,
+                latitude: 10.831514,
+                createdAt: new Date(2018, 12, 27, 12),
+                munId: 5001,
                 userId: 6,
                 categoryId: 2,
                 statusId: 3
@@ -814,14 +912,14 @@ class ModelsTestData {
             {
                 name: 'Dumme folk er dumme',
                 content: 'Vi skal fikse dette!',
-                date: new Date(Date.now()),
+                date: new Date(2018, 12, 27, 12),
                 userId: '2',
                 issueId: '1'
             },
             {
                 name: 'Veilyset på 33 er fisket!',
                 content: 'Veilyset er fikset!',
-                date: new Date(Date.now()),
+                date: new Date(2018, 12, 27, 12),
                 userId: '2',
                 issueId: '4'
             }

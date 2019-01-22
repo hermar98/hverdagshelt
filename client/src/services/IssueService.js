@@ -61,6 +61,14 @@ class IssueService {
       headers: {'x-access-token': token}
     });
   }
+
+  getNumberOfIssues(munId: number, year: number): Promise<JSON[]> {
+      let token = localStorage.getItem('token');
+      if (token) token = JSON.parse(token).jwt;
+      return service.get('/municipals/' + munId + '/issues/count?year=' + year, {
+          headers: {'x-access-token': token}
+      });
+  }
 }
 
 export let issueService = new IssueService();
