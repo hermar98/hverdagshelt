@@ -70,7 +70,7 @@ export class ProfileMenu extends Component {
   }
 
   toProfile() {
-    history.push('/profile');
+    history.push('/profil');
   }
 
   toLogout() {
