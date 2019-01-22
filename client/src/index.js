@@ -48,27 +48,26 @@ const root = document.getElementById('root');
 if (root)
   ReactDOM.render(
     <HashRouter>
-
       <div>
           <Alert />
-          <Switch>
-            <Route exact path="/" component={ChooseMunicipalPage} />
-            <Route exact path="/loggInn" component={LoginPage} />
-            <Route exact path="/registrer" component={RegisterPage} />
-            <Route exact path="/glemtPassord" component={ForgotPassword} />
-            <Route exact path="/glemtPassord/nullstill" component={NewPasswordPage} />
-            <Route exact path="/vilkår" component={TermsOfService} />
-            <Route exact path="/profil" component={UserProfilePage} />
-            <Route exact path="/saker/:issueId" component={IssueLarge} />
-            <Route exact path="/registrerSak" component={FileIssuePage} />
-            <Route exact path="/feed" component={FeedPage} />
-            <Route exact path="/kommune/:munId" component={MunicipalPage} />
-            <Route exact path="/image" component={AlternativeUpload} />
-            <Route exact path="/activate/:tokenId" component={ActivateAccountPage}/>
-            <Route exact path="/kommune/:munId/saker" component={IssueView} />
-            <Route exact path="/saker" component={ContractorView} />
-            <Route path="" component={NotFound}/>
-          </Switch>
+              <Switch>
+                <Route exact path="/" component={ChooseMunicipalPage} />
+                <Route exact path="/loggInn" component={LoginPage} />
+                <Route exact path="/registrer" component={RegisterPage} />
+                <Route exact path="/glemtPassord" component={ForgotPassword} />
+                <Route exact path="/glemtPassord/nullstill" component={NewPasswordPage} />
+                <Route exact path="/vilkår" component={TermsOfService} />
+                <Route exact path="/profil" component={UserProfilePage} />
+                <Route exact path="/saker/:issueId" component={IssueLarge} />
+                <Route exact path="/registrerSak" component={FileIssuePage} />
+                <Route exact path="/feed" component={FeedPage} />
+                <Route exact path="/kommune/:munId" component={MunicipalPage} />
+                <Route exact path="/image" component={AlternativeUpload} />
+                <Route exact path="/activate/:tokenId" component={ActivateAccountPage}/>
+                <Route exact path="/kommune/:munId/saker" component={IssueView} />
+                <Route exact path="/saker" component={ContractorView} />
+                <Route path="" component={NotFound}/>
+              </Switch>
           <Footer />
       </div>
     </HashRouter>,
