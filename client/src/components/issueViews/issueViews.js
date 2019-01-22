@@ -163,23 +163,30 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     }
 
     onClickFeedback () {
-        let feedback = new Feedback();
-        feedback.name = '';
-        feedback.content = this.feedbackContent;
-        feedback.issueId = this.issue.issueId;
-        feedback.userId = tokenManager.getUserId()
-        feedbackService.addFeedback(feedback)
-            .then(res => {
-                this.addFeedbackButton.current.classList.remove('show')
-                this.addFeedbackForm.current.classList.add('show')
-                feedbackService.getFeedbacks(this.props.match.params.issueId)
-                    .then(data => {
-                        sharedFeedback.feedback = data;
-                    })
-                    .catch(error => console.error("Error: ", error))
-                this.feedbackContent = '';
-            })
+        let rank = 0
+        userService.getUser(this.issue.userId)
+            .then(user => rank = user.rank)
             .catch(error => console.error("Error: ", error))
+
+        if(tokenManager.getUserId() == this.issue.userId || rank == 3) {
+            let feedback = new Feedback();
+            feedback.name = '';
+            feedback.content = this.feedbackContent;
+            feedback.issueId = this.issue.issueId;
+            feedback.userId = tokenManager.getUserId()
+            feedbackService.addFeedback(feedback)
+                .then(res => {
+                    this.addFeedbackButton.current.classList.remove('show')
+                    this.addFeedbackForm.current.classList.add('show')
+                    feedbackService.getFeedbacks(this.props.match.params.issueId)
+                        .then(data => {
+                            sharedFeedback.feedback = data;
+                        })
+                        .catch(error => console.error("Error: ", error))
+                    this.feedbackContent = '';
+                })
+                .catch(error => console.error("Error: ", error))
+        }
     }
 
     onDelete() {
