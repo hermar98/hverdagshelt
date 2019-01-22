@@ -156,7 +156,7 @@ app.put('/secure/issues/:id', (req: Request, res: Response) => {
                 issueId: req.params.id
             }
         }
-    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+    ).then(issue => (issue ? res.sendStatus(200) : res.sendStatus(404)));
 });
 app.post('/secure/issues', (req: Request, res: Response) => {
     if (!(req.body instanceof Object)) return res.sendStatus(400);
@@ -171,7 +171,7 @@ app.post('/secure/issues', (req: Request, res: Response) => {
         categoryId: req.body.categoryId,
         munId: req.body.munId,
         userId: req.body.userId
-    }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+    }).then(issue => (issue ? res.send(issue) : res.sendStatus(404)));
 });
 
 app.delete('/secure/issues/:id', (req: Request, res: Response) => {
