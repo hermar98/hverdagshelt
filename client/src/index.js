@@ -27,6 +27,7 @@ import { AlternativeUpload } from './components/image/AlternativeUpload.js';
 import { MunicipalPage } from './components/pages/MunicipalPage';
 import { NotFound } from "./components/pages/NotFound";
 import { IssueView } from './components/pages/IssueOverviewPage';
+import { ContractorView } from './components/pages/ContractorIssuePage';
 
 
 // Reload application when not in production environment
@@ -65,6 +66,7 @@ if (root)
             <Route exact path="/image" component={AlternativeUpload} />
             <Route exact path="/activate/:tokenId" component={ActivateAccountPage}/>
             <Route exact path="/kommune/:munId/saker" component={IssueView} />
+            <Route exact path="/saker" component={ContractorView} />
             <Route path="" component={NotFound}/>
           </Switch>
           <Footer />

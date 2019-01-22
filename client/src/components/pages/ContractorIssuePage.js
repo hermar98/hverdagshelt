@@ -5,6 +5,7 @@ import {Redirect, NavLink} from 'react-router-dom'
 import {HoverButton, IssueOverviewSmall, IssueOverviewNormal} from "../issueViews/issueViews";
 import {issueService} from "../../services/IssueService";
 import {NewMenu} from "../menu/NewMenu";
+import {tokenManager} from "../../tokenManager";
 
 export class ContractorView extends Component<{match: { params: { munId: number}}}> {
 
@@ -15,6 +16,7 @@ export class ContractorView extends Component<{match: { params: { munId: number}
             <div>
                 <NewMenu/>
                 <div className="card issue-view-container">
+                    <h2 className="card-title">Dine tildelte saker</h2>
                     <div className="issue-overview-left">
                         <IssueOverviewNormal issues={this.issues} />
                     </div>
@@ -31,7 +33,7 @@ export class ContractorView extends Component<{match: { params: { munId: number}
     }
 
     mounted () {
-        issueService.getIssuesByMunicipal(this.props.match.params.munId)
+        issueService.getIssuesByUser(tokenManager.getUserId())
             .then(issues => {
                 this.issues = issues
             })

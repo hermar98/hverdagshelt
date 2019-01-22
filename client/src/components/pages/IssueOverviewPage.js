@@ -15,6 +15,7 @@ export class IssueView extends Component<{match: { params: { munId: number}}}> {
             <div>
                 <NewMenu/>
                 <div className="card issue-view-container">
+                    <h2 className="card-title">Saker i din kommune</h2>
                     <div className="issue-overview-left">
                         <IssueOverviewNormal issues={this.issues} />
                     </div>
