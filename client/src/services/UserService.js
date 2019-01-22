@@ -1,5 +1,5 @@
 //@flow
-import {User} from "../models";
+import {User} from "../models/User";
 import service from "./Service";
 
 class UserService {
@@ -70,6 +70,10 @@ class UserService {
       .catch((error: Error) => {
         console.log(error);
       });
+  }
+
+  activateAccount(token: string): Promise<JSON>{
+    return service.put('/activate/' + token);
   }
 }
 

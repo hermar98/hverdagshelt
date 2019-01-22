@@ -3,18 +3,20 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Issue } from '../../models.js';
+import { Issue } from '../../models/Issue.js';
 import { issueCategoryService } from '../../services/IssueCategoryService.js';
 import { Alert, Form, Card, Button } from '../../widgets';
 import { history } from '../../index';
 import { tokenManager } from '../../tokenManager';
-import {issueService} from "../../services/IssueService";
+import { issueService } from '../../services/IssueService';
+import UploadImageButton from '../image/UploadImageButton';
 
 export default class RegisterIssue extends Component {
   issue = new Issue();
   categories = [];
   form = null;
   munId = localStorage.getItem('munId');
+  upload: UploadImageButton = null;
 
   render() {
     return (
@@ -53,7 +55,11 @@ export default class RegisterIssue extends Component {
             required
             placeholder="Skriv innholdet i saken"
           />
-          <Form.FileInput>Legg til bilde</Form.FileInput>
+          <UploadImageButton
+            ref={boy => {
+              this.upload = boy;
+            }}
+          />
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
               <Button.Basic onClick={this.save}>Send inn</Button.Basic>
@@ -71,14 +77,28 @@ export default class RegisterIssue extends Component {
     this.issue.munId = this.munId;
     this.issue.latitude = 0.1;
     this.issue.longitude = 0.2;
-    this.issue.image = 'hei';
+    this.issue.image = '';
 
-    issueService
-      .addIssue(this.issue)
-      .then(history.push('/municipal/' + this.munId + '/issues'))
-      .catch((error: Error) => Alert.danger(error.message));
+    this.upload.printFaenHode(this.issue);
 
-    console.log(this.issue);
+    // issueService
+    // .addIssue(this.issue)
+    // .then(
+    //     id => {
+    //       if(this.upload!=null){
+    //         if(this.upload instanceof UploadImageButton){
+    //             console.log("I DONT SEEEEE WHATS WRONG");
+    //             this.upload.uploadTheImage(id.issueId);
+    //         } else{
+    //           console.log("Fuck this x2: " + id.issueId);
+    //         }
+    //       } else{
+    //           console.log("fak dis sht: " + id.issueId);
+    //       }
+    //     }
+    // )
+    // .then(history.push('/municipal/' + this.munId + '/issues'))
+    // .catch((error: Error) => Alert.danger(error.message));
   }
 
   mounted() {

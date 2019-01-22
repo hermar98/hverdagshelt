@@ -1,4 +1,4 @@
-import * as IssuePicture from "sequelize";
+import {IssuePicture} from '../models';
 const cloudinary = require('cloudinary');
 const { CLIENT_ORIGIN } = require('./config');
 const formData = require('express-form-data');
@@ -11,11 +11,6 @@ require('dotenv').config();
 //     // api_secret: '3jKfbWIScMM2x_iVi78AfKC4yDg'
 // });
 
-console.log("HEY BOOBY");
-console.log(process.env.CLOUD_NAME);
-console.log(process.env.API_KEY);
-console.log(process.env.API_SECRET);
-
 type Request = express$Request;
 type Response = express$Response;
 
@@ -26,7 +21,13 @@ app.use(cors({
 app.use(formData.parse());
 
 
-app.post('/image-upload', (req, res) => {
+app.post('/imageUpload', (req, res) => {
+
+    console.log("WELCOME");
+    console.log(req.body.imageSource);
+    console.log(req.body.pictureId);
+    console.log(req.body.title);
+    console.log(req.body.issueId);
 
     cloudinary.config({
         api_key: '116338133913663',
@@ -34,17 +35,25 @@ app.post('/image-upload', (req, res) => {
         api_secret: '3jKfbWIScMM2x_iVi78AfKC4yDg'
     });
 
-    console.log("NIGGER");
+    if(!req.body.imageSource){
+        res.sendStatus(200);
+        console.log("shit, no imageSource");
+        return null;
+    }
 
-    const values = Object.values(req.files);
-    values.map(image => console.log(image.path));
-    values.map(image => console.log(image.name));
-    const promises = values.map(image => cloudinary.v2.uploader.upload(image.path));
-    console.log("NIGGER3");
-
-    Promise
-        .all(promises)
-        .then(results => res.json(results))
+    cloudinary.v2.uploader.upload(req.body.imageSource, function(error, result) {
+        if(!result){
+            res.sendStatus(200);
+            console.log("Shit boy, imageUpload failed");
+            return null;
+        } else{
+            return IssuePicture.create({
+                title: req.body.title,
+                imageSource: result.url,
+                issueId: req.body.issueId
+            }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+        }
+    });
 });
 
 

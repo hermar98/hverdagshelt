@@ -611,7 +611,7 @@ class ModelsTestData {
                     firstName: 'Vegard',
                     lastName: 'Andersson',
                     email: 'test@test.no',
-                    rank: 1,
+                    rank: 3,
                     salt: 'a83f4da094cc247b',
                     hashStr:
                         '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
@@ -668,7 +668,7 @@ class ModelsTestData {
                     lastName: 'Aasvestad',
                     email: 'jorgaas@stud.ntnu.no',
                     rank: 1,
-                    salt: 'b79ryp98',
+                    salt: 'a83f4da094cc247b',
                     hashStr: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
                     munId: 528,
                     profilePicture:
@@ -678,9 +678,9 @@ class ModelsTestData {
                     firstName: 'Herman Ryen',
                     lastName: 'Martinsen',
                     email: 'HermanRM@stud.ntnu.no',
-                    rank: 1,
-                    salt: 'b79ryp98',
-                    hashStr: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
+                    rank: 2,
+                    salt: 'a83f4da094cc247b',
+                    hashStr: '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
                     munId: 528,
                     profilePicture:
                         'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
@@ -758,8 +758,8 @@ class ModelsTestData {
                     'https://www.thesun.co.uk/wp-content/uploads/2018/07/AF-COMPOSITE-FIGHT.jpg?strip=all&quality=100&w=750&h=500&crop=1',
                 longitude: 60.656877,
                 latitude: 10.824107,
-                date: '2019-01-21',
-                munId: 5001,
+                createdAt: new Date(2018, 12, 24, 12),
+                munId: 528,
                 userId: 1,
                 categoryId: 1,
                 statusId: 1
@@ -772,8 +772,8 @@ class ModelsTestData {
                 image: 'http://www.otera.no/image/20111206015-kopi.jpeg?w=1200',
                 longitude: 60.661293,
                 latitude: 10.828996,
-                createdAt: '2018-04-12',
-                munId: 101,
+                createdAt: new Date(2018, 12, 25, 12),
+                munId: 528,
                 userId: 3,
                 categoryId: 2,
                 statusId: 2
@@ -786,11 +786,11 @@ class ModelsTestData {
                 image: 'http://i.imgur.com/so8Ea.jpg',
                 longitude: 60.684721,
                 latitude: 10.841522,
-                createdAt: '2018-04-12',
-                munId: 101,
+                createdAt: new Date(2018, 12, 26, 12),
+                munId: 528,
                 userId: 2,
                 categoryId: 4,
-                statusId: 6
+                statusId: 2
             },
 
             {
@@ -800,174 +800,105 @@ class ModelsTestData {
                 image: 'https://i.ytimg.com/vi/MPNN_nVwG5w/maxresdefault.jpg',
                 longitude: 60.68273,
                 latitude: 10.831514,
-                createdAt: '2018-06-01',
-                munId: 101,
-                userId: 6,
-                categoryId: 2,
-                statusId: 3
-            },
-            {
-                issueId: 5,
-                title: 'Dumme folk ødeleger lømp',
-                content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
-                image:
-                    'https://www.thesun.co.uk/wp-content/uploads/2018/07/AF-COMPOSITE-FIGHT.jpg?strip=all&quality=100&w=750&h=500&crop=1',
-                longitude: 60.656877,
-                latitude: 10.824107,
-                createdAt: '2018-10-10',
-                munId: 101,
+                createdAt: new Date(2018, 12, 27, 12),
+                munId: 528,
                 userId: 1,
                 categoryId: 1,
                 statusId: 1
+            },
+
+            {
+                issueId: 5,
+                title: 'Veilys på gata hjemme er ødelagt',
+                content: 'Et veilys på gata har blitt ødelagt',
+                image: 'http://www.otera.no/image/20111206015-kopi.jpeg?w=1200',
+                longitude: 60.661293,
+                latitude: 10.828996,
+                createdAt: new Date(2018, 12, 27, 12),
+                munId: 528,
+                userId: 3,
+                categoryId: 2,
+                statusId: 2
             },
 
             {
                 issueId: 6,
-                title: 'Veilys på gata hjemme er ødelagt',
-                content: 'Et veilys på gata har blitt ødelagt',
-                image: 'http://www.otera.no/image/20111206015-kopi.jpeg?w=1200',
-                longitude: 60.661293,
-                latitude: 10.828996,
-                createdAt: '2019-01-01',
-                munId: 101,
-                userId: 3,
-                categoryId: 2,
-                statusId: 2
+                title: 'Dårlig grafitti på skole veggen',
+                content: 'Det er dårlig grafitti på skole veggen',
+                image: 'http://i.imgur.com/so8Ea.jpg',
+                longitude: 60.684721,
+                latitude: 10.841522,
+                createdAt: new Date(2018, 12, 27, 12),
+                munId: 5001,
+                userId: 2,
+                categoryId: 4,
+                statusId: 6
             },
 
             {
                 issueId: 7,
-                title: 'Dårlig grafitti på skole veggen',
-                content: 'Det er dårlig grafitti på skole veggen',
-                image: 'http://i.imgur.com/so8Ea.jpg',
-                longitude: 60.684721,
-                latitude: 10.841522,
-                createdAt: '2018-02-12',
-                munId: 528,
-                userId: 2,
-                categoryId: 4,
-                statusId: 6
-            },
-
-            {
-                issueId: 8,
                 title: 'Veilys ødelagt på 33',
                 content: 'I have a question for god. WHYYYYYYYYYYY. Is this light broken',
                 image: 'https://i.ytimg.com/vi/MPNN_nVwG5w/maxresdefault.jpg',
                 longitude: 60.68273,
                 latitude: 10.831514,
-                createdAt: '2019-01-01',
-                munId: 528,
+                createdAt: new Date(2018, 12, 27, 12),
+                munId: 5001,
                 userId: 6,
                 categoryId: 2,
                 statusId: 3
-            },{
-                issueId: 9,
+            },
+            {
+                issueId: 8,
                 title: 'Dumme folk ødeleger lømp',
                 content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
                 image:
                     'https://www.thesun.co.uk/wp-content/uploads/2018/07/AF-COMPOSITE-FIGHT.jpg?strip=all&quality=100&w=750&h=500&crop=1',
                 longitude: 60.656877,
                 latitude: 10.824107,
-                createdAt: '2019-01-01',
-                munId: 528,
+                createdAt: new Date(2018, 12, 27, 12),
+                munId: 5001,
                 userId: 1,
                 categoryId: 1,
                 statusId: 1
+            },
+
+            {
+                issueId: 9,
+                title: 'Veilys på gata hjemme er ødelagt',
+                content: 'Et veilys på gata har blitt ødelagt',
+                image: 'http://www.otera.no/image/20111206015-kopi.jpeg?w=1200',
+                longitude: 60.661293,
+                latitude: 10.828996,
+                createdAt: new Date(2018, 12, 27, 12),
+                munId: 5001,
+                userId: 3,
+                categoryId: 2,
+                statusId: 2
             },
 
             {
                 issueId: 10,
-                title: 'Veilys på gata hjemme er ødelagt',
-                content: 'Et veilys på gata har blitt ødelagt',
-                image: 'http://www.otera.no/image/20111206015-kopi.jpeg?w=1200',
-                longitude: 60.661293,
-                latitude: 10.828996,
-                createdAt: '2019-01-01',
-                munId: 528,
-                userId: 3,
-                categoryId: 2,
-                statusId: 2
+                title: 'Dårlig grafitti på skole veggen',
+                content: 'Det er dårlig grafitti på skole veggen',
+                image: 'http://i.imgur.com/so8Ea.jpg',
+                longitude: 60.684721,
+                latitude: 10.841522,
+                createdAt: new Date(2018, 12, 27, 12),
+                munId: 5001,
+                userId: 2,
+                categoryId: 4,
+                statusId: 6
             },
 
             {
                 issueId: 11,
-                title: 'Dårlig grafitti på skole veggen',
-                content: 'Det er dårlig grafitti på skole veggen',
-                image: 'http://i.imgur.com/so8Ea.jpg',
-                longitude: 60.684721,
-                latitude: 10.841522,
-                createdAt: '2018-12-12',
-                munId: 5001,
-                userId: 2,
-                categoryId: 4,
-                statusId: 6
-            },
-
-            {
-                issueId: 12,
                 title: 'Veilys ødelagt på 33',
                 content: 'I have a question for god. WHYYYYYYYYYYY. Is this light broken',
                 image: 'https://i.ytimg.com/vi/MPNN_nVwG5w/maxresdefault.jpg',
                 longitude: 60.68273,
                 latitude: 10.831514,
-                createdAt: '2018-03-05',
-                munId: 5001,
-                userId: 6,
-                categoryId: 2,
-                statusId: 3
-            },
-            {
-                issueId: 13,
-                title: 'Dumme folk ødeleger lømp',
-                content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
-                image:
-                    'https://www.thesun.co.uk/wp-content/uploads/2018/07/AF-COMPOSITE-FIGHT.jpg?strip=all&quality=100&w=750&h=500&crop=1',
-                longitude: 60.656877,
-                latitude: 10.824107,
-                createdAt: '2018-03-05',
-                munId: 5001,
-                userId: 1,
-                categoryId: 1,
-                statusId: 1
-            },
-
-            {
-                issueId: 14,
-                title: 'Veilys på gata hjemme er ødelagt',
-                content: 'Et veilys på gata har blitt ødelagt',
-                image: 'http://www.otera.no/image/20111206015-kopi.jpeg?w=1200',
-                longitude: 60.661293,
-                latitude: 10.828996,
-                createdAt: '2018-05-12',
-                munId: 5001,
-                userId: 3,
-                categoryId: 2,
-                statusId: 2
-            },
-
-            {
-                issueId: 15,
-                title: 'Dårlig grafitti på skole veggen',
-                content: 'Det er dårlig grafitti på skole veggen',
-                image: 'http://i.imgur.com/so8Ea.jpg',
-                longitude: 60.684721,
-                latitude: 10.841522,
-                createdAt: '2018-05-12',
-                munId: 5001,
-                userId: 2,
-                categoryId: 4,
-                statusId: 6
-            },
-
-            {
-                issueId: 16,
-                title: 'Veilys ødelagt på 33',
-                content: 'I have a question for god. WHYYYYYYYYYYY. Is this light broken',
-                image: 'https://i.ytimg.com/vi/MPNN_nVwG5w/maxresdefault.jpg',
-                longitude: 60.68273,
-                latitude: 10.831514,
-                createdAt: '2018-05-12',
+                createdAt: new Date(2018, 12, 27, 12),
                 munId: 5001,
                 userId: 6,
                 categoryId: 2,
@@ -981,14 +912,14 @@ class ModelsTestData {
             {
                 name: 'Dumme folk er dumme',
                 content: 'Vi skal fikse dette!',
-                date: new Date(Date.now()),
+                date: new Date(2018, 12, 27, 12),
                 userId: '2',
                 issueId: '1'
             },
             {
                 name: 'Veilyset på 33 er fisket!',
                 content: 'Veilyset er fikset!',
-                date: new Date(Date.now()),
+                date: new Date(2018, 12, 27, 12),
                 userId: '2',
                 issueId: '4'
             }
@@ -1017,10 +948,11 @@ class ModelsTestData {
                 image: 'notin',
                 longitude: 60.652168,
                 latitude: 10.822102,
-                timeStart: new Date(Date.now()),
-                timeEnd: new Date(Date.now()),
+                timeStart: new Date(2019, 1, 22),
+                timeEnd: new Date(2019, 1, 25),
                 userId: '1',
-                categoryId: 1
+                categoryId: 1,
+                munId: 528
             },
             {
                 title: 'PARTIET FORSETTER!',
@@ -1028,10 +960,11 @@ class ModelsTestData {
                 image: 'notin',
                 longitude: 60.655754,
                 latitude: 10.817339,
-                timeStart: new Date(Date.now()),
-                timeEnd: new Date(Date.now()),
+                timeStart: new Date(2019, 1, 23),
+                timeEnd: new Date(2019, 1, 26),
                 userId: '2',
-                categoryId: 1
+                categoryId: 1,
+                munId: 528
             }
         ])
     }
@@ -1039,11 +972,11 @@ class ModelsTestData {
     createUserMunicipal() {
         return UserMunicipal.bulkCreate([
             {
-                munId: 101,
+                munId: 5001,
                 userId: 1
             },
             {
-                munId: 514,
+                munId: 528,
                 userId: 1
             }
         ])

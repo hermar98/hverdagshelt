@@ -3,7 +3,7 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { User } from '../../models.js';
+import { User } from '../../models/User.js';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
 import { userService } from '../../services/UserService.js';
 import { history } from '../../index.js';
@@ -45,31 +45,30 @@ export default class RegistrationForm extends Component {
           <Form.Input
             type="password"
             label="Passord"
+            className="password-input"
             onChange={event => (this.user.password = event.target.value)}
             required
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            title="Passordet må inneholde minst én liten og én stor bokstav, og minst 8 karakterer"
             placeholder="Passord"
           />
           <Form.Input
-              type="password"
-              label="Gjenta passord"
-              onChange={event => (this.repeatPassword = event.target.value)}
-              required
-              placeholder="Gjenta passord" />
+            type="password"
+            label="Gjenta passord"
+            className="password-input"
+            onChange={event => (this.repeatPassword = event.target.value)}
+            required
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            title="Passordet må inneholde minst én liten og én stor bokstav, og minst 8 karakterer"
+            placeholder="Gjenta passord"
+          />
           {this.passwordLengthOk ? (
-              <div/>
+            <div />
           ) : (
-              <Form.Alert text="Du må bruke minst 8 tegn i passordet ditt"/>
+            <Form.Alert type="danger" text="Du må bruke minst 8 tegn i passordet ditt" />
           )}
-          {this.passwordsMatch ? (
-              <div/>
-          ) : (
-              <Form.Alert text="Passordene samsvarer ikke. Prøv på nytt."/>
-          )}
-          {this.emailRegistered ? (
-              <Form.Alert text="E-posten er allerede registrert"/>
-          ) : (
-              <div/>
-          )}
+          {this.passwordsMatch ? <div /> : <Form.Alert type="danger" text="Passordene er ikke like" />}
+          {this.emailRegistered ? <Form.Alert type="danger" text="E-posten er allerede registrert" /> : <div />}
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
               <Button.Basic onClick={this.save}>Lag bruker</Button.Basic>
@@ -98,11 +97,11 @@ export default class RegistrationForm extends Component {
       this.passwordsMatch = true;
     }
 
-    this.user.rank = 1;
+    this.user.rank = 0;
 
     userService
       .addUser(this.user)
-      .then(() => history.push('/municipal/' + this.munId+ '/login'))
+      .then(() => history.push('/loggInn'))
       .catch((error: Error) => {
         console.log(error);
         this.emailRegistered = true;
