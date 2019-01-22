@@ -406,11 +406,6 @@ Profile-page
 /*
 random
  */
-.footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
 
 #log-in {
     margin-top: 7%;
