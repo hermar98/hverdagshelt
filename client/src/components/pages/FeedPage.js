@@ -73,10 +73,8 @@ export class FeedPage extends Component {
                   return e.statusId !== 1 && (e.categoryId == this.iCategoryId || this.iCategoryId == 0)
                     && (e.munId == this.munId || this.munId == 0) })
                   .map(e =>
-                    <li key={e.issueId}>
-                      <Card>
+                    <li key={e.issueId} className="list-group-item">
                         <IssueSmall issue={e} munId={e.munId}/>
-                      </Card>
                     </li>
                   )}
               </ul>
