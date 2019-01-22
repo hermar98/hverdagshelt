@@ -5,14 +5,18 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
-import { User, Issue } from '../../models.js';
-import { issueService } from '../../services/IssueService.js';
+import { Issue } from '../../models/Issue.js';
+import { issueService } from '../../services/IssueService';
 import { tokenManager } from '../../tokenManager';
-import {userService} from "../../services/UserService";
+import { User } from '../../models/User';
+import { userService } from '../../services/UserService';
+import { HoverButton } from '../issueViews/issueViews';
 
-type P = { userId: number };
-type S = {};
-export default class ChangePasswordForm extends Component<P, S> {
+export default class ChangePasswordForm extends Component {
+  state = {
+    passwordOk: false,
+    passwordError: false
+  };
   user = new User();
   currentPassword = '';
   newPassword = '';
@@ -29,18 +33,17 @@ export default class ChangePasswordForm extends Component<P, S> {
 
   handleChangePassword(e: Object) {
     e.preventDefault();
-    console.log(this.newPassword);
-    console.log(this.newPasswordRepeated);
+
     userService
       .login(this.user.email, this.currentPassword)
       .then(() => {
         if (this.newPassword != this.newPasswordRepeated) {
+          this.setState({ passwordError: true, passwordOk: false });
           console.log('Passordene er ikke like');
         } else {
           this.user.password = this.newPassword;
-          console.log(this.user);
+          this.setState({ passwordOk: true, passwordError: false });
           userService.updateUser(this.user);
-          Alert();
         }
       })
       .catch(error => console.log('Nåverende passord er feil'));
@@ -49,8 +52,8 @@ export default class ChangePasswordForm extends Component<P, S> {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleChangePassword}>
-          <div>
+        <form className="change-password-form">
+          <div className="justify-content-center align-items-center row">
             <input
               type="password"
               onChange={event => (this.currentPassword = event.target.value)}
@@ -59,29 +62,35 @@ export default class ChangePasswordForm extends Component<P, S> {
             />
           </div>
 
-          <div>
+          <div className="justify-content-center align-items-center row">
             <input
               type="password"
               onChange={event => (this.newPassword = event.target.value)}
               required
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              title="Passordet må inneholde minst én liten og én stor bokstav, og minst 8 karakterer"
               placeholder="Nytt passord"
             />
           </div>
 
-          <div>
+          <div className="justify-content-center align-items-center row">
             <input
               type="password"
               onChange={event => (this.newPasswordRepeated = event.target.value)}
               required
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              title="Passordet må inneholde minst én liten og én stor bokstav, og minst 8 karakterer"
               placeholder="Gjenta passord"
             />
           </div>
 
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
-              <button type="submit">Endre Passord</button>
+              <HoverButton onclick={this.handleChangePassword} text="Endre passord" />
             </div>
           </div>
+          {this.state.passwordOk ? <Form.Alert type="success" text="Passordet er endret" /> : <div />}
+          {this.state.passwordError ? <Form.Alert type="danger" text="Passordene er ikke like" /> : <div />}
         </form>
       </div>
     );

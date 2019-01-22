@@ -5,17 +5,22 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
-import { User, Issue } from '../../models.js';
+import { Issue } from '../../models/Issue.js';
 import { issueService } from '../../services/IssueService.js';
 import { history } from '../../index';
-import {userService} from "../../services/UserService";
+import { User } from '../../models/User';
+import { userService } from '../../services/UserService';
 
 export default class NewPasswordForm extends Component {
+  state = {
+    passwordOk: false,
+    passwordError: false
+  };
   password = '2';
   passwordr = '';
   form = null;
   munId = localStorage.getItem('munId');
-  //TODO: pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+
   render() {
     return (
       <Card title="Nytt Passord">
@@ -24,13 +29,16 @@ export default class NewPasswordForm extends Component {
             type="password"
             onChange={event => (this.password = event.target.value)}
             required
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            title="Passordet må inneholde minst én liten og én stor bokstav, og minst 8 karakterer"
             placeholder="Nytt Passord"
-            pattern=".{8,}"
           />
           <Form.Input
             type="password"
             onChange={event => (this.passwordr = event.target.value)}
             required
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            title="Passordet må inneholde minst én liten og én stor bokstav, og minst 8 karakterer"
             placeholder="Repeter Nytt Passord"
           />
           <div className="container h-100">
@@ -39,6 +47,7 @@ export default class NewPasswordForm extends Component {
                 Bytt Passord
               </Button.Basic>
             </div>
+            {this.state.passwordError ? <Form.Alert type="danger" text="Sørg for at passordene er like" /> : <div />}
           </div>
         </form>
       </Card>
@@ -50,7 +59,7 @@ export default class NewPasswordForm extends Component {
       return;
     }
     if (!(this.password == this.passwordr)) {
-      Alert.danger('Passord ikke like!');
+      this.setState({ passwordError: true, passwordOk: false });
       return;
     }
 
@@ -58,7 +67,7 @@ export default class NewPasswordForm extends Component {
       .newPassword(window.location.hash.slice(8), this.password)
       .then(token => {
         localStorage.setItem('token', JSON.stringify(token));
-        history.push('/municipal/' + this.munId);
+        history.push('/kommune/' + this.munId);
         console.log('Login ok');
         console.log(this.password + 'form');
       })
