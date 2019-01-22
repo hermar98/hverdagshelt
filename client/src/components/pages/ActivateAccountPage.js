@@ -5,14 +5,14 @@ import {userService} from "../../services/UserService";
 import {history} from "../../index";
 import {Alert} from "../../widgets";
 import {tokenManager} from "../../tokenManager";
-import Menu from "../menu/Menu";
+import NewMenu from "../menu/Menu";
 
 export class ActivateAccountPage extends Component {
 
   render() {
     return (
       <div>
-      <Menu/>
+      <NewMenu/>
         <div>Brukeren er nå aktivert!</div>
       </div>
     );

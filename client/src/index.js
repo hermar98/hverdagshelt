@@ -5,7 +5,7 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { BrowserRouter, HashRouter, Route, NavLink,Switch } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from './widgets';
-import Menu from './components/menu/Menu';
+import NewMenu from './components/menu/Menu';
 import { Footer } from './components/menu/Footer';
 import { FileIssuePage } from './components/pages/FileIssuePage';
 import { LoginPage } from './components/pages/LoginPage';
@@ -26,7 +26,7 @@ import { AlternativeUpload } from './components/image/AlternativeUpload.js';
 
 import { MunicipalPage } from './components/pages/MunicipalPage';
 import { NotFound } from "./components/pages/NotFound";
-import { Issue } from './models/Issue.js';
+import { IssueView } from './components/pages/IssueOverviewPage';
 
 
 // Reload application when not in production environment
