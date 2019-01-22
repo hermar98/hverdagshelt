@@ -6,6 +6,7 @@ import { Component } from 'react-simplified';
 import { User } from '../../models/User.js';
 import LoginForm from '../../components/forms/LoginForm';
 import {IssueOverviewNormal} from '../../components/issueViews/issueViews.js';
+import {issueService} from'../../services/IssueService';
 import Menu from '../../components/menu/Menu.js';
 
 
@@ -19,4 +20,6 @@ export class IssuePage extends Component {
             </div>
         );
     }
+
+
 }

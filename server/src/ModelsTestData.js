@@ -853,7 +853,8 @@ class ModelsTestData {
                 timeStart: new Date(Date.now()),
                 timeEnd: new Date(Date.now()),
                 userId: '1',
-                categoryId: 1
+                categoryId: 1,
+                munId: 528
             },
             {
                 title: 'PARTIET FORSETTER!',
@@ -864,7 +865,8 @@ class ModelsTestData {
                 timeStart: new Date(Date.now()),
                 timeEnd: new Date(Date.now()),
                 userId: '2',
-                categoryId: 1
+                categoryId: 1,
+                munId: 528
             }
         ])
     }

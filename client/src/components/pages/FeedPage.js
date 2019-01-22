@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import { Component } from 'react-simplified';
+import { Component, sharedComponentData } from 'react-simplified';
 import { eventService } from '../../services/EventService';
 import { issueService } from '../../services/IssueService';
 import { userMunicipalService } from '../../services/UserMunicipalService';
@@ -15,17 +15,20 @@ import { userService } from '../../services/UserService';
 import { tokenManager } from '../../tokenManager';
 import { User } from '../../models/User';
 
+let sharedMunicipals = sharedComponentData({municipals: []});
+let sharedIssues = sharedComponentData({issues: []});
+let sharedEvents = sharedComponentData({events: []});
+
 export class FeedPage extends Component {
   // date for events
   user = new User();
-  municipals = [];
-  issues = [];
-  events = [];
   categories = [];
+
 
   munId: number = 0;
   categoryId: number = 0;
   timesort: string = "Nyeste";
+  status: number = 0;
 
   render() {
     return(
@@ -38,14 +41,14 @@ export class FeedPage extends Component {
                 <div className="d-flex flex-row sort-box card-header justify-content-between">
                   <div className="form-group mt-2 ml-1">
                     <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.munId = event.target.value)}>
-                      <option value={0}>Alle kommuner</option>
-                      {this.municipals.map(mun =>
+                      <option value={0}>Alle</option>
+                      {sharedMunicipals.municipals.map(mun =>
                         <option key={mun.munId} value={mun.munId}>{mun.name}</option>)}
                     </select>
                   </div>
                   <div className="form-group mt-2">
                     <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.categoryId = event.target.value)}>
-                      <option value={0}>Alle kategorier</option>
+                      <option value={0}>Alle</option>
                       {this.categories.map(cat =>
                         <option key={cat.categoryId} value={cat.categoryId}>{cat.name}</option>)}
                     </select>
@@ -59,10 +62,17 @@ export class FeedPage extends Component {
                 </div>
               </div>
               <ul className="container-fluid">
-                {this.municipals.map(e =>
-                <li key={e.munId}>
-                  <IssueOverviewSmall munid={e.munId}/>
-                </li>)}
+                {sharedIssues.issues.map(e => {
+                  if(this.status == e.status || this.status == 0) {
+                    return(
+                    <li key={e.issueId}>
+                      <Card>
+                        <IssueSmall issue={e} munId={e.munId}/>
+                      </Card>
+                    </li>
+                    )
+                  }
+                })}
               </ul>
             </Card>
           </div>
@@ -86,7 +96,7 @@ export class FeedPage extends Component {
                 </div>
               </div>
               <ul className="container-fluid">
-                {this.events.map(e =>
+                {sharedEvents.events.map(e =>
                   <li key={e.eventId}>
                     <EventSmall event={e}/>
                   </li>)}
@@ -112,27 +122,38 @@ export class FeedPage extends Component {
       })
       .catch((error: Error) => console.log(error));
 
+    //GET all municipals a user has subscribed to
     userMunicipalService
       .getUserMunicipals(tokenManager.getUserId())
-      .then(muns => this.municipals = muns)
+      .then(muns => {
+        sharedMunicipals.municipals = muns;
+      })
+      .then(()=> console.log(sharedMunicipals.municipals))
       .catch((error: Error) => Alert.danger(error.message));
 
-
+    //GET all issueCategories
     issueCategoryService
       .getCategories()
       .then(cat => (this.categories = cat))
       .catch((error: Error) => Alert.danger(error.message));
 
-    this.municipals.map(mun => (issueService.getIssuesByMunicipal(tokenManager.getUserId())
-      .then(issues => {
-        this.issues = issues
-      })
-      .catch((error: Error) => Alert.danger(error.message))));
 
-    this.municipals.map(mun => (eventService.getEventsByMunicipal(tokenManager.getUserId())
-      .then(events => {
-        this.events = events
+    //GET all Issues registered on the municipals
+    sharedMunicipals.municipals.map(e => issueService.getIssuesByMunicipal(e.munId)
+      .then(issues => {
+        sharedIssues.issues = issues;
       })
-      .catch((error: Error) => Alert.danger(error.message))));
+      .catch((error: Error) => Alert.danger(error.message)));
+
+
+    //GET all events registered on the municipals
+    eventService.getEventsByMunicipal(528)
+      .then(events => {
+        sharedEvents.events = events;
+      })
+      .catch((error: Error) => Alert.danger(error.message));
+
   }
 }
+
+
