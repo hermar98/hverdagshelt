@@ -46,7 +46,7 @@ class IssueService {
     });
   }
 
-  addIssue(issue: Issue): Promise<number> {
+  addIssue(issue: Issue): Promise<Issue> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
     return service.post('/secure/issues', issue, {

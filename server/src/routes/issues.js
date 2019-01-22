@@ -158,7 +158,7 @@ app.put('/secure/issues/:id', (req: Request, res: Response) => {
                 issueId: req.params.id
             }
         }
-    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+    ).then(issue => (issue ? res.sendStatus(200) : res.sendStatus(404)));
 });
 app.post('/secure/issues', (req: Request, res: Response) => {
     if (!(req.body instanceof Object)) return res.sendStatus(400);
@@ -181,7 +181,7 @@ app.post('/secure/issues', (req: Request, res: Response) => {
         }else{
           console.log("Nothing wrong here, please continue");
 
-          res.sendStatus(200);
+          res.send(count);
               User.findOne({
                 where: {
                   userId: req.body.userId
