@@ -786,7 +786,7 @@ class ModelsTestData {
                 image: 'http://i.imgur.com/so8Ea.jpg',
                 longitude: 60.684721,
                 latitude: 10.841522,
-                date: new Date(Date.now()),
+                createdAt: new Date(Date.now()),
                 munId: 528,
                 userId: 2,
                 categoryId: 4,
