@@ -110,9 +110,17 @@ app.get('/issues/:lim/limit/:offset/offset/cat/desc', (req: Request, res: Respon
 });
 
 app.get('/municipals/:id/issues', (req: Request, res: Response) => {
-    return Issue.findAll({ where: { munId: Number(req.params.id) } }).then(issues =>
-        issues ? res.send(issues) : res.sendStatus(404)
+    return Issue.findAll({ where: { munId: Number(req.params.id) },
+                            order: [['createdAt', 'DESC']]})
+      .then(issues => issues ? res.send(issues) : res.sendStatus(404)
     );
+});
+
+app.get('/municipals/:id/issues/count', (req: Request, res: Response) => {
+    return sequelize.query(
+        'SELECT COUNT(*) AS numberOfIssues, MONTH(createdAt) AS month FROM Issues WHERE munId = :munId AND YEAR(createdAt) = :year GROUP BY MONTH(createdAt)',
+        {replacements: {munId: Number(req.params.id), year: Number(req.query.year)}, type: sequelize.QueryTypes.SELECT}
+    ).then(count => count ? res.send(count) : res.sendStatus(404));
 });
 
 app.get('/secure/users/:id/issues', (req: Request, res: Response) => {
@@ -157,7 +165,7 @@ app.put('/secure/issues/:id', (req: Request, res: Response) => {
                 issueId: req.params.id
             }
         }
-    ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+    ).then(issue => (issue ? res.sendStatus(200) : res.sendStatus(404)));
 });
 app.post('/secure/issues', (req: Request, res: Response) => {
     if (!(req.body instanceof Object)) return res.sendStatus(400);
@@ -180,7 +188,7 @@ app.post('/secure/issues', (req: Request, res: Response) => {
         }else{
           console.log("Nothing wrong here, please continue");
 
-          res.sendStatus(200);
+          res.send(count);
               User.findOne({
                 where: {
                   userId: req.body.userId

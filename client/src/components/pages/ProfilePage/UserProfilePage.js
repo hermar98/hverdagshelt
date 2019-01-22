@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 
 import { Alert, NavBar, Form, Card, Button } from '../../../widgets';
-import { ProfileMenu } from '../../../components/menu/ProfileMenu.js';
+import { NewMenu } from '../../../components/menu/NewMenu.js';
 import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
 import { userMunicipalService } from '../../../services/UserMunicipalService';
 import { autocomplete, glob } from '../../../../public/autocomplete';
@@ -102,7 +102,7 @@ export class UserProfilePage extends Component {
         return (
             <div>
                 <div>
-                    <ProfileMenu />
+                    <NewMenu />
                 </div>
                 <h4 className="row justify-content-center my-profile">Min Profil</h4>
                 <div className="profile-page-container page-container">

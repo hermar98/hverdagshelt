@@ -6,10 +6,9 @@ import { autocomplete, glob } from '../../../public/autocomplete';
 import { municipalService } from '../../services/MunicipalService';
 import { history } from '../../index';
 import { Municipal } from '../../models/Municipal';
-import { NewMenu } from '../../components/menu/NewMenu';
-import { tokenManager } from "../../tokenManager";
-import { Card} from "../../widgets";
-
+import { ChooseMunicipalPageMenu } from '../../components/menu/ChooseMunicipalPageMenu';
+import { tokenManager } from '../../tokenManager';
+import { Card } from '../../widgets';
 
 let municipalObjects;
 //TODO: fix input
@@ -18,9 +17,9 @@ export class ChooseMunicipalPage extends Component {
   render() {
     return (
       <div>
-        <div className="bg-image"></div>
+        <div className="bg-image" />
         <div>
-          <NewMenu />
+          <ChooseMunicipalPageMenu />
         </div>
 
         <div className="fg">
