@@ -110,8 +110,9 @@ app.get('/issues/:lim/limit/:offset/offset/cat/desc', (req: Request, res: Respon
 });
 
 app.get('/municipals/:id/issues', (req: Request, res: Response) => {
-    return Issue.findAll({ where: { munId: Number(req.params.id) } }).then(issues =>
-        issues ? res.send(issues) : res.sendStatus(404)
+    return Issue.findAll({ where: { munId: Number(req.params.id) },
+                            order: [['createdAt', 'DESC']]})
+      .then(issues => issues ? res.send(issues) : res.sendStatus(404)
     );
 });
 

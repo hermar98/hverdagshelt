@@ -8,8 +8,9 @@ const app = require('../app');
 
 //Events
 app.get('/municipals/:id/events', (req: Request, res: Response) => {
-    return Event.findAll({ where: { munId: Number(req.params.id) } }).then(events =>
-        events ? res.send(events) : res.sendStatus(404)
+    return Event.findAll({ where: { munId: Number(req.params.id) },
+                            order: [['timeStart', 'ASC']]})
+      .then(events => events ? res.send(events) : res.sendStatus(404)
     );
 });
 
