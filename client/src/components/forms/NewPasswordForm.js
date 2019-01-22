@@ -26,13 +26,16 @@ export default class NewPasswordForm extends Component {
             onChange={event => (this.password = event.target.value)}
             required
             placeholder="Nytt Passord"
-            pattern=".{8,}"
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            title="Passordet må inneholde minst én liten og én stor bokstav, og minst 8 karakterer"
           />
           <Form.Input
             type="password"
             onChange={event => (this.passwordr = event.target.value)}
             required
             placeholder="Repeter Nytt Passord"
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            title="Passordet må inneholde minst én liten og én stor bokstav, og minst 8 karakterer"
           />
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">

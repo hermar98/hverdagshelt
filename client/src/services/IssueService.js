@@ -22,6 +22,7 @@ class IssueService {
   }
 
   getIssue(issueId: number): Promise<Issue> {
+    console.log("2")
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
     return service.get('/secure/issues/' + issueId, {

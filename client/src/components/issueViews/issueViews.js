@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 import {Redirect, NavLink} from 'react-router-dom'
 import { Feedback} from '../../models/Feedback';
-import Menu from '../menu/Menu';
+import { NewMenu } from '../menu/NewMenu';
 import {tokenManager} from "../../tokenManager";
 import {User} from "../../models/User";
 import {Issue} from "../../models/Issue";
@@ -57,12 +57,12 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
             this.setState({
                 clickedDelete: false
             })
-            return <Redirect to={"/municipal/" + this.props.match.params.munId + "/issues"} />
+            return <Redirect to={"/kommune/" + this.props.match.params.munId + "/issues"} />
         }
 
         return (
             <div>
-                <Menu />
+                <NewMenu/>
                 <div className="issue-container">
                     <div className="issue-large">
                         <Status status={this.issue.statusId} id={this.issue.issueId}/>
@@ -154,6 +154,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
             .then(res => {
                 issueService.getIssue(this.issue.issueId)
                     .then(issue => {
+                        console.log("hadad")
                         this.issue = issue;
                         this.setState({clickedStatus: !this.state.clickedStatus})
                     })
@@ -207,7 +208,7 @@ export class IssueNormal extends Component<{issue: Issue, munId: number}>{
     render () {
         return (
             <div className="issue-normal issue-hover" issue={this.props.issue}>
-                <a id="a-hover" href={"#/municipal/" + this.props.munId + "/issues/" + this.props.issue.issueId}>
+                <a id="a-hover" href={"/#/saker/" + this.props.issue.issueId}>
                     <img src="../../images/arrowRightTrans.png" />
                 </a>
                 <div className="d-flex flex-row issue-flex">
@@ -249,7 +250,7 @@ export class IssueSmall extends Component<{issue: Issue, munId: number}> {
     render() {
         return (
             <div className="issue-small issue-hover" issue={this.props.issue}>
-                <a id="a-hover" href={"#/municipal/" + this.props.munId + "/issues/" + this.props.issue.issueId}>
+                <a id="a-hover" href={"/#/saker/" + this.props.issue.issueId}>
                     <img src="../../images/arrowRightTrans.png" />
                 </a>
                 <div>
@@ -323,6 +324,7 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
         window.scrollTo(0, 0);
     }
 }
+
 /*
 A list of issues in normal view
  */

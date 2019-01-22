@@ -8,6 +8,7 @@ import moment from 'moment';
 import { issueCategoryService } from './services/IssueCategoryService.js';
 import { eventCategoryService } from './services/EventCategoryService.js';
 
+
 /**
  * Renders alert messages using Bootstrap classes.
  */
@@ -153,12 +154,14 @@ export class Card extends Component<{ title?: React.Node, children?: React.Node 
   }
 }
 
-class NavBarButton extends Component<{onClick: () => mixed, children?: React.Node}>{
-  render(){
-    return(
-    <form className="form-inline">
-      <button onClick={this.props.onClick} className="btn btn btn-outline-light">{this.props.children}</button>
-    </form>
+class NavBarButton extends Component<{ onClick: () => mixed, children?: React.Node }> {
+  render() {
+    return (
+      <form className="form-inline">
+        <button onClick={this.props.onClick} className="custom-nav-btn btn btn btn-outline-light">
+          {this.props.children}
+        </button>
+      </form>
     );
   }
 }
@@ -180,9 +183,14 @@ class NavBarLink extends Component<{ to: string, exact?: boolean, children?: Rea
   render() {
     if (!this.props.children) return null;
     return (
-      <NavLink className="nav-link" activeClassName="active" exact={this.props.exact} to={this.props.to}>
+      <NavLink
+        className="custom-nav-link nav-link"
+        activeClassName="active"
+        exact={this.props.exact}
+        to={this.props.to}
+      >
         <form className="form-inline">
-          <button className="btn btn btn-outline-light">{this.props.children}</button>
+          <button className="custom-nav-btn btn btn btn-outline-light">{this.props.children}</button>
         </form>
       </NavLink>
     );
@@ -229,7 +237,7 @@ class NavBarDropdown extends Component<
     return (
       <div className="dropdown form-inline ml-2" onClick={this.toggleOpen}>
         <button
-          className="btn btn-info dropdown-toggle"
+          className="custom-nav-btn btn btn-info dropdown-toggle"
           type="button"
           id="dropdownMenuButton"
           data-toggle="dropdown"
@@ -286,7 +294,9 @@ export class DropdownItem extends Component<{
 }
 
 export class NavBar extends Component<{
-  children: React.Element<typeof NavBarBrand | typeof NavBarLink | typeof NavBarLogout | typeof NavBarDropdown | typeof NavBarButton>[]
+  children: React.Element<
+    typeof NavBarBrand | typeof NavBarLink | typeof NavBarLogout | typeof NavBarDropdown | typeof NavBarButton
+  >[]
 }> {
   static Brand = NavBarBrand;
   static Link = NavBarLink;
@@ -297,11 +307,15 @@ export class NavBar extends Component<{
   render() {
     return (
       <nav className="navbar navbar-expand-sm bg-dark navbar-dark mt-0">
-        <div className="container-fluid">
+        <div className="container-fluid custom-container-fluid">
           {this.props.children.filter(child => child.type == NavBarBrand)}
           <ul className="nav navbar-nav navbar-right">
             {this.props.children.filter(
-              child => child.type == NavBarLink || child.type == NavBarLogout || child.type == NavBarDropdown || child.type == NavBarButton
+              child =>
+                child.type == NavBarLink ||
+                child.type == NavBarLogout ||
+                child.type == NavBarDropdown ||
+                child.type == NavBarButton
             )}
           </ul>
         </div>
@@ -339,6 +353,46 @@ class FormInput extends Component<{
   }
 }
 
+class FormInputDateTime extends Component<{
+  label?: React.Node,
+  value?: mixed,
+  onChange?: (event: SyntheticInputEvent<HTMLInputElement>) => mixed,
+  required?: boolean,
+  pattern?: string,
+  placeholder?: string,
+  onChange2?: (event: SyntheticInputEvent<HTMLInputElement>) => mixed,
+  value2?: mixed,
+  label2?: React.Node,
+}> {
+  render() {
+    return (
+      <div className="form-group row justify-content-center">
+        <div className="form-group col-lg-3">
+          <label>{this.props.label}</label>
+          <input
+            className="form-control"
+            type="date"
+            value={this.props.value}
+            onChange={this.props.onChange}
+            required={this.props.required}
+            pattern={this.props.pattern}
+            placeholder={this.props.placeholder}
+          />
+        </div>
+        <div className="form-group col-lg-1">
+          <label>{this.props.label2}</label>
+          <input
+            className="form-control"
+            type="time"
+            value={this.props.value2}
+            onChange={this.props.onChange2}
+          />
+        </div>
+      </div>
+    );
+  }
+}
+
 class FormInputBig extends Component<{
   type: string,
   label?: React.Node,
@@ -350,9 +404,9 @@ class FormInputBig extends Component<{
 }> {
   render() {
     return (
-      <div className="form-group row">
-        <label className="col-sm-4 col-form-label">{this.props.label}</label>
-        <div className="col-sm-4">
+      <div className="form-group row justify-content-center">
+        <div className="col-sm-4 col-sm-offset-4">
+          <label>{this.props.label}</label>
           <textarea
             rows="8"
             id="content"
@@ -407,6 +461,7 @@ export class Form {
   static InputLarge = FormInputBig;
   static FileInput = FileInput;
   static Alert = FormAlert;
+  static InputDateTime = FormInputDateTime;
 }
 
 export class DisplayEvent extends Component<{

@@ -104,7 +104,7 @@ export class EventSmall extends Component<{ event: Event }> {
   render() {
     return (
       <div className="card mb-2">
-        <a id="a-hover" href={"#/municipal/" + this.props.event.munId + "/events/" + this.props.event.eventId}>
+        <a id="a-hover" href={"#/kommune/" + this.props.event.munId + "/events/" + this.props.event.eventId}>
           <img src="../../images/arrowRightTrans.png" />
         </a>
         <div className="card-body">

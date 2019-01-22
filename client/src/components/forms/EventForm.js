@@ -8,6 +8,7 @@ import { history } from '../../index';
 import { myFunction } from '../../../public/AddEventCategory';
 import { tokenManager } from '../../tokenManager';
 import {eventService} from "../../services/EventService";
+import moment from "moment";
 //import { UploadImageButton } from '../../components/image/UploadImageButton';
 
 export default class EventForm extends Component {
@@ -18,12 +19,17 @@ export default class EventForm extends Component {
   category = new EventCategory();
   munId = localStorage.getItem('munId');
   userId = tokenManager.getUserId();
+  dropdownToggle = "";
+  startDate = Date;
+  startTime = null;
+  endDate = Date;
+  endTime = null;
 
   render() {
     return (
       <Card title="Registrer event/hendelse">
         <form ref={e => (this.form = e)}>
-          <Form.Input type="text" onChange={e => (this.event.title = e.target.value)} required placeholder="Tittel" />
+          <Form.Input label="Tittel" type="text" onChange={e => (this.event.title = e.target.value)} required placeholder="Tittel" />
           <div className="form-group row justify-content-center">
             <div className="col-sm-10 col-lg-4 justify-content-center">
               <select
@@ -46,27 +52,18 @@ export default class EventForm extends Component {
             </div>
           </div>
           <Form.InputLarge
+            label={"Innhold"}
             type="text"
             onChange={e => (this.event.content = e.target.value)}
             required
             placeholder="Innhold/forklarende tekst"
           />
+          <Form.InputDateTime label="Startdato" label2="Tidspunkt" required
+                              onChange={e => this.startDate = e.target.value} onChange2={e => this.startTime = e.target.value}/>
+          <Form.InputDateTime label="Sluttdato" label2="Tidspunkt" required
+                              onChange={e => this.endDate = e.target.value} onChange2={e => this.endTime = e.target.value}/>
           <Form.Input
-            //label="Start"
-            type="datetime-local"
-            onChange={e => (this.event.timeStart = e.target.value)}
-            required
-            placeholder="Fra dato & tidspunkt"
-          />
-          <Form.Input
-            //label="Slutt"
-            type="datetime-local"
-            onChange={e => (this.event.timeEnd = e.target.value)} //TODO
-            required
-            placeholder="Til date & tidspunkt"
-          />
-          <Form.Input
-            //label="Sted"
+            label="Sted"
             type="text"
             required
             placeholder="Adresse"
@@ -92,12 +89,14 @@ export default class EventForm extends Component {
     this.event.image = 'imagefile.img';
     this.event.longitude = 1234;
     this.event.latitude = 5678;
+    this.event.timeStart = moment(this.startDate + " " + this.startTime);
+    this.event.timeEnd = moment(this.endDate + " " + this.endTime);
     this.event.munId = this.munId;
     this.event.userId = this.userId;
 
     eventService
       .addEvent(this.event)
-      .then(history.push('/municipal/' + this.munId))
+      .then(history.push('/kommune/' + this.munId))
       .catch((error: Error) => Alert.danger(error.message));
   }
 

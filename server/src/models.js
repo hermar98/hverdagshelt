@@ -1,6 +1,7 @@
 import Sequelize from 'sequelize';
 import type { Model } from 'sequelize';
 import { modelsTestData } from "./ModelsTestData";
+// import { modelsTestDataSmall } from "./ModelsTestDataSmall";
 require('dotenv').config({ path: '../.env' });
 
 console.log(process.env.DATA_USERNAME);
@@ -105,7 +106,8 @@ export let User: Class<
     munId: number,
     profilePicture?: string,
     resetPasswordToken?: string,
-    resetPasswordExpires?: Date
+    resetPasswordExpires?: Date,
+    activateAccountToken?: string
   }>
 > = sequelize.define('User', {
   userId: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
@@ -117,7 +119,8 @@ export let User: Class<
   hashStr: Sequelize.STRING,
   profilePicture: Sequelize.STRING,
   resetPasswordToken: { type: Sequelize.STRING, notNull: false },
-  resetPasswordExpires: { type: Sequelize.DATE, notNull: false }
+  resetPasswordExpires: { type: Sequelize.DATE, notNull: false },
+  activateAccountToken: { type: Sequelize.STRING, notNull: false }
 });
 
 export let Municipal: Class<Model<{ munId?: number, name: string, municipalShield?: string }>> = sequelize.define(
@@ -192,3 +195,8 @@ export let sync = sequelize.sync({ force: !production }).then(() => {
         return modelsTestData.createAll()
     }
 });
+// export let syncSmall = sequelize.sync({ force: !production }).then(() => {
+//     if (!production) {
+//         return modelsTestDataSmall.createAll()
+//     }
+// });

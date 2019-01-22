@@ -45,31 +45,26 @@ export default class RegistrationForm extends Component {
           <Form.Input
             type="password"
             label="Passord"
+            className="password-input"
             onChange={event => (this.user.password = event.target.value)}
             required
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            title="Passordet må inneholde minst én liten og én stor bokstav, og minst 8 karakterer"
             placeholder="Passord"
           />
           <Form.Input
-              type="password"
-              label="Gjenta passord"
-              onChange={event => (this.repeatPassword = event.target.value)}
-              required
-              placeholder="Gjenta passord" />
-          {this.passwordLengthOk ? (
-              <div/>
-          ) : (
-              <Form.Alert text="Du må bruke minst 8 tegn i passordet ditt"/>
-          )}
-          {this.passwordsMatch ? (
-              <div/>
-          ) : (
-              <Form.Alert text="Passordene samsvarer ikke. Prøv på nytt."/>
-          )}
-          {this.emailRegistered ? (
-              <Form.Alert text="E-posten er allerede registrert"/>
-          ) : (
-              <div/>
-          )}
+            type="password"
+            label="Gjenta passord"
+            className="password-input"
+            onChange={event => (this.repeatPassword = event.target.value)}
+            required
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            title="Passordet må inneholde minst én liten og én stor bokstav, og minst 8 karakterer"
+            placeholder="Gjenta passord"
+          />
+          {this.passwordLengthOk ? <div /> : <Form.Alert text="Du må bruke minst 8 tegn i passordet ditt" />}
+          {this.passwordsMatch ? <div /> : <Form.Alert text="Passordene samsvarer ikke. Prøv på nytt." />}
+          {this.emailRegistered ? <Form.Alert text="E-posten er allerede registrert" /> : <div />}
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
               <Button.Basic onClick={this.save}>Lag bruker</Button.Basic>
@@ -98,11 +93,11 @@ export default class RegistrationForm extends Component {
       this.passwordsMatch = true;
     }
 
-    this.user.rank = 1;
+    this.user.rank = 0;
 
     userService
       .addUser(this.user)
-      .then(() => history.push('/login'))
+      .then(() => history.push('/loggInn'))
       .catch((error: Error) => {
         console.log(error);
         this.emailRegistered = true;

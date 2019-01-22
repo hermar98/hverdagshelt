@@ -8,7 +8,7 @@ import { NavLink } from 'react-router-dom';
 export class Footer extends Component {
   render() {
     return(
-      <nav className="navbarnavbar-expand-sm bg-dark navbar-dark bt-0">
+      <nav className="footer navbarnavbar-expand-sm bg-dark navbar-dark bt-0">
         <div className="container-fluid">
           <div className="navbar-footer">
             <ul className="nav navbar-nav navbar-right" id="footer">

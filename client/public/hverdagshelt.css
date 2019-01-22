@@ -135,7 +135,7 @@ div.status > h4 {
 div.feedback-button {
     margin-top: 4vh;
     display: grid;
-    grid-template-columns: 42% 16% 42%;
+    grid-template-columns: 44% 10% 44%;
 }
 
 div.feedback-button div {
@@ -354,7 +354,7 @@ Profile-page
     justify-self: center;
 }
 
-#mun-input {
+#municipalInput {
     align-self: center;
     height: 8vh;
 }
@@ -375,4 +375,23 @@ Profile-page
 
 .my-profile {
     margin: 2% 0 1% 0
+}
+
+/*
+random
+ */
+.footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+#log-in {
+    margin-top: 7%;
+    margin-bottom: 15%;
+}
+.notfound-container{
+    margin: 2% 12% 2% 12%;
+    text-align:center;
+
 }
