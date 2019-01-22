@@ -64,7 +64,7 @@ if (root)
             <Route exact path="/kommune/:munId" component={MunicipalPage} />
             <Route exact path="/image" component={AlternativeUpload} />
             <Route exact path="/activate/:tokenId" component={ActivateAccountPage}/>
-            <Route exact path="/saker" component={IssueView} />
+            <Route exact path="/kommune/:munId/saker" component={IssueView} />
             <Route path="" component={NotFound}/>
           </Switch>
           <Footer />

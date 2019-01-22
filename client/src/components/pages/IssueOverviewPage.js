@@ -6,7 +6,7 @@ import {HoverButton, IssueOverviewSmall} from "../issueViews/issueViews";
 import {issueService} from "../../services/IssueService";
 import {NewMenu} from "../menu/NewMenu";
 
-export class IssueView extends Component {
+export class IssueView extends Component<{match: { params: { munId: number}}}> {
 
     issues: [] = []
 
@@ -31,7 +31,7 @@ export class IssueView extends Component {
     }
 
     mounted () {
-        issueService.getIssues()
+        issueService.getIssuesByMunicipal(this.props.match.params.munId)
             .then(issues => {
                 this.issues = issues
             })

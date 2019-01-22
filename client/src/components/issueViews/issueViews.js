@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 import {Redirect, NavLink} from 'react-router-dom'
@@ -299,9 +298,9 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
                         </select>
                     </div>
                     <div className="form-group">
-                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
+                        <select className="form-control" id="statusSelect" value={this.timesort} onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
                             this.timesort = event.target.value;
-                            this.onChange();
+                            this.handleOnChange()
                         }}>
                             <option value={0}>Nyeste</option>
                             <option value={1}>Eldste</option>
@@ -327,12 +326,10 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
         window.scrollTo(0, 0);
     }
 
-    onChange () {
-        if(this.timesort = 0) {
-            console.log("newest")
+    handleOnChange () {
+        if(this.timesort == 0) {
             this.props.issues.sort((a, b) => a.createdAt < b.createdAt)
-        }else if (this.timesort = 1) {
-            console.log("oldest")
+        }else if (this.timesort == 1) {
             this.props.issues.sort((a, b) => a.createdAt > b.createdAt)
         }
     }
