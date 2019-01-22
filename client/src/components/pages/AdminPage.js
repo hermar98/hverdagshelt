@@ -8,6 +8,7 @@ import { userService } from '../../services/UserService.js';
 
 export class AdminPage extends Component {
     users = [];
+    filterRank = null;
 
     render() {
         return (
@@ -15,11 +16,14 @@ export class AdminPage extends Component {
                 <NewMenu />
                 <div className="card m-3">
                     <div className="card-body">
-                        <h2 className="card-title mb-3">Administrer brukere</h2>
-                        <div className="col">
-                            <label htmlFor="selectType">Type bruker</label>
-                            <select className="form-control m-sm-2" id="selectType">
-                                <option>Default select</option>
+                        <h2 className="card-title">Administrer brukere</h2>
+                        <div className="col-sm-3 my-3">
+                            <select className="form-control">
+                                <option>Alle typer brukere</option>
+                                <option>Privatperson</option>
+                                <option>Bedrift</option>
+                                <option>Kommuneansatt</option>
+                                <option>Admin</option>
                             </select>
                         </div>
                         <table className="table table-hover">
@@ -36,16 +40,27 @@ export class AdminPage extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                {this.users.map(user => (
-                                    <tr>
-                                        <th scope="row">{user.userId}</th>
-                                        <td>{user.firstName}</td>
-                                        <td>{user.lastName}</td>
-                                        <td>{user.email}</td>
-                                        <td>{user.rank}</td>
-                                        <td>{user.munId ? (user.munId) : (' - ')}</td>
-                                    </tr>
-                                ))}
+                                {this.filterRank ? (
+                                    this.users.map(user => (
+                                        <tr>
+                                            <th scope="row">{user.userId}</th>
+                                            <td>{user.firstName}</td>
+                                            <td>{user.lastName}</td>
+                                            <td>{user.email}</td>
+                                            <td>{user.rank}</td>
+                                            <td>{user.munId ? (user.munId) : (' - ')}</td>
+                                        </tr>
+                                    ))) : (
+                                    this.users.filter(user => user.rank === this.filterRank).map(user => (
+                                        <tr>
+                                            <th scope="row">{user.userId}</th>
+                                            <td>{user.firstName}</td>
+                                            <td>{user.lastName}</td>
+                                            <td>{user.email}</td>
+                                            <td>{user.rank}</td>
+                                            <td>{user.munId ? (user.munId) : (' - ')}</td>
+                                        </tr>
+                                    )))}
                             </tbody>
                         </table>
                     </div>
