@@ -1,20 +1,14 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import {
-  Alert,
   NavBar,
-  Form,
-  Card,
-  Button,
   DropdownHeader,
   DropdownFooter,
   DropdownDivider,
   DropdownItem
 } from '../../widgets';
-import { municipalService } from '../../services/MunicipalService.js';
 import { tokenManager } from '../../tokenManager';
 import { history } from '../../index';
-import { Municipal } from '../../models/Municipal';
 import { userService } from '../../services/UserService';
 
 export class ChooseMunicipalPageMenu extends Component {
@@ -95,7 +89,13 @@ export class ChooseMunicipalPageMenu extends Component {
           </NavBar>
         );
       } else {
-        return <div />;
+        return (
+            <NavBar>
+                <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Må sjekke email for aktivering av konto!!!</NavBar.Brand>
+                <NavBar.Button onClick={this.toLogin}>Logg Inn</NavBar.Button>
+                <NavBar.Button onClick={this.toRegister}>Registrer Bruker</NavBar.Button>
+            </NavBar>
+        );
       }
     } else {
       return (

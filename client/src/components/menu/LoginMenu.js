@@ -34,7 +34,7 @@ export class LoginMenu extends Component {
 
   mounted() {
     async function f() {
-      municipalObjects = [];
+      let municipalObjects = [];
       let promise = new Promise((resolve, reject) => {
         resolve(municipalService.getMunicipals().then((municipals: Municipal[]) => (municipalObjects = municipals)));
       });
@@ -42,7 +42,7 @@ export class LoginMenu extends Component {
       let result = await promise;
       let municipals = result.map(e => e.name);
 
-      autocomplete(document.getElementById('municipalInput'), municipals);
+      // autocomplete(document.getElementById('municipalInput'), municipals);
     }
 
     f();

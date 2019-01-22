@@ -1,5 +1,5 @@
 import {Issue, Feedback, User} from "../models";
-import Sequelize from "../../flow-typed/npm/sequelize_v4.x.x";
+import {sequelize} from "../models";
 import {mailSender} from '../MailSender';
 
 type Request = express$Request;

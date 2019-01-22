@@ -89,6 +89,12 @@ ul {
     margin-right: auto;
 }
 
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
 #footerText{
     color: white;
     margin-left: 3cm;
