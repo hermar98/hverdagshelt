@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
 import type { Model } from 'sequelize';
 import { modelsTestData } from "./ModelsTestData";
-import { modelsTestDataSmall } from "./ModelsTestDataSmall";
+// import { modelsTestDataSmall } from "./ModelsTestDataSmall";
 require('dotenv').config({ path: '../.env' });
 
 console.log(process.env.DATA_USERNAME);
@@ -195,8 +195,8 @@ export let sync = sequelize.sync({ force: !production }).then(() => {
         return modelsTestData.createAll()
     }
 });
-export let syncSmall = sequelize.sync({ force: !production }).then(() => {
-    if (!production) {
-        return modelsTestDataSmall.createAll()
-    }
-});
+// export let syncSmall = sequelize.sync({ force: !production }).then(() => {
+//     if (!production) {
+//         return modelsTestDataSmall.createAll()
+//     }
+// });
