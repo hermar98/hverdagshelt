@@ -10,7 +10,7 @@ import { eventCategoryService } from '../../services/EventCategoryService';
 import { Alert, Card } from '../../widgets';
 import {IssueOverviewSmall, IssueSmall} from '../issueViews/issueViews';
 import {DisplayEvent2, EventLarge, EventSmall} from "./EventPage";
-import Menu from "../menu/Menu";
+import NewMenu from "../menu/Menu";
 import NavLink from "react-router-dom/es/NavLink";
 import { userService } from '../../services/UserService';
 import { tokenManager } from '../../tokenManager';
@@ -30,13 +30,14 @@ export class FeedPage extends Component {
   munId: number = 0;
   iCategoryId: number = 0;
   eCategoryId: number = 0;
-  timesort: string = "Nyeste";
+  issueSort: number = 1;
+  eventSort: number = 2;
   status: number = 0;
 
   render() {
     return(
       <div>
-        <Menu />
+        <NewMenu />
         <div className="row">
           <div className="col-lg-6">
             <Card title="Feil/mangler">
@@ -57,9 +58,12 @@ export class FeedPage extends Component {
                     </select>
                   </div>
                   <div className="form-group mt-2 mr-1">
-                    <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.timesort = event.target.value)}>
-                      <option>Nyeste</option>
-                      <option>Eldste</option>
+                    <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
+                      this.issueSort = event.target.value;
+                      this.sortIssues();
+                    }}>
+                      <option value={1}>Nyeste</option>
+                      <option value={2}>Eldste</option>
                     </select>
                   </div>
                 </div>
@@ -89,9 +93,12 @@ export class FeedPage extends Component {
                   </select>
                 </div>
                 <div className="form-group mt-2 mr-1">
-                  <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.timesort = event.target.value)}>
-                    <option>Nyeste</option>
-                    <option>Eldste</option>
+                  <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
+                    this.eventSort = event.target.value;
+                    this.sortEvents();
+                  }}>
+                    <option value={2}>Eldste</option>
+                    <option value={1}>Nyeste</option>
                   </select>
                 </div>
               </div>
@@ -156,6 +163,58 @@ export class FeedPage extends Component {
       .getCategories()
       .then(cat => (this.eCategories = cat))
       .catch((error: Error) => Alert.danger(error.message));
+  }
+
+  sortIssues() {
+    if(this.issueSort == 1){
+      sharedIssues.issues.sort(function(a,b){
+        if(a.createdAt < b.createdAt){
+          return 1;
+        }else if(a.createdAt > b.createdAt) {
+          return -1;
+        }else{
+          return 0;
+        }
+      });
+      console.log(this.issueSort);
+    }else if (this.issueSort == 2){
+      sharedIssues.issues.sort(function(a,b){
+        if(a.createdAt > b.createdAt){
+          return 1;
+        }else if(a.createdAt < b.createdAt) {
+          return -1;
+        }else{
+          return 0;
+        }
+      });
+      console.log(this.issueSort);
+    }
+  }
+
+  sortEvents() {
+    if(this.eventSort == 1){
+      sharedEvents.events.sort(function(a,b){
+        if(a.timeStart < b.timeStart){
+          return 1;
+        }else if(a.timeStart > b.timeStart) {
+          return -1;
+        }else{
+          return 0;
+        }
+      });
+      console.log(this.eventSort);
+    }else if (this.eventSort == 2){
+      sharedEvents.events.sort(function(a,b){
+        if(a.timeStart > b.timeStart){
+          return 1;
+        }else if(a.timeStart < b.timeStart) {
+          return -1;
+        }else{
+          return 0;
+        }
+      });
+      console.log(this.eventSort);
+    }
   }
 }
 
