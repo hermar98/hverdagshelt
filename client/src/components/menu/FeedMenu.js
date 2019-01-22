@@ -78,4 +78,8 @@ export class FeedMenu extends Component {
     localStorage.removeItem('munId');
     history.push('/');
   }
+
+  toIssue () {
+    history.push("/registrerSak")
+  }
 }
