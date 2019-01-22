@@ -5,7 +5,7 @@ import { Component, sharedComponentData } from 'react-simplified';
 import { imageService } from '../../services/ImageService';
 import { Button } from '../../widgets';
 import {Image} from "../../models/Image";
-import {Issue} from "../../models";
+import {Issue} from "../../models/Issue";
 import {issueService} from "../../services/IssueService";
 import {issueCategoryService} from "../../services/IssueCategoryService";
 import {IssueNormal} from "../issueViews/issueViews";
