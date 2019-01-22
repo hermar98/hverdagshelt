@@ -93,7 +93,7 @@ export default class RegistrationForm extends Component {
       this.passwordsMatch = true;
     }
 
-    this.user.rank = 1;
+    this.user.rank = 0;
 
     userService
       .addUser(this.user)

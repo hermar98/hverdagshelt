@@ -36,6 +36,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 import createHashHistory from 'history/createHashHistory';
+import {ActivateAccountPage} from "./components/pages/ActivateAccountPage";
 
 export const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after
 // successfully saving a student

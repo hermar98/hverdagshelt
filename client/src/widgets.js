@@ -8,6 +8,7 @@ import moment from 'moment';
 import { issueCategoryService } from './services/IssueCategoryService.js';
 import { eventCategoryService } from './services/EventCategoryService.js';
 
+
 /**
  * Renders alert messages using Bootstrap classes.
  */
@@ -352,6 +353,46 @@ class FormInput extends Component<{
   }
 }
 
+class FormInputDateTime extends Component<{
+  label?: React.Node,
+  value?: mixed,
+  onChange?: (event: SyntheticInputEvent<HTMLInputElement>) => mixed,
+  required?: boolean,
+  pattern?: string,
+  placeholder?: string,
+  onChange2?: (event: SyntheticInputEvent<HTMLInputElement>) => mixed,
+  value2?: mixed,
+  label2?: React.Node,
+}> {
+  render() {
+    return (
+      <div className="form-group row justify-content-center">
+        <div className="form-group col-lg-3">
+          <label>{this.props.label}</label>
+          <input
+            className="form-control"
+            type="date"
+            value={this.props.value}
+            onChange={this.props.onChange}
+            required={this.props.required}
+            pattern={this.props.pattern}
+            placeholder={this.props.placeholder}
+          />
+        </div>
+        <div className="form-group col-lg-1">
+          <label>{this.props.label2}</label>
+          <input
+            className="form-control"
+            type="time"
+            value={this.props.value2}
+            onChange={this.props.onChange2}
+          />
+        </div>
+      </div>
+    );
+  }
+}
+
 class FormInputBig extends Component<{
   type: string,
   label?: React.Node,
@@ -420,6 +461,7 @@ export class Form {
   static InputLarge = FormInputBig;
   static FileInput = FileInput;
   static Alert = FormAlert;
+  static InputDateTime = FormInputDateTime;
 }
 
 export class DisplayEvent extends Component<{
