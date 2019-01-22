@@ -306,7 +306,7 @@ export class NavBar extends Component<{
   render() {
     return (
       <nav className="navbar navbar-expand-sm bg-dark navbar-dark mt-0">
-        <div className="container-fluid">
+        <div className="container-fluid custom-container-fluid">
           {this.props.children.filter(child => child.type == NavBarBrand)}
           <ul className="nav navbar-nav navbar-right">
             {this.props.children.filter(
