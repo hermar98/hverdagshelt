@@ -36,13 +36,12 @@ export class ChooseMunicipalPage extends Component {
               </div>
               <div className="fg-input">
                 <div className="justify-content-center row">
-                  <form className="munInputForm justify-content-center row" autoComplete="off">
-                      <input id="municipalInput" type="text" name="municipal" placeholder="Velg kommune" />
-                      <button  value="" type="button" onClick={this.go}>Gå</button>
-                  </form>
-                </div>
-                <div>
-
+                    <div className="munInputForm">
+                      <form  autoComplete="off">
+                          <input id="municipalInput" type="text" name="municipal" placeholder="Velg kommune" />
+                          <button  value="" type="button" onClick={this.go}>Gå</button>
+                      </form>
+                    </div>
                 </div>
               </div>
               <div className="fg-content">

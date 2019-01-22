@@ -40,16 +40,17 @@ button:hover{
 }
 
 .autocomplete-items {
-    border-radius: 8px}
+    /*border-radius: 8px;*/
+}
 
 .autocomplete-items{
-    border: 1px solid #d4d4d4;
-    border-bottom: none;
-    border-top: none;
-    z-index: 99;
-    top: 100%;
-    left: 0;
-    right: 0;
+    /*border: 1px solid #d4d4d4;*/
+    /*border-bottom: none;*/
+    /*border-top: none;*/
+    /*z-index: 3;*/
+    /*!*top: 100%;*!*/
+    /*left: 0;*/
+    /*right: 0;*/
 }
 
 .autocomplete-items div{
@@ -174,9 +175,10 @@ ul {
 }
 .fg-input{
     grid-row:2;
-
+    position: relative;
 }
 .munInputForm{
+    position: relative;
     width: 80%;
     max-width: 60%;
 }
@@ -188,11 +190,14 @@ ul {
 }
 #municipalInputautocomplete-list {
     position: absolute;
-    z-index: 3;
-    top:55%;
-    left:37.3%;
-    width: 21.7%;
-    min-width:233px;
+    top:48px;
+    width:70%;
+    /*width: 50%;*/
+    /*max-width: 60%;*/
+    /*position: absolute;*/
+    /*left: 22%;*/
+    /*right:33%;*/
+    /*min-width:233px;*/
 }
 .fg-content {
     grid-row:3;
