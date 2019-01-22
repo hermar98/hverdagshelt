@@ -8,14 +8,15 @@ import { Alert, NavBar, Form, Card, Button } from '../../widgets';
 import { Issue } from '../../models/Issue.js';
 import { issueService } from '../../services/IssueService';
 import { tokenManager } from '../../tokenManager';
-import {User} from "../../models/User";
-import {userService} from "../../services/UserService";
-import {HoverButton} from "../issueViews/issueViews";
+import { User } from '../../models/User';
+import { userService } from '../../services/UserService';
+import { HoverButton } from '../issueViews/issueViews';
 
-type P = { userId: number };
-type S = {};
-
-export default class ChangePasswordForm extends Component<P, S> {
+export default class ChangePasswordForm extends Component {
+  state = {
+    passwordOk: false,
+    passwordError: false
+  };
   user = new User();
   currentPassword = '';
   newPassword = '';
@@ -37,10 +38,11 @@ export default class ChangePasswordForm extends Component<P, S> {
       .login(this.user.email, this.currentPassword)
       .then(() => {
         if (this.newPassword != this.newPasswordRepeated) {
+          this.setState({ passwordError: true, passwordOk: false });
           console.log('Passordene er ikke like');
         } else {
           this.user.password = this.newPassword;
-          console.log(this.user);
+          this.setState({ passwordOk: true, passwordError: false });
           userService.updateUser(this.user);
         }
       })
@@ -84,9 +86,11 @@ export default class ChangePasswordForm extends Component<P, S> {
 
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
-              <HoverButton onclick={this.handleChangePassword} text="Endre passord"/>
+              <HoverButton onclick={this.handleChangePassword} text="Endre passord" />
             </div>
           </div>
+          {this.state.passwordOk ? <Form.Alert type="success" text="Passordet er endret" /> : <div />}
+          {this.state.passwordError ? <Form.Alert type="danger" text="Passordene er ikke like" /> : <div />}
         </form>
       </div>
     );

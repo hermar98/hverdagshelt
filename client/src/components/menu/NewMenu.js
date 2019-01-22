@@ -21,8 +21,6 @@ import { userService } from '../../services/UserService';
 
 export class NewMenu extends Component {
   user = null;
-  municipal = new Municipal();
-  munId = localStorage.getItem('munId');
 
   navbar() {
     if (this.user !== null) {
@@ -65,11 +63,6 @@ export class NewMenu extends Component {
           })
           .catch((error: Error) => console.log(error));
       })
-      .catch((error: Error) => console.log(error));
-
-    municipalService
-      .getMunicipal(this.munId)
-      .then(municipal => (this.municipal = municipal))
       .catch((error: Error) => console.log(error));
   }
 
