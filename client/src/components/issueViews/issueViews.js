@@ -129,7 +129,6 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     }
 
     mounted () {
-        console.log("1")
         window.scrollTo(0, 0);
         console.log(this.props.match.params.issueId)
         issueService.getIssue(this.props.match.params.issueId)
@@ -155,6 +154,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
             .then(res => {
                 issueService.getIssue(this.issue.issueId)
                     .then(issue => {
+                        console.log("hadad")
                         this.issue = issue;
                         this.setState({clickedStatus: !this.state.clickedStatus})
                     })
