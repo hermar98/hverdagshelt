@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import {
@@ -19,7 +17,7 @@ import { history } from '../../index';
 import { Municipal } from '../../models/Municipal';
 import { userService } from '../../services/UserService';
 
-export class ProfileMenu extends Component {
+export class IssueMenu extends Component {
   user = null;
   municipal = new Municipal();
   munId = localStorage.getItem('munId');
@@ -42,7 +40,6 @@ export class ProfileMenu extends Component {
       .then(municipal => (this.municipal = municipal))
       .catch((error: Error) => console.log(error));
   }
-
   render() {
     if (this.user) {
       if (this.user.rank === 1) {
@@ -112,7 +109,13 @@ export class ProfileMenu extends Component {
         );
       }
     }
-    return <div />;
+    return (
+      <NavBar>
+        <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
+        <NavBar.Button onClick={this.toLogin}>Logg Inn</NavBar.Button>
+        <NavBar.Button onClick={this.toRegister}>Registrer Bruker</NavBar.Button>
+      </NavBar>
+    );
   }
 
   toProfile() {

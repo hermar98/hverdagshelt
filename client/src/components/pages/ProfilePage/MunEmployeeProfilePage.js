@@ -3,21 +3,21 @@ import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 
 import { Alert, NavBar, Form, Card, Button } from '../../../widgets';
-import { ProfileMenu } from '../../../components/menu/ProfileMenu.js';
+import { ProfileMenu } from '../../../components/menu/ProfileMenu';
 import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
 import { userMunicipalService } from '../../../services/UserMunicipalService';
 import { autocomplete, glob } from '../../../../public/autocomplete';
-import {IssueSmall, IssueNormal, IssueOverviewSmall, ImageButton} from '../../issueViews/issueViews';
+import { IssueSmall, IssueNormal, IssueOverviewSmall, ImageButton } from '../../issueViews/issueViews';
 import { tokenManager } from '../../../tokenManager';
-import {userService} from "../../../services/UserService";
-import {issueService} from "../../../services/IssueService";
-import {municipalService} from "../../../services/MunicipalService";
-import {User} from "../../../models/User";
-import {Issue} from "../../../models/Issue";
-import {Municipal} from "../../../models/Municipal";
+import { userService } from '../../../services/UserService';
+import { issueService } from '../../../services/IssueService';
+import { municipalService } from '../../../services/MunicipalService';
+import { User } from '../../../models/User';
+import { Issue } from '../../../models/Issue';
+import { Municipal } from '../../../models/Municipal';
 
 let municipalObjects;
-let sharedMunicipals = sharedComponentData({municipals: []})
+let sharedMunicipals = sharedComponentData({ municipals: [] });
 
 export class UserProfilePage extends Component {
   user: User = new User();
@@ -28,7 +28,6 @@ export class UserProfilePage extends Component {
   munId: number = -1;
 
   mounted() {
-
     userService
 
       .getUser(tokenManager.getUserId())
@@ -68,8 +67,7 @@ export class UserProfilePage extends Component {
   }
 
   render() {
-
-    sharedMunicipals.municipals.sort((a, b) => a.name > b.name)
+    sharedMunicipals.municipals.sort((a, b) => a.name > b.name);
 
     return (
       <div>
@@ -95,15 +93,28 @@ export class UserProfilePage extends Component {
             <div className="card municipal">
               <h5 id="municipal-title">Kommuner</h5>
               <div className="add-municipal-field justify-content-between d-flex flex-row">
-                <input className="form-control" id="municipalInput" type="text" value={this.newMunicipalName} placeholder="Legg til kommune..." onChange={
-                  event => this.newMunicipalName = event.target.value
-                }/>
-                <ImageButton source="../../images/add.png" onclick={() => this.handleAddMunicipal()}/>
+                <input
+                  className="form-control"
+                  id="municipalInput"
+                  type="text"
+                  value={this.newMunicipalName}
+                  placeholder="Legg til kommune..."
+                  onChange={event => (this.newMunicipalName = event.target.value)}
+                />
+                <ImageButton source="../../images/add.png" onclick={() => this.handleAddMunicipal()} />
               </div>
               <ul className="list-group mun-list">
                 {sharedMunicipals.municipals.map((mun, index) => (
-                  <li className="list-group-item municipal-item"><div className="d-flex flex-row justify-content-between align-items-center"> {mun.name}<ImageButton source="../../images/trashcan.png" onclick={
-                    () => this.deleteUserMunicipal(mun.munId)}/></div></li>
+                  <li className="list-group-item municipal-item">
+                    <div className="d-flex flex-row justify-content-between align-items-center">
+                      {' '}
+                      {mun.name}
+                      <ImageButton
+                        source="../../images/trashcan.png"
+                        onclick={() => this.deleteUserMunicipal(mun.munId)}
+                      />
+                    </div>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -114,7 +125,7 @@ export class UserProfilePage extends Component {
           </div>
           <div className="profile-issues">
             <Card className="issues" title="Dine Innmeldte Saker">
-              <IssueOverviewSmall issues={this.issues}/>
+              <IssueOverviewSmall issues={this.issues} />
             </Card>
           </div>
         </div>

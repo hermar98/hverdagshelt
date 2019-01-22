@@ -2,13 +2,13 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import {NewMenu} from '../../components/menu/NewMenu';
+import {NotLoggedInMenu} from '../../components/menu/NotLoggedInMenu';
 
 export class TermsOfService extends Component {
   render() {
     return(
       <div id="content" className="one-column">
-        <NewMenu />
+        <NotLoggedInMenu />
         <div className="TOSMain">
           <h1 className="TOSH1">Vilkår for bruk</h1>
           <h2 className="TOSH2">Innledning</h2>
