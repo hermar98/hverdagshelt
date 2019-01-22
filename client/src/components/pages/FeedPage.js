@@ -123,13 +123,13 @@ export class FeedPage extends Component {
       .catch((error: Error) => console.log(error));
 
     //GET all municipals a user has subscribed to
-    userMunicipalService
+    /*userMunicipalService
       .getUserMunicipals(tokenManager.getUserId())
       .then(muns => {
         sharedMunicipals.municipals = muns;
       })
       .then(()=> console.log(sharedMunicipals.municipals))
-      .catch((error: Error) => Alert.danger(error.message));
+      .catch((error: Error) => Alert.danger(error.message));*/
 
     //GET all issueCategories
     issueCategoryService
@@ -139,20 +139,50 @@ export class FeedPage extends Component {
 
 
     //GET all Issues registered on the municipals
-    sharedMunicipals.municipals.map(e => issueService.getIssuesByMunicipal(e.munId)
-      .then(issues => {
-        sharedIssues.issues = issues;
-      })
-      .catch((error: Error) => Alert.danger(error.message)));
+    /*sharedMunicipals.municipals.map(e => {
+      issueService.getIssuesByMunicipal(e.munId)
+        .then(issues => {
+          sharedIssues.issues = issues;
+        })
+        .then(() => console.log(sharedIssues.issues))
+        .catch((error: Error) => Alert.danger(error.message));
+    });*/
 
 
     //GET all events registered on the municipals
-    eventService.getEventsByMunicipal(528)
+    /*eventService.getEventsByMunicipal(528)
       .then(events => {
         sharedEvents.events = events;
       })
-      .catch((error: Error) => Alert.danger(error.message));
+      .catch((error: Error) => Alert.danger(error.message));*/
+    this.getMuns();
+  }
 
+  async getMuns() {
+    let promise = new Promise(resolve => {
+      resolve(userMunicipalService
+        .getUserMunicipals(tokenManager.getUserId())
+        .then(muns => (sharedMunicipals.municipals = muns)));
+        });
+
+
+    let result = await promise;
+    result.map(e => {
+      issueService.getIssuesByMunicipal(e.munId)
+        .then(issues => {
+          sharedIssues.issues = issues;
+        })
+        .then(() => console.log(sharedIssues.issues))
+        .catch((error: Error) => Alert.danger(error.message));
+    });
+
+    result.map(e => {
+      eventService.getEventsByMunicipal(e.munId)
+        .then(events => {
+          sharedEvents.events = events;
+        })
+        .catch((error: Error) => Alert.danger(error.message))
+    })
   }
 }
 
