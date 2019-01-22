@@ -20,27 +20,29 @@ export default class Login extends Component {
 
   render() {
     return (
-      <Card title="Glemt Passord">
-        <form ref={e => (this.form = e)} onSubmit={e => e.preventDefault()}>
-          <Form.Input
-            type="email"
-            onChange={event => (this.email = event.target.value)}
-            required
-            placeholder="Skriv inn epost"
-          />
-          <div className="container h-100">
-            <div className="row h-100 justify-content-center align-items-center">
-              <Button.Basic type="submit" onClick={this.login}>
-                Send Epost
-              </Button.Basic>
+      <div>
+        <Card title="Glemt Passord">
+          <form ref={e => (this.form = e)} onSubmit={e => e.preventDefault()}>
+            <Form.Input
+              type="email"
+              onChange={event => (this.email = event.target.value)}
+              required
+              placeholder="Skriv inn epost"
+            />
+            <div className="container h-100">
+              <div className="row h-100 justify-content-center align-items-center">
+                <Button.Basic type="submit" onClick={this.login}>
+                  Send Epost
+                </Button.Basic>
+              </div>
             </div>
-          </div>
-          <div className="container h-100">
-            {this.state.sendOk ? <Form.Alert type="success" text="Sendt" /> : <div />}
-            {this.state.sendError ? <Form.Alert type="danger" text="Finner ingen bruker med den emailen" /> : <div />}
-          </div>
-        </form>
-      </Card>
+            <div className="container h-100">
+              {this.state.sendOk ? <Form.Alert type="success" text="Sendt" /> : <div />}
+              {this.state.sendError ? <Form.Alert type="danger" text="Finner ingen bruker med den emailen" /> : <div />}
+            </div>
+          </form>
+        </Card>
+      </div>
     );
   }
 

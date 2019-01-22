@@ -51,7 +51,7 @@ export class ProfileMenu extends Component {
             <NavBar>
               <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
               <NavBar.Button onClick={this.toFeed}>Min Feed</NavBar.Button>
-              <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
+              <NavBar.Dropdown className="focus" title={this.user.firstName + ' ' + this.user.lastName}>
                 <DropdownHeader>{this.user.email}</DropdownHeader>
                 <DropdownFooter>Privatperson</DropdownFooter>
                 <DropdownDivider />
@@ -131,7 +131,7 @@ export class ProfileMenu extends Component {
   }
   toLogout() {
     tokenManager.deleteToken();
-    history.push('/loggInn');
+    history.push('/');
   }
   toMunEmployeeProfile() {
     history.push('/'); // TODO: ansatt profilside
