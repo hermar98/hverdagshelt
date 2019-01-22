@@ -49,8 +49,8 @@ export class FeedPage extends Component {
                       onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.munId = event.target.value)}
                     >
                       <option value={0}>Alle kommuner</option>
-                      {sharedMunicipals.municipals.map(mun => (
-                        <option key={mun.munId} value={mun.munId}>
+                      {sharedMunicipals.municipals.map((mun, index) => (
+                        <option key={index} value={mun.munId}>
                           {mun.name}
                         </option>
                       ))}
@@ -65,8 +65,8 @@ export class FeedPage extends Component {
                       }
                     >
                       <option value={0}>Alle kategorier</option>
-                      {this.iCategories.map(cat => (
-                        <option key={cat.categoryId} value={cat.categoryId}>
+                      {this.iCategories.map((cat, index) => (
+                        <option key={index} value={cat.categoryId}>
                           {cat.name}
                         </option>
                       ))}
@@ -96,8 +96,8 @@ export class FeedPage extends Component {
                       (e.munId == this.munId || this.munId == 0)
                     );
                   })
-                  .map(e => (
-                    <li key={e.issueId} className="list-group-item">
+                  .map((e, index) => (
+                    <li key={index} className="list-group-item">
                       <IssueSmall issue={e} munId={e.munId} />
                     </li>
                   ))}
@@ -114,8 +114,8 @@ export class FeedPage extends Component {
                     onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.eCategoryId = event.target.value)}
                   >
                     <option value={0}>Alle kategorier</option>
-                    {this.eCategories.map(e => (
-                      <option key={e.categoryId} value={e.categoryId}>
+                    {this.eCategories.map((e, index) => (
+                      <option key={index} value={e.categoryId}>
                         {e.name}
                       </option>
                     ))}
@@ -140,8 +140,8 @@ export class FeedPage extends Component {
                   .filter(e => {
                     return e.categoryId == this.eCategoryId || this.eCategoryId == 0;
                   })
-                  .map(e => (
-                    <li key={e.eventId}>
+                  .map((e, index) => (
+                    <li key={index}>
                       <EventSmall event={e} />
                     </li>
                   ))}

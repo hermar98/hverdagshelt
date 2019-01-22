@@ -124,7 +124,7 @@ export class ChooseMunicipalPageMenu extends Component {
   }
   toLogout() {
     tokenManager.deleteToken();
-    history.push('/loggInn');
+    history.push('/');
   }
   toMunEmployeeProfile() {
     history.push('/'); // TODO: ansatt profilside
