@@ -1,5 +1,5 @@
 //@flow
-import {Municipal, User, UserMunicipal} from '../models';
+import { Municipal, User, UserMunicipal } from '../models';
 
 type Request = express$Request;
 type Response = express$Response;
@@ -7,7 +7,7 @@ type Response = express$Response;
 const app = require('../app');
 
 
-app.get('/secure/users/:id/mun', (req: Request, res: Response) => {
+app.get('/secure/users/:id/mun', (req: Request, res: Response) => { //userMun
     return Municipal.findAll({
         include: [
             {

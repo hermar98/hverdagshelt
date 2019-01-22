@@ -5,11 +5,13 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
-import { User, Issue } from '../../models.js';
-import { issueService } from '../../services/IssueService.js';
+import { Issue } from '../../models/Issue.js';
 import { tokenManager } from '../../tokenManager.js';
 import { history } from '../../index';
+import {User} from "../../models/User";
 import {userService} from "../../services/UserService";
+import { issueService } from '../../services/IssueService.js';
+
 
 export default class Login extends Component {
   email = '';
@@ -20,6 +22,7 @@ export default class Login extends Component {
 
   render() {
     return (
+        <div id="log-in">
       <Card title="Logg inn">
         <form ref={e => (this.form = e)} onSubmit={e => e.preventDefault()}>
           <Form.Input
@@ -51,6 +54,7 @@ export default class Login extends Component {
           </div>
         </div>
       </Card>
+        </div>
     );
   }
 
@@ -59,7 +63,7 @@ export default class Login extends Component {
       .getToken()
       .then(token => {
         console.log(token);
-        history.push('/municipal/' + this.munId);
+        history.push('/');
       })
       .catch((error: Error) => console.log(error));
   }
@@ -73,7 +77,7 @@ export default class Login extends Component {
       .login(this.email, this.password)
       .then(token => {
         tokenManager.addToken(token);
-        history.push('/municipal/' + this.munId);
+        history.push('/feed');
       })
       .catch((error: Error) => {
         console.log(error);
@@ -82,6 +86,6 @@ export default class Login extends Component {
   }
 
   goTo() {
-    history.push('/forgotPassword');
+    history.push('/glemtPassord');
   }
 }

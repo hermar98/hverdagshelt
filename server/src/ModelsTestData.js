@@ -874,11 +874,11 @@ class ModelsTestData {
     createUserMunicipal() {
         return UserMunicipal.bulkCreate([
             {
-                munId: 101,
+                munId: 5001,
                 userId: 1
             },
             {
-                munId: 514,
+                munId: 528,
                 userId: 1
             }
         ])

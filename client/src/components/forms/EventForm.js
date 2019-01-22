@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Event, EventCategory } from '../../models.js';
-import { eventCategoryService} from '../../services/EventCategoryService';
+import { EventCategory } from '../../models/EventCategory.js';
+import { eventCategoryService } from '../../services/EventCategoryService';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
 import { history } from '../../index';
 import { myFunction } from '../../../public/AddEventCategory';
@@ -96,7 +96,7 @@ export default class EventForm extends Component {
 
     eventService
       .addEvent(this.event)
-      .then(history.push('/municipal/' + this.munId))
+      .then(history.push('/kommune/' + this.munId))
       .catch((error: Error) => Alert.danger(error.message));
   }
 
