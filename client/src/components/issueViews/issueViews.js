@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 import {Redirect, NavLink} from 'react-router-dom'
 import { Feedback} from '../../models/Feedback';
-import Menu from '../menu/Menu';
+import { NewMenu } from '../menu/NewMenu';
 import {tokenManager} from "../../tokenManager";
 import {User} from "../../models/User";
 import {Issue} from "../../models/Issue";
@@ -62,7 +62,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
 
         return (
             <div>
-                <Menu />
+                <NewMenu/>
                 <div className="issue-container">
                     <div className="issue-large">
                         <Status status={this.issue.statusId} id={this.issue.issueId}/>
