@@ -36,7 +36,6 @@ div.status > h4 {
 .issue-image-normal {
     width: 21vw;
     height: auto;
-    min-height: 12.5vw;
 }
 
 .issue-image-normal-container {
@@ -218,6 +217,11 @@ div.feedback-button div {
 
 #date-normal {
     font-size: 75%;
+}
+
+.issue-normal-item {
+    padding: 0 0 0 0;
+    margin-bottom: 2%;
 }
 
 .status-selection {
