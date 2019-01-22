@@ -1,14 +1,15 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Event, EventCategory } from '../../models.js';
+import { EventCategory } from '../../models/EventCategory.js';
 import {eventCategoryService} from '../../services/EventCategoryService';
 import {Alert, DisplayEvent} from '../../widgets';
-import {Issue} from "../../models";
+import {Issue} from "../../models/Issue";
 import {Status} from "../issueViews/issueViews";
 import moment from "moment";
-import Menu from "../menu/Menu";
+import NewMenu from "../menu/Menu";
 import {eventService} from "../../services/EventService";
+import {Event} from "../../models/Event";
 
 
 export class EventPage extends Component {
@@ -17,7 +18,7 @@ export class EventPage extends Component {
   render() {
     return (
       <div>
-      <Menu/>
+      <NewMenu/>
       <div className="container col-10 mt-4 h-100">
         <div className="row h-100">
         {this.events.map(e =>
@@ -29,8 +30,10 @@ export class EventPage extends Component {
   }
 
   mounted(){
+    let munId = localStorage.getItem('munId');
+    console.log(munId);
     eventService
-      .getEvents()
+      .getEventsByMunicipal(munId)
       .then(e => this.events = e)
       .catch((error: Error) => Alert.danger(error.message));
   }
@@ -101,7 +104,7 @@ export class EventSmall extends Component<{ event: Event }> {
   render() {
     return (
       <div className="card mb-2">
-        <a id="a-hover" href={"#/municipal/" + this.props.event.munId + "/events/" + this.props.event.eventId}>
+        <a id="a-hover" href={"#/kommune/" + this.props.event.munId + "/events/" + this.props.event.eventId}>
           <img src="../../images/arrowRightTrans.png" />
         </a>
         <div className="card-body">
@@ -138,7 +141,7 @@ export class EventInfo extends Component<{match: {params: {eventId: number}}}> {
 
         return (
             <div>
-                <Menu/>
+                <NewMenu/>
                 <div className="container my-4">
                     <div className="card">
                         <img className="card-img-top" src={this.event.image}/>

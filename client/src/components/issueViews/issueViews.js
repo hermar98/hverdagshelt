@@ -1,14 +1,15 @@
-
 import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 import {Redirect, NavLink} from 'react-router-dom'
-import { Issue, Feedback, User } from '../../models';
-import {feedbackService} from "../../services/FeedbackService";
-import Menu from '../menu/Menu';
+import { Feedback} from '../../models/Feedback';
+import { NewMenu } from '../menu/NewMenu';
 import {tokenManager} from "../../tokenManager";
+import {User} from "../../models/User";
+import {Issue} from "../../models/Issue";
 import {userService} from "../../services/UserService";
 import {issueService} from "../../services/IssueService";
 import {issueCategoryService} from "../../services/IssueCategoryService";
+import {feedbackService} from "../../services/FeedbackService";
 
 let sharedIssues = sharedComponentData({issues: []})
 let sharedFeedback = sharedComponentData({feedback: []})
@@ -55,12 +56,12 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
             this.setState({
                 clickedDelete: false
             })
-            return <Redirect to={"/municipal/" + this.props.match.params.munId + "/issues"} />
+            return <Redirect to={"/kommune/" + this.props.match.params.munId + "/issues"} />
         }
 
         return (
             <div>
-                <Menu />
+                <NewMenu/>
                 <div className="issue-container">
                     <div className="issue-large">
                         <Status status={this.issue.statusId} id={this.issue.issueId}/>
@@ -152,6 +153,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
             .then(res => {
                 issueService.getIssue(this.issue.issueId)
                     .then(issue => {
+                        console.log("hadad")
                         this.issue = issue;
                         this.setState({clickedStatus: !this.state.clickedStatus})
                     })
@@ -205,7 +207,7 @@ export class IssueNormal extends Component<{issue: Issue, munId: number}>{
     render () {
         return (
             <div className="issue-normal issue-hover" issue={this.props.issue}>
-                <a id="a-hover" href={"#/municipal/" + this.props.munId + "/issues/" + this.props.issue.issueId}>
+                <a id="a-hover" href={"/#/saker/" + this.props.issue.issueId}>
                     <img src="../../images/arrowRightTrans.png" />
                 </a>
                 <div className="d-flex flex-row issue-flex">
@@ -247,7 +249,7 @@ export class IssueSmall extends Component<{issue: Issue, munId: number}> {
     render() {
         return (
             <div className="issue-small issue-hover" issue={this.props.issue}>
-                <a id="a-hover" href={"#/municipal/" + this.props.munId + "/issues/" + this.props.issue.issueId}>
+                <a id="a-hover" href={"/#/saker/" + this.props.issue.issueId}>
                     <img src="../../images/arrowRightTrans.png" />
                 </a>
                 <div>
@@ -278,33 +280,48 @@ export class IssueSmall extends Component<{issue: Issue, munId: number}> {
 /*
 A list of issues in small view
  */
-export class IssueOverviewSmall extends Component<{munId: number}> {
+export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[]}> {
 
-    status: number = 0;
-    timesort: string = "Nyeste";
+    status: number = 1;
+    timesort: number = 0;
+    category: number = 0;
+    categories: [] = []
 
     render () {
         return (
-            <div className="issue-overview-small">
-                <div className="d-flex flex-row sort-box card-header justify-content-between">
-                    <div className="form-group">
-                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
-                        <option value={0}>Alle</option>
-                        <option value={1}>Ikke behandlet</option>
-                        <option value={2}>Under behandling</option>
-                        <option value={3}>Behandlet</option>
-                        </select>
+            <div>
+                <div className="d-flex flex-row sort-box justify-content-between">
+                    <div className="d-flex flex-row justify-content-start">
+                        <div id="sort-push" className="form-group">
+                            <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
+                                <option value={0}>Alle</option>
+                                <option value={1}>Ikke behandlet</option>
+                                <option value={2}>Under behandling</option>
+                                <option value={3}>Behandlet</option>
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <select className="form-control" value={this.category} onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.category = event.target.value)}>
+                                <option value={0}>Alle</option>
+                                {this.categories.map(cat => {
+                                    return <option value={cat.categoryId}>{cat.name}</option>
+                                })}
+                            </select>
+                        </div>
                     </div>
                     <div className="form-group">
-                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.timesort = event.target.value)}>
-                            <option>Nyeste</option>
-                            <option>Eldste</option>
+                        <select className="form-control" id="statusSelect" value={this.timesort} onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
+                            this.timesort = event.target.value;
+                            this.handleOnChange()
+                        }}>
+                            <option value={0}>Nyeste</option>
+                            <option value={1}>Eldste</option>
                         </select>
                     </div>
                 </div>
                 <ul className="list-group">
-                    {sharedIssues.issues.map((issue,index) => {
-                        if (this.status == issue.statusId || this.status == 0) {
+                    {this.props.issues.map((issue,index) => {
+                        if ((this.status == issue.statusId || this.status == 0) && (this.category == issue.categoryId || this.category == 0)) {
                             return(
                                 <li key={index} className="list-group-item">
                                     <IssueSmall issue={issue} munId={this.props.munId}/>
@@ -319,14 +336,73 @@ export class IssueOverviewSmall extends Component<{munId: number}> {
 
     mounted (){
         window.scrollTo(0, 0);
-        issueService.getIssuesByMunicipal(window.location.hash.slice(12))
-            .then(data => {
-                sharedIssues.issues = data;
-            })
+        issueCategoryService.getCategories()
+            .then(res => this.categories = res)
             .catch(error => console.error("Error: ", error))
+    }
+
+    handleOnChange () {
+        if(this.timesort == 0) {
+            this.props.issues.sort((a, b) => a.createdAt < b.createdAt)
+        }else if (this.timesort == 1) {
+            this.props.issues.sort((a, b) => a.createdAt > b.createdAt)
+        }
     }
 }
 
+/*
+A list of issues in normal view
+ */
+export class IssueOverviewNormal extends Component<{munId: number, issues: Issue[]}> {
+
+    status: number = 0;
+    timesort: number = 0;
+
+    render () {
+        return (
+            <div className="issue-overview-normal issue-container">
+                <div className="d-flex flex-row sort-box justify-content-between">
+                    <div className="form-group">
+                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
+                            <option value={0}>Alle</option>
+                            <option value={1}>Ikke behandlet</option>
+                            <option value={2}>Under behandling</option>
+                            <option value={3}>Behandlet</option>
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
+                            this.timesort = event.target.value;
+                            this.onChange();
+                        }}>
+                            <option value={0}>Nyeste</option>
+                            <option value={1}>Eldste</option>
+                        </select>
+                    </div>
+                </div>
+                <ul className="list-group">
+                    {this.props.issues.map(issue => {
+                        if (this.status == issue.statusId || this.status == 0) {
+                            return (
+                                <li className="list-group-item  issue-item normal-list-item">
+                                    <IssueNormal issue={issue} munId={this.props.munId}/>
+                                </li>
+                            )
+                        }
+                    })}
+                </ul>
+            </div>
+        )
+    }
+
+    onChange () {
+        console.log("sort")
+    }
+}
+
+/*
+Widget for displaying a single feedback-card with name, date, profile-picture and content
+ */
 export class IssueFeedback extends Component<{feedback: Feedback}> {
 
     user = new User()
@@ -337,7 +413,6 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
                 <div className="card feedback-card">
                     <div className="card-body">
                         <div className="d-flex flex-row submitter">
-
                                 <div className="p-2">
                                     <img className="card-img profile-image" src={this.user.profilePicture}/>
                                 </div>
@@ -374,68 +449,7 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
     }
 }
 
-/*
-A list of issues in normal view
- */
-export class IssueOverviewNormal extends Component<{munId: number}> {
 
-    status: number = 0;
-    timesort: number = 0;
-
-    render () {
-        return (
-            <div className="issue-overview-normal issue-container">
-                <div className="d-flex flex-row sort-box justify-content-between">
-                    <div className="form-group">
-                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
-                            <option value={0}>Alle</option>
-                            <option value={1}>Ikke behandlet</option>
-                            <option value={2}>Under behandling</option>
-                            <option value={3}>Behandlet</option>
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
-                            this.timesort = event.target.value;
-                            this.onChange();
-                        }}>
-                            <option value={0}>Nyeste</option>
-                            <option value={1}>Eldste</option>
-                        </select>
-                    </div>
-                </div>
-                <ul className="list-group">
-                    {sharedIssues.issues.map(issue => {
-                        if (this.status == issue.statusId || this.status == 0) {
-                            return (
-                                <li className="list-group-item normal-list-item">
-                                    <IssueNormal issue={issue} munId={this.props.munId}/>
-                                </li>
-                            )
-                        }
-                    })}
-                </ul>
-            </div>
-        )
-    }
-
-    mounted (){
-        issueService.getIssues()
-            .then(data => {
-                sharedIssues.issues = data;
-            })
-            .catch(error => console.error("Error: ", error))
-        sharedIssues.issues.sort((a, b) => a.createdAt - b.createdAt );
-    }
-
-    onChange () {
-        if(this.timesort == 1) {
-            sharedIssues.issues.sort((a, b) => b.createdAt - a.createdAt);
-        }else{
-            sharedIssues.issues.sort((a, b) => a.createdAt - b.createdAt );
-        }
-    }
-}
 
 /*
 A colored status-bar. The number decides which status is rendered
@@ -466,6 +480,10 @@ class Status extends Component<{status: number, id: number}> {
     }
 }
 
+
+/*
+Widget for displaying the image of a status
+ */
 class StatusImage extends Component<{status: number}> {
     render () {
         switch (this.props.status){
@@ -488,6 +506,10 @@ class StatusImage extends Component<{status: number}> {
     }
 }
 
+
+/*
+An image-button with the image of a status
+ */
 class StatusButton extends Component<{status: number, onclick: function}> {
     render () {
         switch (this.props.status){
@@ -508,7 +530,10 @@ class StatusButton extends Component<{status: number, onclick: function}> {
     }
 }
 
-class ImageButton extends Component<{source: string, onclick: function}> {
+/*
+A button with an image and a function as arguments
+ */
+export class ImageButton extends Component<{source: string, onclick: function}> {
     render() {
         return(
             <button className="btn image-button" type="button" onClick={this.props.onclick} >
@@ -518,7 +543,7 @@ class ImageButton extends Component<{source: string, onclick: function}> {
     }
 }
 
-class HoverButton extends Component<{onclick: function, text: string}> {
+export class HoverButton extends Component<{onclick: function, text: string}> {
     render () {
         return (
             <button className="btn hover-button" type="button" onClick={this.props.onclick} >

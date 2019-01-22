@@ -611,7 +611,7 @@ class ModelsTestData {
                     firstName: 'Vegard',
                     lastName: 'Andersson',
                     email: 'test@test.no',
-                    rank: 1,
+                    rank: 3,
                     salt: 'a83f4da094cc247b',
                     hashStr:
                         '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
@@ -668,7 +668,7 @@ class ModelsTestData {
                     lastName: 'Aasvestad',
                     email: 'jorgaas@stud.ntnu.no',
                     rank: 1,
-                    salt: 'b79ryp98',
+                    salt: 'a83f4da094cc247b',
                     hashStr: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
                     munId: 528,
                     profilePicture:
@@ -678,9 +678,9 @@ class ModelsTestData {
                     firstName: 'Herman Ryen',
                     lastName: 'Martinsen',
                     email: 'HermanRM@stud.ntnu.no',
-                    rank: 1,
-                    salt: 'b79ryp98',
-                    hashStr: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
+                    rank: 2,
+                    salt: 'a83f4da094cc247b',
+                    hashStr: '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
                     munId: 528,
                     profilePicture:
                         'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
@@ -758,7 +758,7 @@ class ModelsTestData {
                     'https://www.thesun.co.uk/wp-content/uploads/2018/07/AF-COMPOSITE-FIGHT.jpg?strip=all&quality=100&w=750&h=500&crop=1',
                 longitude: 60.656877,
                 latitude: 10.824107,
-                date: new Date(Date.now()),
+                createdAt: new Date(2018, 12, 24, 12),
                 munId: 528,
                 userId: 1,
                 categoryId: 1,
@@ -772,7 +772,7 @@ class ModelsTestData {
                 image: 'http://www.otera.no/image/20111206015-kopi.jpeg?w=1200',
                 longitude: 60.661293,
                 latitude: 10.828996,
-                date: new Date(Date.now()),
+                createdAt: new Date(2018, 12, 25, 12),
                 munId: 528,
                 userId: 3,
                 categoryId: 2,
@@ -786,11 +786,11 @@ class ModelsTestData {
                 image: 'http://i.imgur.com/so8Ea.jpg',
                 longitude: 60.684721,
                 latitude: 10.841522,
-                date: new Date(Date.now()),
+                createdAt: new Date(2018, 12, 26, 12),
                 munId: 528,
                 userId: 2,
                 categoryId: 4,
-                statusId: 6
+                statusId: 2
             },
 
             {
@@ -800,7 +800,7 @@ class ModelsTestData {
                 image: 'https://i.ytimg.com/vi/MPNN_nVwG5w/maxresdefault.jpg',
                 longitude: 60.68273,
                 latitude: 10.831514,
-                date: new Date(Date.now()),
+                createdAt: new Date(2018, 12, 27, 12),
                 munId: 528,
                 userId: 6,
                 categoryId: 2,
@@ -850,10 +850,11 @@ class ModelsTestData {
                 image: 'notin',
                 longitude: 60.652168,
                 latitude: 10.822102,
-                timeStart: new Date(Date.now()),
-                timeEnd: new Date(Date.now()),
+                timeStart: new Date(2019, 1, 22),
+                timeEnd: new Date(2019, 1, 25),
                 userId: '1',
-                categoryId: 1
+                categoryId: 1,
+                munId: 528
             },
             {
                 title: 'PARTIET FORSETTER!',
@@ -861,10 +862,11 @@ class ModelsTestData {
                 image: 'notin',
                 longitude: 60.655754,
                 latitude: 10.817339,
-                timeStart: new Date(Date.now()),
-                timeEnd: new Date(Date.now()),
+                timeStart: new Date(2019, 1, 23),
+                timeEnd: new Date(2019, 1, 26),
                 userId: '2',
-                categoryId: 1
+                categoryId: 1,
+                munId: 528
             }
         ])
     }
@@ -872,11 +874,11 @@ class ModelsTestData {
     createUserMunicipal() {
         return UserMunicipal.bulkCreate([
             {
-                munId: 101,
+                munId: 5001,
                 userId: 1
             },
             {
-                munId: 514,
+                munId: 528,
                 userId: 1
             }
         ])

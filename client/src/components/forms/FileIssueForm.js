@@ -3,7 +3,7 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Issue } from '../../models.js';
+import { Issue } from '../../models/Issue.js';
 import { issueCategoryService } from '../../services/IssueCategoryService.js';
 import { Alert, Form, Card, Button } from '../../widgets';
 import { history } from '../../index';

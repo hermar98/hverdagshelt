@@ -1,5 +1,6 @@
-import {Issue, Feedback} from "../models";
+import {Issue, Feedback, User} from "../models";
 import Sequelize from "../../flow-typed/npm/sequelize_v4.x.x";
+import {mailSender} from '../MailSender';
 
 type Request = express$Request;
 type Response = express$Response;
@@ -109,8 +110,9 @@ app.get('/issues/:lim/limit/:offset/offset/cat/desc', (req: Request, res: Respon
 });
 
 app.get('/municipals/:id/issues', (req: Request, res: Response) => {
-    return Issue.findAll({ where: { munId: Number(req.params.id) } }).then(issues =>
-        issues ? res.send(issues) : res.sendStatus(404)
+    return Issue.findAll({ where: { munId: Number(req.params.id) },
+                            order: [['createdAt', 'DESC']]})
+      .then(issues => issues ? res.send(issues) : res.sendStatus(404)
     );
 });
 
@@ -171,7 +173,25 @@ app.post('/secure/issues', (req: Request, res: Response) => {
         categoryId: req.body.categoryId,
         munId: req.body.munId,
         userId: req.body.userId
-    }).then(issue => (issue ? res.send(issue) : res.sendStatus(404)));
+    }).then(count => {
+        if(!count){
+          console.log("Something went wrong")
+
+          res.sendStatus(404);
+        }else{
+          console.log("Nothing wrong here, please continue");
+
+          res.send(count);
+              User.findOne({
+                where: {
+                  userId: req.body.userId
+                }
+              }).then(user => mailSender.sendEmail(user.email, "Din sak har blitt registrert!", "Hei " + user.firstName + " " +
+              user.lastName + "!\n\nDin sak '" + req.body.title + "' har nå blitt registrert i systemet, og en av våre fremste ansatte vil så fort" +
+                " som mulig påbegynne saksbehandlingen. Tusen takk for at du melder inn feil, og bidrar til å gjøre Norge et bedre sted!\n\nMed vennlig hilsen\n" +
+                "Ya boi mr Gayman, Aka young fleinar kokt i fleinsuppe (Dank Kushman aka young dagger dick)\nShoutout til min boi lil thuggers, som er fast as fucc boi"));
+        }
+    });
 });
 
 app.delete('/secure/issues/:id', (req: Request, res: Response) => {

@@ -1,5 +1,5 @@
 //@flow
-import {Municipal} from "../models";
+import {Municipal} from "../models/Municipal";
 import service from "./Service";
 
 class MunicipalService {
