@@ -30,8 +30,10 @@ export class EventPage extends Component {
   }
 
   mounted(){
+    let munId = localStorage.getItem('munId');
+    console.log(munId);
     eventService
-      .getEvents()
+      .getEventsByMunicipal(munId)
       .then(e => this.events = e)
       .catch((error: Error) => Alert.danger(error.message));
   }

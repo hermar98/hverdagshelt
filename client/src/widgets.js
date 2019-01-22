@@ -331,6 +331,7 @@ class FormInput extends Component<{
   onChange?: (event: SyntheticInputEvent<HTMLInputElement>) => mixed,
   required?: boolean,
   pattern?: string,
+  title?: string,
   placeholder?: string
 }> {
   render() {
@@ -345,6 +346,7 @@ class FormInput extends Component<{
             onChange={this.props.onChange}
             required={this.props.required}
             pattern={this.props.pattern}
+            title={this.props.title}
             placeholder={this.props.placeholder}
           />
         </div>
@@ -442,12 +444,12 @@ class FileInput extends Component<{
   }
 }
 
-class FormAlert extends Component<{ text: string }> {
+class FormAlert extends Component<{ text: string, type: string }> {
   render() {
     return (
       <div className="form-group row justify-content-center">
         <div className="col-sm-10 col-lg-4 justify-content-center">
-          <div className="alert alert-danger" role="alert">
+          <div className={'alert alert-' + this.props.type} role="alert">
             {this.props.text}
           </div>
         </div>

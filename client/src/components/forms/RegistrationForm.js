@@ -62,9 +62,13 @@ export default class RegistrationForm extends Component {
             title="Passordet må inneholde minst én liten og én stor bokstav, og minst 8 karakterer"
             placeholder="Gjenta passord"
           />
-          {this.passwordLengthOk ? <div /> : <Form.Alert text="Du må bruke minst 8 tegn i passordet ditt" />}
-          {this.passwordsMatch ? <div /> : <Form.Alert text="Passordene samsvarer ikke. Prøv på nytt." />}
-          {this.emailRegistered ? <Form.Alert text="E-posten er allerede registrert" /> : <div />}
+          {this.passwordLengthOk ? (
+            <div />
+          ) : (
+            <Form.Alert type="danger" text="Du må bruke minst 8 tegn i passordet ditt" />
+          )}
+          {this.passwordsMatch ? <div /> : <Form.Alert type="danger" text="Passordene er ikke like" />}
+          {this.emailRegistered ? <Form.Alert type="danger" text="E-posten er allerede registrert" /> : <div />}
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
               <Button.Basic onClick={this.save}>Lag bruker</Button.Basic>
@@ -97,7 +101,7 @@ export default class RegistrationForm extends Component {
 
     userService
       .addUser(this.user)
-      .then(() => history.push('/kommune/' + this.munId + '/loggInn'))
+      .then(() => history.push('/loggInn'))
       .catch((error: Error) => {
         console.log(error);
         this.emailRegistered = true;

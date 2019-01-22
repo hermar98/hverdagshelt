@@ -323,7 +323,7 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
                     {this.props.issues.map((issue,index) => {
                         if ((this.status == issue.statusId || this.status == 0) && (this.category == issue.categoryId || this.category == 0)) {
                             return(
-                                <li key={index} className="list-group-item issue-item">
+                                <li key={index} className="list-group-item">
                                     <IssueSmall issue={issue} munId={this.props.munId}/>
                                 </li>
                             )
@@ -543,9 +543,6 @@ export class ImageButton extends Component<{source: string, onclick: function}> 
     }
 }
 
-/*
-A button which goes from black to white on hover
- */
 export class HoverButton extends Component<{onclick: function, text: string}> {
     render () {
         return (
