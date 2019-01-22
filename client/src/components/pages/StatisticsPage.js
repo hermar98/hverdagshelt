@@ -1,6 +1,6 @@
 import {Component} from "react-simplified";
-import {User} from "../../models";
-import Menu from "../menu/Menu";
+import { User } from "../../models/User";
+import { NotLoggedInMenu } from "../menu/NotLoggedInMenu";
 import RegistrationForm from "../forms/RegistrationForm";
 import {statistics} from "../../statistics";
 import {Alert} from '../../widgets.js';
@@ -21,7 +21,7 @@ export class StatisticsPage extends Component {
     render() {
         return (
             <div>
-                <Menu/>
+                <NotLoggedInMenu/>
                 <div className="mt-3" align="center">
                     <h1>Statistikk</h1>
                     <p>Antall registrerte saker per måned i en kommune</p>

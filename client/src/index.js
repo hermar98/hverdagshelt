@@ -14,14 +14,14 @@ import { RegisterPage } from './components/pages/RegisterPage';
 import { EventPage, EventInfo } from './components/pages/EventPage';
 import { FeedPage } from './components/pages/FeedPage';
 import { ChooseMunicipalPage } from './components/pages/ChooseMunicipalPage';
-import { RegisterEventPage } from './components/pages/RegisterEventPage';
+// import { RegisterEventPage } from './components/pages/RegisterEventPage';
 import { IssuePage } from './components/pages/IssuePage';
 import { IssueLarge, IssueOverviewNormal, IssueNormal, IssueOverviewSmall } from './components/issueViews/issueViews';
 import { ForgotPassword } from './components/pages/ForgotPassword.js';
 import { NewPasswordPage } from './components/pages/NewPasswordPage.js';
 import { StatisticsPage } from './components/pages/StatisticsPage.js';
 import { TermsOfService } from './components/pages/TermsOfServicePage.js';
-import { UploadImageTest } from './components/image/UploadImageTest.js';
+// import { UploadImageTest } from './components/image/UploadImageTest.js';
 import { AlternativeUpload } from './components/image/AlternativeUpload.js';
 
 import { MunicipalPage } from './components/pages/MunicipalPage';

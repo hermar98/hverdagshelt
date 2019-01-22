@@ -4,17 +4,17 @@ import { Component, sharedComponentData } from 'react-simplified';
 import {Redirect, NavLink} from 'react-router-dom'
 import {HoverButton, IssueOverviewSmall, IssueOverviewNormal} from "../issueViews/issueViews";
 import {issueService} from "../../services/IssueService";
-import {NewMenu} from "../menu/NewMenu";
+import {IssueMenu} from "../menu/IssueMenu";
 import {tokenManager} from "../../tokenManager";
 
 export class ContractorView extends Component<{match: { params: { munId: number}}}> {
 
-    issues: [] = []
+    issues: [] = [];
 
     render () {
         return (
             <div>
-                <NewMenu/>
+                <IssueMenu/>
                 <div className="card issue-view-container">
                     <h2 className="card-title">Dine tildelte saker</h2>
                     <div className="issue-overview-left">
