@@ -101,7 +101,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                     </div>
                     <h4 className="feedback-title">Oppdateringer</h4>
                     {sharedFeedback.feedback.map(feedback => {
-                        return <IssueFeedback feedback={feedback}/>
+                        return <IssueFeedback feedback={feedback} userId={this.issue.userId}/>
                     })}
                     <div className="feedback-button">
                         <div>
@@ -163,23 +163,30 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     }
 
     onClickFeedback () {
-        let feedback = new Feedback();
-        feedback.name = '';
-        feedback.content = this.feedbackContent;
-        feedback.issueId = this.issue.issueId;
-        feedback.userId = tokenManager.getUserId()
-        feedbackService.addFeedback(feedback)
-            .then(res => {
-                this.addFeedbackButton.current.classList.remove('show')
-                this.addFeedbackForm.current.classList.add('show')
-                feedbackService.getFeedbacks(this.props.match.params.issueId)
-                    .then(data => {
-                        sharedFeedback.feedback = data;
-                    })
-                    .catch(error => console.error("Error: ", error))
-                this.feedbackContent = '';
-            })
+        let rank = 0
+        userService.getUser(this.issue.userId)
+            .then(user => rank = user.rank)
             .catch(error => console.error("Error: ", error))
+
+        if(tokenManager.getUserId() == this.issue.userId || rank == 3) {
+            let feedback = new Feedback();
+            feedback.name = '';
+            feedback.content = this.feedbackContent;
+            feedback.issueId = this.issue.issueId;
+            feedback.userId = tokenManager.getUserId()
+            feedbackService.addFeedback(feedback)
+                .then(res => {
+                    this.addFeedbackButton.current.classList.remove('show')
+                    this.addFeedbackForm.current.classList.add('show')
+                    feedbackService.getFeedbacks(this.props.match.params.issueId)
+                        .then(data => {
+                            sharedFeedback.feedback = data;
+                        })
+                        .catch(error => console.error("Error: ", error))
+                    this.feedbackContent = '';
+                })
+                .catch(error => console.error("Error: ", error))
+        }
     }
 
     onDelete() {
@@ -426,7 +433,7 @@ export class IssueOverviewNormal extends Component<{munId: number, issues: Issue
 /*
 Widget for displaying a single feedback-card with name, date, profile-picture and content
  */
-export class IssueFeedback extends Component<{feedback: Feedback}> {
+export class IssueFeedback extends Component<{feedback: Feedback, userId: number}> {
 
     user = new User()
 
@@ -462,12 +469,20 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
     }
 
     onDelete() {
-        if(confirm("Are you sure?")) {
-            feedbackService.deleteFeedback(this.props.feedback.feedbackId)
-                .then(res => {
-                    sharedFeedback.feedback.splice(sharedFeedback.feedback.indexOf(this.props.feedback), 1)
-                })
-                .catch(error => console.error("Error: ", error))
+        let rank = 0
+        userService.getUser(this.props.userId)
+            .then(user => rank = user.rank)
+            .catch(error => console.error("Error: ", error))
+        console.log()
+
+        if(tokenManager.getUserId() == this.props.userId || rank == 3) {
+            if (confirm("Are you sure?")) {
+                feedbackService.deleteFeedback(this.props.feedback.feedbackId)
+                    .then(res => {
+                        sharedFeedback.feedback.splice(sharedFeedback.feedback.indexOf(this.props.feedback), 1)
+                    })
+                    .catch(error => console.error("Error: ", error))
+            }
         }
     }
 }

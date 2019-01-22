@@ -23,6 +23,7 @@ export class FeedMenu extends Component {
       <div>
         <NavBar>
           <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
+            <NavBar.Button onClick={this.toIssue}>Registrer sak</NavBar.Button>
           <NavBar.Button onClick={this.toFeed}>Min Feed</NavBar.Button>
           <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
             <DropdownHeader>{this.user.email}</DropdownHeader>
@@ -47,5 +48,9 @@ export class FeedMenu extends Component {
   changeMunicipal() {
     localStorage.removeItem('munId');
     history.push('/');
+  }
+
+  toIssue () {
+    history.push("/registrerSak")
   }
 }
