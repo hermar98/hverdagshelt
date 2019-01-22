@@ -518,7 +518,7 @@ export class ImageButton extends Component<{source: string, onclick: function}> 
     }
 }
 
-class HoverButton extends Component<{onclick: function, text: string}> {
+export class HoverButton extends Component<{onclick: function, text: string}> {
     render () {
         return (
             <button className="btn hover-button" type="button" onClick={this.props.onclick} >
