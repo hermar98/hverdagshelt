@@ -284,11 +284,30 @@ A list of issues in small view
 export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[]}> {
 
     status: number = 0;
-    timesort: string = "Nyeste";
+    timesort: number = 0;
 
     render () {
         return (
             <div>
+                <div className="d-flex flex-row sort-box justify-content-between">
+                    <div className="form-group">
+                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
+                            <option value={0}>Alle</option>
+                            <option value={1}>Ikke behandlet</option>
+                            <option value={2}>Under behandling</option>
+                            <option value={3}>Behandlet</option>
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
+                            this.timesort = event.target.value;
+                            this.onChange();
+                        }}>
+                            <option value={0}>Nyeste</option>
+                            <option value={1}>Eldste</option>
+                        </select>
+                    </div>
+                </div>
                 <ul className="list-group">
                     {this.props.issues.map((issue,index) => {
                         if (this.status == issue.statusId || this.status == 0) {
@@ -306,6 +325,16 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
 
     mounted (){
         window.scrollTo(0, 0);
+    }
+
+    onChange () {
+        if(this.timesort = 0) {
+            console.log("newest")
+            this.props.issues.sort((a, b) => a.createdAt < b.createdAt)
+        }else if (this.timesort = 1) {
+            console.log("oldest")
+            this.props.issues.sort((a, b) => a.createdAt > b.createdAt)
+        }
     }
 }
 

@@ -52,19 +52,20 @@ if (root)
           <Alert />
           <Switch>
             <Route exact path="/" component={ChooseMunicipalPage} />
-        <Route exact path="/loggInn" component={LoginPage} />
-        <Route exact path="/registrer" component={RegisterPage} />
-        <Route exact path="/glemtPassord" component={ForgotPassword} />
-        <Route exact path="/glemtPassord/nullstill" component={NewPasswordPage} />
-        <Route exact path="/vilkår" component={TermsOfService} />
-        <Route exact path="/profil" component={UserProfilePage} />
-        <Route exact path="/saker/:issueId" component={IssueLarge} />
-        <Route exact path="/registrerSak" component={FileIssuePage} />
-        <Route exact path="/feed" component={FeedPage} />
-        <Route exact path="/kommune/:munId" component={MunicipalPage} />
-          <Route exact path="/image" component={AlternativeUpload} />
-          <Route exact path="/activate/:tokenId" component={ActivateAccountPage}/>
-          <Route path="" component={NotFound}/>
+            <Route exact path="/loggInn" component={LoginPage} />
+            <Route exact path="/registrer" component={RegisterPage} />
+            <Route exact path="/glemtPassord" component={ForgotPassword} />
+            <Route exact path="/glemtPassord/nullstill" component={NewPasswordPage} />
+            <Route exact path="/vilkår" component={TermsOfService} />
+            <Route exact path="/profil" component={UserProfilePage} />
+            <Route exact path="/saker/:issueId" component={IssueLarge} />
+            <Route exact path="/registrerSak" component={FileIssuePage} />
+            <Route exact path="/feed" component={FeedPage} />
+            <Route exact path="/kommune/:munId" component={MunicipalPage} />
+            <Route exact path="/image" component={AlternativeUpload} />
+            <Route exact path="/activate/:tokenId" component={ActivateAccountPage}/>
+            <Route exact path="/saker" component={IssueView} />
+            <Route path="" component={NotFound}/>
           </Switch>
           <Footer />
       </div>

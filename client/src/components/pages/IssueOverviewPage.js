@@ -2,17 +2,30 @@
 import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 import {Redirect, NavLink} from 'react-router-dom'
-import { IssueOverviewSmall } from "../issueViews/issueViews";
+import {HoverButton, IssueOverviewSmall} from "../issueViews/issueViews";
 import {issueService} from "../../services/IssueService";
+import {NewMenu} from "../menu/NewMenu";
 
-class IssueView extends Component {
+export class IssueView extends Component {
 
     issues: [] = []
 
     render () {
         return (
-            <div className="issue-container">
-                <IssueOverviewSmall issues={this.issues} />
+            <div>
+                <NewMenu/>
+                <div className="card issue-view-container">
+                    <div className="issue-overview-left">
+                        <IssueOverviewSmall issues={this.issues} />
+                    </div>
+                    <div className="issue-options">
+                        <div className="buttons row justify-content-center">
+                            <HoverButton onclick={console.log("hello")} text="Trykk"/>
+                            <HoverButton onclick={console.log("hello")} text="Trykk"/>
+                            <HoverButton onclick={console.log("hello")} text="Trykk"/>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }
