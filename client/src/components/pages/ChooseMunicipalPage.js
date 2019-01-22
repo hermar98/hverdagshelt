@@ -24,21 +24,37 @@ export class ChooseMunicipalPage extends Component {
         </div>
 
         <div className="fg">
-          <Card>
+          <div className="fg-card">
             <div className="fg-grid">
               <div className="fg-logo">
-                <img src={"../../images/hverdagshelt-logo-lightblue.svg"}width='100px'/><p>HverdagsHelt</p>
+                <div className="justify-content-center row">
+                 <img className="fg-image" src={"../../images/hverdagshelt-logo-black.svg"}/>
+                </div>
+                <div className="justify-content-center row">
+                HverdagsHelt
+                </div>
               </div>
-              <div className="fg-input autocomplete">
-                <form autoComplete="off">
-                  <div>
-                    <input id="municipalInput" type="text" name="municipal" placeholder="Velg kommune" />
-                    <button value="" type="button" onClick={this.go}>Gå</button>
-                  </div>
-                </form>
+              <div className="fg-input">
+                <div className="justify-content-center row">
+                  <form className="munInputForm justify-content-center row" autoComplete="off">
+                      <input id="municipalInput" type="text" name="municipal" placeholder="Velg kommune" />
+                      <button  value="" type="button" onClick={this.go}>Gå</button>
+                  </form>
+                </div>
+                <div>
+
+                </div>
+              </div>
+              <div className="fg-content">
+                <div className="justify-content-center row">
+                  <h5>Information:</h5>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel suscipit metus, eget condimentum velit. Vestibulum auctor tincidunt lectus. Integer nec dolor quis ligula convallis fringilla vel ac urna. Nunc vitae risus sagittis, accumsan augue vel, mattis ipsum. Suspendisse dignissim hendrerit suscipit.
+                  </p>
+                </div>
               </div>
           </div>
-          </Card>
+          </div>
         </div>
       </div>
     );

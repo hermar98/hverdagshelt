@@ -354,10 +354,7 @@ Profile-page
     justify-self: center;
 }
 
-#municipalInput {
-    align-self: center;
-    height: 8vh;
-}
+
 
 .add-municipal-field {
     margin-bottom: 5%;
@@ -381,7 +378,7 @@ Profile-page
 random
  */
 .footer {
-    position: relative;
+    position: fixed;
     bottom: 0;
     width: 100%;
 }
