@@ -9,6 +9,8 @@ import express from 'express';
 import fs from 'fs';
 import jwt from 'jsonwebtoken';
 import path from 'path';
+import {mailSender} from "./MailSender";
+
 
 //Flow type checking
 type Application = express$Application;
@@ -16,6 +18,7 @@ type Request = express$Request;
 type Response = express$Response;
 
 const public_path = path.join(__dirname, '/../../client/public');
+const crypto = require('crypto');
 
 let app: Application = express();
 app.use(express.static(public_path));
@@ -100,6 +103,9 @@ app.post('/register', (req: Request, res: Response) => {
   //Flow type checking mixed src: https://github.com/flow-typed/flow-typed/issues/812
   const body = req.body !== null && typeof req.body === 'object' ? req.body : {};
   const { firstName, lastName, email, rank, password } = body;
+  let emailS: string = (email: any);
+  let firstNameS: string = (firstName: any);
+  let lastNameS: string = (lastName: any);
 
   User.findOne({ where: { email: email } }).then(user => {
     if (user) return res.sendStatus(409);
@@ -108,14 +114,44 @@ app.post('/register', (req: Request, res: Response) => {
   let passwordSalt = passwordHash.genRandomString(16);
   let passwordData = passwordHash.sha512(password, passwordSalt);
 
+  const token = crypto.randomBytes(20).toString('hex');
+
   return User.create({
     firstName: firstName,
     lastName: lastName,
     email: email,
     rank: rank,
     salt: passwordSalt,
-    hashStr: passwordData.passwordHash
-  }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
+    hashStr: passwordData.passwordHash,
+    activateAccountToken: token
+  }).then(count => {
+    if(!count){
+      console.log("Something went wrong")
+      res.sendStatus(404);
+    }else{
+      console.log("Nothing wrong here, please continue");
+
+      res.sendStatus(200);
+      mailSender.sendEmail(emailS, "Aktivering av bruker", "Hei " + firstNameS + " " + lastNameS + "!\n\nTakk for din registrering og velkommen " +
+        "til Hverdagshelt. For å aktivere din bruker vennligst trykk følgende link:\nhttp://localhost:3000/#/activate/" + token +
+      "\n\nHvis du ikke har registrert bruker hos oss, vennligst se bort fra denne mailen.\n\nMed vennlig hilsen\n" + "Hverdagshelt AS (Young Fleinar Inc.)");
+    }
+  });
+});
+
+app.put('/activate/:token', (req: Request, res: Response) => {
+  let token = req.params.token;
+  User.findOne({ where: { activateAccountToken: token } }).then(user => {
+    if (user) {
+      token = jwt.sign({ email: user.email }, secretKey, { expiresIn: 4000 });
+      return User.update(
+        {
+          rank: 1
+        },
+        { where: { userId: user.userId } }
+      ).then(count => (count ? res.json({ userId: user.userId, jwt: token }) : res.sendStatus(404)));
+    }
+  });
 });
 
 module.exports = app;
