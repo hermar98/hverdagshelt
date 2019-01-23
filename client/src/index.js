@@ -11,7 +11,7 @@ import { LoginPage } from './components/pages/LoginPage';
 import { UserProfilePage } from './components/pages/ProfilePage/UserProfilePage';
 import { AdminProfilePage } from './components/pages/ProfilePage/AdminProfilePage';
 import { RegisterPage } from './components/pages/RegisterPage';
-import { EventPage, EventInfo } from './components/pages/EventPage';
+import { EventInfo } from './components/pages/EventPage';
 import { FeedPage } from './components/pages/FeedPage';
 import { ChooseMunicipalPage } from './components/pages/ChooseMunicipalPage';
 // import { RegisterEventPage } from './components/pages/RegisterEventPage';
@@ -69,7 +69,7 @@ if (root)
                 <Route exact path="/statistics" component={StatisticsPage} />
                 <Route exact path="/admin" component={AdminPage}/>
                 <Route exact path="/admin/edit/:userId" component={AdminEditPage}/>
-                  <Route extact path="/hendelser/:eventId" component={EventInfo} />
+                <Route extact path="/hendelser/:eventId" component={EventInfo} />
                 <Route path="" component={NotFound}/>
               </Switch>
           <Footer />

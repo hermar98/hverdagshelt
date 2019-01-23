@@ -147,7 +147,7 @@ export class EventInfo extends Component<{ match: { params: { eventId: number } 
 
     return (
       <div>
-        <NotLoggedInMenu />
+        <IssueMenu />
         <div className="container my-4">
           <div className="card">
             <img className="card-img-top" src={this.event.image} />
