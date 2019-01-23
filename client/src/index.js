@@ -21,7 +21,7 @@ import { IssueLarge, IssueOverviewNormal, IssueNormal, IssueOverviewSmall } from
 import { ForgotPassword } from './components/pages/ForgotPassword.js';
 import { NewPasswordPage } from './components/pages/NewPasswordPage.js';
 import { TermsOfService } from './components/pages/TermsOfServicePage.js';
-import { AdminPage } from './components/pages/AdminPage.js';
+import { AdminPage, AdminEditPage } from './components/pages/AdminPage.js';
 import { UploadImageTest } from './components/image/UploadImageTest.js';
 import { AlternativeUpload } from './components/image/AlternativeUpload.js';
 
@@ -59,6 +59,7 @@ if (root)
         <Route exact path="/feed" component={FeedPage} />
         <Route exact path="/kommune/:munId" component={MunicipalPage} />
         <Route exact path="/admin" component={AdminPage}/>
+        <Route exact path="/admin/edit/:userId" component={AdminEditPage}/>
         <Footer />
       </div>
     </HashRouter>,

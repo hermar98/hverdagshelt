@@ -330,7 +330,8 @@ class FormInput extends Component<{
   onChange?: (event: SyntheticInputEvent<HTMLInputElement>) => mixed,
   required?: boolean,
   pattern?: string,
-  placeholder?: string
+  placeholder?: string,
+    readOnly?: boolean
 }> {
   render() {
     return (
@@ -345,7 +346,8 @@ class FormInput extends Component<{
             required={this.props.required}
             pattern={this.props.pattern}
             placeholder={this.props.placeholder}
-          />
+            readOnly={this.props.readOnly}
+            />
         </div>
       </div>
     );
