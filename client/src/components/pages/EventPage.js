@@ -102,12 +102,13 @@ export class EventLarge extends Component<{ event: Event }> {
 }
 
 export class EventSmall extends Component<{ event: Event }> {
+
   textLength = 50;
 
   render() {
     return (
-      <div className="card mb-2">
-        <a id="a-hover" href={'#/kommune/' + this.props.event.munId + '/events/' + this.props.event.eventId}>
+      <div className="card">
+        <a id="a-hover" href={'#/hendelser/' + this.props.event.eventId}>
           <img src="../../images/arrowRightTrans.png" />
         </a>
         <div className="card-body">
