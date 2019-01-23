@@ -113,7 +113,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                 this.addFeedbackForm.current.classList.remove('show')
                                 window.scrollTo(0, document.body.scrollHeight);
                             }}>
-                                <img id="image-button-image" src="../../images/add.png" />
+                                <img id="add-image-button" src="../../images/add.png" />
                             </button>
                         </div>
                     </div>
