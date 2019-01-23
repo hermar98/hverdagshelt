@@ -17,10 +17,12 @@ export class ChooseMunicipalPage extends Component {
   render() {
     return (
       <div>
-        <div className="bg-image" />
+        <div className="bg-image"/>
         <div>
           <ChooseMunicipalPageMenu />
         </div>
+        <div className="col-lg-12">
+          <div className="fg">
           <div className="fg-card">
             <div className="fg-grid">
               <div className="fg-logo">
@@ -52,6 +54,9 @@ export class ChooseMunicipalPage extends Component {
               </div>
           </div>
           </div>
+          </div>
+        </div>
+
         </div>
 
     );
