@@ -489,7 +489,7 @@ Event
     font-size: 18px;
     font-weight:bold;
     width:100%;
-
+    z-index:0;
     grid-template-rows: auto auto auto;
 }
 .image-upload-text {
@@ -500,12 +500,14 @@ Event
     position:relative;
     margin-left: 0  !important;
     grid-row: 2;
-    min-height:300px;
+    height:300px;
     text-align:center;
+    overflow-y:auto;
 }
 .image-upload-images-text {
     position: absolute;
     align-self: center;
+    color: deeppink;
     z-index:5;
 }
 .image-upload-images {
