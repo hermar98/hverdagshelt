@@ -4,13 +4,13 @@ import { Component } from 'react-simplified';
 import { User } from '../../models/User.js';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
 import EventForm from '../../components/forms/EventForm';
-import MenuMunicipalWorker from '../../components/menu/NotLoggedInMenu.js';
+import { RegisterEventMenu } from '../../components/menu/RegisterEventMenu.js';
 
 export class RegisterEventPage extends Component {
   render() {
     return (
       <div>
-        <MenuMunicipalWorker />
+        <RegisterEventMenu />
         <EventForm />
       </div>
     );
