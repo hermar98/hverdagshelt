@@ -22,6 +22,7 @@ export default class Login extends Component {
   rank = 0;
 
   munId = localStorage.getItem('munId');
+  user = new User();
 
   render() {
     return (
@@ -80,7 +81,16 @@ export default class Login extends Component {
       .login(this.email, this.password)
       .then(token => {
         tokenManager.addToken(token);
-        history.push('/feed');
+        userService.getUser(tokenManager.getUserId())
+          .then(user =>{
+            this.user = user;
+            if(this.user.rank === 0){
+              history.push('/aktiver/aktiverBruker');
+            }else{
+              history.push('/feed');
+            }
+          })
+          .catch((error: Error) => console.log(error))
       })
       .catch((error: Error) => {
         console.log(error);
