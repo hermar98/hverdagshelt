@@ -140,10 +140,10 @@ export class IssueMenu extends Component {
     history.push('/'); // TODO: ansatt profilside
   }
   toMunEmployeeHome() {
-    history.push('/'); //TODO: ansatt hjemside
+    history.push('/kommune/' + localStorage.getItem('munId') + '/saker'); //TODO: ansatt hjemside
   }
   toCompanyEmployeeHome() {
-    history.push('/'); //TODO: bedrift hjemside
+    history.push('/saker'); //TODO: bedrift hjemside
   }
   toAdminHome() {
     history.push('/'); //TODO: admin hjemside

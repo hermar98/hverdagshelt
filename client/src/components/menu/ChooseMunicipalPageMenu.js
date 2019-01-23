@@ -1,12 +1,6 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import {
-  NavBar,
-  DropdownHeader,
-  DropdownFooter,
-  DropdownDivider,
-  DropdownItem
-} from '../../widgets';
+import { NavBar, DropdownHeader, DropdownFooter, DropdownDivider, DropdownItem } from '../../widgets';
 import { tokenManager } from '../../tokenManager';
 import { history } from '../../index';
 import { userService } from '../../services/UserService';
@@ -90,11 +84,13 @@ export class ChooseMunicipalPageMenu extends Component {
         );
       } else {
         return (
-            <NavBar>
-                <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Må sjekke email for aktivering av konto!!!</NavBar.Brand>
-                <NavBar.Button onClick={this.toLogin}>Logg Inn</NavBar.Button>
-                <NavBar.Button onClick={this.toRegister}>Registrer Bruker</NavBar.Button>
-            </NavBar>
+          <NavBar>
+            <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>
+              Må sjekke email for aktivering av konto!!!
+            </NavBar.Brand>
+            <NavBar.Button onClick={this.toLogin}>Logg Inn</NavBar.Button>
+            <NavBar.Button onClick={this.toRegister}>Registrer Bruker</NavBar.Button>
+          </NavBar>
         );
       }
     } else {
@@ -126,14 +122,12 @@ export class ChooseMunicipalPageMenu extends Component {
     tokenManager.deleteToken();
     history.push('/');
   }
-  toMunEmployeeProfile() {
-    history.push('/'); // TODO: ansatt profilside
-  }
+
   toMunEmployeeHome() {
-    history.push('/'); //TODO: ansatt hjemside
+    history.push('/kommune/' + localStorage.getItem('munId') + '/saker'); //TODO: ansatt hjemside
   }
   toCompanyEmployeeHome() {
-    history.push('/'); //TODO: bedrift hjemside
+    history.push('/saker'); //TODO: bedrift hjemside
   }
   toAdminHome() {
     history.push('/'); //TODO: admin hjemside
