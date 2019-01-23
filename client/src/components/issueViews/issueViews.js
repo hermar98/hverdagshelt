@@ -476,7 +476,7 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
         console.log()
 
         if(tokenManager.getUserId() == this.props.userId || rank == 3) {
-            if (confirm("Are you sure?")) {
+            if (confirm("Are you sure?")) {fi
                 feedbackService.deleteFeedback(this.props.feedback.feedbackId)
                     .then(res => {
                         sharedFeedback.feedback.splice(sharedFeedback.feedback.indexOf(this.props.feedback), 1)
