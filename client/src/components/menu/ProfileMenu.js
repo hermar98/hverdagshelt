@@ -21,8 +21,6 @@ import { userService } from '../../services/UserService';
 
 export class ProfileMenu extends Component {
   user = null;
-  municipal = new Municipal();
-  munId = localStorage.getItem('munId');
 
   mounted() {
     userService
@@ -35,11 +33,6 @@ export class ProfileMenu extends Component {
           })
           .catch((error: Error) => console.log(error));
       })
-      .catch((error: Error) => console.log(error));
-
-    municipalService
-      .getMunicipal(this.munId)
-      .then(municipal => (this.municipal = municipal))
       .catch((error: Error) => console.log(error));
   }
 
@@ -68,7 +61,7 @@ export class ProfileMenu extends Component {
             <NavBar>
               <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
               <NavBar.Button onClick={this.toCompanyHome}>Hjem</NavBar.Button>
-              <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
+              <NavBar.Dropdown className="focus" title={this.user.firstName + ' ' + this.user.lastName}>
                 <DropdownHeader>{this.user.email}</DropdownHeader>
                 <DropdownFooter>Bedrift</DropdownFooter>
                 <DropdownDivider />
@@ -84,7 +77,7 @@ export class ProfileMenu extends Component {
             <NavBar>
               <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
               <NavBar.Button onClick={this.toMunEmployeeHome}>Hjem</NavBar.Button>
-              <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
+              <NavBar.Dropdown className="focus" title={this.user.firstName + ' ' + this.user.lastName}>
                 <DropdownHeader>{this.user.email}</DropdownHeader>
                 <DropdownFooter>Kommuneansatt</DropdownFooter>
                 <DropdownDivider />
@@ -100,7 +93,7 @@ export class ProfileMenu extends Component {
             <NavBar>
               <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
               <NavBar.Button onClick={this.toAdminHome}>Hjem</NavBar.Button>
-              <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
+              <NavBar.Dropdown className="focus" title={this.user.firstName + ' ' + this.user.lastName}>
                 <DropdownHeader>{this.user.email}</DropdownHeader>
                 <DropdownFooter>Admin</DropdownFooter>
                 <DropdownDivider />
@@ -133,14 +126,11 @@ export class ProfileMenu extends Component {
     tokenManager.deleteToken();
     history.push('/');
   }
-  toMunEmployeeProfile() {
-    history.push('/'); // TODO: ansatt profilside
-  }
   toMunEmployeeHome() {
-    history.push('/'); //TODO: ansatt hjemside
+    history.push('/kommune/' + localStorage.getItem('munId') + '/saker'); //TODO: ansatt hjemside
   }
   toCompanyEmployeeHome() {
-    history.push('/'); //TODO: bedrift hjemside
+    history.push('/saker'); //TODO: bedrift hjemside
   }
   toAdminHome() {
     history.push('/'); //TODO: admin hjemside

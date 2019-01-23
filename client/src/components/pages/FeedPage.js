@@ -88,19 +88,23 @@ export class FeedPage extends Component {
                 </div>
               </div>
               <ul className="container-fluid">
-                {sharedIssues.issues
-                  .filter(e => {
-                    return (
-                      e.statusId !== 1 &&
-                      (e.categoryId == this.iCategoryId || this.iCategoryId == 0) &&
-                      (e.munId == this.munId || this.munId == 0)
-                    );
-                  })
-                  .map((e, index) => (
-                    <li key={index} className="list-group-item">
-                      <IssueSmall issue={e} munId={e.munId} />
-                    </li>
-                  ))}
+                {Array.from(
+                  new Set(
+                    sharedIssues.issues
+                      .filter(e => {
+                        return (
+                          e.statusId !== 1 &&
+                          (e.categoryId == this.iCategoryId || this.iCategoryId == 0) &&
+                          (e.munId == this.munId || this.munId == 0)
+                        );
+                      })
+                      .map((e, index) => (
+                        <li key={index} className="list-group-item">
+                          <IssueSmall issue={e} munId={e.munId} />
+                        </li>
+                      ))
+                  )
+                )}
               </ul>
             </Card>
           </div>
@@ -136,15 +140,19 @@ export class FeedPage extends Component {
                 </div>
               </div>
               <ul className="container-fluid">
-                {sharedEvents.events
-                  .filter(e => {
-                    return e.categoryId == this.eCategoryId || this.eCategoryId == 0;
-                  })
-                  .map((e, index) => (
-                    <li key={index}>
-                      <EventSmall event={e} />
-                    </li>
-                  ))}
+                {Array.from(
+                  new Set(
+                    sharedEvents.events
+                      .filter(e => {
+                        return e.categoryId == this.eCategoryId || this.eCategoryId == 0;
+                      })
+                      .map((e, index) => (
+                        <li key={index}>
+                          <EventSmall event={e} />
+                        </li>
+                      ))
+                  )
+                )}
               </ul>
             </Card>
           </div>
@@ -178,6 +186,7 @@ export class FeedPage extends Component {
             //GET all Issues registered on the municipals
             .then(issues => {
               Array.prototype.push.apply(sharedIssues.issues, issues);
+              console.log(sharedIssues.issues);
             })
             .catch((error: Error) => Alert.danger(error.message))
         );

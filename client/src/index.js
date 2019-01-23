@@ -27,7 +27,7 @@ import { AlternativeUpload } from './components/image/AlternativeUpload.js';
 import { MunicipalPage } from './components/pages/MunicipalPage';
 import { NotFound } from './components/pages/NotFound';
 import { IssueView } from './components/pages/IssueOverviewPage';
-import { ContractorView } from './components/pages/ContractorIssuePage';
+import { ContractorView } from './components/pages/CompanyIssuePage';
 
 // Reload application when not in production environment
 
