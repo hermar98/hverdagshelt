@@ -8,6 +8,7 @@ import { history } from '../../index';
 import { Municipal } from '../../models/Municipal';
 import { ChooseMunicipalPageMenu } from '../../components/menu/ChooseMunicipalPageMenu';
 import { tokenManager } from '../../tokenManager';
+import { Button } from '../../widgets';
 import { Card } from '../../widgets';
 
 let municipalObjects;
@@ -38,7 +39,7 @@ export class ChooseMunicipalPage extends Component {
                     <div className="munInputForm justify-content-center row">
                       <form id="munInputForm-Form" autoComplete="off">
                           <input id="munInputForm-Input" type="text" name="municipal" placeholder="Velg kommune" />
-                          <button id="munInputForm-Button"  value="" type="button" onClick={this.go}>Gå</button>
+                          <Button.Basic  value="" type="button" onClick={this.go}>Gå</Button.Basic>
                       </form>
                     </div>
 
