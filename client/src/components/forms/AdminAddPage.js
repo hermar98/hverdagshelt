@@ -13,7 +13,7 @@ import {autocomplete, glob} from "../../../public/autocomplete";
 
 let municipalObjects;
 
-export default class RegistrationForm extends Component {
+export default class AdminAddPage extends Component {
   user = new User();
   repeatPassword = '';
   passwordLengthOk = true;
