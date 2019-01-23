@@ -21,8 +21,6 @@ export class ChooseMunicipalPage extends Component {
         <div>
           <ChooseMunicipalPageMenu />
         </div>
-
-        <div className="fg">
           <div className="fg-card">
             <div className="fg-grid">
               <div className="fg-logo">
@@ -35,12 +33,13 @@ export class ChooseMunicipalPage extends Component {
               </div>
               <div className="fg-input">
                 <div className="justify-content-center row">
-                    <div className="munInputForm">
-                      <form  autoComplete="off">
-                          <input id="municipalInput" type="text" name="municipal" placeholder="Velg kommune" />
-                          <button  value="" type="button" onClick={this.go}>Gå</button>
+                    <div className="munInputForm justify-content-center row">
+                      <form id="munInputForm-Form" autoComplete="off">
+                          <input id="munInputForm-Input" type="text" name="municipal" placeholder="Velg kommune" />
+                          <button id="munInputForm-Button"  value="" type="button" onClick={this.go}>Gå</button>
                       </form>
                     </div>
+
                 </div>
               </div>
               <div className="fg-content">
@@ -54,7 +53,7 @@ export class ChooseMunicipalPage extends Component {
           </div>
           </div>
         </div>
-      </div>
+
     );
   }
   mounted() {
@@ -67,7 +66,7 @@ export class ChooseMunicipalPage extends Component {
       let result = await promise;
       let municipals = result.map(e => e.name);
 
-      autocomplete(document.getElementById('municipalInput'), municipals);
+      autocomplete(document.getElementById('munInputForm-Input'), municipals);
     }
 
     f();
