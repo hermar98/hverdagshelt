@@ -330,7 +330,7 @@ class FormInput extends Component<{
   required?: boolean,
   pattern?: string,
   placeholder?: string,
-  readOnly?: boolean
+  readOnly?: boolean,
   title?: string,
   placeholder?: string
 }> {
