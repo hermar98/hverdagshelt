@@ -239,7 +239,7 @@ div.feedback-button div {
     display: none
 }
 
-#feedback-text {
+.feedback-text {
     margin: 3% 0 2% 0;
 }
 
