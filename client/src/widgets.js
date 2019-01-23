@@ -330,8 +330,7 @@ class FormInput extends Component<{
   required?: boolean,
   pattern?: string,
   placeholder?: string,
-  readOnly?: boolean
-  title?: string,
+  readOnly?: boolean,
   placeholder?: string
 }> {
   render() {
@@ -346,7 +345,6 @@ class FormInput extends Component<{
             onChange={this.props.onChange}
             required={this.props.required}
             pattern={this.props.pattern}
-            title={this.props.title}
             placeholder={this.props.placeholder}
             readOnly={this.props.readOnly}
             />

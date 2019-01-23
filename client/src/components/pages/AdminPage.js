@@ -3,7 +3,7 @@ import { Component } from 'react-simplified';
 import { User } from '../../models/User.js';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
 import RegistrationForm from '../../components/forms/RegistrationForm';
-import { NewMenu } from '../menu/NewMenu';
+import { IssueMenu } from '../menu/IssueMenu';
 import { userService } from '../../services/UserService.js';
 import { municipalService } from '../../services/MunicipalService.js';
 import { ImageButton } from '../issueViews/issueViews.js';
@@ -23,7 +23,7 @@ export class AdminPage extends Component {
     render() {
         return (
             <div>
-                <NewMenu />
+                <IssueMenu />
                 <div className="card m-3">
                     <div className="card-body">
                         <h2 className="card-title">Administrer brukere</h2>
