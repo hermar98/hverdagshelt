@@ -121,10 +121,10 @@ div.status > h4 {
     height: 75%;
 }
 
-.issue-small-list {
+/*.issue-small-list {
     max-height: 360px;
     overflow: auto;
-}
+}*/
 
 .sort-box {
     padding: 1% 1% 0% 1%;
