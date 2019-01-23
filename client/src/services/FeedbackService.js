@@ -19,6 +19,15 @@ class FeedbackService {
     });
   }
 
+  updateFeedback(feedback: Feedback): Promise<number> {
+    console.log("1")
+    let token = localStorage.getItem('token');
+    if (token) token = JSON.parse(token).jwt;
+    return service.put('/secure/feedback/' + feedback.feedbackId, feedback, {
+        headers: {'x-access-token': token}
+    });
+  }
+
   deleteFeedback(feedbackId: number): Promise<number> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;

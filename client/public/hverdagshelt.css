@@ -22,7 +22,7 @@ body {
 }
 
 .issue-overview-small-item {
-    margin-bottom: 5px;
+    padding: 0 0 0 0;
 }
 
 div.status > h4 {
@@ -111,13 +111,18 @@ div.status > h4 {
 
 .image-button {
     background-color: white;
-    height: 8vh;
+    height: 50px;
     border-radius: 0;
 }
 
 .image-button img {
-    width: 4vh;
-    height: 4vh;
+    width: 100%;
+    height: 100%;
+}
+
+.issue-small-list {
+    max-height: 360px;
+    overflow: auto;
 }
 
 .sort-box {
@@ -192,8 +197,8 @@ div.feedback-button div {
 }
 
 .status-image {
-    width: 4.5vh;
-    height: 4.5vh;
+    width: 30px;
+    height: 30px;
 }
 
 .issue-normal {
@@ -266,13 +271,28 @@ div.feedback-button div {
     padding: 0 0 0 0;
 }
 
+#edit-input-feedback {
+    margin: 3% 0 2% 0
+}
+
+#edit-button-feedback:hover {
+    color: black;
+    background-color: white;
+}
+
+#edit-button-feedback {
+    color: white;
+    background-color: #3d3d3d;
+    border: solid 1px black;
+}
+
 .view-text {
     flex: 1
 }
 
 .status-label {
     font-size: 110%;
-    opacity: 0.6;
+    color: #686868;
 }
 .status-box {
     border-bottom: lightgray 2px solid;
@@ -283,12 +303,22 @@ div.feedback-button div {
     margin-bottom: 1.5vh;
 }
 
+.issue-small-item {
+    padding: 1% 2% 0 2%;
+    margin-bottom: 2%;
+}
+
 .issue-large-card {
     padding: 6vh 6vh 6vh 6vh
 }
 
 .issue-images {
     margin-top: 3%;
+}
+
+.cat-name {
+    font-size: 105%;
+    color: #686868;
 }
 
 .feedback {
@@ -365,6 +395,10 @@ Profile-page
 
 }
 
+.municipal-2 {
+    border: none;
+}
+
 .change-password-profile {
     grid-column: 1 / 3;
     margin-top: 1%;
@@ -401,7 +435,7 @@ Profile-page
 }
 
 .my-profile {
-    margin: 2% 0 1% 0
+    margin: 3% 0 1% 0
 }
 
 /*
@@ -416,4 +450,7 @@ random
     margin: 2% 12% 2% 12%;
     text-align:center;
 
+}
+.autocomplete-items {
+    border: solid lightgrey 1px;
 }
