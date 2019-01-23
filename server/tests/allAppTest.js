@@ -92,7 +92,7 @@ describe('User tests', () => {
         expect(response.body.firstName).toBe('Vegard');
         expect(response.body.lastName).toBe('Andersson');
         expect(response.body.email).toBe('test@test.no');
-        expect(response.body.rank).toBe(1);
+        expect(response.body.rank).toBe(3);
         expect(response.body.salt).toBe('a83f4da094cc247b');
         expect(response.body.hashStr).toBe(
             '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722'
@@ -127,7 +127,7 @@ describe('User tests', () => {
         expect(response.body.firstName).toBe('Jørgen');
         expect(response.body.lastName).toBe('Andersson');
         expect(response.body.email).toBe('test@test.no');
-        expect(response.body.rank).toBe(1);
+        expect(response.body.rank).toBe(3);
         expect(response.body.salt).toBe('a83f4da094cc247b');
         expect(response.body.hashStr).toBe(
             '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722'
@@ -149,7 +149,7 @@ describe('User tests', () => {
 
         expect(response.body.firstName).toBe('Jørgen');
         expect(response.body.email).toBe('j@j.j');
-        expect(response.body.rank).toBe(1);
+        expect(response.body.rank).toBe(3);
     });
 
     //Delete user
@@ -407,7 +407,7 @@ describe('Issue tests', () => {
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
 
-        expect(response.body.length).toEqual(1);
+        expect(response.body.length).toEqual(3); //Registrert 3 issues på userid 1
     });
     //Update issue with id
     test('PUT /secure/issues/:id', async () => {
