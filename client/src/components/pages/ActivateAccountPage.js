@@ -6,28 +6,60 @@ import {history} from "../../index";
 import {Alert} from "../../widgets";
 import {tokenManager} from "../../tokenManager";
 import Menu from "../menu/Menu";
+import LimitedRegistrationForm from "../forms/LimitedRegistrationForm";
 
 export class ActivateAccountPage extends Component {
   isActivated: boolean = false;
+  isAdminCreated: boolean = false;
 
   render() {
-    return (
+    if(this.isActivated){
+      return(
       <div>
-      <Menu/>
-        {this.isActivated ? <div>Brukeren din er nå aktivert, BRO!</div> : <div>Din bruker er ikke aktivert. Vennligst sjekk din epost for aktiverings-link.</div>}
+        <Menu/>
+        <div className="container justify-content-center">
+          <h2>Aktivering av bruker</h2>
+          <div>Brukeren din er nå aktivert, BRO!</div>
+        </div>
       </div>
-    );
+      )
+    }else if(this.isAdminCreated){
+      return(
+      <div>
+        <Menu/>
+        <LimitedRegistrationForm/>
+      </div>
+      );
+    }else{
+      return (
+        <div>
+          <Menu/>
+          <div className="container justify-content-center">
+            <h2>Aktivering av bruker</h2>
+            <div>Din bruker er ikke aktivert eller har blitt deaktivert. Vennligst sjekk din epost for aktiverings-link.</div>
+          </div>
+        </div>
+      );
+    }
   }
 
   mounted() {
-    userService
-      .activateAccount(window.location.hash.slice(11))
-      .then(token => {
-        tokenManager.addToken(token)
-        this.isActivated = true;
+    userService.checkActivationToken(window.location.hash.slice(11))
+      .then(user => {
+        if(!user) return;
+        if(user.rank !== 0){
+          this.isAdminCreated = true;
+        }else{
+          userService
+            .activateAccount(window.location.hash.slice(11))
+            .then(token => {
+              tokenManager.addToken(token)
+              this.isActivated = true;
+            })
+            .catch((error: Error) => {
+              console.log(error)
+            });
+        }
       })
-      .catch((error: Error) => {
-        console.log(error)
-      });
   }
 }
