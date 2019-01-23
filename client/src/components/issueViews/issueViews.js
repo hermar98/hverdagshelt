@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 import {Redirect, NavLink} from 'react-router-dom'
 import { Feedback} from '../../models/Feedback';
-import { NotLoggedInMenu } from '../menu/NotLoggedInMenu';
+import { IssueMenu } from '../menu/IssueMenu';
 import {tokenManager} from "../../tokenManager";
 import {User} from "../../models/User";
 import {Issue} from "../../models/Issue";
@@ -61,7 +61,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
 
         return (
             <div>
-                <NotLoggedInMenu/>
+                <IssueMenu />
                 <div className="issue-container">
                     <div className="issue-large">
                         <Status status={this.issue.statusId} id={this.issue.issueId}/>
@@ -190,17 +190,23 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     }
 
     onDelete() {
-        if(confirm("Are you sure?")) {
-            issueService.deleteIssue(this.issue.issueId)
-                .then(res => {
-                    this.setState({
-                        clickedDelete: true
+        let rank = 0
+        userService.getUser(this.issue.userId)
+            .then(user => rank = user.rank)
+            .catch(error => console.error("Error: ", error))
+
+        if(rank == 3) {
+            if (confirm("Are you sure?")) {
+                issueService.deleteIssue(this.issue.issueId)
+                    .then(res => {
+                        this.setState({
+                            clickedDelete: true
+                        })
                     })
-                })
-                .catch(error => console.error("Error: ", error))
+                    .catch(error => console.error("Error: ", error))
+            }
         }
     }
-
 }
 
 /*
@@ -473,10 +479,9 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
         userService.getUser(this.props.userId)
             .then(user => rank = user.rank)
             .catch(error => console.error("Error: ", error))
-        console.log()
 
-        if(tokenManager.getUserId() == this.props.userId || rank == 3) {
-            if (confirm("Are you sure?")) {fi
+        if(tokenManager.getUserId() == this.props.feedback.userId) {
+            if (confirm("Are you sure?")) {
                 feedbackService.deleteFeedback(this.props.feedback.feedbackId)
                     .then(res => {
                         sharedFeedback.feedback.splice(sharedFeedback.feedback.indexOf(this.props.feedback), 1)

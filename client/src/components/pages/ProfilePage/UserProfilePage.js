@@ -120,20 +120,22 @@ export class UserProfilePage extends Component {
                                 <p>Email: {this.user.email}</p>
                             </div>
                         </div>
-                        <div className="card municipal">
+                        <div className="card  municipal">
                             <h5 id="municipal-title">Kommuner</h5>
-                            <div className="add-municipal-field justify-content-between d-flex flex-row">
-                                <input className="form-control" id="municipalInput" type="text" value={this.newMunicipalName} placeholder="Legg til kommune..." onChange={
-                                    event => this.newMunicipalName = event.target.value
-                                }/>
-                                <ImageButton source="../../images/add.png" onclick={() => this.handleAddMunicipal()}/>
+                            <div className="card municipal-2">
+                                <div className="add-municipal-field justify-content-between d-flex flex-row">
+                                    <input className="form-control" id="munInputForm-Input" type="text" value={this.newMunicipalName} placeholder="Legg til kommune..." onChange={
+                                        event => this.newMunicipalName = event.target.value
+                                    }/>
+                                    <ImageButton source="../../images/add.png" onclick={() => this.handleAddMunicipal()}/>
+                                </div>
+                                <ul className="list-group mun-list">
+                                    {sharedMunicipals.municipals.map((mun, index) => (
+                                        <li className="list-group-item municipal-item"><div className="d-flex flex-row justify-content-between align-items-center"> {mun.name}<ImageButton source="../../images/trashcan.png" onclick={
+                                            () => this.deleteUserMunicipal(mun.munId)}/></div></li>
+                                    ))}
+                                </ul>
                             </div>
-                            <ul className="list-group mun-list">
-                                {sharedMunicipals.municipals.map((mun, index) => (
-                                    <li className="list-group-item municipal-item"><div className="d-flex flex-row justify-content-between align-items-center"> {mun.name}<ImageButton source="../../images/trashcan.png" onclick={
-                                        () => this.deleteUserMunicipal(mun.munId)}/></div></li>
-                                ))}
-                            </ul>
                         </div>
                         <br />
                         <div className="change-password-profile">

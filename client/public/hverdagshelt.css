@@ -365,6 +365,10 @@ Profile-page
 
 }
 
+.municipal-2 {
+    border: none;
+}
+
 .change-password-profile {
     grid-column: 1 / 3;
     margin-top: 1%;
@@ -416,4 +420,7 @@ random
     margin: 2% 12% 2% 12%;
     text-align:center;
 
+}
+.autocomplete-items {
+    border: solid lightgrey 1px;
 }
