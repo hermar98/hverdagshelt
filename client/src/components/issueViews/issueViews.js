@@ -341,7 +341,7 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
                         </select>
                     </div>
                 </div>
-                <ul className="list-group">
+                <ul className="list-group issue-small-list">
                     {this.props.issues.map((issue,index) => {
                         if ((this.status == issue.statusId || this.status == 0) && (this.category == issue.categoryId || this.category == 0)) {
                             return(
@@ -450,19 +450,25 @@ Widget for displaying a single feedback-card with name, date, profile-picture an
  */
 export class IssueFeedback extends Component<{feedback: Feedback, userId: number}> {
 
+    constructor(props) {
+        super(props)
+        this.bodyRef = React.createRef()
+    }
+
     user = new User()
+    feedText: string = ''
 
     render() {
         return (
             <div className="feedback" feedback={this.props.feedback}>
                 <div className="card feedback-card">
-                    <div className="card-body">
+                    <div className="card-body" ref={this.bodyRef}>
                         <div className="d-flex flex-row submitter">
                                 <div className="p-2">
                                     <img className="card-img profile-image" src={this.user.profilePicture}/>
                                 </div>
                                 <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{formatDate(this.props.feedback.createdAt)}</p></div>
-                            <ImageButton source="../../images/cog.png" onclick="Edited" />
+                            <ImageButton source="../../images/cog.png" onclick={() => this.onEdit()} />
                             <ImageButton source="../../images/trashcan.png" onclick={() => this.onDelete()}/>
                         </div>
                         <div id="feedback-text" className="card-text">
@@ -480,6 +486,34 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
                 this.user = user
             })
             .catch(error => console.error("Error", error))
+        this.feedText = this.props.feedback.content
+    }
+
+    onEdit() {
+        let inp = document.createElement('input')
+        let btn = document.createElement('button')
+        let text = document.getElementById('feedback-text')
+        this.bodyRef.current.removeChild(text)
+        inp.id = 'edit-input-feedback'
+        inp.value = this.feedText
+        inp.onchange = (event) => (this.feedText = event.target.value)
+        inp.classList.add('form-control')
+        btn.id = 'edit-button-feedback'
+        btn.onclick = () => this.onEditComplete(inp, btn, text)
+        btn.classList.add('btn')
+        btn.innerHTML = "Endre"
+        this.bodyRef.current.append(inp)
+        this.bodyRef.current.append(btn)
+    }
+
+    onEditComplete (inp, btn, text) {
+        this.props.feedback.content = this.feedText
+        feedbackService.updateFeedback(this.props.feedback)
+            .then()
+            .catch(error => console.error("Error: ", error))
+        this.bodyRef.current.removeChild(inp)
+        this.bodyRef.current.removeChild(btn)
+        this.bodyRef.current.append(text)
     }
 
     onDelete() {

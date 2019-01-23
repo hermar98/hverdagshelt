@@ -111,13 +111,18 @@ div.status > h4 {
 
 .image-button {
     background-color: white;
-    height: 8vh;
+    height: 50px;
     border-radius: 0;
 }
 
 .image-button img {
-    width: 4vh;
-    height: 4vh;
+    width: 100%;
+    height: 100%;
+}
+
+.issue-small-list {
+    max-height: 360px;
+    overflow: auto;
 }
 
 .sort-box {
@@ -192,8 +197,8 @@ div.feedback-button div {
 }
 
 .status-image {
-    width: 4.5vh;
-    height: 4.5vh;
+    width: 30px;
+    height: 30px;
 }
 
 .issue-normal {
@@ -264,6 +269,21 @@ div.feedback-button div {
 
 .normal-list-item {
     padding: 0 0 0 0;
+}
+
+#edit-input-feedback {
+    margin: 3% 0 2% 0
+}
+
+#edit-button-feedback:hover {
+    color: black;
+    background-color: white;
+}
+
+#edit-button-feedback {
+    color: white;
+    background-color: #3d3d3d;
+    border: solid 1px black;
 }
 
 .view-text {
