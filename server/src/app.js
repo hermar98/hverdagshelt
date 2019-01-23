@@ -107,12 +107,26 @@ app.post('/register', (req: Request, res: Response) => {
   let firstNameS: string = (firstName: any);
   let lastNameS: string = (lastName: any);
 
+  if(!firstNameS){
+    firstNameS = "";
+  }
+  if(!lastNameS){
+    lastNameS = "";
+  }
+
   User.findOne({ where: { email: email } }).then(user => {
     if (user) return res.sendStatus(409);
   });
 
-  let passwordSalt = passwordHash.genRandomString(16);
-  let passwordData = passwordHash.sha512(password, passwordSalt);
+  let passwordSalt = null;
+  let passwordData = {
+    passwordHash: null
+  }
+
+  if(password) {
+    passwordSalt = passwordHash.genRandomString(16);
+    passwordData = passwordHash.sha512(password, passwordSalt);
+  }
 
   const token = crypto.randomBytes(20).toString('hex');
 
@@ -140,13 +154,36 @@ app.post('/register', (req: Request, res: Response) => {
 });
 
 app.put('/activate/:token', (req: Request, res: Response) => {
+  const body = req.body !== null && typeof req.body === 'object' ? req.body : {};
+  const { firstName, lastName, email, rank, password } = body;
+  let isAdminCreated = false;
+  if(firstName && lastName && password){
+    isAdminCreated = true;
+  }
+
   let token = req.params.token;
   User.findOne({ where: { activateAccountToken: token } }).then(user => {
     if (user) {
       token = jwt.sign({ email: user.email }, secretKey, { expiresIn: 4000 });
+      if(user.rank === 0){
+        user.rank = 1;
+      }
+
+      if(isAdminCreated){
+        user.firstName = firstName;
+        user.lastName = lastName;
+        user.passwordSalt = passwordHash.genRandomString(16);
+        let passwordData = passwordHash.sha512(password, user.passwordSalt);
+        user.passwordHash = passwordData.passwordHash;
+      }
+
       return User.update(
         {
-          rank: 1,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          salt: user.passwordSalt,
+          hashStr: user.passwordHash,
+          rank: user.rank,
           activateAccountToken: null
         },
         { where: { userId: user.userId } }
@@ -155,6 +192,10 @@ app.put('/activate/:token', (req: Request, res: Response) => {
       res.sendStatus(404);
     }
   });
+});
+
+app.get('/activate/:token',(req: Request, res: Response) => {
+  return User.findOne({ where: {activateAccountToken: req.params.token} }).then(user => res.send(user))
 });
 
 module.exports = app;

@@ -40,6 +40,7 @@ if (process.env.NODE_ENV !== 'production') {
 import createHashHistory from 'history/createHashHistory';
 import {ActivateAccountPage} from "./components/pages/ActivateAccountPage";
 import ProfilePage from "./components/pages/ProfilePage/ProfilePage";
+import RegistrationFormAdmin from "./components/forms/AddUserFormAdmin";
 
 export const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after
 
@@ -63,7 +64,8 @@ if (root)
         <Route exact path="/registrerSak" component={FileIssuePage} />
         <Route exact path="/feed" component={FeedPage} />
         <Route exact path="/kommune/:munId" component={MunicipalPage} />
-          <Route exact path="/image" component={AlternativeUpload} />
+            <Route exact path="/admin/registrerBruker" component={RegistrationFormAdmin}/>
+            <Route exact path="/image" component={AlternativeUpload} />
           <Route exact path="/activate/:tokenId" component={ActivateAccountPage}/>
           <Route path="" component={NotFound}/>
           </Switch>
