@@ -129,7 +129,6 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
 
     mounted () {
         window.scrollTo(0, 0);
-        console.log(this.props.match.params.issueId)
         issueService.getIssue(this.props.match.params.issueId)
             .then(issue => {
                 this.issue = issue;
@@ -469,7 +468,6 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
         userService.getUser(this.props.feedback.userId)
             .then(user => {
                 this.user = user
-                console.log(JSON.stringify(this.user))
             })
             .catch(error => console.error("Error", error))
     }
