@@ -28,6 +28,7 @@ export class AdminProfilePage extends Component {
       <div>
         <ProfileMenu />
         <Card title="Min Profil">
+          <hr />
           <p>
             Navn: {this.user.firstName} {this.user.lastName}
           </p>
