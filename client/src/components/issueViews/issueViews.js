@@ -36,6 +36,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
         this.statusSelect = React.createRef()
         this.addFeedbackButton = React.createRef()
         this.addFeedbackForm = React.createRef()
+        this.bodyRef = React.createRef()
         this.state = {
             clickedStatus: false,
             clickedDelete: false
@@ -45,6 +46,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     issue = new Issue();
     feedbackContent: string = '';
     categoryName: string = '';
+    issueText: string = '';
 
     render() {
         if(!this.state.clickedStatus && this.statusSelect.current != null) {
@@ -71,7 +73,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                 <div className="d-flex flex-row">
                                     <p id="date-large" className="date">{formatDate(this.issue.createdAt)}</p>
                                     <div className="options">
-                                        <ImageButton source="../../images/cog.png" onclick="Edited" />
+                                        <ImageButton source="../../images/cog.png" onclick={() => this.onEdit()} />
                                         <ImageButton source="../../images/trashcan.png" onclick={() => this.onDelete()} />
                                     </div>
                                     <StatusButton status={this.issue.statusId} onclick={() => {
@@ -88,7 +90,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                     </div>
                                 </div>
                                 <h5>{this.categoryName}</h5>
-                                <div className="card-text">
+                                <div className="card-text" ref={this.bodyRef}>
                                     <p id="issue-large-text">{this.issue.content}</p>
                                 </div>
                             </div>
@@ -187,6 +189,34 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                 })
                 .catch(error => console.error("Error: ", error))
         }
+    }
+
+    onEdit() {
+        this.issueText = this.issue.content
+        let inp = document.createElement('input')
+        let btn = document.createElement('button')
+        let text = document.getElementById('issue-large-text')
+        this.bodyRef.current.removeChild(text)
+        inp.id = 'edit-input-feedback'
+        inp.value = this.issueText
+        inp.onchange = (event) => (this.issueText = event.target.value)
+        inp.classList.add('form-control')
+        btn.id = 'edit-button-feedback'
+        btn.onclick = () => this.onEditComplete(inp, btn, text)
+        btn.classList.add('btn')
+        btn.innerHTML = "Endre"
+        this.bodyRef.current.append(inp)
+        this.bodyRef.current.append(btn)
+    }
+
+    onEditComplete (inp, btn, text) {
+        this.issue.content = this.issueText
+        issueService.updateIssue(this.issue)
+            .then()
+            .catch(error => console.error("Error: ", error))
+        this.bodyRef.current.removeChild(inp)
+        this.bodyRef.current.removeChild(btn)
+        this.bodyRef.current.append(text)
     }
 
     onDelete() {
