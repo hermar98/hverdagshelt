@@ -1,4 +1,4 @@
-import {Feedback} from "../models";
+import {Feedback, Issue} from "../models";
 require('dotenv').config();
 
 type Request = express$Request;
@@ -27,6 +27,7 @@ app.get('/issues/:id/feedback/:lim/limit/:off/offset/asc', (req: Request, res: R
         order: [
             ['createdAt']
         ]
+
         }).then(
         issue => (issue ? res.send(issue) : res.sendStatus(404))
     );
@@ -56,6 +57,23 @@ app.get('/feedback/:id', (req: Request, res: Response) => {
         feedbak => (feedbak ? res.send(feedbak) : res.sendStatus(404))
     );
 });
+
+//UPDATE one feedback with id
+app.put('/secure/feedback/:id', (req: Request, res: Response) => {
+    console.log("2")
+    if (!(req.body instanceof Object)) return res.sendStatus(400);
+    return Feedback.update(
+        {
+            content: req.body.content
+        },
+        {
+            where: {
+                feedbackId: req.params.id
+            }
+        }
+    ).then(feedback => (feedback ? res.sendStatus(200) : res.sendStatus(404)));
+})
+
 //DELETE one feedback with id
 app.delete('/feedback/:id', (req: Request, res: Response) => {
     return Feedback.destroy({

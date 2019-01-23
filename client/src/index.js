@@ -21,6 +21,7 @@ import { ForgotPassword } from './components/pages/ForgotPassword.js';
 import { NewPasswordPage } from './components/pages/NewPasswordPage.js';
 import { StatisticsPage } from './components/pages/StatisticsPage.js';
 import { TermsOfService } from './components/pages/TermsOfServicePage.js';
+import { AdminPage, AdminEditPage } from './components/pages/AdminPage.js';
 // import { UploadImageTest } from './components/image/UploadImageTest.js';
 import { AlternativeUpload } from './components/image/AlternativeUpload.js';
 
@@ -66,6 +67,8 @@ if (root)
                 <Route exact path="/kommune/:munId/saker" component={IssueView} />
                 <Route exact path="/saker" component={ContractorView} />
                 <Route exact path="/statistics" component={StatisticsPage} />
+                <Route exact path="/admin" component={AdminPage}/>
+                <Route exact path="/admin/edit/:userId" component={AdminEditPage}/>
                 <Route path="" component={NotFound}/>
               </Switch>
           <Footer />
