@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 import {Redirect, NavLink} from 'react-router-dom'
 import { Feedback} from '../../models/Feedback';
-import { NotLoggedInMenu } from '../menu/NotLoggedInMenu';
+import { IssueMenu } from '../menu/IssueMenu';
 import {tokenManager} from "../../tokenManager";
 import {User} from "../../models/User";
 import {Issue} from "../../models/Issue";
@@ -10,6 +10,7 @@ import {userService} from "../../services/UserService";
 import {issueService} from "../../services/IssueService";
 import {issueCategoryService} from "../../services/IssueCategoryService";
 import {feedbackService} from "../../services/FeedbackService";
+import {municipalService} from "../../services/MunicipalService";
 
 let sharedIssues = sharedComponentData({issues: []})
 let sharedFeedback = sharedComponentData({feedback: []})
@@ -35,6 +36,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
         this.statusSelect = React.createRef()
         this.addFeedbackButton = React.createRef()
         this.addFeedbackForm = React.createRef()
+        this.bodyRef = React.createRef()
         this.state = {
             clickedStatus: false,
             clickedDelete: false
@@ -44,6 +46,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     issue = new Issue();
     feedbackContent: string = '';
     categoryName: string = '';
+    issueText: string = '';
 
     render() {
         if(!this.state.clickedStatus && this.statusSelect.current != null) {
@@ -61,7 +64,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
 
         return (
             <div>
-                <NotLoggedInMenu/>
+                <IssueMenu />
                 <div className="issue-container">
                     <div className="issue-large">
                         <Status status={this.issue.statusId} id={this.issue.issueId}/>
@@ -70,7 +73,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                 <div className="d-flex flex-row">
                                     <p id="date-large" className="date">{formatDate(this.issue.createdAt)}</p>
                                     <div className="options">
-                                        <ImageButton source="../../images/cog.png" onclick="Edited" />
+                                        <ImageButton source="../../images/cog.png" onclick={() => this.onEdit()} />
                                         <ImageButton source="../../images/trashcan.png" onclick={() => this.onDelete()} />
                                     </div>
                                     <StatusButton status={this.issue.statusId} onclick={() => {
@@ -87,7 +90,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                     </div>
                                 </div>
                                 <h5>{this.categoryName}</h5>
-                                <div className="card-text">
+                                <div className="card-text" ref={this.bodyRef}>
                                     <p id="issue-large-text">{this.issue.content}</p>
                                 </div>
                             </div>
@@ -129,7 +132,6 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
 
     mounted () {
         window.scrollTo(0, 0);
-        console.log(this.props.match.params.issueId)
         issueService.getIssue(this.props.match.params.issueId)
             .then(issue => {
                 this.issue = issue;
@@ -189,18 +191,52 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
         }
     }
 
-    onDelete() {
-        if(confirm("Are you sure?")) {
-            issueService.deleteIssue(this.issue.issueId)
-                .then(res => {
-                    this.setState({
-                        clickedDelete: true
-                    })
-                })
-                .catch(error => console.error("Error: ", error))
-        }
+    onEdit() {
+        this.issueText = this.issue.content
+        let inp = document.createElement('input')
+        let btn = document.createElement('button')
+        let text = document.getElementById('issue-large-text')
+        this.bodyRef.current.removeChild(text)
+        inp.id = 'edit-input-feedback'
+        inp.value = this.issueText
+        inp.onchange = (event) => (this.issueText = event.target.value)
+        inp.classList.add('form-control')
+        btn.id = 'edit-button-feedback'
+        btn.onclick = () => this.onEditComplete(inp, btn, text)
+        btn.classList.add('btn')
+        btn.innerHTML = "Endre"
+        this.bodyRef.current.append(inp)
+        this.bodyRef.current.append(btn)
     }
 
+    onEditComplete (inp, btn, text) {
+        this.issue.content = this.issueText
+        issueService.updateIssue(this.issue)
+            .then()
+            .catch(error => console.error("Error: ", error))
+        this.bodyRef.current.removeChild(inp)
+        this.bodyRef.current.removeChild(btn)
+        this.bodyRef.current.append(text)
+    }
+
+    onDelete() {
+        let rank = 0
+        userService.getUser(this.issue.userId)
+            .then(user => rank = user.rank)
+            .catch(error => console.error("Error: ", error))
+
+        if(rank == 3) {
+            if (confirm("Are you sure?")) {
+                issueService.deleteIssue(this.issue.issueId)
+                    .then(res => {
+                        this.setState({
+                            clickedDelete: true
+                        })
+                    })
+                    .catch(error => console.error("Error: ", error))
+            }
+        }
+    }
 }
 
 /*
@@ -252,6 +288,7 @@ Small view of an issue that displays only the title and the status
 export class IssueSmall extends Component<{issue: Issue, munId: number}> {
 
     categoryName: string = '';
+    munName: string = '';
 
     render() {
         return (
@@ -262,12 +299,15 @@ export class IssueSmall extends Component<{issue: Issue, munId: number}> {
                 <div>
                     <div className="d-flex flex-row issue-flex justify-content-between">
                         <div className="view-text">
-                            <p className="date">{formatDate(this.props.issue.createdAt)}</p>
                             <h5>
-                                {this.categoryName}
+                                {this.munName + " Kommune"}
                             </h5>
+                            <p className="cat-name">
+                                {this.categoryName}
+                            </p>
+                            <p className="date">{formatDate(this.props.issue.createdAt)}</p>
                         </div>
-                        <p>Status:&nbsp;&nbsp;</p>
+                        <p className="status-label">Status:&nbsp;&nbsp;</p>
                         <StatusImage status={this.props.issue.statusId} />
                     </div>
                 </div>
@@ -279,6 +319,11 @@ export class IssueSmall extends Component<{issue: Issue, munId: number}> {
         issueCategoryService.getCategory(this.props.issue.categoryId)
             .then(category => {
                 this.categoryName = category.name
+            })
+            .catch(error => console.error("Error: ", error))
+        municipalService.getMunicipal(this.props.issue.munId)
+            .then(mun => {
+                this.munName = mun.name
             })
             .catch(error => console.error("Error: ", error))
     }
@@ -326,11 +371,11 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
                         </select>
                     </div>
                 </div>
-                <ul className="list-group">
+                <ul className="list-group issue-small-list">
                     {this.props.issues.map((issue,index) => {
                         if ((this.status == issue.statusId || this.status == 0) && (this.category == issue.categoryId || this.category == 0)) {
                             return(
-                                <li key={index} className="list-group-item">
+                                <li key={index} className="list-group-item issue-small-item">
                                     <IssueSmall issue={issue} munId={this.props.munId}/>
                                 </li>
                             )
@@ -435,19 +480,25 @@ Widget for displaying a single feedback-card with name, date, profile-picture an
  */
 export class IssueFeedback extends Component<{feedback: Feedback, userId: number}> {
 
+    constructor(props) {
+        super(props)
+        this.bodyRef = React.createRef()
+    }
+
     user = new User()
+    feedText: string = ''
 
     render() {
         return (
             <div className="feedback" feedback={this.props.feedback}>
                 <div className="card feedback-card">
-                    <div className="card-body">
+                    <div className="card-body" ref={this.bodyRef}>
                         <div className="d-flex flex-row submitter">
                                 <div className="p-2">
                                     <img className="card-img profile-image" src={this.user.profilePicture}/>
                                 </div>
                                 <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{formatDate(this.props.feedback.createdAt)}</p></div>
-                            <ImageButton source="../../images/cog.png" onclick="Edited" />
+                            <ImageButton source="../../images/cog.png" onclick={() => this.onEdit()} />
                             <ImageButton source="../../images/trashcan.png" onclick={() => this.onDelete()}/>
                         </div>
                         <div id="feedback-text" className="card-text">
@@ -463,9 +514,36 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
         userService.getUser(this.props.feedback.userId)
             .then(user => {
                 this.user = user
-                console.log(JSON.stringify(this.user))
             })
             .catch(error => console.error("Error", error))
+        this.feedText = this.props.feedback.content
+    }
+
+    onEdit() {
+        let inp = document.createElement('input')
+        let btn = document.createElement('button')
+        let text = document.getElementById('feedback-text')
+        this.bodyRef.current.removeChild(text)
+        inp.id = 'edit-input-feedback'
+        inp.value = this.feedText
+        inp.onchange = (event) => (this.feedText = event.target.value)
+        inp.classList.add('form-control')
+        btn.id = 'edit-button-feedback'
+        btn.onclick = () => this.onEditComplete(inp, btn, text)
+        btn.classList.add('btn')
+        btn.innerHTML = "Endre"
+        this.bodyRef.current.append(inp)
+        this.bodyRef.current.append(btn)
+    }
+
+    onEditComplete (inp, btn, text) {
+        this.props.feedback.content = this.feedText
+        feedbackService.updateFeedback(this.props.feedback)
+            .then()
+            .catch(error => console.error("Error: ", error))
+        this.bodyRef.current.removeChild(inp)
+        this.bodyRef.current.removeChild(btn)
+        this.bodyRef.current.append(text)
     }
 
     onDelete() {
@@ -473,9 +551,8 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
         userService.getUser(this.props.userId)
             .then(user => rank = user.rank)
             .catch(error => console.error("Error: ", error))
-        console.log()
 
-        if(tokenManager.getUserId() == this.props.userId || rank == 3) {
+        if(tokenManager.getUserId() == this.props.feedback.userId) {
             if (confirm("Are you sure?")) {
                 feedbackService.deleteFeedback(this.props.feedback.feedbackId)
                     .then(res => {
