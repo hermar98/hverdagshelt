@@ -47,6 +47,7 @@ export class SpecificIssueMenu extends Component {
           <div>
             <NavBar>
               <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
+              <NavBar.Button onClick={this.toRegisterIssue}>Registrer Sak</NavBar.Button>
               <NavBar.Button onClick={this.toFeed}>Min Feed</NavBar.Button>
               <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
                 <DropdownHeader>{this.user.email}</DropdownHeader>
@@ -80,6 +81,7 @@ export class SpecificIssueMenu extends Component {
           <div>
             <NavBar>
               <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
+              <NavBar.Button onClick={this.toRegisterEvent}>Registrer Event</NavBar.Button>
               <NavBar.Button onClick={this.toMunEmployeeHome}>Hjem</NavBar.Button>
               <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
                 <DropdownHeader>{this.user.email}</DropdownHeader>
@@ -135,6 +137,12 @@ export class SpecificIssueMenu extends Component {
   toLogout() {
     tokenManager.deleteToken();
     history.push('/');
+  }
+  toRegisterIssue() {
+    history.push('/registrerSak');
+  }
+  toRegisterEvent() {
+    history.push('/registrerEvent');
   }
   toMunEmployeeProfile() {
     history.push('/profil');

@@ -41,7 +41,8 @@
 }
 
 .focus {
-  background-color: #58b355;
+  background-color: white;
+  color: black;
 }
 .navbar-collapse.collapse.show {
   display: block !important;

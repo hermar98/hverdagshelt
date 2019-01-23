@@ -46,6 +46,7 @@ export class FeedMenu extends Component {
         <div>
           <NavBar>
             <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
+            <NavBar.Button onClick={this.toRegisterIssue}>Registrer Sak</NavBar.Button>
             <NavBar.Button className="focus" onClick={this.toFeed}>
               Min Feed
             </NavBar.Button>
@@ -74,12 +75,18 @@ export class FeedMenu extends Component {
     tokenManager.deleteToken();
     history.push('/');
   }
+  toRegisterIssue() {
+    history.push('/registrerSak');
+  }
+  toRegisterEvent() {
+    history.push('/registrerEvent');
+  }
   changeMunicipal() {
     localStorage.removeItem('munId');
     history.push('/');
   }
 
-  toIssue () {
-    history.push("/registrerSak")
+  toIssue() {
+    history.push('/registrerSak');
   }
 }
