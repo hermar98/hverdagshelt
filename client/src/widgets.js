@@ -236,6 +236,7 @@ class NavBarDropdown extends Component<
       <div className="dropdown form-inline ml-2" onClick={this.toggleOpen}>
         <button
           className={'custom-nav-btn btn btn-outline-light dropdown-toggle ' + this.props.className}
+          id="profileButton"
           type="button"
           //  id="dropdownMenuButton"
           //  data-toggle="dropdown"

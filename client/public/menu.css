@@ -27,6 +27,9 @@
     border-left: none !important;
   }
 }
+#profileButton {
+  width: 180px;
+}
 .custom-nav-link {
   padding-top: 0px !important;
   padding-bottom: 0px !important;
