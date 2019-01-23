@@ -22,9 +22,6 @@ export class ChooseMunicipalPageMenu extends Component {
       .catch((error: Error) => console.log(error));
   }
   render() {
-    {
-      console.log(this.user);
-    }
     if (this.user) {
       if (this.user.rank === 1) {
         return (
