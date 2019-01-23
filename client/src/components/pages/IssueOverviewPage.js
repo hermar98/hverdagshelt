@@ -4,9 +4,13 @@ import { Redirect, NavLink } from 'react-router-dom';
 import { HoverButton, IssueOverviewSmall } from '../issueViews/issueViews';
 import { issueService } from '../../services/IssueService';
 import { IssueMenu } from '../menu/IssueMenu';
+import {userService} from "../../services/UserService";
+import {tokenManager} from "../../tokenManager";
 
-export class IssueView extends Component<{ match: { params: { munId: number } } }> {
+export class IssueView extends Component {
+
   issues: [] = [];
+  munId: number = 0;
 
   render() {
     return (
@@ -29,11 +33,16 @@ export class IssueView extends Component<{ match: { params: { munId: number } } 
   }
 
   mounted() {
-    issueService
-      .getIssuesByMunicipal(this.props.match.params.munId)
-      .then(issues => {
-        this.issues = issues;
-      })
-      .catch(error => console.error('Error: ', error));
+
+    userService.getUser(tokenManager.getUserId())
+        .then(user => {
+          this.munId = user.munId
+            issueService
+                .getIssuesByMunicipal(this.munId)
+                .then(issues => {
+                    this.issues = issues;
+                })
+                .catch(error => console.error('Error: ', error));
+        })
   }
 }
