@@ -46,7 +46,7 @@ class IssueService {
     });
   }
 
-  addIssue(issue: Issue): Promise<number> {
+  addIssue(issue: Issue): Promise<Issue> {
     let token = localStorage.getItem('token');
     if (token) token = JSON.parse(token).jwt;
     return service.post('/secure/issues', issue, {
@@ -60,6 +60,14 @@ class IssueService {
     return service.delete('/secure/issues/' + issueId, {
       headers: {'x-access-token': token}
     });
+  }
+
+  getNumberOfIssues(munId: number, year: number): Promise<JSON[]> {
+      let token = localStorage.getItem('token');
+      if (token) token = JSON.parse(token).jwt;
+      return service.get('/municipals/' + munId + '/issues/count?year=' + year, {
+          headers: {'x-access-token': token}
+      });
   }
 }
 

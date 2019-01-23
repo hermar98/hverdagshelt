@@ -3,7 +3,7 @@ import service from './Service';
 import {Image} from "../models/Image.js";
 
 class ImageService{
-    static getImage(imageId: number): Promise<Image> {
+    getImage(imageId: number): Promise<Image> {
         let token = localStorage.getItem('token');
         if (token) token = JSON.parse(token).jwt;
         return service.get('/secure/image/' + imageId, {
@@ -11,16 +11,18 @@ class ImageService{
         });
     }
 
-    static addImage(image: Image): Promise<number> {
-        return service.post('/secure/image', image);
+    uploadImage(image: Image): Promise<Image> {
+        console.log("ON OUR WAY");
+        return service.post('/imageUpload', image);
     }
 
-    static deleteImage(imageId: number): Promise<void> {
+    deleteImage(imageId: number): Promise<void> {
         let token = localStorage.getItem('token');
         if (token) token = JSON.parse(token).jwt;
         return service.delete('/secure/image/' + imageId, {
             headers: { 'x-access-token': token }
         });
     }
+}
 
-}   
+export let imageService = new ImageService();

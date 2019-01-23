@@ -5,7 +5,7 @@ import { Component } from 'react-simplified';
 import { User } from '../../models/User.js';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
 import RegistrationForm from '../../components/forms/RegistrationForm';
-import { NewMenu } from '../menu/NewMenu';
+import { RegisterMenu } from '../menu/RegisterMenu';
 
 export class RegisterPage extends Component {
   user = new User();
@@ -13,7 +13,7 @@ export class RegisterPage extends Component {
   render() {
     return (
       <div>
-        <NewMenu />
+        <RegisterMenu />
         <RegistrationForm />
       </div>
     );

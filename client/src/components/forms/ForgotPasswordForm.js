@@ -8,35 +8,41 @@ import { Alert, NavBar, Form, Card, Button } from '../../widgets';
 import { userService } from '../../services/UserService.js';
 import { Issue } from '../../models/Issue';
 import { history } from '../../index';
-import {User} from "../../models/User";
+import { User } from '../../models/User';
 
 export default class Login extends Component {
+  state = {
+    sendOk: false,
+    sendError: false
+  };
   email = '';
   form = null;
-  message = '';
 
   render() {
     return (
-      <Card title="Glemt Passord">
-        <form ref={e => (this.form = e)} onSubmit={e => e.preventDefault()}>
-          <Form.Input
-            type="email"
-            onChange={event => (this.email = event.target.value)}
-            required
-            placeholder="Skriv inn epost"
-          />
-          <div className="container h-100">
-            <div className="row h-100 justify-content-center align-items-center">
-              <Button.Basic type="submit" onClick={this.login}>
-                Send Epost
-              </Button.Basic>
+      <div>
+        <Card title="Glemt Passord">
+          <form ref={e => (this.form = e)} onSubmit={e => e.preventDefault()}>
+            <Form.Input
+              type="email"
+              onChange={event => (this.email = event.target.value)}
+              required
+              placeholder="Skriv inn epost"
+            />
+            <div className="container h-100">
+              <div className="row h-100 justify-content-center align-items-center">
+                <Button.Basic type="submit" onClick={this.login}>
+                  Send Epost
+                </Button.Basic>
+              </div>
             </div>
-          </div>
-          <div className="container h-100">
-            <div className="row justify-content-center align-items-center">{this.message}</div>
-          </div>
-        </form>
-      </Card>
+            <div className="container h-100">
+              {this.state.sendOk ? <Form.Alert type="success" text="Sendt" /> : <div />}
+              {this.state.sendError ? <Form.Alert type="danger" text="Finner ingen bruker med den emailen" /> : <div />}
+            </div>
+          </form>
+        </Card>
+      </div>
     );
   }
 
@@ -48,8 +54,15 @@ export default class Login extends Component {
     userService
       .forgotPassword(this.email)
       .then(res => {
-        this.message = res;
+        console.log(res);
+        if (res !== 'email er ikke i databasen') {
+          this.setState({ sendOk: true, sendError: false });
+        } else {
+          this.setState({ sendError: true, sendOk: false });
+        }
       })
-      .catch((error: Error) => Alert.danger(error.message));
+      .catch((error: Error) => {
+        console.log(error);
+      });
   }
 }

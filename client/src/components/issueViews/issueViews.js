@@ -1,9 +1,8 @@
-
 import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 import {Redirect, NavLink} from 'react-router-dom'
 import { Feedback} from '../../models/Feedback';
-import Menu from '../menu/Menu';
+import { NotLoggedInMenu } from '../menu/NotLoggedInMenu';
 import {tokenManager} from "../../tokenManager";
 import {User} from "../../models/User";
 import {Issue} from "../../models/Issue";
@@ -62,7 +61,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
 
         return (
             <div>
-                <Menu />
+                <NotLoggedInMenu/>
                 <div className="issue-container">
                     <div className="issue-large">
                         <Status status={this.issue.statusId} id={this.issue.issueId}/>
@@ -102,7 +101,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                     </div>
                     <h4 className="feedback-title">Oppdateringer</h4>
                     {sharedFeedback.feedback.map(feedback => {
-                        return <IssueFeedback feedback={feedback}/>
+                        return <IssueFeedback feedback={feedback} userId={this.issue.userId}/>
                     })}
                     <div className="feedback-button">
                         <div>
@@ -129,7 +128,6 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     }
 
     mounted () {
-        console.log("1")
         window.scrollTo(0, 0);
         console.log(this.props.match.params.issueId)
         issueService.getIssue(this.props.match.params.issueId)
@@ -155,6 +153,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
             .then(res => {
                 issueService.getIssue(this.issue.issueId)
                     .then(issue => {
+                        console.log("hadad")
                         this.issue = issue;
                         this.setState({clickedStatus: !this.state.clickedStatus})
                     })
@@ -164,23 +163,30 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     }
 
     onClickFeedback () {
-        let feedback = new Feedback();
-        feedback.name = '';
-        feedback.content = this.feedbackContent;
-        feedback.issueId = this.issue.issueId;
-        feedback.userId = tokenManager.getUserId()
-        feedbackService.addFeedback(feedback)
-            .then(res => {
-                this.addFeedbackButton.current.classList.remove('show')
-                this.addFeedbackForm.current.classList.add('show')
-                feedbackService.getFeedbacks(this.props.match.params.issueId)
-                    .then(data => {
-                        sharedFeedback.feedback = data;
-                    })
-                    .catch(error => console.error("Error: ", error))
-                this.feedbackContent = '';
-            })
+        let rank = 0
+        userService.getUser(this.issue.userId)
+            .then(user => rank = user.rank)
             .catch(error => console.error("Error: ", error))
+
+        if(tokenManager.getUserId() == this.issue.userId || rank == 3) {
+            let feedback = new Feedback();
+            feedback.name = '';
+            feedback.content = this.feedbackContent;
+            feedback.issueId = this.issue.issueId;
+            feedback.userId = tokenManager.getUserId()
+            feedbackService.addFeedback(feedback)
+                .then(res => {
+                    this.addFeedbackButton.current.classList.remove('show')
+                    this.addFeedbackForm.current.classList.add('show')
+                    feedbackService.getFeedbacks(this.props.match.params.issueId)
+                        .then(data => {
+                            sharedFeedback.feedback = data;
+                        })
+                        .catch(error => console.error("Error: ", error))
+                    this.feedbackContent = '';
+                })
+                .catch(error => console.error("Error: ", error))
+        }
     }
 
     onDelete() {
@@ -284,16 +290,47 @@ A list of issues in small view
 export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[]}> {
 
     status: number = 0;
-    timesort: string = "Nyeste";
+    timesort: number = 0;
+    category: number = 0;
+    categories: [] = []
 
     render () {
         return (
             <div>
+                <div className="d-flex flex-row sort-box justify-content-between">
+                    <div className="d-flex flex-row justify-content-start">
+                        <div id="sort-push" className="form-group">
+                            <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
+                                <option value={0}>Alle</option>
+                                <option value={1}>Ikke behandlet</option>
+                                <option value={2}>Under behandling</option>
+                                <option value={3}>Behandlet</option>
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <select className="form-control" value={this.category} onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.category = event.target.value)}>
+                                <option value={0}>Alle</option>
+                                {this.categories.map(cat => {
+                                    return <option value={cat.categoryId}>{cat.name}</option>
+                                })}
+                            </select>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <select className="form-control" id="statusSelect" value={this.timesort} onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
+                            this.timesort = event.target.value;
+                            this.handleOnChange()
+                        }}>
+                            <option value={0}>Nyeste</option>
+                            <option value={1}>Eldste</option>
+                        </select>
+                    </div>
+                </div>
                 <ul className="list-group">
                     {this.props.issues.map((issue,index) => {
-                        if (this.status == issue.statusId || this.status == 0) {
+                        if ((this.status == issue.statusId || this.status == 0) && (this.category == issue.categoryId || this.category == 0)) {
                             return(
-                                <li key={index} className="list-group-item issue-item">
+                                <li key={index} className="list-group-item">
                                     <IssueSmall issue={issue} munId={this.props.munId}/>
                                 </li>
                             )
@@ -306,6 +343,17 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
 
     mounted (){
         window.scrollTo(0, 0);
+        issueCategoryService.getCategories()
+            .then(res => this.categories = res)
+            .catch(error => console.error("Error: ", error))
+    }
+
+    handleOnChange () {
+        if(this.timesort == 0) {
+            this.props.issues.sort((a, b) => a.createdAt < b.createdAt)
+        }else if (this.timesort == 1) {
+            this.props.issues.sort((a, b) => a.createdAt > b.createdAt)
+        }
     }
 }
 
@@ -316,23 +364,35 @@ export class IssueOverviewNormal extends Component<{munId: number, issues: Issue
 
     status: number = 0;
     timesort: number = 0;
+    category: number = 0;
+    categories: [] = []
 
     render () {
         return (
-            <div className="issue-overview-normal issue-container">
+            <div>
                 <div className="d-flex flex-row sort-box justify-content-between">
-                    <div className="form-group">
-                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
-                            <option value={0}>Alle</option>
-                            <option value={1}>Ikke behandlet</option>
-                            <option value={2}>Under behandling</option>
-                            <option value={3}>Behandlet</option>
-                        </select>
+                    <div className="d-flex flex-row justify-content-start">
+                        <div id="sort-push" className="form-group">
+                            <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
+                                <option value={0}>Alle</option>
+                                <option value={1}>Ikke behandlet</option>
+                                <option value={2}>Under behandling</option>
+                                <option value={3}>Behandlet</option>
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <select className="form-control" value={this.category} onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.category = event.target.value)}>
+                                <option value={0}>Alle</option>
+                                {this.categories.map(cat => {
+                                    return <option value={cat.categoryId}>{cat.name}</option>
+                                })}
+                            </select>
+                        </div>
                     </div>
                     <div className="form-group">
-                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
+                        <select className="form-control" id="statusSelect" value={this.timesort} onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
                             this.timesort = event.target.value;
-                            this.onChange();
+                            this.handleOnChange()
                         }}>
                             <option value={0}>Nyeste</option>
                             <option value={1}>Eldste</option>
@@ -340,10 +400,10 @@ export class IssueOverviewNormal extends Component<{munId: number, issues: Issue
                     </div>
                 </div>
                 <ul className="list-group">
-                    {this.props.issues.map(issue => {
-                        if (this.status == issue.statusId || this.status == 0) {
-                            return (
-                                <li className="list-group-item  issue-item normal-list-item">
+                    {this.props.issues.map((issue,index) => {
+                        if ((this.status == issue.statusId || this.status == 0) && (this.category == issue.categoryId || this.category == 0)) {
+                            return(
+                                <li key={index} className="issue-normal-item list-group-item">
                                     <IssueNormal issue={issue} munId={this.props.munId}/>
                                 </li>
                             )
@@ -354,15 +414,26 @@ export class IssueOverviewNormal extends Component<{munId: number, issues: Issue
         )
     }
 
-    onChange () {
-        console.log("sort")
+    mounted (){
+        window.scrollTo(0, 0);
+        issueCategoryService.getCategories()
+            .then(res => this.categories = res)
+            .catch(error => console.error("Error: ", error))
+    }
+
+    handleOnChange () {
+        if(this.timesort == 0) {
+            this.props.issues.sort((a, b) => a.createdAt < b.createdAt)
+        }else if (this.timesort == 1) {
+            this.props.issues.sort((a, b) => a.createdAt > b.createdAt)
+        }
     }
 }
 
 /*
 Widget for displaying a single feedback-card with name, date, profile-picture and content
  */
-export class IssueFeedback extends Component<{feedback: Feedback}> {
+export class IssueFeedback extends Component<{feedback: Feedback, userId: number}> {
 
     user = new User()
 
@@ -398,12 +469,20 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
     }
 
     onDelete() {
-        if(confirm("Are you sure?")) {
-            feedbackService.deleteFeedback(this.props.feedback.feedbackId)
-                .then(res => {
-                    sharedFeedback.feedback.splice(sharedFeedback.feedback.indexOf(this.props.feedback), 1)
-                })
-                .catch(error => console.error("Error: ", error))
+        let rank = 0
+        userService.getUser(this.props.userId)
+            .then(user => rank = user.rank)
+            .catch(error => console.error("Error: ", error))
+        console.log()
+
+        if(tokenManager.getUserId() == this.props.userId || rank == 3) {
+            if (confirm("Are you sure?")) {
+                feedbackService.deleteFeedback(this.props.feedback.feedbackId)
+                    .then(res => {
+                        sharedFeedback.feedback.splice(sharedFeedback.feedback.indexOf(this.props.feedback), 1)
+                    })
+                    .catch(error => console.error("Error: ", error))
+            }
         }
     }
 }
@@ -502,9 +581,6 @@ export class ImageButton extends Component<{source: string, onclick: function}> 
     }
 }
 
-/*
-A button which goes from black to white on hover
- */
 export class HoverButton extends Component<{onclick: function, text: string}> {
     render () {
         return (

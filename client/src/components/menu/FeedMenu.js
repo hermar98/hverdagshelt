@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import {
@@ -19,40 +17,10 @@ import { history } from '../../index';
 import { Municipal } from '../../models/Municipal';
 import { userService } from '../../services/UserService';
 
-export class NewMenu extends Component {
+export class FeedMenu extends Component {
   user = null;
   municipal = new Municipal();
   munId = localStorage.getItem('munId');
-
-  navbar() {
-    if (this.user !== null) {
-      return (
-        <NavBar>
-          <NavBar.Brand image={'../../images/hverdagshelt.svg'}>Hverdagshelt</NavBar.Brand>
-          <NavBar.Button onClick={this.toFeed}>Min Feed</NavBar.Button>
-          <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
-            <DropdownHeader>{this.user.email}</DropdownHeader>
-            <DropdownFooter>Privatperson</DropdownFooter>
-            <DropdownDivider />
-            <DropdownItem onClick={this.toProfile}>Min profil</DropdownItem>
-            <DropdownItem onClick={this.toLogout}>Logg ut</DropdownItem>
-          </NavBar.Dropdown>
-        </NavBar>
-      );
-    } else {
-      return (
-        <NavBar>
-          <NavBar.Brand image={'../../images/hverdagshelt.svg'}>Hverdagshelt</NavBar.Brand>
-          <NavBar.Button onClick={this.toLogin}>Logg Inn</NavBar.Button>
-          <NavBar.Button onClick={this.toRegister}>Registrer Bruker</NavBar.Button>
-        </NavBar>
-      );
-    }
-  }
-
-  render() {
-    return <div>{this.navbar()}</div>;
-  }
 
   mounted() {
     userService
@@ -72,7 +40,29 @@ export class NewMenu extends Component {
       .then(municipal => (this.municipal = municipal))
       .catch((error: Error) => console.log(error));
   }
-
+  render() {
+    if (this.user) {
+      return (
+        <div>
+          <NavBar>
+            <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
+            <NavBar.Button className="focus" onClick={this.toFeed}>
+              Min Feed
+            </NavBar.Button>
+            <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
+              <DropdownHeader>{this.user.email}</DropdownHeader>
+              <DropdownFooter>Privatperson</DropdownFooter>
+              <DropdownDivider />
+              <DropdownItem onClick={this.changeMunicipal}>Endre kommune</DropdownItem>
+              <DropdownItem onClick={this.toProfile}>Min profil</DropdownItem>
+              <DropdownItem onClick={this.toLogout}>Logg ut</DropdownItem>
+            </NavBar.Dropdown>
+          </NavBar>
+        </div>
+      );
+    }
+    return <div />;
+  }
   toProfile() {
     history.push('/profil');
   }
@@ -80,20 +70,16 @@ export class NewMenu extends Component {
   toFeed() {
     history.push('/feed');
   }
-
-  toLogin() {
-    history.push('/login');
-  }
-  toRegister() {
-    history.push('/register');
-  }
   toLogout() {
     tokenManager.deleteToken();
-    history.push('/login');
+    history.push('/');
   }
-
   changeMunicipal() {
     localStorage.removeItem('munId');
     history.push('/');
+  }
+
+  toIssue () {
+    history.push("/registrerSak")
   }
 }
