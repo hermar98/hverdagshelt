@@ -82,7 +82,7 @@ export default class Login extends Component {
           .then(user =>{
             this.user = user;
             if(this.user.rank === 0){
-              history.push('/activate/aktiverBruker');
+              history.push('/aktiver/aktiverBruker');
             }else{
               history.push('/feed');
             }

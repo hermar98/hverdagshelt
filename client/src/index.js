@@ -40,7 +40,7 @@ if (process.env.NODE_ENV !== 'production') {
 import createHashHistory from 'history/createHashHistory';
 import {ActivateAccountPage} from "./components/pages/ActivateAccountPage";
 import ProfilePage from "./components/pages/ProfilePage/ProfilePage";
-import RegistrationFormAdmin from "./components/forms/AddUserFormAdmin";
+import RegistrationFormAdmin from "./components/forms/AdminAddPage";
 
 export const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after
 
