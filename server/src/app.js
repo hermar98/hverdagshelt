@@ -155,7 +155,7 @@ app.post('/register', (req: Request, res: Response) => {
 
 app.put('/activate/:token', (req: Request, res: Response) => {
   const body = req.body !== null && typeof req.body === 'object' ? req.body : {};
-  const { firstName, lastName, email, rank, password } = body;
+  const { firstName, lastName, munId, rank, password } = body;
   let isAdminCreated = false;
   if(firstName && lastName && password){
     isAdminCreated = true;
@@ -167,6 +167,8 @@ app.put('/activate/:token', (req: Request, res: Response) => {
       token = jwt.sign({ email: user.email }, secretKey, { expiresIn: 4000 });
       if(user.rank === 0){
         user.rank = 1;
+      }else if(user.rank === 3){
+        user.munId = munId;
       }
 
       if(isAdminCreated){
@@ -184,6 +186,7 @@ app.put('/activate/:token', (req: Request, res: Response) => {
           salt: user.passwordSalt,
           hashStr: user.passwordHash,
           rank: user.rank,
+          munId: user.munId,
           activateAccountToken: null
         },
         { where: { userId: user.userId } }
