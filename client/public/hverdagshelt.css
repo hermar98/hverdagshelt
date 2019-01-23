@@ -464,8 +464,66 @@ random
     border: solid lightgrey 1px;
 }
 
-
+.btn {
+    background-color: dodgerblue;
+    color: white;
+    height:46px;
+}
 /*
 Event
  */
+#event-image-small {
+    margin-left: auto;
+    height: 100px;
+    width: 100px;
+}
 
+/*Image upload*/
+.image-upload-container {
+    position:relative;
+    display: grid;
+    margin-bottom: 15px;
+    padding-top: 15px;
+    padding-bottom:15px;
+    text-align:center;
+    font-size: 18px;
+    font-weight:bold;
+    width:100%;
+    z-index:0;
+    grid-template-rows: auto auto auto;
+}
+.image-upload-text {
+    /*background-color: #1e7e34;*/
+    grid-row: 1;
+}
+.image-upload-list{
+    position:relative;
+    margin-left: 0  !important;
+    grid-row: 2;
+    height:300px;
+    text-align:center;
+    overflow-y:auto;
+}
+.image-upload-images-text {
+    position: absolute;
+    align-self: center;
+    color: deeppink;
+    z-index:5;
+}
+.image-upload-images {
+    width:100%;
+    z-index:6;
+    display:inline-block;
+}
+.image-upload-image {
+    position: relative;
+    max-height:300px;
+}
+.image-upload-form {
+    width: 50%;
+    margin:auto;
+}
+.image-upload-button {
+    margin: auto;
+    grid-row:3;
+}
