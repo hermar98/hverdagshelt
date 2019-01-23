@@ -492,7 +492,7 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
         return (
             <div className="feedback" feedback={this.props.feedback}>
                 <div className="card feedback-card">
-                    <div className="card-body" ref={this.bodyRef}>
+                    <div id={"feedback-body " + this.props.feedback.feedbackId} className="card-body" ref={this.bodyRef}>
                         <div className="d-flex flex-row submitter">
                                 <div className="p-2">
                                     <img className="card-img profile-image" src={this.user.profilePicture}/>
@@ -501,7 +501,7 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
                             <ImageButton source="../../images/cog.png" onclick={() => this.onEdit()} />
                             <ImageButton source="../../images/trashcan.png" onclick={() => this.onDelete()}/>
                         </div>
-                        <div id="feedback-text" className="card-text">
+                        <div id={"feedback-text " + this.props.feedback.feedbackId} className="card-text">
                             {this.props.feedback.content}
                         </div>
                     </div>
@@ -520,30 +520,33 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
     }
 
     onEdit() {
-        let inp = document.createElement('input')
-        let btn = document.createElement('button')
-        let text = document.getElementById('feedback-text')
-        this.bodyRef.current.removeChild(text)
-        inp.id = 'edit-input-feedback'
-        inp.value = this.feedText
-        inp.onchange = (event) => (this.feedText = event.target.value)
-        inp.classList.add('form-control')
-        btn.id = 'edit-button-feedback'
-        btn.onclick = () => this.onEditComplete(inp, btn, text)
-        btn.classList.add('btn')
-        btn.innerHTML = "Endre"
-        this.bodyRef.current.append(inp)
-        this.bodyRef.current.append(btn)
+        if(tokenManager.getUserId() == this.props.feedback.userId) {
+            let inp = document.createElement('input')
+            let btn = document.createElement('button')
+            let text = document.getElementById('feedback-text ' + this.props.feedback.feedbackId)
+            let parent = document.getElementById('feedback-body ' + this.props.feedback.feedbackId)
+            parent.removeChild(text)
+            inp.id = 'edit-input-feedback'
+            inp.value = this.feedText
+            inp.onchange = (event) => (this.feedText = event.target.value)
+            inp.classList.add('form-control')
+            btn.id = 'edit-button-feedback'
+            btn.onclick = () => this.onEditComplete(inp, btn, text, parent)
+            btn.classList.add('btn')
+            btn.innerHTML = "Endre"
+            parent.append(inp)
+            parent.append(btn)
+        }
     }
 
-    onEditComplete (inp, btn, text) {
+    onEditComplete (inp, btn, text, parent) {
         this.props.feedback.content = this.feedText
         feedbackService.updateFeedback(this.props.feedback)
             .then()
             .catch(error => console.error("Error: ", error))
-        this.bodyRef.current.removeChild(inp)
-        this.bodyRef.current.removeChild(btn)
-        this.bodyRef.current.append(text)
+        parent.removeChild(inp)
+        parent.removeChild(btn)
+        parent.append(text)
     }
 
     onDelete() {
