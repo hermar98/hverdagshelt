@@ -119,6 +119,7 @@ export class ChooseMunicipalPageMenu extends Component {
   }
   toLogout() {
     tokenManager.deleteToken();
+    window.location.reload();
     history.push('/');
   }
   toRegisterIssue() {
