@@ -412,8 +412,16 @@ random
     margin-top: 7%;
     margin-bottom: 15%;
 }
+
+#t-head:hover {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+    cursor: pointer;
+}
+
 .notfound-container{
     margin: 2% 12% 2% 12%;
     text-align:center;
-
 }

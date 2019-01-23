@@ -1,5 +1,5 @@
 //@flow
-import {User} from '../models';
+import {sequelize, User} from '../models';
 import * as passwordHash from '../passwordHash.js';
 
 type Request = express$Request;
@@ -10,7 +10,7 @@ const app = require('../app');
 
 //User
 app.get('/secure/users', (req: Request, res: Response) => {
-    return User.findAll().then(users => res.send(users));
+    return User.findAll({ where: {rank: {[sequelize.Op.ne]: 0} }}).then(users => res.send(users));
 });
 
 app.get('/secure/users/:id', (req: Request, res: Response) => {
