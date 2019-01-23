@@ -68,7 +68,7 @@ export class ProfileMenu extends Component {
             <NavBar>
               <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
               <NavBar.Button onClick={this.toCompanyHome}>Hjem</NavBar.Button>
-              <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
+              <NavBar.Dropdown className="focus" title={this.user.firstName + ' ' + this.user.lastName}>
                 <DropdownHeader>{this.user.email}</DropdownHeader>
                 <DropdownFooter>Bedrift</DropdownFooter>
                 <DropdownDivider />
@@ -84,7 +84,7 @@ export class ProfileMenu extends Component {
             <NavBar>
               <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
               <NavBar.Button onClick={this.toMunEmployeeHome}>Hjem</NavBar.Button>
-              <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
+              <NavBar.Dropdown className="focus" title={this.user.firstName + ' ' + this.user.lastName}>
                 <DropdownHeader>{this.user.email}</DropdownHeader>
                 <DropdownFooter>Kommuneansatt</DropdownFooter>
                 <DropdownDivider />
@@ -100,7 +100,7 @@ export class ProfileMenu extends Component {
             <NavBar>
               <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
               <NavBar.Button onClick={this.toAdminHome}>Hjem</NavBar.Button>
-              <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
+              <NavBar.Dropdown className="focus" title={this.user.firstName + ' ' + this.user.lastName}>
                 <DropdownHeader>{this.user.email}</DropdownHeader>
                 <DropdownFooter>Admin</DropdownFooter>
                 <DropdownDivider />
