@@ -84,6 +84,7 @@ export class UserProfilePage extends Component {
                     <h5 className="card-title">Info</h5>
                   </div>
                 </div>
+                <hr />
                 <p>
                   Navn: {this.user.firstName} {this.user.lastName}
                 </p>

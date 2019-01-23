@@ -1,36 +1,177 @@
-input {border-radius: 8px}
 
-input{
-    border: 1px solid transparent;
-    background-color: ghostwhite;
-    padding: 10px;
-    font-size: 16px;
+/*@media only screen*/
+/*and (min-device-width: 150px)*/
+/*and (max-device-width: 500px)*/
+/*and (-webkit-min-device-pixel-ratio: 3) {*/
+
+
+
+input {
+  border-radius: 8px;
 }
 
-input[type=text]{
-    background-color: white;
+
+input {
+  border: 1px solid transparent;
+  background-color: ghostwhite;
+  padding: 10px;
+  font-size: 16px;
 }
 
-input[type=submit]{
-    background-color: dodgerblue;
-    color: #fff
+input[type='text'] {
+  background-color: white;
 }
 
-button {border-radius: 8px}
-
-button{
-    background-color: dodgerblue;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
+input[type='submit'] {
+  background-color: dodgerblue;
+  color: #fff;
 }
 
-button:hover{
-    cursor: pointer;
+button {
+  border-radius: 8px;
+}
+
+button {
+  background-color: dodgerblue;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.logo {
+  max-width: 100%;
+}
+
+#event-image-small {
+  margin-left: auto;
+  height: 100px;
+  width: 100px;
+}
+
+#event-content {
+  margin-right: auto;
+}
+
+.footer {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+#footerText {
+  color: white;
+  margin-left: 3cm;
+}
+
+#footer {
+  margin-left: 22%;
+}
+
+.bg-image {
+  position: fixed;
+  top:0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+
+  display: block;
+
+
+  background-image: url('images/Trolltunga.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+  transform: scale(1.1);
+}
+
+.fg{
+    margin-top: 10%;
+    margin-bottom: 90%;
+}
+
+.fg-card{
+    background-color: rgba(255,255,255,0.8);
+    padding-top: 10px;
+    margin:auto;
+
+    width: 50%;
+    opacity:1;
+    min-width:850px;
+}
+.fg-grid {
+  display: grid;
+  grid-template-rows: auto auto auto;
+}
+
+.fg-logo {
+  grid-row: 1;
+  opacity: 1;
+
+  color: #000;
+  /*color: #50bbe6;*/
+  font-size: 72px;
+  font-weight: bold;
+
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+.fg-image {
+  width: 100px;
+  height: 100px;
+}
+.fg-input {
+  grid-row: 2;
+  position: relative;
+}
+.munInputForm {
+  position: relative;
+  width: 80%;
+  max-width: 60%;
+}
+#munInputForm-Input {
+    align-self: center;
+    /*height: 8vh;*/
+    width:400px;
+    margin-right:10px;
+}
+#munInputForm-Button{
+    /*float:right;*/
+    /*width:28%;*/
+}
+#munInputForm-Inputautocomplete-list {
+    position: absolute;
+    top:48px;
+        width: 50%;
+    /*max-width: 60%;*/
+    /*position: absolute;*/
+    /*left: 22%;*/
+    /*right:33%;*/
+    /*min-width:233px;*/
+}
+#munInputForm-Form {
+    position:relative;
 }
 
 .autocomplete{
@@ -44,6 +185,7 @@ button:hover{
 }
 
 .autocomplete-items{
+    min-width:100%;
     /*border: 1px solid #d4d4d4;*/
     /*border-bottom: none;*/
     /*border-top: none;*/
@@ -69,153 +211,20 @@ button:hover{
     color: black;
 }
 
-ul {
-    list-style-type: none;
-}
 
-
-
-.logo{
-    max-width: 100%;
-}
-
-#event-image-small{
-    margin-left: auto;
-    height: 100px;
-    width: 100px;
-}
-
-#event-content{
-    margin-right: auto;
-}
-
-.footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
-#footerText{
-    color: white;
-    margin-left: 3cm;
-}
-
-#footer{
-    margin-left: 22%;
-}
-
-.bg-image{
-    position: fixed;
-    left: 0;
-    right: 0;
-    z-index: -1;
-    max-width: 100%;
-    height: 1000px;
-    display: block;
-
-    background-image: url("images/Trolltunga.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-
-    -webkit-filter: blur(5px);
-    -moz-filter: blur(5px);
-    -o-filter: blur(5px);
-    -ms-filter: blur(5px);
-    filter: blur(5px);
-    transform: scale(1.1);
-}
-.bg-text{
-    background-color: rgba(0,0,0, 0.7);
-
-    color: #50bbe6;
-    font-size: 72px;
-    font-weight: bold;
-
-    border: 3px solid #f1f1f1;
-
-    z-index: 2;
-    padding: 20px;
-    text-align: center;
-    grid-column: 2;
-}
-.bg-text-grid{
-    display:grid;
-    grid-template-columns:10% 80% 10%;
-    margin-top: 5%;
-}
-
-.fg{
-    margin-top:10%;
-    margin-bottom: 10%;
-}
-.fg-card{
-    background-color: rgba(255,255,255,0.8);
-    padding-top: 10px;
-    margin:auto;
-    width: 50%;
-    opacity:1;
-    min-width:525px;
-}
-.fg-grid {
-    display:grid;
-    grid-template-rows: auto auto auto;
-}
-
-.fg-logo {
-    grid-row:1;
-    opacity: 1 ;
-
-    color:#000;
-    /*color: #50bbe6;*/
-    font-size: 72px;
-    font-weight: bold;
-
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+/Edge */
-    user-select: none; /* Standard */
-}
-.fg-image{
-    width:100px;
-    height:100px;
-}
-.fg-input{
-    grid-row:2;
-    position: relative;
-}
-.munInputForm{
-    position: relative;
-    width: 80%;
-    max-width: 60%;
-}
-#municipalInput {
-    align-self: center;
-    /*height: 8vh;*/
-    width:70%;
-    margin-right:10px;
-}
-#municipalInputautocomplete-list {
-    position: absolute;
-    top:48px;
-    width:70%;
-    /*width: 50%;*/
-    /*max-width: 60%;*/
-    /*position: absolute;*/
-    /*left: 22%;*/
-    /*right:33%;*/
-    /*min-width:233px;*/
-}
 .fg-content {
-    grid-row:3;
-    padding: 50px;
-    color:#000;
-    text-align: center;
+  grid-row: 3;
+  padding: 50px;
+  color: #000;
+  text-align: center;
 }
 .fg-content h5 {
-    font-weight:bold;
+  font-weight: bold;
 }
 .fg-content p {
-    font-size:18px;
-    font-weight:bold;
+  font-size: 18px;
+  font-weight: bold;
 }
+
+/*}*/
 

@@ -219,10 +219,10 @@ type S = { isOpen: boolean }; //Quick fix
 class NavBarDropdown extends Component<
   {
     title: string,
-    className?: string,
     children: React.Element<
       typeof DropdownHeader | typeof DropdownFooter | typeof DropdownDivider | typeof DropdownItem
-    >[]
+    >[],
+    className?: string
   },
   S
 > {
