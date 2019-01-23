@@ -10,6 +10,7 @@ import {userService} from "../../services/UserService";
 import {issueService} from "../../services/IssueService";
 import {issueCategoryService} from "../../services/IssueCategoryService";
 import {feedbackService} from "../../services/FeedbackService";
+import {municipalService} from "../../services/MunicipalService";
 
 let sharedIssues = sharedComponentData({issues: []})
 let sharedFeedback = sharedComponentData({feedback: []})
@@ -257,6 +258,7 @@ Small view of an issue that displays only the title and the status
 export class IssueSmall extends Component<{issue: Issue, munId: number}> {
 
     categoryName: string = '';
+    munName: string = '';
 
     render() {
         return (
@@ -267,12 +269,15 @@ export class IssueSmall extends Component<{issue: Issue, munId: number}> {
                 <div>
                     <div className="d-flex flex-row issue-flex justify-content-between">
                         <div className="view-text">
-                            <p className="date">{formatDate(this.props.issue.createdAt)}</p>
                             <h5>
-                                {this.categoryName}
+                                {this.munName + " Kommune"}
                             </h5>
+                            <p className="cat-name">
+                                {this.categoryName}
+                            </p>
+                            <p className="date">{formatDate(this.props.issue.createdAt)}</p>
                         </div>
-                        <p>Status:&nbsp;&nbsp;</p>
+                        <p className="status-label">Status:&nbsp;&nbsp;</p>
                         <StatusImage status={this.props.issue.statusId} />
                     </div>
                 </div>
@@ -284,6 +289,11 @@ export class IssueSmall extends Component<{issue: Issue, munId: number}> {
         issueCategoryService.getCategory(this.props.issue.categoryId)
             .then(category => {
                 this.categoryName = category.name
+            })
+            .catch(error => console.error("Error: ", error))
+        municipalService.getMunicipal(this.props.issue.munId)
+            .then(mun => {
+                this.munName = mun.name
             })
             .catch(error => console.error("Error: ", error))
     }
@@ -335,7 +345,7 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
                     {this.props.issues.map((issue,index) => {
                         if ((this.status == issue.statusId || this.status == 0) && (this.category == issue.categoryId || this.category == 0)) {
                             return(
-                                <li key={index} className="list-group-item">
+                                <li key={index} className="list-group-item issue-small-item">
                                     <IssueSmall issue={issue} munId={this.props.munId}/>
                                 </li>
                             )
