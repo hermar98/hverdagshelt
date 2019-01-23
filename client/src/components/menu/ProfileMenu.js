@@ -60,7 +60,9 @@ export class ProfileMenu extends Component {
         return (
           <div>
             <NavBar>
-              <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
+              <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'} to={'/saker'}>
+                Hverdagshelt
+              </NavBar.Brand>
               <NavBar.Button onClick={this.toCompanyHome}>Hjem</NavBar.Button>
               <NavBar.Dropdown className="focus" title={this.user.firstName + ' ' + this.user.lastName}>
                 <DropdownHeader>{this.user.email}</DropdownHeader>
@@ -76,7 +78,12 @@ export class ProfileMenu extends Component {
         return (
           <div>
             <NavBar>
-              <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
+              <NavBar.Brand
+                image={'../../images/hverdagshelt-logo-white.svg'}
+                to={'/kommune/' + localStorage.getItem('munId') + '/saker'}
+              >
+                Hverdagshelt
+              </NavBar.Brand>
               <NavBar.Button onClick={this.toRegisterEvent}>Registrer Event</NavBar.Button>
               <NavBar.Button onClick={this.toMunEmployeeHome}>Hjem</NavBar.Button>
               <NavBar.Dropdown className="focus" title={this.user.firstName + ' ' + this.user.lastName}>
@@ -93,7 +100,9 @@ export class ProfileMenu extends Component {
         return (
           <div>
             <NavBar>
-              <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
+              <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'} to={'/admin'}>
+                Hverdagshelt
+              </NavBar.Brand>
               <NavBar.Button onClick={this.toAdminHome}>Hjem</NavBar.Button>
               <NavBar.Dropdown className="focus" title={this.user.firstName + ' ' + this.user.lastName}>
                 <DropdownHeader>{this.user.email}</DropdownHeader>

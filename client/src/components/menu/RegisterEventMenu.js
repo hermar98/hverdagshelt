@@ -26,7 +26,12 @@ export class RegisterEventMenu extends Component {
     if (this.user) {
       return (
         <NavBar>
-          <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
+          <NavBar.Brand
+            image={'../../images/hverdagshelt-logo-white.svg'}
+            to={'/kommune/' + localStorage.getItem('munId') + '/saker'}
+          >
+            Hverdagshelt
+          </NavBar.Brand>
           <NavBar.Button onClick={this.toRegisterEvent}>Registrer Event</NavBar.Button>
           <NavBar.Button onClick={this.toMunEmployeeHome}>Hjem</NavBar.Button>
           <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>

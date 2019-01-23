@@ -64,7 +64,9 @@ export class IssueMenu extends Component {
         return (
           <div>
             <NavBar>
-              <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
+              <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'} to={'/saker'}>
+                Hverdagshelt
+              </NavBar.Brand>
               <NavBar.Button className="focus" onClick={this.toCompanyHome}>
                 Hjem
               </NavBar.Button>
@@ -82,7 +84,12 @@ export class IssueMenu extends Component {
         return (
           <div>
             <NavBar>
-              <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
+              <NavBar.Brand
+                image={'../../images/hverdagshelt-logo-white.svg'}
+                to={'/kommune/' + localStorage.getItem('munId') + '/saker'}
+              >
+                Hverdagshelt
+              </NavBar.Brand>
               <NavBar.Button onClick={this.toRegisterEvent}>Registrer Event</NavBar.Button>
               <NavBar.Button className="focus" onClick={this.toMunEmployeeHome}>
                 Hjem
@@ -101,7 +108,9 @@ export class IssueMenu extends Component {
         return (
           <div>
             <NavBar>
-              <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
+              <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'} to={'/admin'}>
+                Hverdagshelt
+              </NavBar.Brand>
               <NavBar.Button className="focus" onClick={this.toAdminHome}>
                 Hjem
               </NavBar.Button>
