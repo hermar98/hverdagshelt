@@ -17,7 +17,7 @@ import { history } from '../../index';
 import { Municipal } from '../../models/Municipal';
 import { userService } from '../../services/UserService';
 
-export class IssueMenu extends Component {
+export class SpecificIssueMenu extends Component {
   user = null;
   municipal = new Municipal();
   munId = localStorage.getItem('munId');
@@ -64,9 +64,7 @@ export class IssueMenu extends Component {
           <div>
             <NavBar>
               <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
-              <NavBar.Button className="focus" onClick={this.toCompanyHome}>
-                Hjem
-              </NavBar.Button>
+              <NavBar.Button onClick={this.toCompanyHome}>Hjem</NavBar.Button>
               <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
                 <DropdownHeader>{this.user.email}</DropdownHeader>
                 <DropdownFooter>Bedrift</DropdownFooter>
@@ -82,9 +80,7 @@ export class IssueMenu extends Component {
           <div>
             <NavBar>
               <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
-              <NavBar.Button className="focus" onClick={this.toMunEmployeeHome}>
-                Hjem
-              </NavBar.Button>
+              <NavBar.Button onClick={this.toMunEmployeeHome}>Hjem</NavBar.Button>
               <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
                 <DropdownHeader>{this.user.email}</DropdownHeader>
                 <DropdownFooter>Kommuneansatt</DropdownFooter>
@@ -100,9 +96,7 @@ export class IssueMenu extends Component {
           <div>
             <NavBar>
               <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
-              <NavBar.Button className="focus" onClick={this.toAdminHome}>
-                Hjem
-              </NavBar.Button>
+              <NavBar.Button onClick={this.toAdminHome}>Hjem</NavBar.Button>
               <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
                 <DropdownHeader>{this.user.email}</DropdownHeader>
                 <DropdownFooter>Admin</DropdownFooter>

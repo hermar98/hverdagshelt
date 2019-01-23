@@ -127,6 +127,6 @@ export class ChooseMunicipalPageMenu extends Component {
     history.push('/saker'); //TODO: bedrift hjemside
   }
   toAdminHome() {
-    history.push('/'); //TODO: admin hjemside
+    history.push('/admin'); //TODO: admin hjemside
   }
 }

@@ -19,6 +19,7 @@ export default class Login extends Component {
   email = '';
   password = '';
   form = null;
+  rank = 0;
 
   munId = localStorage.getItem('munId');
 

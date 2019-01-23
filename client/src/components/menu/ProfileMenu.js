@@ -130,10 +130,10 @@ export class ProfileMenu extends Component {
     history.push('/kommune/' + localStorage.getItem('munId') + '/saker'); //TODO: ansatt hjemside
   }
   toCompanyEmployeeHome() {
-    history.push('/saker'); //TODO: bedrift hjemside
+    history.push('/saker');
   }
   toAdminHome() {
-    history.push('/'); //TODO: admin hjemside
+    history.push('/admin');
   }
 
   changeMunicipal() {
