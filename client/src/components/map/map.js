@@ -1,10 +1,9 @@
 // @Flow
 
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import GoogleMap from 'google-map-react';
+import isEmpty from 'lodash.isempty';
 import { mapService } from '../../services/mapService';
-
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 const greatPlaceStyle = {
   // initially any map object has left top corner at lat lng coordinates
@@ -19,6 +18,7 @@ const greatPlaceStyle = {
   border: '2px solid #fff',
   borderRadius: '100%',
   backgroundColor: '#000',
+  //text css
   textAlign: 'center',
   color: '#3f51b5',
   fontSize: 16,
@@ -73,7 +73,8 @@ export class SimpleMap extends Component<{ lat: number, lng: number }> {
           onChange={event => this.onChange(event)}
           yesIWantToUseGoogleMapApiInternals
         >
-          <MyGreatPlace lat={this.lat} lng={this.lng} text="" />
+          <MyGreatPlace lat={this.center.lat} lng={this.center.lng} text="" />
+          {/* <MyGreatPlace lat={this.lat} lng={this.lng} text="" /> */}
         </GoogleMap>
       </div>
     );
@@ -82,8 +83,152 @@ export class SimpleMap extends Component<{ lat: number, lng: number }> {
   onClick = ({ x, y, lat, lng, event }) => {
     // console.log(x, y, lat, lng, event);
     // mapService.getLoactionByLatLng(lat, lng).then(e => console.log(e));
-    // this.lat = lat;
-    // this.lng = lng;
+    this.lat = lat;
+    this.lng = lng;
+    // console.log(this.lat, this.lng);
+    this.forceUpdate();
+  };
+
+  onChildClick = event => {
+    console.log('THIS IS A PROBLEM');
+  };
+
+  onChange = ({ center, zoom, bounds, marginBounds }) => {
+    // console.log(center, zoom, bounds, marginBounds);
+  };
+}
+
+export class Search extends Component {
+  constructor(props) {
+    super(props);
+    this.clearSearchBox = this.clearSearchBox.bind(this);
+  }
+
+  componentDidMount({ map, mapApi, adress } = this.props) {
+    const options = {
+      // restrict your search to a specific type of result
+      // types: ['geocode', 'address', 'establishment', '(regions)', '(cities)'],
+      // types: ['(regions)'],
+      // restrict your search to a specific country, or an array of countries
+      // componentRestrictions: { country: ['gb', 'us'] },
+      componentRestrictions: { country: ['no'] }
+    };
+    this.autoComplete = new mapApi.places.Autocomplete(this.searchInput, options);
+    this.autoComplete.addListener('place_changed', this.onPlaceChanged);
+    this.autoComplete.bindTo('bounds', map);
+  }
+
+  componentWillUnmount({ mapApi } = this.props) {
+    mapApi.event.clearInstanceListeners(this.searchInput);
+  }
+
+  onPlaceChanged = ({ map, addplace } = this.props) => {
+    const place = this.autoComplete.getPlace();
+
+    if (!place.geometry) return;
+    if (place.geometry.viewport) {
+      map.fitBounds(place.geometry.viewport);
+    } else {
+      map.setCenter(place.geometry.location);
+      map.setZoom(17);
+    }
+
+    addplace(place);
+    this.searchInput.blur();
+  };
+
+  clearSearchBox() {
+    // this.searchInput.value = '';
+  }
+
+  fillSearchBox() {}
+
+  render() {
+    return (
+      // Important! Always set the container height explicitly
+      <div style={{ height: '50vh', width: '100%' }}>
+        <input
+          ref={ref => {
+            this.searchInput = ref;
+          }}
+          type="text"
+          onFocus={this.clearSearchBox}
+          placeholder="Skriv inn Adresse"
+        />
+      </div>
+    );
+  }
+}
+
+export class BigMap extends Component<{ lat: number, lng: number }> {
+  center = { lat: this.props.lat, lng: this.props.lng };
+  lat = null;
+  lng = null;
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      mapApiLoaded: false,
+      mapInstance: null,
+      mapApi: null,
+      places: []
+    };
+  }
+
+  apiHasLoaded = (map, maps) => {
+    this.setState({
+      mapApiLoaded: true,
+      mapInstance: map,
+      mapApi: maps
+    });
+  };
+
+  addPlace = place => {
+    this.setState({ places: [place] });
+    this.lat = null;
+    this.lng = null;
+    this.forceUpdate();
+  };
+
+  render() {
+    const { places, mapApiLoaded, mapInstance, mapApi } = this.state;
+    return (
+      <Fragment>
+        {mapApiLoaded && <Search map={mapInstance} mapApi={mapApi} addplace={this.addPlace} adress={this.adress} />}
+        <GoogleMap
+          bootstrapURLKeys={{
+            key: 'AIzaSyCVd-3sSATNkNAa5jRe9U6_t8wR5YkH480',
+            language: 'no',
+            libraries: ['places', 'geometry']
+          }}
+          defaultCenter={this.center}
+          defaultZoom={15}
+          hoverDistance={30}
+          options={createMapOptions}
+          onClick={event => this.onClick(event)}
+          onChildClick={event => this.onChildClick(event)}
+          onChange={event => this.onChange(event)}
+          yesIWantToUseGoogleMapApiInternals
+          onGoogleApiLoaded={({ map, maps }) => this.apiHasLoaded(map, maps)}
+        >
+          {/* <MyGreatPlace lat={this.center.lat} lng={this.center.lng} text="" /> */}
+          <MyGreatPlace lat={this.lat} lng={this.lng} text="" />
+          {!isEmpty(places) &&
+            places.map(place => (
+              <MyGreatPlace key="" lat={place.geometry.location.lat()} lng={place.geometry.location.lng()} text="" />
+            ))}
+        </GoogleMap>
+      </Fragment>
+    );
+  }
+  onClick = ({ x, y, lat, lng, event }) => {
+    console.log(x, y, lat, lng, event);
+    mapService.getLoactionByLatLng(lat, lng).then(e => console.log(e));
+    this.lat = lat;
+    this.lng = lng;
+    // console.log(this.lat, this.lng);
+    this.state.places = [];
+    this.forceUpdate();
   };
 
   onChildClick = event => {
