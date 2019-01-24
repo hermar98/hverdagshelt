@@ -98,7 +98,7 @@ describe('User tests', () => {
             '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722'
         );
     });
-    // //Post user
+    // //Post user TODO: POST isnt working...
     // test('POST /users', async () => {
     //     let totalUsers = await User.count(); // entries in database
     //     console.log(totalUsers);
@@ -110,7 +110,7 @@ describe('User tests', () => {
     //     expect(response.statusCode).toBe(200);
     //     expect(await User.count()).toEqual(totalUsers + 1);
     // });
-    // //Put user
+    // //Put user TODO: PUT isnt working...
     //
     // test('PUT /users/:id', async () => {
     //     const updateUserResponse = await request(app)
