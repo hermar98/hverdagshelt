@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
+import { Event } from '../../models/Event.js';
 import { EventCategory } from '../../models/EventCategory.js';
 import { eventCategoryService } from '../../services/EventCategoryService';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
@@ -9,6 +10,7 @@ import { myFunction } from '../../../public/AddEventCategory';
 import { tokenManager } from '../../tokenManager';
 import {eventService} from "../../services/EventService";
 import moment from "moment";
+import {HoverButton} from "../issueViews/issueViews";
 //import { UploadImageButton } from '../../components/image/UploadImageButton';
 
 export default class EventForm extends Component {
@@ -31,22 +33,22 @@ export default class EventForm extends Component {
         <form ref={e => (this.form = e)}>
           <Form.Input label="Tittel" type="text" onChange={e => (this.event.title = e.target.value)} required placeholder="Tittel" />
           <div className="form-group row justify-content-center">
-            <div className="col-sm-10 col-lg-4 justify-content-center">
+            <div className="col-12 col-md-4 justify-content-center">
               <select
                 required
                 className="form-control"
                 value={this.event.categoryId}
                 onChange={(e: SyntheticInputEvent<HTMLInputElement>) => {
-                  if (this.event) this.event.categoryId = parseInt(e.target.value);
+                  if (this.event){this.event.categoryId = parseInt(e.target.value); console.log(e.target.value)};
                 }}
               >
                 <option selected disabled value="">
                   Velg kategori..
                 </option>
                 {this.categories.map(cat => (
-                  <option key={cat.category_id} value={cat.categoryId}>
+                  <option key={cat.categoryId} value={cat.categoryId}>
                     {cat.name}
-                  </option>
+                    </option>
                 ))}
               </select>
             </div>
@@ -71,9 +73,7 @@ export default class EventForm extends Component {
           <Form.FileInput>Legg til bilde (valgfritt) </Form.FileInput>
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
-              <Button.Basic type="submit" onClick={this.save}>
-                Registrer event
-              </Button.Basic>
+              <HoverButton onclick={this.save} text="Registrer Event"/>
             </div>
           </div>
         </form>

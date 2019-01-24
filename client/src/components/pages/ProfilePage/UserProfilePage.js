@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 
 import { Alert, NavBar, Form, Card, Button } from '../../../widgets';
-import { ProfileMenu } from '../../../components/menu/ProfileMenu';
 import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
 import { userMunicipalService } from '../../../services/UserMunicipalService';
 import { autocomplete, glob } from '../../../../public/autocomplete';
@@ -15,7 +14,6 @@ import { issueService } from '../../../services/IssueService';
 import { municipalService } from '../../../services/MunicipalService';
 import { User } from '../../../models/User';
 import { Issue } from '../../../models/Issue';
-import { Municipal } from '../../../models/Municipal';
 
 let municipalObjects;
 let sharedMunicipals = sharedComponentData({ municipals: [] });
@@ -96,54 +94,64 @@ export class UserProfilePage extends Component {
     sharedMunicipals.municipals.sort((a, b) => a.name > b.name);
 
     return (
-      <div>
-        <div>
-          <ProfileMenu />
-        </div>
+      <div className="container-fluid">
         <h4 className="row justify-content-center my-profile">Min Profil</h4>
         <div className="profile-page-container page-container">
-            <div className="profile-left">
-                <div className="card profile-info">
-                    <div className="card-body">
-                        <div className="container">
-                            <div className="row justify-content-center align-items-center">
-                                <h5 className="card-title">Info</h5>
-                            </div>
-                        </div>
-                        <p>
-                            Navn: {this.user.firstName} {this.user.lastName}
-                        </p>
-                        <p>Email: {this.user.email}</p>
-                    </div>
+          <div className="profile-left">
+            <div className="card profile-info">
+              <div className="card-body">
+                <div className="container">
+                  <div className="row justify-content-center align-items-center">
+                    <h5 className="card-title">Info</h5>
+                  </div>
                 </div>
-                <div className="card  municipal">
-                    <h5 id="municipal-title">Kommuner</h5>
-                    <div className="card municipal-2">
-                        <div className="add-municipal-field justify-content-between d-flex flex-row">
-                            <input className="form-control" id="munInputForm-Input" type="text" value={this.newMunicipalName} placeholder="Legg til kommune..." onChange={
-                                event => this.newMunicipalName = event.target.value
-                            }/>
-                            <ImageButton source="../../images/add.png" onclick={() => this.handleAddMunicipal()}/>
-                        </div>
-                        <ul className="list-group mun-list">
-                            {sharedMunicipals.municipals.map((mun, index) => (
-                                <li className="list-group-item municipal-item"><div className="d-flex flex-row justify-content-between align-items-center"> {mun.name}<ImageButton source="../../images/trashcan.png" onclick={
-                                    () => this.deleteUserMunicipal(mun.munId)}/></div></li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
-                <br />
-                <div className="change-password-profile">
-                    <ChangePasswordForm />
-                </div>
+                <p>
+                  Navn: {this.user.firstName} {this.user.lastName}
+                </p>
+                <p>Email: {this.user.email}</p>
+              </div>
             </div>
-            <div className="profile-issues">
-                <Card className="issues" title="Dine Innmeldte Saker">
-                    <IssueOverviewSmall issues={this.issues}/>
-                </Card>
+            <div className="card  municipal">
+              <h5 id="municipal-title">Kommuner</h5>
+              <div className="card municipal-2">
+                <div className="add-municipal-field d-flex flex-row justify-content-between">
+                  <input
+                    className="form-control mun-input"
+                    id="munInputForm-Input"
+                    type="text"
+                    value={this.newMunicipalName}
+                    placeholder="Legg til kommune..."
+                    onChange={event => (this.newMunicipalName = event.target.value)}
+                  />
+                  <ImageButton source="../../images/add.png" onclick={() => this.handleAddMunicipal()} />
+                </div>
+                <ul className="list-group mun-list">
+                  {sharedMunicipals.municipals.map((mun, index) => (
+                    <li className="list-group-item municipal-item">
+                      <div className="d-flex flex-row justify-content-between align-items-center">
+                        {' '}
+                        {mun.name}
+                        <ImageButton
+                          source="../../images/trashcan.png"
+                          onclick={() => this.deleteUserMunicipal(mun.munId)}
+                        />
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <br />
+            <div className="change-password-profile">
+              <ChangePasswordForm />
             </div>
           </div>
+          <div className="profile-issues">
+            <Card className="issues" title="Dine Innmeldte Saker">
+              <IssueOverviewSmall issues={this.issues} />
+            </Card>
+          </div>
+        </div>
       </div>
     );
   }

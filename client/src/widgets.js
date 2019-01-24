@@ -153,14 +153,11 @@ export class Card extends Component<{ title?: React.Node, children?: React.Node 
   }
 }
 
-class NavBarButton extends Component<{ onClick: () => mixed, children?: React.Node, className?: string }> {
+class NavBarButton extends Component<{ onClick: () => mixed, children?: React.Node }> {
   render() {
     return (
       <form className="form-inline">
-        <button
-          onClick={this.props.onClick}
-          className={'custom-nav-btn btn btn btn-outline-light ' + this.props.className}
-        >
+        <button onClick={this.props.onClick} className="custom-nav-btn btn btn-outline-light" data-toggle="collapse">
           {this.props.children}
         </button>
       </form>
@@ -219,10 +216,10 @@ type S = { isOpen: boolean }; //Quick fix
 class NavBarDropdown extends Component<
   {
     title: string,
+    className?: string,
     children: React.Element<
       typeof DropdownHeader | typeof DropdownFooter | typeof DropdownDivider | typeof DropdownItem
-    >[],
-    className?: string
+    >[]
   },
   S
 > {
@@ -343,7 +340,7 @@ class FormInput extends Component<{
   render() {
     return (
       <div className="form-group row justify-content-center">
-        <div className="col-sm-4 col-sm-offset-4">
+        <div className="col-md-4 col-12">
           <label>{this.props.label}</label>
           <input
             className="form-control"
@@ -354,7 +351,7 @@ class FormInput extends Component<{
             pattern={this.props.pattern}
             placeholder={this.props.placeholder}
             readOnly={this.props.readOnly}
-            />
+          />
         </div>
       </div>
     );
@@ -375,7 +372,7 @@ class FormInputDateTime extends Component<{
   render() {
     return (
       <div className="form-group row justify-content-center">
-        <div className="form-group col-lg-3">
+        <div className="form-group col-md-3 col-8">
           <label>{this.props.label}</label>
           <input
             className="form-control"
@@ -387,7 +384,7 @@ class FormInputDateTime extends Component<{
             placeholder={this.props.placeholder}
           />
         </div>
-        <div className="form-group col-lg-1">
+        <div className="form-group col-md-1 col-4">
           <label>{this.props.label2}</label>
           <input className="form-control" type="time" value={this.props.value2} onChange={this.props.onChange2} />
         </div>
@@ -408,7 +405,7 @@ class FormInputBig extends Component<{
   render() {
     return (
       <div className="form-group row justify-content-center">
-        <div className="col-sm-4 col-sm-offset-4">
+        <div className="col-md-4 col-12">
           <label>{this.props.label}</label>
           <textarea
             rows="8"
@@ -434,8 +431,8 @@ class FileInput extends Component<{
     return (
       <form>
         <div className="form-group row">
-          <div className="col-sm-4" />
-          <div className="col-sm-4 col-form-label">
+          <div className="col-md-4 col-12" />
+          <div className="col-md-4 col-form-label">
             <i>{this.props.children}</i>
             <input type="file" className="form-control-file" />
           </div>

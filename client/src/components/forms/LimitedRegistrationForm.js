@@ -8,6 +8,7 @@ import { Alert, NavBar, Form, Card, Button } from '../../widgets';
 import { userService } from '../../services/UserService.js';
 import { history } from '../../index.js';
 import {tokenManager} from "../../tokenManager";
+import {HoverButton} from "../issueViews/issueViews";
 
 
 export default class LimitedRegistrationForm extends Component {
@@ -57,7 +58,7 @@ export default class LimitedRegistrationForm extends Component {
           {this.passwordsMatch ? <div /> : <Form.Alert text="Passordene samsvarer ikke. Prøv på nytt." />}
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
-              <Button.Basic onClick={this.save}>Lag bruker</Button.Basic>
+              <HoverButton onclick={this.save} text="Lag Bruker"/>
             </div>
           </div>
         </form>

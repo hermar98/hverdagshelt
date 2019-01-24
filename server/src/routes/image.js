@@ -1,4 +1,4 @@
-import {IssuePicture} from '../models';
+import {Issue, IssuePicture} from '../models';
 const cloudinary = require('cloudinary');
 const { CLIENT_ORIGIN } = require('./config');
 const formData = require('express-form-data');
@@ -71,9 +71,25 @@ app.post('/image', (req: Request, res: Response) => {
 
 
 
-app.get('/image//:id', (req: Request, res: Response) => {
+app.get('/image/:id', (req: Request, res: Response) => {
     return IssuePicture.findOne({
         where: { imageId: Number(req.params.id) }
+    }).then(user => (user ? res.send(user) : res.sendStatus(404)));
+});
+
+app.get('/image/issue/:issueId', (req: Request, res: Response) => {
+    return Issue.findOne({
+        // where: { '$Issues.issueId$': Number(req.params.issueId) },
+        include: [
+            {
+                model: IssuePicture,
+                // as: 'IssuesPictures',
+                // through: { model: UserIssue, as: 'UserIssues' },
+                required:   true,
+            }
+        ],
+        attributes: [],
+        where: {issueId: req.params.issueId}
     }).then(user => (user ? res.send(user) : res.sendStatus(404)));
 });
 
@@ -89,4 +105,4 @@ cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.API_KEY,
     api_secret: process.env.API_SECRET
-})
+});

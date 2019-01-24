@@ -17,16 +17,22 @@ import { history } from '../../index';
 import { Municipal } from '../../models/Municipal';
 import { userService } from '../../services/UserService';
 
-export class FeedMenu extends Component {
+export class MunEmployeeMenu extends Component {
   user = null;
   municipal = new Municipal();
   munId = localStorage.getItem('munId');
+  className = '';
 
   mounted() {
     userService
-      .getCurrentUser()
-      .then(user => {
-        this.user = user;
+      .getToken()
+      .then(() => {
+        userService
+          .getUser(tokenManager.getUserId())
+          .then(user => {
+            this.user = user;
+          })
+          .catch((error: Error) => console.log(error));
       })
       .catch((error: Error) => console.log(error));
 
@@ -40,16 +46,18 @@ export class FeedMenu extends Component {
       return (
         <div>
           <NavBar>
-            <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
-            <NavBar.Button onClick={this.toRegisterIssue}>Registrer Sak</NavBar.Button>
-            <NavBar.Button className="focus" onClick={this.toFeed}>
-              Min Feed
-            </NavBar.Button>
-            <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
+            <NavBar.Brand
+              image={'../../images/hverdagshelt-logo-white.svg'}
+              to={'/kommune/' + localStorage.getItem('munId') + '/saker'}
+            >
+              Hverdagshelt
+            </NavBar.Brand>
+            <NavBar.Button onClick={this.toRegisterEvent}>Registrer Event</NavBar.Button>
+            <NavBar.Button onClick={this.toMunEmployeeHome}>Hjem</NavBar.Button>
+            <NavBar.Dropdown className={this.className} title={this.user.firstName + ' ' + this.user.lastName}>
               <DropdownHeader>{this.user.email}</DropdownHeader>
-              <DropdownFooter>Privatperson</DropdownFooter>
+              <DropdownFooter>Kommuneansatt</DropdownFooter>
               <DropdownDivider />
-              <DropdownItem onClick={this.changeMunicipal}>Endre kommune</DropdownItem>
               <DropdownItem onClick={this.toProfile}>Min profil</DropdownItem>
               <DropdownItem onClick={this.toLogout}>Logg ut</DropdownItem>
             </NavBar.Dropdown>
@@ -61,27 +69,26 @@ export class FeedMenu extends Component {
   }
   toProfile() {
     history.push('/profil');
+    this.className = 'profilefocus';
   }
 
-  toFeed() {
-    history.push('/feed');
-  }
   toLogout() {
     tokenManager.deleteToken();
+    window.location.reload();
     history.push('/');
   }
-  toRegisterIssue() {
-    history.push('/registrerSak');
-  }
+
   toRegisterEvent() {
     history.push('/registrerEvent');
+    this.className = '';
   }
   changeMunicipal() {
     localStorage.removeItem('munId');
     history.push('/');
   }
 
-  toIssue() {
-    history.push('/registrerSak');
+  toMunEmployeeHome() {
+    history.push('/kommune/' + localStorage.getItem('munId') + '/saker');
+    this.className = '';
   }
 }
