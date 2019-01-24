@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 
 import { Alert, NavBar, Form, Card, Button } from '../../../widgets';
-import { ProfileMenu } from '../../../components/menu/ProfileMenu';
 import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
 import { userService } from '../../../services/UserService';
 import { User } from '../../../models/User';
@@ -26,7 +25,6 @@ export class AdminProfilePage extends Component {
   render() {
     return (
       <div>
-        <ProfileMenu />
         <Card title="Min Profil">
           <hr />
           <p>
