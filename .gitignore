@@ -6,3 +6,4 @@ client/.DS_Store
 server/coverage
 client/coverage
 .env
+.vscode

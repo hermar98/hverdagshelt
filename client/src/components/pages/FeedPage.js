@@ -10,7 +10,6 @@ import { eventCategoryService } from '../../services/EventCategoryService';
 import { Alert, Card } from '../../widgets';
 import { IssueOverviewSmall, IssueSmall } from '../issueViews/issueViews';
 import { DisplayEvent2, EventLarge, EventSmall } from './EventPage';
-import { FeedMenu } from '../menu/FeedMenu';
 import NavLink from 'react-router-dom/es/NavLink';
 import { userService } from '../../services/UserService';
 import { tokenManager } from '../../tokenManager';
@@ -41,7 +40,6 @@ export class FeedPage extends Component {
 
     return (
       <div>
-        <FeedMenu />
         <div className="row">
           <div className="col-lg-6">
             <Card title="Feil/mangler">

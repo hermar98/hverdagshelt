@@ -1,6 +1,5 @@
 import { Component } from 'react-simplified';
 import { User } from '../../models/User';
-import { IssueMenu } from '../menu/IssueMenu';
 import RegistrationForm from '../forms/RegistrationForm';
 import { statistics } from '../../statistics';
 import { Alert } from '../../widgets.js';
@@ -21,7 +20,6 @@ export class StatisticsPage extends Component {
   render() {
     return (
       <div>
-        <IssueMenu />
         <div className="mt-3" align="center">
           <h1>Statistikk</h1>
           <p>Antall registrerte saker per måned i en kommune</p>

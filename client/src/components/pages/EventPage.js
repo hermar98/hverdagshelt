@@ -7,7 +7,6 @@ import { Alert, DisplayEvent } from '../../widgets';
 import { Issue } from '../../models/Issue';
 import { Status } from '../issueViews/issueViews';
 import moment from 'moment';
-import { IssueMenu } from '../menu/IssueMenu';
 import { eventService } from '../../services/EventService';
 import { Event } from '../../models/Event';
 
@@ -17,7 +16,6 @@ export class EventPage extends Component {
   render() {
     return (
       <div>
-        <IssueMenu />
         <div className="container col-10 mt-4 h-100">
           <div className="row h-100">
             {this.events.map(e => (
@@ -102,7 +100,6 @@ export class EventLarge extends Component<{ event: Event }> {
 }
 
 export class EventSmall extends Component<{ event: Event }> {
-
   textLength = 50;
 
   render() {

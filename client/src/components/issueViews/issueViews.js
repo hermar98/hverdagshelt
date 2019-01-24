@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 import {Redirect, NavLink} from 'react-router-dom'
 import { Feedback} from '../../models/Feedback';
-import { SpecificIssueMenu } from '../menu/SpecificIssueMenu';
 import {tokenManager} from "../../tokenManager";
 import {User} from "../../models/User";
 import {Issue} from "../../models/Issue";
@@ -64,7 +63,6 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
 
         return (
             <div>
-                <SpecificIssueMenu/>
                 <div className="issue-container">
                     <div className="issue-large">
                         <Status status={this.issue.statusId} id={this.issue.issueId}/>
@@ -72,14 +70,19 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                             <div className="card-body issue-large-card">
                                 <div className="d-flex flex-row">
                                     <p id="date-large" className="date">{formatDate(this.issue.createdAt)}</p>
-                                    <div className="options">
-                                        <ImageButton source="../../images/cog.png" onclick={() => this.onEdit()} />
-                                        <ImageButton source="../../images/trashcan.png" onclick={() => this.onDelete()} />
-                                    </div>
+                                    <ButtonGroup onclickC={this.onEdit} onclickT={this.onDelete} rank={1} />
                                     <StatusButton status={this.issue.statusId} onclick={() => {
-                                        this.setState({
-                                            clickedStatus: !this.state.clickedStatus
-                                        })
+                                        let rank = 0
+                                        userService.getUser(tokenManager.getUserId())
+                                            .then(user => {
+                                                rank = user.rank
+                                                if(rank == 3) {
+                                                    this.setState({
+                                                        clickedStatus: !this.state.clickedStatus
+                                                    })
+                                                }
+                                            })
+                                            .catch(error => console.error("Error: ", error))
                                     }}/>
                                 </div>
                                 <div className="d-flex flex-row justify-content-end">
@@ -162,7 +165,6 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
             .then(res => {
                 issueService.getIssue(this.issue.issueId)
                     .then(issue => {
-                        console.log("hadad")
                         this.issue = issue;
                         this.setState({clickedStatus: !this.state.clickedStatus})
                     })
@@ -221,21 +223,14 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     }
 
     onDelete() {
-        let rank = 0
-        userService.getUser(this.issue.userId)
-            .then(user => rank = user.rank)
-            .catch(error => console.error("Error: ", error))
-
-        if(rank == 3) {
-            if (confirm("Are you sure?")) {
-                issueService.deleteIssue(this.issue.issueId)
-                    .then(res => {
-                        this.setState({
-                            clickedDelete: true
-                        })
+        if (confirm("Are you sure?")) {
+            issueService.deleteIssue(this.issue.issueId)
+                .then(res => {
+                    this.setState({
+                        clickedDelete: true
                     })
-                    .catch(error => console.error("Error: ", error))
-            }
+                })
+                .catch(error => console.error("Error: ", error))
         }
     }
 }
@@ -499,8 +494,7 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
                                     <img className="card-img profile-image" src={this.user.profilePicture}/>
                                 </div>
                                 <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{formatDate(this.props.feedback.createdAt)}</p></div>
-                            <ImageButton source="../../images/cog.png" onclick={() => this.onEdit()} />
-                            <ImageButton source="../../images/trashcan.png" onclick={() => this.onDelete()}/>
+                            <ButtonGroup onclickC={this.onEdit} onclickT={this.onDelete} />
                         </div>
                         <div className="card-text feedback-text" id={"feedback-text " + this.props.feedback.feedbackId}>
                             {this.props.feedback.content}
@@ -669,5 +663,29 @@ export class HoverButton extends Component<{onclick: function, text: string}> {
                 {this.props.text}
             </button>
         )
+    }
+}
+
+export class ButtonGroup extends Component<{onclickC: function, onclickT: function}> {
+
+    rank: number = -1
+
+    render() {
+        if(this.rank == 3) {
+            return (
+                <div className="options">
+                    <ImageButton source="../../images/cog.png" onclick={this.props.onclickC}/>
+                    <ImageButton source="../../images/trashcan.png" onclick={this.props.onclickT}/>
+                </div>
+            )
+        }else{
+            return null
+        }
+    }
+
+    mounted () {
+        userService.getUser(tokenManager.getUserId())
+            .then(user => this.rank = user.rank)
+            .catch(error => console.error("Error: ", error))
     }
 }

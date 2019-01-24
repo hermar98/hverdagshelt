@@ -102,7 +102,7 @@ div.status > h4 {
 
 .hover-button:hover {
     color: black;
-    background-color: white;
+    background-color: lightskyblue;
 }
 
 .image-button:hover {
@@ -136,6 +136,7 @@ div.status > h4 {
     border: #4e555b 1px solid;
     background-color: #3d3d3d;
     height: 90%;
+    color:white;
 }
 
 div.feedback-button {
@@ -247,7 +248,7 @@ div.feedback-button div {
     border-bottom: lightgray solid 1px;
 }
 
-.btn:focus, .btn:active {
+.hover-button:focus, .hover-button:active {
     outline: none !important;
     background-color: #d8d8d8;
     box-shadow: none;
@@ -464,11 +465,6 @@ random
     border: solid lightgrey 1px;
 }
 
-.btn {
-    background-color: dodgerblue;
-    color: white;
-    height:46px;
-}
 /*
 Event
  */

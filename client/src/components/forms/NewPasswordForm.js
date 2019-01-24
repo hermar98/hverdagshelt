@@ -10,6 +10,7 @@ import { issueService } from '../../services/IssueService.js';
 import { history } from '../../index';
 import { User } from '../../models/User';
 import { userService } from '../../services/UserService';
+import { HoverButton } from "../issueViews/issueViews";
 
 export default class NewPasswordForm extends Component {
   state = {
@@ -43,9 +44,7 @@ export default class NewPasswordForm extends Component {
           />
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
-              <Button.Basic type="submit" onClick={this.login}>
-                Bytt Passord
-              </Button.Basic>
+              <HoverButton onclick={this.login} text="Bytt Passord"/>
             </div>
             {this.state.passwordError ? <Form.Alert type="danger" text="Sørg for at passordene er like" /> : <div />}
           </div>

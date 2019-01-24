@@ -10,6 +10,7 @@ import { history } from '../../index';
 import { tokenManager } from '../../tokenManager';
 import { issueService } from '../../services/IssueService';
 import UploadImageButton from '../image/UploadImageButton';
+import {HoverButton} from "../issueViews/issueViews";
 
 export default class RegisterIssue extends Component {
   issue = new Issue();
@@ -62,7 +63,7 @@ export default class RegisterIssue extends Component {
           />
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
-              <Button.Basic onClick={this.save}>Send inn</Button.Basic>
+              <HoverButton onclick={this.save} text="Send Inn"/>
             </div>
           </div>
         </form>
