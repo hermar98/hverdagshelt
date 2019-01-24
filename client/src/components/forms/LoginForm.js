@@ -86,9 +86,12 @@ export default class Login extends Component {
             this.user = user;
             if(this.user.rank === 0){
               history.push('/aktiver/aktiverBruker');
-            }else{
+            }else if(this.user.rank === 1){
               history.push('/feed');
+            }else{
+              history.push('/profil');
             }
+
           })
           .catch((error: Error) => console.log(error))
       })

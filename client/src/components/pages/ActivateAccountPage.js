@@ -43,6 +43,8 @@ export class ActivateAccountPage extends Component {
   }
 
   mounted() {
+
+
     userService.checkActivationToken(window.location.hash.slice(11)).then(user => {
       if (!user) return;
       if (user.rank !== 0) {
