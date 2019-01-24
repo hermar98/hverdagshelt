@@ -22,6 +22,7 @@ export class AdminMenu extends Component {
   municipal = new Municipal();
   munId = localStorage.getItem('munId');
   className = '';
+  className2 = '';
 
   mounted() {
     userService
@@ -46,10 +47,12 @@ export class AdminMenu extends Component {
       return (
         <div>
           <NavBar>
-            <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'} to={'/admin'}>
+            <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'} to={'/admin'} onClick={this.toAdminHome2}>
               Hverdagshelt
             </NavBar.Brand>
-            <NavBar.Button onClick={this.toAdminHome}>Hjem</NavBar.Button>
+            <NavBar.Button className2={this.className2} onClick={this.toAdminHome}>
+              Hjem
+            </NavBar.Button>
             <NavBar.Dropdown className={this.className} title={this.user.firstName + ' ' + this.user.lastName}>
               <DropdownHeader>{this.user.email}</DropdownHeader>
               <DropdownFooter>Admin</DropdownFooter>
@@ -66,6 +69,7 @@ export class AdminMenu extends Component {
   toProfile() {
     history.push('/profil');
     this.className = 'profilefocus';
+    this.className2 = '';
   }
 
   toFeed() {
@@ -81,9 +85,16 @@ export class AdminMenu extends Component {
   changeMunicipal() {
     localStorage.removeItem('munId');
     history.push('/');
+    this.className2 = '';
+    this.className = 'profilefocus';
   }
   toAdminHome() {
     history.push('/admin');
     this.className = '';
+  }
+  toAdminHome2() {
+    this.className = '';
+    this.className2 = 'homefocus';
+    console.log(this.className2);
   }
 }

@@ -153,11 +153,15 @@ export class Card extends Component<{ title?: React.Node, children?: React.Node 
   }
 }
 
-class NavBarButton extends Component<{ onClick: () => mixed, children?: React.Node }> {
+class NavBarButton extends Component<{ onClick: () => mixed, className2?: string, children?: React.Node }> {
   render() {
     return (
       <form className="form-inline">
-        <button onClick={this.props.onClick} className="custom-nav-btn btn btn-outline-light" data-toggle="collapse">
+        <button
+          onClick={this.props.onClick}
+          className={'custom-nav-btn btn btn-outline-light ' + this.props.className2}
+          data-toggle="collapse"
+        >
           {this.props.children}
         </button>
       </form>
@@ -165,15 +169,18 @@ class NavBarButton extends Component<{ onClick: () => mixed, children?: React.No
   }
 }
 
-class NavBarBrand extends Component<{ image?: React.Node, to?: string, children?: React.Node }> {
+class NavBarBrand extends Component<{ image?: React.Node, onClick: () => mixed, to: string, children?: React.Node }> {
   render() {
     if (!this.props.children) return null;
-    return (
-      <NavLink className="navbar-brand" exact to={this.props.to ? this.props.to : '/'}>
-        <img src={this.props.image} alt="" width="50px" height="40px" />
 
-        {this.props.children}
-      </NavLink>
+    return (
+      <div onClick={this.props.onClick}>
+        <NavLink className="navbar-brand" exact to={this.props.to ? this.props.to : '/'}>
+          <img src={this.props.image} alt="" width="50px" height="40px" />
+
+          {this.props.children}
+        </NavLink>
+      </div>
     );
   }
 }
