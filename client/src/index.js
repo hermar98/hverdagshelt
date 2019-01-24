@@ -1,35 +1,33 @@
 // @flow
-
 import ReactDOM from 'react-dom';
 import * as React from 'react';
-import { Component } from 'react-simplified';
-import { BrowserRouter, HashRouter, Route, NavLink, Switch } from 'react-router-dom';
-import { Alert, NavBar, Form, Card, Button } from './widgets';
+import { HashRouter, Route, Switch } from 'react-router-dom';
+import { Alert } from './widgets';
 import { Footer } from './components/menu/Footer';
 import { FileIssuePage } from './components/pages/FileIssuePage';
 import { LoginPage } from './components/pages/LoginPage';
-import { UserProfilePage } from './components/pages/ProfilePage/UserProfilePage';
-import { AdminProfilePage } from './components/pages/ProfilePage/AdminProfilePage';
 import { RegisterPage } from './components/pages/RegisterPage';
 import { EventInfo } from './components/pages/EventPage';
 import { FeedPage } from './components/pages/FeedPage';
 import { ChooseMunicipalPage } from './components/pages/ChooseMunicipalPage';
 import { Menu } from './components/menu/Menu';
-// import { RegisterEventPage } from './components/pages/RegisterEventPage';
-import { IssuePage } from './components/pages/IssuePage';
-import { IssueLarge, IssueOverviewNormal, IssueNormal, IssueOverviewSmall } from './components/issueViews/issueViews';
+import { IssueLarge } from './components/issueViews/issueViews';
 import { ForgotPassword } from './components/pages/ForgotPassword.js';
 import { NewPasswordPage } from './components/pages/NewPasswordPage.js';
 import { StatisticsPage } from './components/pages/StatisticsPage.js';
 import { TermsOfService } from './components/pages/TermsOfServicePage.js';
 import { AdminPage, AdminEditPage } from './components/pages/AdminPage.js';
-// import { UploadImageTest } from './components/image/UploadImageTest.js';
 import { AlternativeUpload } from './components/image/AlternativeUpload.js';
-
 import { MunicipalPage } from './components/pages/MunicipalPage';
 import { NotFound } from './components/pages/NotFound';
 import { IssueView } from './components/pages/IssueOverviewPage';
 import { ContractorView } from './components/pages/CompanyIssuePage';
+import { ActivateAccountPage } from './components/pages/ActivateAccountPage';
+import { Map } from './map';
+import { RegisterEventPage } from "./components/pages/RegisterEventPage";
+import createHashHistory from 'history/createHashHistory';
+import ProfilePage from './components/pages/ProfilePage/ProfilePage';
+import AdminAddPage from './components/forms/AdminAddPage';
 
 // Reload application when not in production environment
 
@@ -39,11 +37,6 @@ if (process.env.NODE_ENV !== 'production') {
   if (document.body) document.body.appendChild(script);
 }
 
-import createHashHistory from 'history/createHashHistory';
-import { ActivateAccountPage } from './components/pages/ActivateAccountPage';
-import ProfilePage from './components/pages/ProfilePage/ProfilePage';
-import AdminAddPage from './components/forms/AdminAddPage';
-import { Map } from './map';
 
 export const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after
 
@@ -64,6 +57,7 @@ if (root)
           <Route exact path="/profil" component={ProfilePage} />
           <Route exact path="/saker/:issueId" component={IssueLarge} />
           <Route exact path="/registrerSak" component={FileIssuePage} />
+          <Route exact path="/registrerEvent" component={RegisterEventPage} />
           <Route exact path="/feed" component={FeedPage} />
           <Route exact path="/kommune/:munId" component={MunicipalPage} />
           <Route exact path="/image" component={AlternativeUpload} />
