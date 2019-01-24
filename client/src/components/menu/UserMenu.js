@@ -21,6 +21,7 @@ export class UserMenu extends Component {
   user = null;
   municipal = new Municipal();
   munId = localStorage.getItem('munId');
+  className = '';
 
   mounted() {
     userService
@@ -48,7 +49,7 @@ export class UserMenu extends Component {
             <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
             <NavBar.Button onClick={this.toRegisterIssue}>Registrer Sak</NavBar.Button>
             <NavBar.Button onClick={this.toFeed}>Min Feed</NavBar.Button>
-            <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
+            <NavBar.Dropdown className={this.className} title={this.user.firstName + ' ' + this.user.lastName}>
               <DropdownHeader>{this.user.email}</DropdownHeader>
               <DropdownFooter>Privatperson</DropdownFooter>
               <DropdownDivider />
@@ -64,10 +65,12 @@ export class UserMenu extends Component {
   }
   toProfile() {
     history.push('/profil');
+    this.className = 'profilefocus';
   }
 
   toFeed() {
     history.push('/feed');
+    this.className = '';
   }
   toLogout() {
     tokenManager.deleteToken();
@@ -76,9 +79,7 @@ export class UserMenu extends Component {
   }
   toRegisterIssue() {
     history.push('/registrerSak');
-  }
-  toRegisterEvent() {
-    history.push('/registrerEvent');
+    this.className = '';
   }
   changeMunicipal() {
     localStorage.removeItem('munId');
@@ -87,5 +88,6 @@ export class UserMenu extends Component {
 
   toIssue() {
     history.push('/registrerSak');
+    this.className = '';
   }
 }

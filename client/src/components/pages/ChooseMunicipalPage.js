@@ -9,7 +9,7 @@ import { Municipal } from '../../models/Municipal';
 import { tokenManager } from '../../tokenManager';
 import { Button } from '../../widgets';
 import { Card } from '../../widgets';
-import {HoverButton} from "../issueViews/issueViews";
+import { HoverButton } from '../issueViews/issueViews';
 
 let municipalObjects;
 //TODO: fix input
@@ -35,7 +35,7 @@ export class ChooseMunicipalPage extends Component {
                     <div className="munInputForm justify-content-center row">
                       <form id="munInputForm-Form" autoComplete="off">
                         <input id="munInputForm-Input" type="text" name="municipal" placeholder="Velg kommune" />
-                        <HoverButton  onclick={this.go} text="Gå"/>
+                        <HoverButton className="ero" onclick={this.go} text="Gå" />
                       </form>
                     </div>
                   </div>

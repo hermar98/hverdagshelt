@@ -1,4 +1,4 @@
-@media (min-width: 574px) {
+@media (min-width: 611px) {
   .custom-nav-btn {
     color: white;
     margin-top: 0px !important;
@@ -41,8 +41,16 @@
   #footer {
     margin-left: 22%;
   }
+  .dropdown-menu {
+    position: relative !important;
+    width: 100% !important;
+  }
+  .profilefocus {
+    background-color: white !important;
+    color: black !important;
+  }
 }
-@media (max-width: 574px) {
+@media (max-width: 610px) {
   .custom-nav-btn {
     color: white;
     margin-top: 0px !important;
@@ -94,7 +102,12 @@
   #footer {
     text-align: center !important;
   }
-
+  .dropdown-menu {
+    position: relative !important;
+    width: 100% !important;
+    background-color: #21252 !important;
+    color: white !important;
+  }
 }
 
 #profileButton {
@@ -118,10 +131,6 @@
   display: block !important;
 }
 
-.dropdown-submenu {
-  position: relative !important;
-  width: 100% !important;
-}
 .dropdown-menu {
   position: absolute !important;
 }
