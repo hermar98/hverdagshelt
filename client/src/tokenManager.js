@@ -1,3 +1,5 @@
+import service from "./services/Service";
+
 class TokenManager {
     getJwt(): string {
         let token = localStorage.getItem('token');
@@ -8,13 +10,12 @@ class TokenManager {
         }
     }
 
-    getUserId(): number {
+    getNewToken(): Promise<JSON> {
         let token = localStorage.getItem('token');
-        if (token) {
-            return JSON.parse(token).userId;
-        } else {
-            return null;
-        }
+        if (token) token = JSON.parse(token).jwt;
+        return service.get('/token', {
+            headers: {'x-access-token': token}
+        });
     }
 
     addToken(token: JSON) {

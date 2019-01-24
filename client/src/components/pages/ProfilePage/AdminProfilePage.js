@@ -14,7 +14,7 @@ export class AdminProfilePage extends Component {
 
   mounted() {
     userService
-      .getUser(tokenManager.getUserId())
+      .getCurrentUser()
       .then(rows => {
         this.user = rows;
         this.state.isLoaded = true;

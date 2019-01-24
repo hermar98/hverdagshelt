@@ -62,8 +62,8 @@ export default class Login extends Component {
   }
 
   mounted() {
-    userService
-      .getToken()
+    tokenManager
+      .getNewToken()
       .then(token => {
         console.log(token);
         history.push('/');
@@ -80,7 +80,7 @@ export default class Login extends Component {
       .login(this.email, this.password)
       .then(token => {
         tokenManager.addToken(token);
-        userService.getUser(tokenManager.getUserId())
+        userService.getCurrentUser()
           .then(user =>{
             this.user = user;
             if(this.user.rank === 0){

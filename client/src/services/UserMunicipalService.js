@@ -1,29 +1,29 @@
 //@flow
 import {Municipal} from "../models/Municipal";
 import service from './Service';
+import {tokenManager} from "../tokenManager";
 
 class UserMunicipalService {
   getUserMunicipals(userId: number): Promise<Municipal[]> {
-    let token = localStorage.getItem('token');
-    if (token) token = JSON.parse(token).jwt;
-    return service.get('/secure/users/' + userId + '/mun', {
-      headers: {'x-access-token': token}
-    });
+    return service.get('/users/' + userId + '/mun');
   }
 
   addUserMunicipal(userId: number, munId: number): Promise<Object> {
-    let token = localStorage.getItem('token');
-    if (token) token = JSON.parse(token).jwt;
-    console.log(token);
-    return service.post('/secure/users/' + userId + '/mun/' + munId, null, {headers: {'x-access-token': token}});
+      let token = tokenManager.getJwt();
+      tokenManager.getNewToken()
+          .then(newToken => tokenManager.updateToken(newToken))
+          .catch((error: Error) => console.log(error));
+
+    return service.post('/users/' + userId + '/mun/' + munId, null, {headers: {'x-access-token': token}});
   }
 
   deleteUserMunicipal(userId: number, munId: number): Promise<void> {
-    let token = localStorage.getItem('token');
-    if (token) {
-      token = JSON.parse(token).jwt;
-    }
-    return service.delete('/secure/users/' + userId + '/mun/' + munId, {
+      let token = tokenManager.getJwt();
+      tokenManager.getNewToken()
+          .then(newToken => tokenManager.updateToken(newToken))
+          .catch((error: Error) => console.log(error));
+
+    return service.delete('/users/' + userId + '/mun/' + munId, {
       headers: {
         'x-access-token': token
       }
@@ -48,7 +48,7 @@ class UserMunicipalService {
   //       //handle error
   //       console.log(response);
   //     });
-  //   return Service.post('/secure/user/' + userId + '/mun/' + munId, {
+  //   return Service.post('/user/' + userId + '/mun/' + munId, {
   //     headers: { 'x-access-token': token }
   //   });
   // }

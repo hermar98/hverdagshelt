@@ -10,6 +10,7 @@ import fs from 'fs';
 import jwt from 'jsonwebtoken';
 import path from 'path';
 import {mailSender} from "./MailSender";
+import {tokenManager} from './tokenManager.js';
 
 
 //Flow type checking
@@ -26,29 +27,14 @@ app.use(express.json()); // For parsing application/json
 
 let secretKey = fs.readFileSync('./secret.key', 'utf8');
 
-app.use('/secure', (req: Request, res: Response, next) => {
-  let token = req.headers['x-access-token'];
-  jwt.verify(token, secretKey, err => {
-    if (err) {
-      res.sendStatus(401);
-    } else {
-      next();
-    }
-  });
-});
-
 app.get('/token', (req: Request, res: Response) => {
-    let token = req.headers['x-access-token'];
-    jwt.verify(token, secretKey, (err, decoded) => {
-        if (err) {
-            res.sendStatus(401);
-        } else {
-            token = jwt.sign({ email: decoded.email }, secretKey, {
-                expiresIn: 30
-            });
-            res.json({ jwt: token });
-        }
-    });
+    let tokenData = tokenManager.verifyToken(req.headers['x-access-token']);
+    if (tokenData) {
+      let token = tokenManager.signToken(tokenData.userId, tokenData.rank);
+      res.json({jwt: token});
+    } else {
+      res.sendStatus(401);
+    }
 });
 
 app.post('/login', (req: Request, res: Response) => {
@@ -60,10 +46,8 @@ app.post('/login', (req: Request, res: Response) => {
     if (user) {
       let passwordData = passwordHash.sha512(password, user.salt);
       if (passwordData.passwordHash === user.hashStr) {
-        let token = jwt.sign({ email: email }, secretKey, {
-          expiresIn: 4000
-        });
-        res.json({ userId: user.userId, jwt: token });
+        let token = tokenManager.signToken(user.userId, user.rank);
+        res.json({ jwt: token });
       } else {
         res.sendStatus(401);
       }
@@ -130,11 +114,19 @@ app.post('/register', (req: Request, res: Response) => {
 
   const token = crypto.randomBytes(20).toString('hex');
 
+  let userRank = 1;
+  let tokenData = tokenManager.verifyToken(req.headers['x-access-token']);
+  if (tokenData) {
+    if (tokenData.rank === 4) {
+      userRank = rank;
+    }
+  }
+
   return User.create({
     firstName: firstName,
     lastName: lastName,
     email: email,
-    rank: rank,
+    rank: userRank,
     salt: passwordSalt,
     hashStr: passwordData.passwordHash,
     activateAccountToken: token
@@ -147,7 +139,7 @@ app.post('/register', (req: Request, res: Response) => {
 
       res.sendStatus(200);
       mailSender.sendEmail(emailS, "Aktivering av bruker", "Hei " + firstNameS + " " + lastNameS + "!\n\nTakk for din registrering og velkommen " +
-        "til Hverdagshelt. For å aktivere din bruker vennligst trykk følgende link:\nhttp://localhost:3000/#/activate/" + token +
+        "til Hverdagshelt. For å aktivere din bruker vennligst trykk følgende link:\nhttp://localhost:3000/#/aktiver/" + token +
       "\n\nHvis du ikke har registrert bruker hos oss, vennligst se bort fra denne mailen.\n\nMed vennlig hilsen\n" + "Hverdagshelt AS (Young Fleinar Inc.)");
     }
   });

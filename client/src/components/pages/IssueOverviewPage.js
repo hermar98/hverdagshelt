@@ -31,14 +31,16 @@ export class IssueView extends Component {
   }
 
   mounted() {
-    userService.getUser(tokenManager.getUserId()).then(user => {
-      this.munId = user.munId;
-      issueService
-        .getIssuesByMunicipal(this.munId)
-        .then(issues => {
-          this.issues = issues;
+
+    userService.getCurrentUser()
+        .then(user => {
+          this.munId = user.munId;
+            issueService
+                .getIssuesByMunicipal(this.munId)
+                .then(issues => {
+                    this.issues = issues;
+                })
+                .catch(error => console.error('Error: ', error));
         })
-        .catch(error => console.error('Error: ', error));
-    });
   }
 }

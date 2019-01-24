@@ -8,7 +8,7 @@ import { issueCategoryService } from '../../services/IssueCategoryService.js';
 import { Alert, Form, Card, Button } from '../../widgets';
 import { history } from '../../index';
 import { tokenManager } from '../../tokenManager';
-import { issueService } from '../../services/IssueService';
+import { userService } from '../../services/UserService';
 import UploadImageButton from '../image/UploadImageButton';
 import {HoverButton} from "../issueViews/issueViews";
 
@@ -18,6 +18,7 @@ export default class RegisterIssue extends Component {
   form = null;
   munId = localStorage.getItem('munId');
   upload: UploadImageButton = null;
+  user = null;
 
   render() {
     return (
@@ -74,7 +75,7 @@ export default class RegisterIssue extends Component {
   save() {
     if (!this.form || !this.form.checkValidity()) return;
 
-    this.issue.userId = tokenManager.getUserId();
+    this.issue.userId = this.user.userId;
     this.issue.munId = this.munId;
     this.issue.latitude = 0.1;
     this.issue.longitude = 0.2;
@@ -103,6 +104,10 @@ export default class RegisterIssue extends Component {
   }
 
   mounted() {
+    userService.getCurrentUser()
+        .then(user => this.user = user)
+        .catch((error: Error) => Alert.danger(error.message));
+
     issueCategoryService
       .getCategories()
       .then(issueCategories => (this.categories = issueCategories))

@@ -22,19 +22,19 @@ export class ContractorProfilePage extends Component {
 
   mounted() {
     userService
-      .getUser(tokenManager.getUserId())
-      .then(rows => {
-        this.user = rows;
+      .getCurrentUser()
+      .then(rows =>{
+        this.user = rows
         municipalService
           .getMunicipal(this.user.munId)
-          .then(mun => (this.municipal = mun))
+          .then(mun => this.municipal = mun)
           .catch(error => console.log(error));
-      })
-      .catch(error => console.log(error));
 
-    issueService
-      .getIssuesByUser(tokenManager.getUserId())
-      .then(rows => (this.issues = rows))
+        issueService
+            .getIssuesByUser(this.user.userId)
+            .then(rows => (this.issues = rows))
+            .catch(error => console.log(error));
+      })
       .catch(error => console.log(error));
   }
 

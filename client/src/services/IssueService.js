@@ -2,72 +2,61 @@
 
 import {Issue} from "../models/Issue";
 import service from "./Service";
+import {tokenManager} from "../tokenManager";
 
 
 class IssueService {
   getIssues(): Promise<Issue[]> {
-    let token = localStorage.getItem('token');
-    if (token) token = JSON.parse(token).jwt;
-    return service.get('/secure/issues', {
-      headers: {'x-access-token': token}
-    });
+    return service.get('/issues');
   }
 
   getIssuesByUser(userId: number): Promise<Issue[]> {
-    let token = localStorage.getItem('token');
-    if (token) token = JSON.parse(token).jwt;
-    return service.get('/secure/users/' + userId + '/issues', {
-      headers: {'x-access-token': token}
-    });
+    return service.get('/users/' + userId + '/issues');
   }
 
   getIssue(issueId: number): Promise<Issue> {
-    console.log("2")
-    let token = localStorage.getItem('token');
-    if (token) token = JSON.parse(token).jwt;
-    return service.get('/secure/issues/' + issueId, {
-      headers: {'x-access-token': token}
-    });
+    return service.get('/issues/' + issueId);
   }
 
   getIssuesByMunicipal(munId: number): Promise<Issue[]> {
-    let token = localStorage.getItem('token');
-    if (token) token = JSON.parse(token).jwt;
-    return service.get('/municipals/' + munId + '/issues', {
-      headers: {'x-access-token': token}
-    });
+    return service.get('/municipals/' + munId + '/issues');
   }
 
   updateIssue(issue: Issue): Promise<void> {
-    let token = localStorage.getItem('token');
-    if (token) token = JSON.parse(token).jwt;
-    return service.put('/secure/issues/' + issue.issueId, issue, {
+      let token = tokenManager.getJwt();
+      tokenManager.getNewToken()
+          .then(newToken => tokenManager.updateToken(newToken))
+          .catch((error: Error) => console.log(error));
+
+    return service.put('/issues/' + issue.issueId, issue, {
       headers: {'x-access-token': token}
     });
   }
 
   addIssue(issue: Issue): Promise<Issue> {
-    let token = localStorage.getItem('token');
-    if (token) token = JSON.parse(token).jwt;
-    return service.post('/secure/issues', issue, {
+      let token = tokenManager.getJwt();
+      tokenManager.getNewToken()
+          .then(newToken => tokenManager.updateToken(newToken))
+          .catch((error: Error) => console.log(error));
+
+    return service.post('/issues', issue, {
       headers: {'x-access-token': token}
     });
   }
 
   deleteIssue(issueId: number): Promise<void> {
-    let token = localStorage.getItem('token');
-    if (token) token = JSON.parse(token).jwt;
-    return service.delete('/secure/issues/' + issueId, {
+      let token = tokenManager.getJwt();
+      tokenManager.getNewToken()
+          .then(newToken => tokenManager.updateToken(newToken))
+          .catch((error: Error) => console.log(error));
+
+    return service.delete('/issues/' + issueId, {
       headers: {'x-access-token': token}
     });
   }
 
   getNumberOfIssues(munId: number, year: number): Promise<JSON[]> {
-      let token = localStorage.getItem('token');
-      if (token) token = JSON.parse(token).jwt;
-      return service.get('/municipals/' + munId + '/issues/count?year=' + year, {
-          headers: {'x-access-token': token}
-      });
+      return service.get('/municipals/' + munId + '/issues/count?year=' + year);
   }
 }
 
