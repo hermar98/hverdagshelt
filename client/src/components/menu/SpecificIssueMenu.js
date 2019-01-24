@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import {
@@ -19,8 +17,10 @@ import { history } from '../../index';
 import { Municipal } from '../../models/Municipal';
 import { userService } from '../../services/UserService';
 
-export class ProfileMenu extends Component {
+export class SpecificIssueMenu extends Component {
   user = null;
+  municipal = new Municipal();
+  munId = localStorage.getItem('munId');
 
   mounted() {
     userService
@@ -34,8 +34,12 @@ export class ProfileMenu extends Component {
           .catch((error: Error) => console.log(error));
       })
       .catch((error: Error) => console.log(error));
-  }
 
+    municipalService
+      .getMunicipal(this.munId)
+      .then(municipal => (this.municipal = municipal))
+      .catch((error: Error) => console.log(error));
+  }
   render() {
     if (this.user) {
       if (this.user.rank === 1) {
@@ -45,7 +49,7 @@ export class ProfileMenu extends Component {
               <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
               <NavBar.Button onClick={this.toRegisterIssue}>Registrer Sak</NavBar.Button>
               <NavBar.Button onClick={this.toFeed}>Min Feed</NavBar.Button>
-              <NavBar.Dropdown className="focus" title={this.user.firstName + ' ' + this.user.lastName}>
+              <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
                 <DropdownHeader>{this.user.email}</DropdownHeader>
                 <DropdownFooter>Privatperson</DropdownFooter>
                 <DropdownDivider />
@@ -64,7 +68,7 @@ export class ProfileMenu extends Component {
                 Hverdagshelt
               </NavBar.Brand>
               <NavBar.Button onClick={this.toCompanyHome}>Hjem</NavBar.Button>
-              <NavBar.Dropdown className="focus" title={this.user.firstName + ' ' + this.user.lastName}>
+              <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
                 <DropdownHeader>{this.user.email}</DropdownHeader>
                 <DropdownFooter>Bedrift</DropdownFooter>
                 <DropdownDivider />
@@ -86,7 +90,7 @@ export class ProfileMenu extends Component {
               </NavBar.Brand>
               <NavBar.Button onClick={this.toRegisterEvent}>Registrer Event</NavBar.Button>
               <NavBar.Button onClick={this.toMunEmployeeHome}>Hjem</NavBar.Button>
-              <NavBar.Dropdown className="focus" title={this.user.firstName + ' ' + this.user.lastName}>
+              <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
                 <DropdownHeader>{this.user.email}</DropdownHeader>
                 <DropdownFooter>Kommuneansatt</DropdownFooter>
                 <DropdownDivider />
@@ -104,7 +108,7 @@ export class ProfileMenu extends Component {
                 Hverdagshelt
               </NavBar.Brand>
               <NavBar.Button onClick={this.toAdminHome}>Hjem</NavBar.Button>
-              <NavBar.Dropdown className="focus" title={this.user.firstName + ' ' + this.user.lastName}>
+              <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
                 <DropdownHeader>{this.user.email}</DropdownHeader>
                 <DropdownFooter>Admin</DropdownFooter>
                 <DropdownDivider />
@@ -116,7 +120,13 @@ export class ProfileMenu extends Component {
         );
       }
     }
-    return <div />;
+    return (
+      <NavBar>
+        <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
+        <NavBar.Button onClick={this.toLogin}>Logg Inn</NavBar.Button>
+        <NavBar.Button onClick={this.toRegister}>Registrer Bruker</NavBar.Button>
+      </NavBar>
+    );
   }
 
   toProfile() {
@@ -142,6 +152,9 @@ export class ProfileMenu extends Component {
   }
   toRegisterEvent() {
     history.push('/registrerEvent');
+  }
+  toMunEmployeeProfile() {
+    history.push('/profil');
   }
   toMunEmployeeHome() {
     history.push('/kommune/' + localStorage.getItem('munId') + '/saker'); //TODO: ansatt hjemside

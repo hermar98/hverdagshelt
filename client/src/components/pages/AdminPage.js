@@ -232,7 +232,7 @@ export class AdminEditPage extends Component<{match: {params: {userId: number}}}
 
         return (
             <div>
-                <NewMenu/>
+                <IssueMenu/>
                 <Card title="Rediger bruker">
                     <form ref={e => (this.form = e)} onSubmit={e => e.preventDefault()}>
                         <Form.Input

@@ -72,8 +72,12 @@ class UserService {
       });
   }
 
-  activateAccount(token: string): Promise<JSON>{
-    return service.put('/activate/' + token);
+  activateAccount(token: string, user?: User): Promise<JSON>{
+    return service.put('/activate/' + token, user);
+  }
+
+  checkActivationToken(token: string): Promise<User>{
+    return service.get('/activate/' + token);
   }
 }
 

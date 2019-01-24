@@ -11,7 +11,7 @@ import { LoginPage } from './components/pages/LoginPage';
 import { UserProfilePage } from './components/pages/ProfilePage/UserProfilePage';
 import { AdminProfilePage } from './components/pages/ProfilePage/AdminProfilePage';
 import { RegisterPage } from './components/pages/RegisterPage';
-import { EventPage, EventInfo } from './components/pages/EventPage';
+import { EventInfo } from './components/pages/EventPage';
 import { FeedPage } from './components/pages/FeedPage';
 import { ChooseMunicipalPage } from './components/pages/ChooseMunicipalPage';
 // import { RegisterEventPage } from './components/pages/RegisterEventPage';
@@ -39,7 +39,9 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 import createHashHistory from 'history/createHashHistory';
-import { ActivateAccountPage } from './components/pages/ActivateAccountPage';
+import {ActivateAccountPage} from "./components/pages/ActivateAccountPage";
+import ProfilePage from "./components/pages/ProfilePage/ProfilePage";
+import AdminAddPage from "./components/forms/AdminAddPage";
 
 export const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after
 
@@ -48,7 +50,6 @@ if (root)
   ReactDOM.render(
     <HashRouter>
       <div>
-      <Route exact path="/image" component={AlternativeUpload} />
           <Alert />
               <Switch>
                 <Route exact path="/" component={ChooseMunicipalPage} />
@@ -57,7 +58,7 @@ if (root)
                 <Route exact path="/glemtPassord" component={ForgotPassword} />
                 <Route exact path="/glemtPassord/nullstill" component={NewPasswordPage} />
                 <Route exact path="/vilkår" component={TermsOfService} />
-                <Route exact path="/profil" component={UserProfilePage} />
+                <Route exact path="/profil" component={ProfilePage} />
                 <Route exact path="/saker/:issueId" component={IssueLarge} />
                 <Route exact path="/registrerSak" component={FileIssuePage} />
                 <Route exact path="/feed" component={FeedPage} />
@@ -69,6 +70,8 @@ if (root)
                 <Route exact path="/statistics" component={StatisticsPage} />
                 <Route exact path="/admin" component={AdminPage}/>
                 <Route exact path="/admin/edit/:userId" component={AdminEditPage}/>
+                <Route exact path="/admin/registrerBruker" component={AdminAddPage}/>
+                <Route extact path="/hendelser/:eventId" component={EventInfo} />
                 <Route path="" component={NotFound}/>
               </Switch>
           <Footer />

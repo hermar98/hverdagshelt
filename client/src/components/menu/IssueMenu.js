@@ -47,6 +47,7 @@ export class IssueMenu extends Component {
           <div>
             <NavBar>
               <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
+              <NavBar.Button onClick={this.toRegisterIssue}>Registrer Sak</NavBar.Button>
               <NavBar.Button onClick={this.toFeed}>Min Feed</NavBar.Button>
               <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
                 <DropdownHeader>{this.user.email}</DropdownHeader>
@@ -63,8 +64,12 @@ export class IssueMenu extends Component {
         return (
           <div>
             <NavBar>
-              <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
-              <NavBar.Button onClick={this.toCompanyHome}>Hjem</NavBar.Button>
+              <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'} to={'/saker'}>
+                Hverdagshelt
+              </NavBar.Brand>
+              <NavBar.Button className="focus" onClick={this.toCompanyHome}>
+                Hjem
+              </NavBar.Button>
               <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
                 <DropdownHeader>{this.user.email}</DropdownHeader>
                 <DropdownFooter>Bedrift</DropdownFooter>
@@ -79,8 +84,16 @@ export class IssueMenu extends Component {
         return (
           <div>
             <NavBar>
-              <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
-              <NavBar.Button onClick={this.toMunEmployeeHome}>Hjem</NavBar.Button>
+              <NavBar.Brand
+                image={'../../images/hverdagshelt-logo-white.svg'}
+                to={'/kommune/' + localStorage.getItem('munId') + '/saker'}
+              >
+                Hverdagshelt
+              </NavBar.Brand>
+              <NavBar.Button onClick={this.toRegisterEvent}>Registrer Event</NavBar.Button>
+              <NavBar.Button className="focus" onClick={this.toMunEmployeeHome}>
+                Hjem
+              </NavBar.Button>
               <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
                 <DropdownHeader>{this.user.email}</DropdownHeader>
                 <DropdownFooter>Kommuneansatt</DropdownFooter>
@@ -95,8 +108,12 @@ export class IssueMenu extends Component {
         return (
           <div>
             <NavBar>
-              <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
-              <NavBar.Button onClick={this.toAdminHome}>Hjem</NavBar.Button>
+              <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'} to={'/admin'}>
+                Hverdagshelt
+              </NavBar.Brand>
+              <NavBar.Button className="focus" onClick={this.toAdminHome}>
+                Hjem
+              </NavBar.Button>
               <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
                 <DropdownHeader>{this.user.email}</DropdownHeader>
                 <DropdownFooter>Admin</DropdownFooter>
@@ -136,17 +153,23 @@ export class IssueMenu extends Component {
     tokenManager.deleteToken();
     history.push('/');
   }
+  toRegisterIssue() {
+    history.push('/registrerSak');
+  }
+  toRegisterEvent() {
+    history.push('/registrerEvent');
+  }
   toMunEmployeeProfile() {
-    history.push('/'); // TODO: ansatt profilside
+    history.push('/profil');
   }
   toMunEmployeeHome() {
     history.push('/kommune/' + localStorage.getItem('munId') + '/saker'); //TODO: ansatt hjemside
   }
   toCompanyEmployeeHome() {
-    history.push('/saker'); //TODO: bedrift hjemside
+    history.push('/saker');
   }
   toAdminHome() {
-    history.push('/'); //TODO: admin hjemside
+    history.push('/admin');
   }
 
   changeMunicipal() {

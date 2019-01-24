@@ -656,9 +656,10 @@ class ModelsTestData {
                     firstName: 'Sander',
                     lastName: 'Nicolausson',
                     email: 'sandern@stud.ntnu.no',
-                    rank: 1,
-                    salt: 'b79ryp98',
-                    hashStr: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
+                    rank: 2,
+                    salt: 'a83f4da094cc247b',
+                    hashStr:
+                      '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
                     munId: 528,
                     profilePicture:
                         'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
@@ -667,9 +668,10 @@ class ModelsTestData {
                     firstName: 'Jørgen',
                     lastName: 'Aasvestad',
                     email: 'jorgaas@stud.ntnu.no',
-                    rank: 1,
+                    rank: 4,
                     salt: 'a83f4da094cc247b',
-                    hashStr: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
+                    hashStr:
+                      '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
                     munId: 528,
                     profilePicture:
                         'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
@@ -678,7 +680,7 @@ class ModelsTestData {
                     firstName: 'Herman Ryen',
                     lastName: 'Martinsen',
                     email: 'HermanRM@stud.ntnu.no',
-                    rank: 2,
+                    rank: 1,
                     salt: 'a83f4da094cc247b',
                     hashStr: '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
                     munId: 528,
@@ -689,9 +691,9 @@ class ModelsTestData {
                     firstName: 'Herman',
                     lastName: 'Christiansen',
                     email: 'hermanc@stud.ntnu.no',
-                    rank: 1,
-                    salt: 'b79ryp98',
-                    hashStr: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
+                    rank: 0,
+                    salt: 'a83f4da094cc247b',
+                    hashStr: '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
                     munId: 528,
                     profilePicture:
                         'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'

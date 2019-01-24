@@ -4,14 +4,14 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { User } from '../../models/User.js';
 import FileIssueForm from '../../components/forms/FileIssueForm';
-import { IssueMenu } from '../../components/menu/IssueMenu.js';
+import { RegisterIssueMenu } from '../../components/menu/RegisterIssueMenu.js';
 
 export class FileIssuePage extends Component {
   user = new User();
   render() {
     return (
       <div>
-        <IssueMenu />
+        <RegisterIssueMenu />
         <FileIssueForm />
       </div>
     );

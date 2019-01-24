@@ -236,14 +236,15 @@ class NavBarDropdown extends Component<
       <div className="dropdown form-inline ml-2" onClick={this.toggleOpen}>
         <button
           className={'custom-nav-btn btn btn-outline-light dropdown-toggle ' + this.props.className}
+          id="profileButton"
           type="button"
-          id="dropdownMenuButton"
-          data-toggle="dropdown"
-          aria-haspopup="true"
+          //  id="dropdownMenuButton"
+          //  data-toggle="dropdown"
+          //  aria-haspopup="true"
         >
           {this.props.title}
         </button>
-        <div className={menuClass} aria-labelledby="dropdownMenuButton">
+        <div className={menuClass}>
           {this.props.children.filter(
             child =>
               child.type === DropdownHeader ||
@@ -284,7 +285,7 @@ export class DropdownItem extends Component<{
   render() {
     if (!this.props.children) return null;
     return (
-      <button className="dropdown-item" onClick={this.props.onClick}>
+      <button className="dropdown-item dropdown-submenu" onClick={this.props.onClick}>
         {this.props.children}
       </button>
     );
@@ -307,15 +308,21 @@ export class NavBar extends Component<{
       <nav className="navbar navbar-expand-sm bg-dark navbar-dark mt-0">
         <div className="container-fluid custom-container-fluid">
           {this.props.children.filter(child => child.type == NavBarBrand)}
-          <ul className="nav navbar-nav navbar-right">
-            {this.props.children.filter(
-              child =>
-                child.type == NavBarLink ||
-                child.type == NavBarLogout ||
-                child.type == NavBarDropdown ||
-                child.type == NavBarButton
-            )}
-          </ul>
+          <button className="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
+            {' '}
+            <span className="navbar-toggler-icon" />
+          </button>
+          <div className="collapse navbar-collapse" id="navbarMenu">
+            <ul className="nav navbar-nav ml-auto ">
+              {this.props.children.filter(
+                child =>
+                  child.type == NavBarLink ||
+                  child.type == NavBarLogout ||
+                  child.type == NavBarDropdown ||
+                  child.type == NavBarButton
+              )}
+            </ul>
+          </div>
         </div>
       </nav>
     );

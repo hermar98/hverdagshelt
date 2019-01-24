@@ -16,7 +16,7 @@ import {User} from "../../../models/User";
 import {Issue} from "../../../models/Issue";
 import {Municipal} from "../../../models/Municipal";
 
-export class MunEmployeeProfilePage extends Component {
+export class ContractorProfilePage extends Component {
   user: User = new User();
   issues: Issue[] = [];
   municipal: Municipal = new Municipal();
@@ -39,17 +39,6 @@ export class MunEmployeeProfilePage extends Component {
       .catch(error => console.log(error));
   }
 
-  delete(issueId: number) {
-    if (this.issues.find(e => e.issueId === issueId).statusId === 6) {
-      issueService
-        .deleteIssue(issueId)
-        .then(rows => (this.issues = this.issues.filter(e => e.issueId !== issueId)))
-        .catch(error => console.log(error));
-    } else {
-      console.log('Not allowed to delete this issue  ');
-    }
-  }
-
   render() {
     return (
       <div>
@@ -70,7 +59,6 @@ export class MunEmployeeProfilePage extends Component {
                   Navn: {this.user.firstName} {this.user.lastName}
                 </p>
                 <p>Email: {this.user.email}</p>
-                <p>Kommune: {this.municipal.name} </p>
               </div>
             </div>
             <br />
@@ -79,7 +67,7 @@ export class MunEmployeeProfilePage extends Component {
             </div>
           </div>
           <div className="profile-issues">
-            <Card className="issues" title="Dine Saker">
+            <Card className="issues" title="Dine Tildelte Saker">
               <IssueOverviewSmall issues={this.issues}/>
             </Card>
           </div>

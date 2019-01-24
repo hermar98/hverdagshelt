@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 import {Redirect, NavLink} from 'react-router-dom'
 import { Feedback} from '../../models/Feedback';
-import { IssueMenu } from '../menu/IssueMenu';
+import { SpecificIssueMenu } from '../menu/SpecificIssueMenu';
 import {tokenManager} from "../../tokenManager";
 import {User} from "../../models/User";
 import {Issue} from "../../models/Issue";
@@ -64,7 +64,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
 
         return (
             <div>
-                <IssueMenu />
+                <SpecificIssueMenu/>
                 <div className="issue-container">
                     <div className="issue-large">
                         <Status status={this.issue.statusId} id={this.issue.issueId}/>
@@ -109,11 +109,18 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                     <div className="feedback-button">
                         <div>
                             <button ref={this.addFeedbackButton} className="btn image-button" type="button" onClick={() => {
-                                this.addFeedbackButton.current.classList.add('show')
-                                this.addFeedbackForm.current.classList.remove('show')
-                                window.scrollTo(0, document.body.scrollHeight);
+                                let rank = 0
+                                userService.getUser(this.issue.userId)
+                                    .then(user => rank = user.rank)
+                                    .catch(error => console.error("Error: ", error))
+
+                                if(tokenManager.getUserId() == this.issue.userId || rank == 3) {
+                                    this.addFeedbackButton.current.classList.add('show')
+                                    this.addFeedbackForm.current.classList.remove('show')
+                                    window.scrollTo(0, document.body.scrollHeight);
+                                }
                             }}>
-                                <img id="image-button-image" src="../../images/add.png" />
+                                <img id="add-image-button" src="../../images/add.png" />
                             </button>
                         </div>
                     </div>
@@ -165,30 +172,24 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     }
 
     onClickFeedback () {
-        let rank = 0
-        userService.getUser(this.issue.userId)
-            .then(user => rank = user.rank)
+        let feedback = new Feedback();
+        feedback.name = '';
+        feedback.content = this.feedbackContent;
+        feedback.issueId = this.issue.issueId;
+        feedback.userId = tokenManager.getUserId()
+        feedbackService.addFeedback(feedback)
+            .then(res => {
+                this.addFeedbackButton.current.classList.remove('show')
+                this.addFeedbackForm.current.classList.add('show')
+                feedbackService.getFeedbacks(this.props.match.params.issueId)
+                    .then(data => {
+                        sharedFeedback.feedback = data;
+                    })
+                    .catch(error => console.error("Error: ", error))
+                this.feedbackContent = '';
+            })
             .catch(error => console.error("Error: ", error))
 
-        if(tokenManager.getUserId() == this.issue.userId || rank == 3) {
-            let feedback = new Feedback();
-            feedback.name = '';
-            feedback.content = this.feedbackContent;
-            feedback.issueId = this.issue.issueId;
-            feedback.userId = tokenManager.getUserId()
-            feedbackService.addFeedback(feedback)
-                .then(res => {
-                    this.addFeedbackButton.current.classList.remove('show')
-                    this.addFeedbackForm.current.classList.add('show')
-                    feedbackService.getFeedbacks(this.props.match.params.issueId)
-                        .then(data => {
-                            sharedFeedback.feedback = data;
-                        })
-                        .catch(error => console.error("Error: ", error))
-                    this.feedbackContent = '';
-                })
-                .catch(error => console.error("Error: ", error))
-        }
     }
 
     onEdit() {
@@ -501,7 +502,7 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
                             <ImageButton source="../../images/cog.png" onclick={() => this.onEdit()} />
                             <ImageButton source="../../images/trashcan.png" onclick={() => this.onDelete()}/>
                         </div>
-                        <div id={"feedback-text " + this.props.feedback.feedbackId} className="card-text">
+                        <div className="card-text feedback-text" id={"feedback-text " + this.props.feedback.feedbackId}>
                             {this.props.feedback.content}
                         </div>
                     </div>
