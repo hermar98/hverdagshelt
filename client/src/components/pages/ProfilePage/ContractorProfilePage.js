@@ -44,7 +44,7 @@ export class ContractorProfilePage extends Component {
         <h4 className="row justify-content-center my-profile">Min Profil</h4>
         <div className="profile-page-container page-container">
           <div className="profile-left">
-            <div className="card profile-info">
+            <div className="card profile-info2">
               <div className="card-body">
                 <div className="container">
                   <div className="row justify-content-center align-items-center">

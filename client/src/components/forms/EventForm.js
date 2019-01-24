@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
+import { Event } from '../../models/Event.js';
 import { EventCategory } from '../../models/EventCategory.js';
 import { eventCategoryService } from '../../services/EventCategoryService';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
@@ -38,16 +39,16 @@ export default class EventForm extends Component {
                 className="form-control"
                 value={this.event.categoryId}
                 onChange={(e: SyntheticInputEvent<HTMLInputElement>) => {
-                  if (this.event) this.event.categoryId = parseInt(e.target.value);
+                  if (this.event){this.event.categoryId = parseInt(e.target.value); console.log(e.target.value)};
                 }}
               >
                 <option selected disabled value="">
                   Velg kategori..
                 </option>
                 {this.categories.map(cat => (
-                  <option key={cat.category_id} value={cat.categoryId}>
+                  <option key={cat.categoryId} value={cat.categoryId}>
                     {cat.name}
-                  </option>
+                    </option>
                 ))}
               </select>
             </div>
@@ -90,7 +91,6 @@ export default class EventForm extends Component {
     this.event.latitude = 5678;
     this.event.timeStart = moment(this.startDate + " " + this.startTime);
     this.event.timeEnd = moment(this.endDate + " " + this.endTime);
-    this.event.munId = this.munId;
     this.event.userId = this.userId;
 
     eventService
