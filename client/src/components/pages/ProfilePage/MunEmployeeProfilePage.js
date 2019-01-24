@@ -51,7 +51,7 @@ export class MunEmployeeProfilePage extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container-fluid">
         <h4 className="row justify-content-center my-profile">Min Profil</h4>
         <div className="profile-page-container page-container">
           <div className="profile-left">
