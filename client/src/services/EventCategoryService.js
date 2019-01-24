@@ -24,11 +24,19 @@ class EventCategoryService {
   }
 
   addCategory(category: EventCategory): Promise<number> {
-    return service.post('/secure/eventCat', category);
+    let token = localStorage.getItem('token');
+    if (token) token = JSON.parse(token).jwt;
+    return service.post('/secure/eventCat', category, {
+      headers: {'x-access-token': token}
+    });
   }
 
   deleteCategory(categoryId: number): Promise<void> {
-    return service.delete('/secure/eventCat/' + categoryId);
+    let token = localStorage.getItem('token');
+    if (token) token = JSON.parse(token).jwt;
+    return service.delete('/secure/eventCat/' + categoryId, {
+      headers: {'x-access-token': token}
+    });
   }
 }
 

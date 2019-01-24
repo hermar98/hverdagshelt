@@ -24,7 +24,7 @@ export class AdminProfilePage extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container-fluid">
         <Card title="Min Profil">
           <hr />
           <p>

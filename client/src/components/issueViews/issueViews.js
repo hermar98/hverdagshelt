@@ -362,9 +362,10 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
     status: number = 0;
     timesort: number = 0;
     category: number = 0;
-    categories: [] = []
+    categories: [] = [];
 
     render () {
+      const hasIssues = this.props.issues.length != 0;
         return (
             <div>
                 <div className="d-flex flex-row sort-box justify-content-between">
@@ -397,7 +398,7 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
                     </div>
                 </div>
                 <ul className="list-group issue-small-list">
-                    {this.props.issues.map((issue,index) => {
+                    {hasIssues ? (this.props.issues.map((issue,index) => {
                         if ((this.status == issue.statusId || this.status == 0) && (this.category == issue.categoryId || this.category == 0)) {
                             return(
                                 <li key={index} className="list-group-item issue-small-item">
@@ -405,7 +406,10 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
                                 </li>
                             )
                         }
-                    })}
+                    }) ) : (
+                      <li key={0}>
+                        <p id="noIssues">Denne kommunen har ingen registrerte saker...</p> </li>
+                    )}
                 </ul>
             </div>
         )

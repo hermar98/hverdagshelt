@@ -17,8 +17,10 @@ export class MunicipalPage extends Component<{ match: { params: { munId: number 
   events = [];
 
   render() {
+    const hasIssues = this.issues.length != 0;
+    const hasEvents = this.issues.length != 0;
     return (
-      <div>
+      <div className="container-fluid">
         <div className="row page-container">
           <div className="col-lg-6">
             <Card title="Feil/mangler">
@@ -29,7 +31,7 @@ export class MunicipalPage extends Component<{ match: { params: { munId: number 
           </div>
           <div className="col-lg-6">
             <Card title="Events" id="event-cards">
-              <div className="d-flex flex-row sort-box card-header justify-content-between">
+              <div className="d-flex flex-row sort-box justify-content-between">
                 <div className="form-group">
                   <select
                     className="form-control"
@@ -54,17 +56,19 @@ export class MunicipalPage extends Component<{ match: { params: { munId: number 
                   </select>
                 </div>
               </div>
-              <ul className="container-fluid">
-                {this.events.map(e => (
+              <ul className="list-group issue-small-list">
+                {hasEvents ? (this.events.map(e => (
                   <li key={e.eventId}>
                     <EventSmall event={e} />
                   </li>
-                ))}
+                ))) : (
+                  <li key={0}>
+                    <p id="noIssues">Denne kommunen har ingen registrerte events...</p> </li>
+                )}
               </ul>
             </Card>
           </div>
         </div>
-        <img className="w-100 h-50" src="../../images/trondheim.jpg" />
       </div>
     );
   }
