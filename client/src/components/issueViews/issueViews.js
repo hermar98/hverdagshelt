@@ -72,8 +72,8 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                 <div className="issue-container">
                     <Status status={this.issue.statusId} id={this.issue.issueId}/>
                     <div className="issue-large">
-                        <div className="card">
-                            <div className="d-flex flex-row">
+                        <div className="">
+                            <div className="card d-flex flex-row">
                                 <div className="card-body issue-large-card">
                                     <div className="d-flex flex-row">
                                         <p className="date date-large">{formatDate(this.issue.createdAt)}</p>
@@ -105,12 +105,12 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                         <p id="issue-large-text">{this.issue.content}</p>
                                     </div>
                                 </div>
-                                <div className="card issue-map-container">
+                                <div className="issue-map-container">
                                     {console.log(this.lat + " " + this.long)}
                                     <SimpleMap lat={this.long} lng={this.lat}/>
                                 </div>
                             </div>
-                            <div className="card-footer issue-images">
+                            <div className="issue-images">
                                 <h4>&nbsp;Bilder</h4>
                                 <div className="flex-container">
                                         <img className="issue-image" src={this.issue.image}/>
