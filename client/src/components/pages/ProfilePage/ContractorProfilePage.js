@@ -3,18 +3,17 @@ import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 
 import { Alert, NavBar, Form, Card, Button } from '../../../widgets';
-import { ProfileMenu } from '../../../components/menu/ProfileMenu.js';
 import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
 import { userMunicipalService } from '../../../services/UserMunicipalService';
 import { autocomplete, glob } from '../../../../public/autocomplete';
-import {IssueSmall, IssueNormal, IssueOverviewSmall, ImageButton} from '../../issueViews/issueViews';
+import { IssueSmall, IssueNormal, IssueOverviewSmall, ImageButton } from '../../issueViews/issueViews';
 import { tokenManager } from '../../../tokenManager';
-import {userService} from "../../../services/UserService";
-import {issueService} from "../../../services/IssueService";
-import {municipalService} from "../../../services/MunicipalService";
-import {User} from "../../../models/User";
-import {Issue} from "../../../models/Issue";
-import {Municipal} from "../../../models/Municipal";
+import { userService } from '../../../services/UserService';
+import { issueService } from '../../../services/IssueService';
+import { municipalService } from '../../../services/MunicipalService';
+import { User } from '../../../models/User';
+import { Issue } from '../../../models/Issue';
+import { Municipal } from '../../../models/Municipal';
 
 export class ContractorProfilePage extends Component {
   user: User = new User();
@@ -24,12 +23,12 @@ export class ContractorProfilePage extends Component {
   mounted() {
     userService
       .getUser(tokenManager.getUserId())
-      .then(rows =>{
-        this.user = rows
+      .then(rows => {
+        this.user = rows;
         municipalService
           .getMunicipal(this.user.munId)
-          .then(mun => this.municipal = mun)
-          .catch(error => console.log(error))
+          .then(mun => (this.municipal = mun))
+          .catch(error => console.log(error));
       })
       .catch(error => console.log(error));
 
@@ -42,9 +41,6 @@ export class ContractorProfilePage extends Component {
   render() {
     return (
       <div>
-        <div>
-          <ProfileMenu />
-        </div>
         <h4 className="row justify-content-center my-profile">Min Profil</h4>
         <div className="profile-page-container page-container">
           <div className="profile-left">
@@ -68,7 +64,7 @@ export class ContractorProfilePage extends Component {
           </div>
           <div className="profile-issues">
             <Card className="issues" title="Dine Tildelte Saker">
-              <IssueOverviewSmall issues={this.issues}/>
+              <IssueOverviewSmall issues={this.issues} />
             </Card>
           </div>
         </div>

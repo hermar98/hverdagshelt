@@ -58,7 +58,7 @@ export default class AdminAddPage extends Component {
               <select
                 required
                 className="form-control"
-                value={this.user.rank}
+                value={this.user.munId}
                 onChange={(e: SyntheticInputEvent<HTMLInputElement>) => this.user.munId = parseInt(e.target.value)}>
                 {this.municipals.map(mun =>
                   <option key={mun.munId} value={mun.munId}>{mun.name}</option>
@@ -98,6 +98,7 @@ export default class AdminAddPage extends Component {
       this.munEmployee = true;
     }else{
       this.munEmployee = false;
+      this.user.munId = null;
     }
   }
 
