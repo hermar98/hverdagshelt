@@ -10,3 +10,8 @@
 #feedLink:hover{
     cursor: pointer;
 }
+
+#munTitle{
+    text-align: center;
+    margin-top: 1%;
+}

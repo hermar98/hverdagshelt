@@ -66,7 +66,7 @@ if (root)
           <Route exact path="/aktiver/:tokenId" component={ActivateAccountPage} />
           <Route exact path="/kommune/:munId/saker" component={IssueView} />
           <Route exact path="/saker" component={ContractorView} />
-          <Route exact path="/statistics" component={StatisticsPage} />
+          <Route exact path="/statistikk" component={StatisticsPage} />
           <Route exact path="/admin" component={AdminPage} />
           <Route exact path="/admin/edit/:userId" component={AdminEditPage} />
           <Route exact path="/admin/registrerBruker" component={AdminAddPage} />
