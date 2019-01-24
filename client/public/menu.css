@@ -20,17 +20,18 @@
     padding-bottom: 0px !important;
     font-size: 18px !important;
     height: 60px !important;
-    width: 574px !important;
-    align-items: center;
+    width: 100% !important;
+    text-align: center !important;
+    position: static !important;
     border-radius: 0px !important;
     border-right: none !important;
     border-left: none !important;
   }
 }
 @media (min-width: 574px) {
-  .custom-nav-btn:active {
-    background-color: green !important;
-    color: white;
+  .custom-nav-btn:focus {
+    background-color: white !important;
+    color: black !important;
     margin-top: 0px !important;
     padding-top: 0px !important;
     padding-bottom: 0px !important;
@@ -43,24 +44,27 @@
   }
 }
 @media (max-width: 574px) {
-  .custom-nav-btn:active {
-    background-color: white;
-    color: black;
+  .custom-nav-btn:focus {
+    background-color: white !important;
+    color: black !important;
     margin-top: 0px !important;
     padding-top: 0px !important;
     padding-bottom: 0px !important;
     font-size: 18px !important;
     height: 60px !important;
     width: 574px !important;
-    align-items: center;
+    align-items: center !important;
+    position: relative !important;
     border-radius: 0px !important;
     border-right: none !important;
     border-left: none !important;
   }
 }
+
 #profileButton {
   width: 180px;
 }
+
 .custom-nav-link {
   padding-top: 0px !important;
   padding-bottom: 0px !important;
@@ -74,10 +78,6 @@
   position: relative;
 }
 
-.focus {
-  background-color: white;
-  color: black;
-}
 .navbar-collapse.collapse.show {
   display: block !important;
 }
