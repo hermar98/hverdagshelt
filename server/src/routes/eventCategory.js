@@ -1,7 +1,6 @@
 //@flow
-import {EventCategory, User} from '../models';
+import {EventCategory} from '../models';
 import {tokenManager} from "../tokenManager";
-import * as passwordHash from "../passwordHash";
 
 type Request = express$Request;
 type Response = express$Response;
@@ -20,14 +19,15 @@ app.get('/eventCat/:id', (req: Request, res: Response) => {
 });
 
 app.put('/eventCat/:id', (req: Request, res: Response) => {
-    if (!(req.body instanceof Object)) return res.sendStatus(400);
+    const body = req.body !== null && typeof req.body === 'object' ? req.body : {};
+    const { name } = body;
 
     let tokenData = tokenManager.verifyToken(req.headers['x-access-token']);
     if (tokenData) {
         if (tokenData.rank === 4 || tokenData.rank === 3) {
             return EventCategory.update(
                 {
-                    name: req.body.name
+                    name: name
                 },
                 {
                     where: {

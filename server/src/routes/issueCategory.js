@@ -1,7 +1,6 @@
 //@flow
-import {Feedback, IssueCategory, User} from '../models';
+import { IssueCategory } from '../models';
 import {tokenManager} from "../tokenManager";
-import * as passwordHash from "../passwordHash";
 
 type Request = express$Request;
 type Response = express$Response;
@@ -18,13 +17,14 @@ app.get('/issueCat/:id', (req: Request, res: Response) => {
     );
 });
 app.put('/issueCat/:id', (req: Request, res: Response) => {
-    if (!(req.body instanceof Object)) return res.sendStatus(400);
+    const body = req.body !== null && typeof req.body === 'object' ? req.body : {};
+    const { name } = body;
 
     let tokenData = tokenManager.verifyToken(req.headers['x-access-token']);
     if (tokenData) {
         return IssueCategory.update(
             {
-                name: req.body.name
+                name: name
             },
             {
                 where: {
@@ -37,12 +37,13 @@ app.put('/issueCat/:id', (req: Request, res: Response) => {
     }
 });
 app.post('/issueCat', (req: Request, res: Response) => {
-    if (!(req.body instanceof Object)) return res.sendStatus(400);
+    const body = req.body !== null && typeof req.body === 'object' ? req.body : {};
+    const { name } = body;
 
     let tokenData = tokenManager.verifyToken(req.headers['x-access-token']);
     if (tokenData) {
         return IssueCategory.create({
-            name: req.body.name
+            name: name
         }).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)));
     } else {
         res.sendStatus(401);

@@ -29,7 +29,7 @@ require('../src/routes/userMunicipal');
 require('../src/routes/users');
 require('../src/routes/events');
 
-let email = 'test@test.no';
+let email = 'admin@hh.no';
 let pw = '1';
 let token = 'noe';
 
@@ -69,22 +69,22 @@ describe('Public tests', () => {
 //User
 describe('User tests', () => {
     //Get all users
-    test('GET /secure/users', async () => {
+    test('GET /users', async () => {
         //console.log(token);
         const response = await request(app)
-            .get('/secure/users')
+            .get('/users')
             .set({ 'x-access-token': token });
         console.log(response.body);
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
 
-        expect(response.body.length).toEqual(await User.count());
+        expect(response.body.length).toEqual((await User.count())-1); // 12 Users - 1 disabled User since disabled users doesn't return.
     });
 
     //Get one user  with id
-    test('GET /secure/users/:id', async () => {
+    test('GET /users/:id', async () => {
         const response = await request(app)
-            .get('/secure/users/1')
+            .get('/users/1')
             .set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
@@ -92,72 +92,72 @@ describe('User tests', () => {
         expect(response.body.firstName).toBe('Vegard');
         expect(response.body.lastName).toBe('Andersson');
         expect(response.body.email).toBe('test@test.no');
-        expect(response.body.rank).toBe(1);
+        expect(response.body.rank).toBe(4);
         expect(response.body.salt).toBe('a83f4da094cc247b');
         expect(response.body.hashStr).toBe(
             '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722'
         );
     });
-    //Post user
-    test('POST /secure/users', async () => {
-        let totalUsers = await User.count(); // entries in database
-        console.log(totalUsers);
-        let user = { firstName: 'A', lastName: 'B', email: 'c@c.no', rank: 1, salt: '123', hashStr: '234' };
-        const response = await request(app)
-            .post('/secure/users')
-            .send(user)
-            .set({ 'x-access-token': token });
-        expect(response.statusCode).toBe(200);
-        expect(await User.count()).toEqual(totalUsers + 1);
-    });
-    //Put user
+    // //Post user
+    // test('POST /users', async () => {
+    //     let totalUsers = await User.count(); // entries in database
+    //     console.log(totalUsers);
+    //     let user = { firstName: 'A', lastName: 'B', email: 'c@c.no', rank: 1, salt: '123', hashStr: '234' };
+    //     const response = await request(app)
+    //         .post('/users')
+    //         .send(user)
+    //         .set({ 'x-access-token': token });
+    //     expect(response.statusCode).toBe(200);
+    //     expect(await User.count()).toEqual(totalUsers + 1);
+    // });
+    // //Put user
+    //
+    // test('PUT /users/:id', async () => {
+    //     const updateUserResponse = await request(app)
+    //         .put('/users/1')
+    //         .send({ firstName: 'Jørgen' })
+    //         .set({ 'x-access-token': token });
+    //
+    //     expect(updateUserResponse.statusCode).toBe(200);
+    //
+    //     const response = await request(app)
+    //         .get('/users/1')
+    //         .set({ 'x-access-token': token });
+    //
+    //     expect(response.body.firstName).toBe('Jørgen');
+    //     expect(response.body.lastName).toBe('Andersson');
+    //     expect(response.body.email).toBe('test@test.no');
+    //     expect(response.body.rank).toBe(4);
+    //     expect(response.body.salt).toBe('a83f4da094cc247b');
+    //     expect(response.body.hashStr).toBe(
+    //         '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722'
+    //     );
+    //
+    // });
 
-    test('PUT /secure/users/:id', async () => {
+    test('PUT /users/:id', async () => {
         const updateUserResponse = await request(app)
-            .put('/secure/users/1')
-            .send({ firstName: 'Jørgen' })
-            .set({ 'x-access-token': token });
-
-        expect(updateUserResponse.statusCode).toBe(200);
-
-        const response = await request(app)
-            .get('/secure/users/1')
-            .set({ 'x-access-token': token });
-
-        expect(response.body.firstName).toBe('Jørgen');
-        expect(response.body.lastName).toBe('Andersson');
-        expect(response.body.email).toBe('test@test.no');
-        expect(response.body.rank).toBe(1);
-        expect(response.body.salt).toBe('a83f4da094cc247b');
-        expect(response.body.hashStr).toBe(
-            '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722'
-        );
-
-    });
-
-    test('PUT /secure/users/:id', async () => {
-        const updateUserResponse = await request(app)
-            .put('/secure/users/1')
+            .put('/users/1')
             .send({ firstName: 'Jørgen', password: '1', email: 'j@j.j' })
             .set({ 'x-access-token': token });
 
         expect(updateUserResponse.statusCode).toBe(200);
 
         const response = await request(app)
-            .get('/secure/users/1')
+            .get('/users/1')
             .set({ 'x-access-token': token });
 
         expect(response.body.firstName).toBe('Jørgen');
         expect(response.body.email).toBe('j@j.j');
-        expect(response.body.rank).toBe(1);
+        expect(response.body.rank).toBe(4);
     });
 
     //Delete user
-    test('DELETE /secure/users/:id', async () => {
+    test('DELETE /users/:id', async () => {
         let totalUsers = await User.count();
 
         const response = await request(app)
-            .delete('/secure/users/2')
+            .delete('/users/2')
             .set({ 'x-access-token': token });
 
         expect(response.statusCode).toBe(200);
@@ -227,9 +227,9 @@ describe('Municipality tests', () => {
 //Event
 describe('Event tests', () => {
     //Get all Events
-    test('GET /secure/events', async () => {
+    test('GET /events', async () => {
         const response = await request(app)
-            .get('/secure/events')
+            .get('/events')
             .set({ 'x-access-token': token });
 
         expect(response.statusCode).toBe(200);
@@ -238,9 +238,9 @@ describe('Event tests', () => {
         expect(response.body.length).toEqual(await Event.count());
     });
     //Get one event  with id
-    test('GET /secure/events/:id', async () => {
+    test('GET /events/:id', async () => {
         const response = await request(app)
-            .get('/secure/events/1')
+            .get('/events/1')
             .set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
@@ -253,37 +253,37 @@ describe('Event tests', () => {
         expect(response.body.categoryId).toBe(1);
     });
     //Update one event with id
-    test('PUT /secure/events/:id', async () => {
+    test('PUT /events/:id', async () => {
         const updateEventResponse = await request(app)
-            .put('/secure/events/1')
+            .put('/events/1')
             .send({ title: 'No bear left' })
             .set({ 'x-access-token': token });
 
         expect(updateEventResponse.statusCode).toBe(200);
 
         const response = await request(app)
-            .get('/secure/events/1')
+            .get('/events/1')
             .set({ 'x-access-token': token });
 
         expect(response.body.title).toBe('No bear left');
     });
     //Create one event
-    test('POST /secure/events', async () => {
+    test('POST /events', async () => {
         let count = await Event.count(); // entries in database
         let event = { title: 'Gratis Øl for studenter', content: ':O', image: null, longitude: 63.1, latitude: 10.4 };
         const response = await request(app)
-            .post('/secure/events')
+            .post('/events')
             .send(event)
             .set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(await Event.count()).toEqual(count + 1);
     });
     //Delete one event with id
-    test('DELETE /secure/events/:id', async () => {
+    test('DELETE /events/:id', async () => {
         let totalEvents = await Event.count();
 
         const response = await request(app)
-            .delete('/secure/events/1')
+            .delete('/events/1')
             .set({ 'x-access-token': token });
 
         expect(response.statusCode).toBe(200);
@@ -297,7 +297,7 @@ describe('Event tests', () => {
 describe('Event Category Test', () => {
     test('GET all event categories', async () => {
         const response = await request(app)
-            .get('/secure/eventCat')
+            .get('/eventCat')
             .set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
@@ -306,33 +306,33 @@ describe('Event Category Test', () => {
 
     test('GET Event Category with id = 1', async () => {
         const response = await request(app)
-            .get('/secure/eventCat/1')
+            .get('/eventCat/1')
             .set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
     });
     //Update one eventCategory with id
-    test('PUT /secure/eventCat/:id', async () => {
+    test('PUT /eventCat/:id', async () => {
         const updateEventResponse = await request(app)
-            .put('/secure/eventCat/1')
+            .put('/eventCat/1')
             .send({ name: 'Poker' })
             .set({ 'x-access-token': token });
 
         expect(updateEventResponse.statusCode).toBe(200);
 
         const response = await request(app)
-            .get('/secure/eventCat/1')
+            .get('/eventCat/1')
             .set({ 'x-access-token': token });
 
         expect(response.body.name).toBe('Poker');
     });
 
     //Create one eventCategory
-    test('POST /secure/eventCat', async () => {
+    test('POST /eventCat', async () => {
         let count = await EventCategory.count(); // entries in database
         let event = { name: 'Konsert' };
         const response = await request(app)
-            .post('/secure/eventCat')
+            .post('/eventCat')
             .send(event)
             .set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
@@ -343,7 +343,7 @@ describe('Event Category Test', () => {
     test('DELETE Event category with id = 1', async () => {
         let n = await EventCategory.count();
         const response = await request(app)
-            .delete('/secure/eventCat/1')
+            .delete('/eventCat/1')
             .set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(await EventCategory.count()).toBe(n - 1);
@@ -353,9 +353,9 @@ describe('Event Category Test', () => {
 //Issue
 describe('Issue tests', () => {
     //Get All Issues
-    test('GET /secure/issues', async () => {
+    test('GET /issues', async () => {
         const response = await request(app)
-            .get('/secure/issues')
+            .get('/issues')
             .set({ 'x-access-token': token });
 
         expect(response.statusCode).toBe(200);
@@ -364,9 +364,9 @@ describe('Issue tests', () => {
         expect(response.body.length).toEqual(await Issue.count());
     });
     //Get one Issue with id
-    test('GET /secure/issues/:id', async () => {
+    test('GET /issues/:id', async () => {
         const response = await request(app)
-            .get('/secure/issues/1')
+            .get('/issues/1')
             .set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
@@ -388,9 +388,9 @@ describe('Issue tests', () => {
         //expect(response.body.statusId).toBe(1);
     });
     //Get all feedback for Issue with id
-    test('GET /secure/issues/:id/feedback', async () => {
+    test('GET /issues/:id/feedback', async () => {
         const response = await request(app)
-            .get('/secure/issues/1/feedback')
+            .get('/issues/1/feedback')
             .set({ 'x-access-token': token });
 
         expect(response.statusCode).toBe(200);
@@ -399,33 +399,33 @@ describe('Issue tests', () => {
         expect(response.body.length).toEqual(1);
     });
     //Get all issues for a user with id
-    test('GET /secure/users/:id/issues', async () => {
+    test('GET /users/:id/issues', async () => {
         const response = await request(app)
-            .get('/secure/users/1/issues')
+            .get('/users/1/issues')
             .set({ 'x-access-token': token });
 
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
 
-        expect(response.body.length).toEqual(1);
+        expect(response.body.length).toEqual(3);
     });
     //Update issue with id
-    test('PUT /secure/issues/:id', async () => {
+    test('PUT /issues/:id', async () => {
         const updateEventResponse = await request(app)
-            .put('/secure/issues/1')
+            .put('/issues/1')
             .send({ title: 'No bear left' })
             .set({ 'x-access-token': token });
 
         expect(updateEventResponse.statusCode).toBe(200);
 
         const response = await request(app)
-            .get('/secure/issues/1')
+            .get('/issues/1')
             .set({ 'x-access-token': token });
 
         expect(response.body.title).toBe('No bear left');
     });
     //Create issue
-    test('POST /secure/issues', async () => {
+    test('POST /issues', async () => {
         let count = await Issue.count(); // entries in database
         let issue = {
             title: 'Gratis Øl for studenter',
@@ -436,7 +436,7 @@ describe('Issue tests', () => {
         };
 
         const response = await request(app)
-            .post('/secure/issues')
+            .post('/issues')
             .send(issue)
             .set({ 'x-access-token': token });
 
@@ -444,11 +444,11 @@ describe('Issue tests', () => {
         expect(await Issue.count()).toEqual(count + 1);
     });
     //Delete issue
-    test('DELETE /secure/issues/:id', async () => {
+    test('DELETE /issues/:id', async () => {
         let totalIssues = await Issue.count();
 
         const response = await request(app)
-            .delete('/secure/issues/1')
+            .delete('/issues/1')
             .set({ 'x-access-token': token });
 
         expect(response.statusCode).toBe(200);
@@ -462,7 +462,7 @@ describe('Issue Category Test', () => {
     //GET all issue categories
     test('GET all issue category', async () => {
         const response = await request(app)
-            .get('/secure/issueCat')
+            .get('/issueCat')
             .set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
@@ -471,34 +471,34 @@ describe('Issue Category Test', () => {
     //Get one issue category
     test('GET Issue Category with id = 1', async () => {
         const response = await request(app)
-            .get('/secure/issueCat/1')
+            .get('/issueCat/1')
             .set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
     });
 
     //Update one issueCategory with id
-    test('PUT /secure/issueCat/:id', async () => {
+    test('PUT /issueCat/:id', async () => {
         const updateEventResponse = await request(app)
-            .put('/secure/issueCat/1')
+            .put('/issueCat/1')
             .send({ name: 'Poker' })
             .set({ 'x-access-token': token });
 
         expect(updateEventResponse.statusCode).toBe(200);
 
         const response = await request(app)
-            .get('/secure/issueCat/1')
+            .get('/issueCat/1')
             .set({ 'x-access-token': token });
 
         expect(response.body.name).toBe('Poker');
     });
 
     //Create one issueCategory
-    test('POST /secure/issueCat', async () => {
+    test('POST /issueCat', async () => {
         let count = await IssueCategory.count(); // entries in database
         let event = { name: 'Konsert' };
         const response = await request(app)
-            .post('/secure/issueCat')
+            .post('/issueCat')
             .send(event)
             .set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
@@ -508,7 +508,7 @@ describe('Issue Category Test', () => {
     test('DELETE Issue category with id = 1', async () => {
         let n = await IssueCategory.count();
         const response = await request(app)
-            .delete('/secure/issueCat/1')
+            .delete('/issueCat/1')
             .set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(await IssueCategory.count()).toBe(n - 1);
@@ -517,14 +517,14 @@ describe('Issue Category Test', () => {
 
 //userIssues tests
 describe('userIssues tests',() => {
-    //GET /secure/users/:id/issues
-    test('GET /secure/users/:id/issues', async ()=>{
-        const r1 = await request(app).post('/secure/users/1/issues/2 ').set({ 'x-access-token': token });
-        const r2 = await request(app).post('/secure/users/1/issues/3').set({ 'x-access-token': token });
+    //GET /users/:id/issues
+    test('GET /users/:id/issues', async ()=>{
+        const r1 = await request(app).post('/users/1/issues/2 ').set({ 'x-access-token': token });
+        const r2 = await request(app).post('/users/1/issues/3').set({ 'x-access-token': token });
         expect(r1.statusCode).toBe(200);
         expect(r2.statusCode).toBe(200);
 
-        const response = await request(app).get('/secure/users/1/issues').set({ 'x-access-token': token });
+        const response = await request(app).get('/users/1/issues').set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
         console.log(response.body);
@@ -533,20 +533,20 @@ describe('userIssues tests',() => {
         //TODO: Fix so it checks result
     });
 
-    //POST /secure/users/:userId/issues/:issueId
-    test('POST /secure/users/:userId/issues/:issueId', async () => {
+    //POST /users/:userId/issues/:issueId
+    test('POST /users/:userId/issues/:issueId', async () => {
         let count = await UserIssue.count(); // entries in database
         const response = await request(app)
-            .post('/secure/users/1/issues/4')
+            .post('/users/1/issues/4')
             .set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(await UserIssue.count()).toEqual(count + 1);
     });
-    //DELETE /secure/users/:userId/issue/:issueId
-    test('DELETE /secure/users/:userId/issues/:issueId', async () => {
+    //DELETE /users/:userId/issue/:issueId
+    test('DELETE /users/:userId/issues/:issueId', async () => {
         let count = await UserIssue.count();
         const response = await request(app)
-            .delete('/secure/users/1/issues/2')
+            .delete('/users/1/issues/2')
             .set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(await UserIssue.count()).toBe(count - 1);
@@ -555,14 +555,14 @@ describe('userIssues tests',() => {
 
 //userMunicipals tests
 describe('userMunicipals tests',() => {
-    //GET /secure/userMun/:id
-    test('GET /secure/users/:id/mun', async ()=>{
-        const r1 = await request(app).post('/secure/users/1/mun/101').set({ 'x-access-token': token });
-        const r2 = await request(app).post('/secure/users/1/mun/216').set({ 'x-access-token': token });
+    //GET /userMun/:id
+    test('GET /users/:id/mun', async ()=>{
+        const r1 = await request(app).post('/users/1/mun/101').set({ 'x-access-token': token });
+        const r2 = await request(app).post('/users/1/mun/216').set({ 'x-access-token': token });
         expect(r1.statusCode).toBe(200);
         expect(r2.statusCode).toBe(200);
         // console.log('POST FINISHED')
-        const response = await request(app).get('/secure/users/1/mun').set({ 'x-access-token': token });
+        const response = await request(app).get('/users/1/mun').set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
         console.log((response.body));
@@ -571,21 +571,21 @@ describe('userMunicipals tests',() => {
         //TODO: Fix so it checks result
     });
 
-    //POST /secure/user/:userId/mun/:munId
-    test('POST /secure/users/:userId/mun/:munId', async () => {
+    //POST /user/:userId/mun/:munId
+    test('POST /users/:userId/mun/:munId', async () => {
         let count = await UserMunicipal.count(); // entries in database
 
         const response = await request(app)
-            .post('/secure/users/1/mun/935')
+            .post('/users/1/mun/935')
             .set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(await UserMunicipal.count()).toEqual(count + 1);
     });
-    //DELETE /secure/users/:userId/mun/:munId
-    test('DELETE /secure/users/:userId/mun/:munId', async () => {
+    //DELETE /users/:userId/mun/:munId
+    test('DELETE /users/:userId/mun/:munId', async () => {
         let count = await UserMunicipal.count();
         const response = await request(app)
-            .delete('/secure/users/1/mun/935')
+            .delete('/users/1/mun/935')
             .set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(await UserMunicipal.count()).toBe(count - 1);
