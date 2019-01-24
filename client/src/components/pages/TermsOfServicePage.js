@@ -13,7 +13,7 @@ export class TermsOfService extends Component {
           <h1 className="TOSH1">Vilkår for bruk</h1>
           <h2 className="TOSH2">Innledning</h2>
 
-          <p className="TOSp">Dette nettstedet («nettstedet») eies av Frida Magnarsdatter Lund styres av Hverdagshelt AS. Dette gjøres tilgjengelig for deg i
+          <p className="TOSp">Dette nettstedet («nettstedet») eies av Frida Magnarsdatter Lund, og styres av Hverdagshelt AS. Dette gjøres tilgjengelig for deg i
             den hensikt å informere. Ved å besøke eller bruke dette nettstedet, er du enig i disse vilkårene for bruk.
             Hvis du ikke er enig i disse vilkårene for bruk, skal du ikke bruke nettstedet.</p>
 
