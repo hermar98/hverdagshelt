@@ -17,6 +17,8 @@ export class MunicipalPage extends Component<{ match: { params: { munId: number 
   events = [];
 
   render() {
+    const hasIssues = this.issues.length != 0;
+    const hasEvents = this.issues.length != 0;
     return (
       <div>
         <div className="row page-container">
@@ -55,11 +57,14 @@ export class MunicipalPage extends Component<{ match: { params: { munId: number 
                 </div>
               </div>
               <ul className="container-fluid">
-                {this.events.map(e => (
+                {hasEvents ? (this.events.map(e => (
                   <li key={e.eventId}>
                     <EventSmall event={e} />
                   </li>
-                ))}
+                ))) : (
+                  <li key={0}>
+                    <p id="noIssues">Denne kommunen har ingen registrerte events...</p> </li>
+                )}
               </ul>
             </Card>
           </div>
