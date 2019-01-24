@@ -33,7 +33,7 @@ export default class EventForm extends Component {
         <form ref={e => (this.form = e)}>
           <Form.Input label="Tittel" type="text" onChange={e => (this.event.title = e.target.value)} required placeholder="Tittel" />
           <div className="form-group row justify-content-center">
-            <div className="col-sm-10 col-lg-4 justify-content-center">
+            <div className="col-12 col-md-4 justify-content-center">
               <select
                 required
                 className="form-control"

@@ -340,7 +340,7 @@ class FormInput extends Component<{
   render() {
     return (
       <div className="form-group row justify-content-center">
-        <div className="col-sm-4 col-sm-offset-4">
+        <div className="col-md-4 col-12">
           <label>{this.props.label}</label>
           <input
             className="form-control"
@@ -372,7 +372,7 @@ class FormInputDateTime extends Component<{
   render() {
     return (
       <div className="form-group row justify-content-center">
-        <div className="form-group col-lg-3 col-sm-7">
+        <div className="form-group col-md-3 col-8">
           <label>{this.props.label}</label>
           <input
             className="form-control"
@@ -384,7 +384,7 @@ class FormInputDateTime extends Component<{
             placeholder={this.props.placeholder}
           />
         </div>
-        <div className="form-group col-lg-1 col-sm-3">
+        <div className="form-group col-md-1 col-4">
           <label>{this.props.label2}</label>
           <input className="form-control" type="time" value={this.props.value2} onChange={this.props.onChange2} />
         </div>
@@ -405,7 +405,7 @@ class FormInputBig extends Component<{
   render() {
     return (
       <div className="form-group row justify-content-center">
-        <div className="col-sm-4 col-sm-offset-4">
+        <div className="col-md-4 col-12">
           <label>{this.props.label}</label>
           <textarea
             rows="8"
@@ -431,8 +431,8 @@ class FileInput extends Component<{
     return (
       <form>
         <div className="form-group row">
-          <div className="col-sm-4" />
-          <div className="col-sm-4 col-form-label">
+          <div className="col-md-4 col-12" />
+          <div className="col-md-4 col-form-label">
             <i>{this.props.children}</i>
             <input type="file" className="form-control-file" />
           </div>
