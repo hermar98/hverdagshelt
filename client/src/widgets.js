@@ -216,6 +216,7 @@ type S = { isOpen: boolean }; //Quick fix
 class NavBarDropdown extends Component<
   {
     title: string,
+    className?: string,
     children: React.Element<
       typeof DropdownHeader | typeof DropdownFooter | typeof DropdownDivider | typeof DropdownItem
     >[]
@@ -231,7 +232,7 @@ class NavBarDropdown extends Component<
     return (
       <div className="dropdown form-inline ml-2" onClick={this.toggleOpen}>
         <button
-          className="custom-nav-btn btn btn-outline-light dropdown-toggle"
+          className={'custom-nav-btn btn btn-outline-light dropdown-toggle ' + this.props.className}
           id="profileButton"
           type="button"
           //  id="dropdownMenuButton"
