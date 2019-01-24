@@ -27,6 +27,7 @@ app.post('/api/map', (req: Request, res: Response) => {
           adress: response.json.results[0].formatted_address,
           lat: response.json.results[0].geometry.location.lat,
           lng: response.json.results[0].geometry.location.lng,
+          country: response.json.results[0].address_components[5].long_name,
           county: response.json.results[0].address_components[4].long_name,
           municipality: response.json.results[0].address_components[3].long_name
         };
@@ -55,9 +56,11 @@ app.get('/api/map/:lat/:long', (req: Request, res: Response) => {
         result = {
           adress: response.json.results[0].formatted_address,
           lat: response.json.results[0].geometry.location.lat,
-          lng: response.json.results[0].geometry.location.lng,
-          county: response.json.results[0].address_components[4].long_name,
-          municipality: response.json.results[0].address_components[3].long_name
+          lng: response.json.results[0].geometry.location.lng
+
+          // country: response.json.results[0].address_components[4].long_name,
+          // county: response.json.results[0].address_components[3].long_name,
+          // municipality: response.json.results[0].address_components[2].long_name
         };
         // console.log(result);
         return res.send(result);

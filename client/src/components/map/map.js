@@ -108,12 +108,11 @@ export class Search extends Component {
     const options = {
       // restrict your search to a specific type of result
       // types: ['geocode', 'address', 'establishment', '(regions)', '(cities)'],
-      // types: ['(regions)'],
+      types: ['address'],
       // restrict your search to a specific country, or an array of countries
-      // componentRestrictions: { country: ['gb', 'us'] },
+      // componentRestrictions: { country: ['no', 'us'] },
       componentRestrictions: { country: ['no'] }
     };
-    console.log('did');
     this.autoComplete = new mapApi.places.Autocomplete(this.searchInput, options);
     this.autoComplete.addListener('place_changed', this.onPlaceChanged);
     this.autoComplete.bindTo('bounds', map);
@@ -133,7 +132,7 @@ export class Search extends Component {
       map.setCenter(place.geometry.location);
       map.setZoom(17);
     }
-
+    // this.searchInput.value = getPlace;
     addplace(place);
     this.searchInput.blur();
   };
@@ -153,13 +152,10 @@ export class Search extends Component {
           type="text"
           onFocus={this.clearSearchBox}
           placeholder="Skriv inn Adresse"
+          onClick={this.onClick}
         />
       </div>
     );
-  }
-
-  onClick() {
-    this.searchInput.value = 'balls';
   }
 }
 
@@ -183,7 +179,8 @@ export class BigMap extends Component<{ lat: number, lng: number }> {
     this.setState({
       mapApiLoaded: true,
       mapInstance: map,
-      mapApi: maps
+      mapApi: maps,
+      adress: 'Elgesetergate 19'
     });
   };
 
@@ -191,6 +188,7 @@ export class BigMap extends Component<{ lat: number, lng: number }> {
     this.setState({ places: [place] });
     this.lat = null;
     this.lng = null;
+    console.log(place.formatted_address);
     this.forceUpdate();
   };
 
@@ -198,15 +196,6 @@ export class BigMap extends Component<{ lat: number, lng: number }> {
     const { places, mapApiLoaded, mapInstance, mapApi } = this.state;
     return (
       <Fragment>
-        {mapApiLoaded && (
-          <Search
-            map={mapInstance}
-            mapApi={mapApi}
-            addplace={this.addPlace}
-            adress={this.adress}
-            onClick={this.onClick}
-          />
-        )}
         <GoogleMap
           bootstrapURLKeys={{
             key: 'AIzaSyCVd-3sSATNkNAa5jRe9U6_t8wR5YkH480',
@@ -230,21 +219,28 @@ export class BigMap extends Component<{ lat: number, lng: number }> {
               <MyGreatPlace key="" lat={place.geometry.location.lat()} lng={place.geometry.location.lng()} text="" />
             ))}
         </GoogleMap>
+        {mapApiLoaded && <Search map={mapInstance} mapApi={mapApi} addplace={this.addPlace} />}
       </Fragment>
     );
   }
   onClick = ({ x, y, lat, lng, event }) => {
-    console.log(x, y, lat, lng, event);
+    // console.log(x, y, lat, lng, event);
     mapService.getLoactionByLatLng(lat, lng).then(e => {
       this.adress = e.adress;
-      console.log(this.adress);
-      console.log(e);
+      let reg = e.adress.match(/Norge/);
+      if (reg && reg.includes('Norge')) {
+        console.log(this.adress);
+        // console.log('Norway');
+      } else {
+        // console.log('Not Norway');
+      }
     });
     this.lat = lat;
     this.lng = lng;
     // console.log(this.lat, this.lng);
 
     this.state.places = [];
+
     this.forceUpdate();
   };
 
