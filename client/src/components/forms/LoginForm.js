@@ -84,6 +84,7 @@ export default class Login extends Component {
           .then(user =>{
             this.user = user;
             if(this.user.rank === 0){
+              tokenManager.deleteToken();
               history.push('/aktiver/aktiverBruker');
             }else if(this.user.rank === 1){
               window.location.reload();

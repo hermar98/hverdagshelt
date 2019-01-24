@@ -931,7 +931,10 @@ class ModelsTestData {
     createEventCategory() {
         return EventCategory.bulkCreate([
             {
-                name: 'PARTY'
+              name:'Annet'
+            },
+            {
+                name: 'Party'
             },
             {
                 name: 'Konsert'
