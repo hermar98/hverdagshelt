@@ -43,10 +43,7 @@ import createHashHistory from 'history/createHashHistory';
 import { ActivateAccountPage } from './components/pages/ActivateAccountPage';
 import ProfilePage from './components/pages/ProfilePage/ProfilePage';
 import AdminAddPage from './components/forms/AdminAddPage';
-<<<<<<< HEAD
 import { Map } from './map';
-=======
->>>>>>> d5a0f7ff1c4b611bd71626a579928664397e1b83
 
 export const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after
 
@@ -56,10 +53,7 @@ if (root)
     <HashRouter>
       <div>
         <Alert />
-<<<<<<< HEAD
-=======
         <Route path="/" component={Menu} />
->>>>>>> d5a0f7ff1c4b611bd71626a579928664397e1b83
         <Switch>
           <Route exact path="/" component={ChooseMunicipalPage} />
           <Route exact path="/loggInn" component={LoginPage} />
@@ -81,10 +75,7 @@ if (root)
           <Route exact path="/admin/edit/:userId" component={AdminEditPage} />
           <Route exact path="/admin/registrerBruker" component={AdminAddPage} />
           <Route extact path="/hendelser/:eventId" component={EventInfo} />
-<<<<<<< HEAD
           <Route extact path="/map" component={Map} />
-=======
->>>>>>> d5a0f7ff1c4b611bd71626a579928664397e1b83
           <Route path="" component={NotFound} />
         </Switch>
         <Footer />
