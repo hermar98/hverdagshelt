@@ -31,7 +31,7 @@ export class ActivateAccountPage extends Component<{ match: { params: { tokenId:
     } else if (this.isAdminCreated) {
       return (
         <div>
-          <LimitedRegistrationForm />
+          <LimitedRegistrationForm tokenId={this.props.match.params.tokenId}/>
         </div>
       );
     } else {
@@ -58,32 +58,32 @@ export class ActivateAccountPage extends Component<{ match: { params: { tokenId:
 
   mounted() {
     userService.checkActivationToken(this.props.match.params.tokenId).then(user => {
-      if (!user){
+      if (!user) {
         userService.getCurrentUser()
           .then(user => {
             this.user = user;
-            if(user.rank !== 0){
+            if (user.rank !== 0) {
               this.isActivated = true;
-            }else{
+            } else {
               this.isActivated = false;
             }
           })
           .catch(error => console.log(error));
-        return;
-      }
-      if (user.rank !== 0) {
-        this.isAdminCreated = true;
-      } else {
-        userService
-          .activateAccount(this.props.match.params.tokenId)
-          .then(token => {
-            tokenManager.addToken(token);
-            this.isActivated = true;
-            window.location.reload();
-          })
-          .catch((error: Error) => {
-            console.log(error);
-          });
+      }else{
+        if (user.rank !== 0) {
+          this.isAdminCreated = true;
+        } else {
+          userService
+            .activateAccount(this.props.match.params.tokenId)
+            .then(token => {
+              tokenManager.addToken(token);
+              this.isActivated = true;
+              window.location.reload();
+            })
+            .catch((error: Error) => {
+              console.log(error);
+            });
+        }
       }
     });
   }
