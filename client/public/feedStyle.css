@@ -1,0 +1,12 @@
+#feedInfo, #noEvents, #noIssues{
+    margin-top: 3%;
+}
+
+#feedLink{
+    color: blue;
+    text-decoration: underline;
+}
+
+#feedLink:hover{
+    cursor: pointer;
+}
