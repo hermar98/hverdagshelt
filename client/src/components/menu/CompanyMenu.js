@@ -21,6 +21,7 @@ export class CompanyMenu extends Component {
   user = null;
   municipal = new Municipal();
   munId = localStorage.getItem('munId');
+  className = '';
 
   mounted() {
     userService
@@ -49,7 +50,7 @@ export class CompanyMenu extends Component {
               Hverdagshelt
             </NavBar.Brand>
             <NavBar.Button onClick={this.toCompanyHome}>Hjem</NavBar.Button>
-            <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
+            <NavBar.Dropdown className={this.className} title={this.user.firstName + ' ' + this.user.lastName}>
               <DropdownHeader>{this.user.email}</DropdownHeader>
               <DropdownFooter>Bedrift</DropdownFooter>
               <DropdownDivider />
@@ -64,21 +65,12 @@ export class CompanyMenu extends Component {
   }
   toProfile() {
     history.push('/profil');
-  }
-
-  toFeed() {
-    history.push('/feed');
+    this.className = 'profilefocus';
   }
   toLogout() {
     tokenManager.deleteToken();
     window.location.reload();
     history.push('/');
-  }
-  toRegisterIssue() {
-    history.push('/registrerSak');
-  }
-  toRegisterEvent() {
-    history.push('/registrerEvent');
   }
   changeMunicipal() {
     localStorage.removeItem('munId');
@@ -86,5 +78,6 @@ export class CompanyMenu extends Component {
   }
   toCompanyHome() {
     history.push('/saker');
+    this.className = '';
   }
 }
