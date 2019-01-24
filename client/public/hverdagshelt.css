@@ -307,7 +307,7 @@ div.feedback-button div {
 
 .status-label {
     font-size: 110%;
-    color: #686868;
+    color: lightgrey;
 }
 .status-box {
     border-bottom: lightgray 2px solid;

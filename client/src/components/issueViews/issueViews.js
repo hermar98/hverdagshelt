@@ -291,7 +291,7 @@ export class IssueNormal extends Component<{issue: Issue, munId: number}>{
                             </h5>
                         </div>
                     </div>
-                    <p>Status:&nbsp;&nbsp;</p>
+                    <p className="status-label">Status:&nbsp;&nbsp;</p>
                     <StatusImage status={this.props.issue.statusId} />
                 </div>
             </div>
