@@ -173,7 +173,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
         if (this.rank == 3 || tokenManager.getUserId() == this.issue.userId) {
             return (
                 <div>
-                    <button ref={this.addFeedbackButton} className="btn image-button" type="button"
+                    <button ref={this.addFeedbackButton} className="btn" type="button"
                             onClick={() => {
                                 this.addFeedbackButton.current.classList.add('show')
                                 this.addFeedbackForm.current.classList.remove('show')

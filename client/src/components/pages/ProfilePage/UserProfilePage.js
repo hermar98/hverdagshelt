@@ -117,9 +117,9 @@ export class UserProfilePage extends Component {
             <div className="card  municipal">
               <h5 id="municipal-title">Kommuner</h5>
               <div className="card municipal-2">
-                <div className="add-municipal-field justify-content-between d-flex flex-row">
+                <div className="add-municipal-field d-flex flex-row justify-content-between">
                   <input
-                    className="form-control"
+                    className="form-control mun-input"
                     id="munInputForm-Input"
                     type="text"
                     value={this.newMunicipalName}
