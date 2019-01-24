@@ -26,7 +26,7 @@ body {
 }
 
 div.status > h4 {
-    font-size: 3vh;
+    font-size: 110%;
 }
 .issue-container {margin: 2% 12% 10% 12%}
 .issue-image:hover {
@@ -269,7 +269,7 @@ div.feedback-button div {
 
 #issue-large-text {
     font-size: 110%;
-    margin: 2% 0 2% 0;
+    margin: 2% 0 0 0;
 }
 
 .normal-list-item {
