@@ -22,7 +22,7 @@ export class MunEmployeeMenu extends Component {
   municipal = new Municipal();
   munId = localStorage.getItem('munId');
   className = '';
-
+  className2 = '';
   mounted() {
     userService
       .getToken()
@@ -49,11 +49,14 @@ export class MunEmployeeMenu extends Component {
             <NavBar.Brand
               image={'../../images/hverdagshelt-logo-white.svg'}
               to={'/kommune/' + localStorage.getItem('munId') + '/saker'}
+              onClick={this.toMunEmployeeHome2}
             >
               Hverdagshelt
             </NavBar.Brand>
             <NavBar.Button onClick={this.toRegisterEvent}>Registrer Event</NavBar.Button>
-            <NavBar.Button onClick={this.toMunEmployeeHome}>Hjem</NavBar.Button>
+            <NavBar.Button className2={this.className2} onClick={this.toMunEmployeeHome}>
+              Hjem
+            </NavBar.Button>
             <NavBar.Dropdown className={this.className} title={this.user.firstName + ' ' + this.user.lastName}>
               <DropdownHeader>{this.user.email}</DropdownHeader>
               <DropdownFooter>Kommuneansatt</DropdownFooter>
@@ -70,6 +73,7 @@ export class MunEmployeeMenu extends Component {
   toProfile() {
     history.push('/profil');
     this.className = 'profilefocus';
+    this.className2 = '';
   }
 
   toLogout() {
@@ -81,6 +85,7 @@ export class MunEmployeeMenu extends Component {
   toRegisterEvent() {
     history.push('/registrerEvent');
     this.className = '';
+    this.className2 = '';
   }
   changeMunicipal() {
     localStorage.removeItem('munId');
@@ -89,6 +94,12 @@ export class MunEmployeeMenu extends Component {
 
   toMunEmployeeHome() {
     history.push('/kommune/' + localStorage.getItem('munId') + '/saker');
+    console.log(',soc,lsd,c');
     this.className = '';
+  }
+  toMunEmployeeHome2() {
+    this.className = '';
+    this.className2 = 'homefocus';
+    console.log(this.className2);
   }
 }
