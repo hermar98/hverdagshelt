@@ -21,6 +21,7 @@ export class AdminMenu extends Component {
   user = null;
   municipal = new Municipal();
   munId = localStorage.getItem('munId');
+  className = '';
 
   mounted() {
     userService
@@ -49,7 +50,7 @@ export class AdminMenu extends Component {
               Hverdagshelt
             </NavBar.Brand>
             <NavBar.Button onClick={this.toAdminHome}>Hjem</NavBar.Button>
-            <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
+            <NavBar.Dropdown className={this.className} title={this.user.firstName + ' ' + this.user.lastName}>
               <DropdownHeader>{this.user.email}</DropdownHeader>
               <DropdownFooter>Admin</DropdownFooter>
               <DropdownDivider />
@@ -64,31 +65,25 @@ export class AdminMenu extends Component {
   }
   toProfile() {
     history.push('/profil');
+    this.className = 'profilefocus';
   }
 
   toFeed() {
     history.push('/feed');
+    this.className = '';
   }
   toLogout() {
     tokenManager.deleteToken();
     window.location.reload();
     history.push('/');
   }
-  toRegisterIssue() {
-    history.push('/registrerSak');
-  }
-  toRegisterEvent() {
-    history.push('/registrerEvent');
-  }
+
   changeMunicipal() {
     localStorage.removeItem('munId');
     history.push('/');
   }
   toAdminHome() {
     history.push('/admin');
-  }
-
-  toIssue() {
-    history.push('/registrerSak');
+    this.className = '';
   }
 }

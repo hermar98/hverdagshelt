@@ -697,6 +697,50 @@ class ModelsTestData {
                     munId: 528,
                     profilePicture:
                         'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
+                },
+                {
+                    firstName: 'Privat',
+                    lastName: 'Person',
+                    email: 'privat@hh.no',
+                    rank: 1,
+                    salt: 'a83f4da094cc247b',
+                    hashStr: '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
+                    munId: 528,
+                    profilePicture:
+                        'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
+                },
+                {
+                    firstName: 'Bedrift',
+                    lastName: 'Ansatt',
+                    email: 'bedrift@hh.no',
+                    rank: 2,
+                    salt: 'a83f4da094cc247b',
+                    hashStr: '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
+                    munId: 528,
+                    profilePicture:
+                        'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
+                },
+                {
+                    firstName: 'Kommune',
+                    lastName: 'Ansatt',
+                    email: 'kommune@hh.no',
+                    rank: 3,
+                    salt: 'a83f4da094cc247b',
+                    hashStr: '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
+                    munId: 528,
+                    profilePicture:
+                        'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
+                },
+                {
+                    firstName: 'Admin',
+                    lastName: 'Istrator',
+                    email: 'admin@hh.no',
+                    rank: 4,
+                    salt: 'a83f4da094cc247b',
+                    hashStr: '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
+                    munId: 528,
+                    profilePicture:
+                        'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
                 }
             ],
             {
