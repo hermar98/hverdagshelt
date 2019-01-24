@@ -290,7 +290,7 @@ export class AdminEditPage extends Component<{ match: { params: { userId: number
 
   mounted() {
     userService
-      .getUser(this.props.match.params.userId)
+      .getCurrentUser()
       .then(user => (this.user = user))
       .catch((error: Error) => Alert.danger(error.message));
   }

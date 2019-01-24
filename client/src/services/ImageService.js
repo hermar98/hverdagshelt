@@ -15,7 +15,7 @@ class ImageService{
     getAllImage(issueId: number): Promise<Issue> {
         let token = localStorage.getItem('token');
         if (token) token = JSON.parse(token).jwt;
-        return service.get('/secure/image/issue/' + issueId, {
+        return service.get('/image/issue/' + issueId, {
             headers: { 'x-access-token': token }
         });
     }
@@ -23,7 +23,7 @@ class ImageService{
     uploadImage(image: Image): Promise<Image> {
         let token = localStorage.getItem('token');
         if (token) token = JSON.parse(token).jwt;
-        return service.post('secure/imageUpload', image, {
+        return service.post('/imageUpload', image, {
             headers: { 'x-access-token': token }
         });
     }
