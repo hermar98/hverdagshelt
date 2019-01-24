@@ -7,7 +7,7 @@ import { User } from '../../models/User.js';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
 import { userService } from '../../services/UserService.js';
 import { history } from '../../index.js';
-import {HoverButton} from "../issueViews/issueViews";
+import { HoverButton } from '../issueViews/issueViews';
 
 export default class RegistrationForm extends Component {
   user = new User();
@@ -102,7 +102,7 @@ export default class RegistrationForm extends Component {
 
     userService
       .addUser(this.user)
-      .then(() => history.push('/loggInn'))
+      .then(() => history.push('/aktiver/aktiverBruker'))
       .catch((error: Error) => {
         console.log(error);
         this.emailRegistered = true;

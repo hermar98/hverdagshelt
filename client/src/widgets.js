@@ -153,14 +153,11 @@ export class Card extends Component<{ title?: React.Node, children?: React.Node 
   }
 }
 
-class NavBarButton extends Component<{ onClick: () => mixed, children?: React.Node, className?: string }> {
+class NavBarButton extends Component<{ onClick: () => mixed, children?: React.Node }> {
   render() {
     return (
       <form className="form-inline">
-        <button
-          onClick={this.props.onClick}
-          className={'custom-nav-btn btn btn btn-outline-light ' + this.props.className}
-        >
+        <button onClick={this.props.onClick} className="custom-nav-btn btn btn-outline-light" data-toggle="collapse">
           {this.props.children}
         </button>
       </form>
@@ -219,10 +216,10 @@ type S = { isOpen: boolean }; //Quick fix
 class NavBarDropdown extends Component<
   {
     title: string,
+    className?: string,
     children: React.Element<
       typeof DropdownHeader | typeof DropdownFooter | typeof DropdownDivider | typeof DropdownItem
-    >[],
-    className?: string
+    >[]
   },
   S
 > {
@@ -354,7 +351,7 @@ class FormInput extends Component<{
             pattern={this.props.pattern}
             placeholder={this.props.placeholder}
             readOnly={this.props.readOnly}
-            />
+          />
         </div>
       </div>
     );
