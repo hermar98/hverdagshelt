@@ -39,9 +39,10 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 import createHashHistory from 'history/createHashHistory';
-import {ActivateAccountPage} from "./components/pages/ActivateAccountPage";
-import ProfilePage from "./components/pages/ProfilePage/ProfilePage";
-import AdminAddPage from "./components/forms/AdminAddPage";
+import { ActivateAccountPage } from './components/pages/ActivateAccountPage';
+import ProfilePage from './components/pages/ProfilePage/ProfilePage';
+import AdminAddPage from './components/forms/AdminAddPage';
+import { Map } from './map';
 
 export const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after
 
@@ -50,31 +51,32 @@ if (root)
   ReactDOM.render(
     <HashRouter>
       <div>
-          <Alert />
-              <Switch>
-                <Route exact path="/" component={ChooseMunicipalPage} />
-                <Route exact path="/loggInn" component={LoginPage} />
-                <Route exact path="/registrer" component={RegisterPage} />
-                <Route exact path="/glemtPassord" component={ForgotPassword} />
-                <Route exact path="/glemtPassord/nullstill" component={NewPasswordPage} />
-                <Route exact path="/vilkår" component={TermsOfService} />
-                <Route exact path="/profil" component={ProfilePage} />
-                <Route exact path="/saker/:issueId" component={IssueLarge} />
-                <Route exact path="/registrerSak" component={FileIssuePage} />
-                <Route exact path="/feed" component={FeedPage} />
-                <Route exact path="/kommune/:munId" component={MunicipalPage} />
-                <Route exact path="/image" component={AlternativeUpload} />
-                <Route exact path="/activate/:tokenId" component={ActivateAccountPage}/>
-                <Route exact path="/kommune/:munId/saker" component={IssueView} />
-                <Route exact path="/saker" component={ContractorView} />
-                <Route exact path="/statistics" component={StatisticsPage} />
-                <Route exact path="/admin" component={AdminPage}/>
-                <Route exact path="/admin/edit/:userId" component={AdminEditPage}/>
-                <Route exact path="/admin/registrerBruker" component={AdminAddPage}/>
-                <Route extact path="/hendelser/:eventId" component={EventInfo} />
-                <Route path="" component={NotFound}/>
-              </Switch>
-          <Footer />
+        <Alert />
+        <Switch>
+          <Route exact path="/" component={ChooseMunicipalPage} />
+          <Route exact path="/loggInn" component={LoginPage} />
+          <Route exact path="/registrer" component={RegisterPage} />
+          <Route exact path="/glemtPassord" component={ForgotPassword} />
+          <Route exact path="/glemtPassord/nullstill" component={NewPasswordPage} />
+          <Route exact path="/vilkår" component={TermsOfService} />
+          <Route exact path="/profil" component={ProfilePage} />
+          <Route exact path="/saker/:issueId" component={IssueLarge} />
+          <Route exact path="/registrerSak" component={FileIssuePage} />
+          <Route exact path="/feed" component={FeedPage} />
+          <Route exact path="/kommune/:munId" component={MunicipalPage} />
+          <Route exact path="/image" component={AlternativeUpload} />
+          <Route exact path="/activate/:tokenId" component={ActivateAccountPage} />
+          <Route exact path="/kommune/:munId/saker" component={IssueView} />
+          <Route exact path="/saker" component={ContractorView} />
+          <Route exact path="/statistics" component={StatisticsPage} />
+          <Route exact path="/admin" component={AdminPage} />
+          <Route exact path="/admin/edit/:userId" component={AdminEditPage} />
+          <Route exact path="/admin/registrerBruker" component={AdminAddPage} />
+          <Route extact path="/hendelser/:eventId" component={EventInfo} />
+          <Route extact path="/map" component={Map} />
+          <Route path="" component={NotFound} />
+        </Switch>
+        <Footer />
       </div>
     </HashRouter>,
     root
