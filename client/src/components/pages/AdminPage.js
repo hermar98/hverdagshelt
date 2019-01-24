@@ -8,6 +8,7 @@ import { municipalService } from '../../services/MunicipalService.js';
 import { ImageButton } from '../issueViews/issueViews.js';
 import { tokenManager } from '../../tokenManager';
 import { history } from '../../index.js';
+import {HoverButton} from "../issueViews/issueViews";
 
 export class AdminPage extends Component {
   userId = 0;
@@ -283,7 +284,7 @@ export class AdminEditPage extends Component<{ match: { params: { userId: number
             </div>
             <div className="container h-100">
               <div className="row h-100 justify-content-center align-items-center">
-                <Button.Basic onClick={this.save}>Lagre endringer</Button.Basic>
+                <HoverButton onclick={this.save} text="Lagre Endringer" />
               </div>
             </div>
           </form>

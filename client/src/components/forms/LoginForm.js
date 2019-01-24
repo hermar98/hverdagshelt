@@ -11,6 +11,7 @@ import { history } from '../../index';
 import { User } from '../../models/User';
 import { userService } from '../../services/UserService';
 import { issueService } from '../../services/IssueService.js';
+import {HoverButton} from "../issueViews/issueViews";
 
 export default class Login extends Component {
   state = {
@@ -46,9 +47,7 @@ export default class Login extends Component {
             {this.state.loginError ? <Form.Alert text="Feil e-post og/eller passord" type="danger" /> : <div />}
             <div className="container h-100">
               <div className="row h-100 justify-content-center align-items-center">
-                <Button.Basic type="submit" onClick={this.login}>
-                  Logg inn
-                </Button.Basic>
+                <HoverButton onclick={this.login} text="Logg Inn"/>
               </div>
             </div>
           </form>

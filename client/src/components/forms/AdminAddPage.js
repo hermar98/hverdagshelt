@@ -10,6 +10,7 @@ import { history } from '../../index.js';
 import {municipalService} from "../../services/MunicipalService";
 import {Municipal} from "../../models/Municipal";
 import {autocomplete, glob} from "../../../public/autocomplete";
+import {HoverButton} from "../issueViews/issueViews";
 
 let municipalObjects;
 
@@ -71,7 +72,7 @@ export default class AdminAddPage extends Component {
           {this.emailRegistered ? <Form.Alert text="E-posten er allerede registrert" /> : <div />}
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
-              <Button.Basic onClick={this.save}>Lag bruker</Button.Basic>
+              <HoverButton onclick={this.save} text="Lag Bruker" text="Lag Bruker"/>
             </div>
           </div>
         </form>

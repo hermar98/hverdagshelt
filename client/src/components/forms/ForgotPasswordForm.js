@@ -9,6 +9,7 @@ import { userService } from '../../services/UserService.js';
 import { Issue } from '../../models/Issue';
 import { history } from '../../index';
 import { User } from '../../models/User';
+import {HoverButton} from "../issueViews/issueViews";
 
 export default class Login extends Component {
   state = {
@@ -31,9 +32,7 @@ export default class Login extends Component {
             />
             <div className="container h-100">
               <div className="row h-100 justify-content-center align-items-center">
-                <Button.Basic type="submit" onClick={this.login}>
-                  Send Epost
-                </Button.Basic>
+                <HoverButton onclick={this.login} text="Send Epost"/>
               </div>
             </div>
             <div className="container h-100">

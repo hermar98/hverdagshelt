@@ -9,6 +9,7 @@ import { myFunction } from '../../../public/AddEventCategory';
 import { tokenManager } from '../../tokenManager';
 import {eventService} from "../../services/EventService";
 import moment from "moment";
+import {HoverButton} from "../issueViews/issueViews";
 //import { UploadImageButton } from '../../components/image/UploadImageButton';
 
 export default class EventForm extends Component {
@@ -71,9 +72,7 @@ export default class EventForm extends Component {
           <Form.FileInput>Legg til bilde (valgfritt) </Form.FileInput>
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
-              <Button.Basic type="submit" onClick={this.save}>
-                Registrer event
-              </Button.Basic>
+              <HoverButton onclick={this.save} text="Registrer Event"/>
             </div>
           </div>
         </form>

@@ -7,6 +7,7 @@ import { User } from '../../models/User.js';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
 import { userService } from '../../services/UserService.js';
 import { history } from '../../index.js';
+import {HoverButton} from "../issueViews/issueViews";
 
 export default class RegistrationForm extends Component {
   user = new User();
@@ -71,7 +72,7 @@ export default class RegistrationForm extends Component {
           {this.emailRegistered ? <Form.Alert type="danger" text="E-posten er allerede registrert" /> : <div />}
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
-              <Button.Basic onClick={this.save}>Lag bruker</Button.Basic>
+              <HoverButton onclick={this.save} text="Lag Bruker" />
             </div>
           </div>
         </form>
