@@ -62,11 +62,14 @@ export default class Login extends Component {
   }
 
   mounted() {
-    tokenManager
-      .getNewToken()
-      .then(token => {
-        console.log(token);
-        history.push('/');
+    userService
+      .getCurrentUser()
+      .then(user => {
+        if(!user){
+          tokenManager.deleteToken()
+        }
+        console.log(user);
+        history.push('/profil');
       })
       .catch((error: Error) => console.log(error));
   }

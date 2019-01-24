@@ -114,7 +114,7 @@ app.post('/register', (req: Request, res: Response) => {
 
   const token = crypto.randomBytes(20).toString('hex');
 
-  let userRank = 1;
+  let userRank = 0;
   let tokenData = tokenManager.verifyToken(req.headers['x-access-token']);
   if (tokenData) {
     if (tokenData.rank === 4) {
@@ -156,7 +156,7 @@ app.put('/activate/:token', (req: Request, res: Response) => {
   let token = req.params.token;
   User.findOne({ where: { activateAccountToken: token } }).then(user => {
     if (user) {
-      token = jwt.sign({ email: user.email }, secretKey, { expiresIn: 4000 });
+      token = tokenManager.signToken(user.userId, user.rank);
       if(user.rank === 0){
         user.rank = 1;
       }else if(user.rank === 3){
@@ -182,7 +182,7 @@ app.put('/activate/:token', (req: Request, res: Response) => {
           activateAccountToken: null
         },
         { where: { userId: user.userId } }
-      ).then(count => (count ? res.json({ userId: user.userId, jwt: token }) : res.sendStatus(404)));
+      ).then(count => (count ? res.json({ jwt: token }) : res.sendStatus(404)));
     }else{
       res.sendStatus(404);
     }

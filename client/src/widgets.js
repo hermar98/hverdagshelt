@@ -367,11 +367,13 @@ class FormInput extends Component<{
 
 class FormInputDateTime extends Component<{
   label?: React.Node,
+  id?: string,
   value?: mixed,
   onChange?: (event: SyntheticInputEvent<HTMLInputElement>) => mixed,
   required?: boolean,
   pattern?: string,
   placeholder?: string,
+  min?: Date,
   onChange2?: (event: SyntheticInputEvent<HTMLInputElement>) => mixed,
   value2?: mixed,
   label2?: React.Node
@@ -382,8 +384,10 @@ class FormInputDateTime extends Component<{
         <div className="form-group col-md-3 col-8">
           <label>{this.props.label}</label>
           <input
+            id={this.props.id}
             className="form-control"
             type="date"
+            min={this.props.min}
             value={this.props.value}
             onChange={this.props.onChange}
             required={this.props.required}

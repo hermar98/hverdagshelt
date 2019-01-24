@@ -62,8 +62,8 @@ export default class EventForm extends Component {
             placeholder="Innhold/forklarende tekst"
           />
           <Form.InputDateTime label="Startdato" label2="Tidspunkt" required
-                              onChange={e => this.startDate = e.target.value} onChange2={e => this.startTime = e.target.value}/>
-          <Form.InputDateTime label="Sluttdato" label2="Tidspunkt" required
+                              onChange={e => {this.startDate = e.target.value; document.getElementById("dateEnd").setAttribute("min", this.startDate);}} onChange2={e => this.startTime = e.target.value}/>
+          <Form.InputDateTime id="dateEnd" label="Sluttdato" label2="Tidspunkt" required
                               onChange={e => this.endDate = e.target.value} onChange2={e => this.endTime = e.target.value}/>
           <Form.Input
             label="Sted"
