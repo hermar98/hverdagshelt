@@ -36,7 +36,7 @@ export class UserProfilePage extends Component {
       let result = await promise;
       let municipals = result.map(e => e.name);
 
-      autocomplete(document.getElementById('municipalInput'), municipals);
+      autocomplete(document.getElementById('munInputForm-Input'), municipals);
     }
 
     f();
