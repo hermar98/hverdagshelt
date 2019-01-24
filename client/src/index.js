@@ -24,7 +24,7 @@ import { IssueView } from './components/pages/IssueOverviewPage';
 import { ContractorView } from './components/pages/CompanyIssuePage';
 import { ActivateAccountPage } from './components/pages/ActivateAccountPage';
 import { Map } from './map';
-import { RegisterEventPage } from "./components/pages/RegisterEventPage";
+import { RegisterEventPage } from './components/pages/RegisterEventPage';
 import createHashHistory from 'history/createHashHistory';
 import ProfilePage from './components/pages/ProfilePage/ProfilePage';
 import AdminAddPage from './components/forms/AdminAddPage';
@@ -36,7 +36,6 @@ if (process.env.NODE_ENV !== 'production') {
   script.src = '/reload/reload.js';
   if (document.body) document.body.appendChild(script);
 }
-
 
 export const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after
 
