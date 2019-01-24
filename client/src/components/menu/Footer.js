@@ -22,6 +22,9 @@ export class Footer extends Component {
                 <NavLink id="footerText" to={"#"}>
                   <li>Epost: hverdagsheltas@gmail.com</li>
                 </NavLink>
+                <NavLink id="footerText" to="/statistikk" >
+                  <li>Statistikk</li>
+                </NavLink>
               </form>
             </ul>
           </div>
