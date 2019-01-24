@@ -22,25 +22,25 @@ run_tests:
   script:
     - npm test
     - cd ../server && npm test
-  artifacts:
-    paths:
-      - client/coverage
-      - server/coverage
+#  artifacts:
+#    paths:
+#      - client/coverage
+#      - server/coverage
 
 
-pages:
-  stage: deploy
-  dependencies:
-    - run_tests
-  script:
-    - cd ../
-    - mkdir .public
-    - cp -r client/* .public
-    - cp -r server/* .public
-    - mv .public public
-
-  artifacts:
-    paths:
-      - public
-  only:
-    - master
+#pages:
+#  stage: deploy
+#  dependencies:
+#    - run_tests
+#  script:
+#    - cd ../
+#    - mkdir .public
+#    - cp -r client/* .public
+#    - cp -r server/* .public
+#    - mv .public public
+#
+#  artifacts:
+#    paths:
+#      - public
+#  only:
+#    - master
