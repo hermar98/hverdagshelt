@@ -247,7 +247,7 @@ div.feedback-button div {
     border-bottom: lightgray solid 1px;
 }
 
-.btn:focus, .btn:active {
+.hover-button:focus, .hover-button:active {
     outline: none !important;
     background-color: #d8d8d8;
     box-shadow: none;
@@ -469,6 +469,7 @@ random
     color: white;
     height:46px;
 }
+
 /*
 Event
  */
