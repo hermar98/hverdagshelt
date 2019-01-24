@@ -38,7 +38,7 @@ function createMapOptions(maps) {
     mapTypeControl: false,
     panControl: false,
     fullscreenControl: false,
-    scaleControl: true,
+    scaleControl: false,
     gestureHandling: 'cooperative',
     styles: [
       {

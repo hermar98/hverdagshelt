@@ -40,7 +40,6 @@ div.status > h4 {
 .issue-map-container {
     height: auto;
     width: 30%;
-    max-height: 400px;
 }
 
 .issue-image-normal {
