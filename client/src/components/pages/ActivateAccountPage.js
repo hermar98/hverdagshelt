@@ -3,11 +3,11 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { userService } from '../../services/UserService';
 import { history } from '../../index';
-import { Alert } from '../../widgets';
+import {Alert, Card} from '../../widgets';
 import { tokenManager } from '../../tokenManager';
 import LimitedRegistrationForm from '../forms/LimitedRegistrationForm';
 
-export class ActivateAccountPage extends Component {
+export class ActivateAccountPage extends Component<{ match: { params: { tokenId: string } } }>{
   isActivated: boolean = false;
   isAdminCreated: boolean = false;
 
@@ -29,27 +29,30 @@ export class ActivateAccountPage extends Component {
       );
     } else {
       return (
-        <div>
-          <NotLoggedInMenu />
-          <div className="container justify-content-center">
-            <h2>Aktivering av bruker</h2>
+        <div className="container">
+          <Card className="mt-4" title="Aktivering av bruker">
             <div>
-              Din bruker er ikke aktivert eller har blitt deaktivert. Vennligst sjekk din epost for aktiverings-link.
+              En aktiveringslink ar blitt sendt til din epost-adresse.
             </div>
-          </div>
+            </Card>
         </div>
       );
     }
   }
 
   mounted() {
-    userService.checkActivationToken(window.location.hash.slice(11)).then(user => {
+    let token = tokenManager.getJwt();
+    if(token){
+      history.push('/profil');
+    }
+
+    userService.checkActivationToken(this.props.match.params.tokenId).then(user => {
       if (!user) return;
       if (user.rank !== 0) {
         this.isAdminCreated = true;
       } else {
         userService
-          .activateAccount(window.location.hash.slice(11))
+          .activateAccount(this.props.match.params.tokenId)
           .then(token => {
             tokenManager.addToken(token);
             this.isActivated = true;

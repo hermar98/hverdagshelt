@@ -67,7 +67,7 @@ if (root)
           <Route exact path="/feed" component={FeedPage} />
           <Route exact path="/kommune/:munId" component={MunicipalPage} />
           <Route exact path="/image" component={AlternativeUpload} />
-          <Route exact path="/activate/:tokenId" component={ActivateAccountPage} />
+          <Route exact path="/aktiver/:tokenId" component={ActivateAccountPage} />
           <Route exact path="/kommune/:munId/saker" component={IssueView} />
           <Route exact path="/saker" component={ContractorView} />
           <Route exact path="/statistics" component={StatisticsPage} />
