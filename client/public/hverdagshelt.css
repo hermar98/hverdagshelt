@@ -33,6 +33,12 @@ div.status > h4 {
     background-color: #b9bbbe;
 }
 
+.issue-map-container {
+    height: auto;
+    width: 50%;
+    padding: 2% 2% 2% 2%;
+}
+
 .issue-image-normal {
     width: 21vw;
     height: auto;
@@ -44,7 +50,7 @@ div.status > h4 {
 
 .issue-image {
     width: auto;
-    height: 15vw;
+    height: 12vw;
     padding: 1% 1% 1% 1%;
 }
 
@@ -90,8 +96,8 @@ div.status > h4 {
 }
 
 .issue-large {
-    margin-bottom: 10vh;
-    margin-top: 5%
+    margin-top: 0;
+    width: 50%;
 }
 
 .feedback-title {

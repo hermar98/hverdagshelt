@@ -10,6 +10,7 @@ import {issueService} from "../../services/IssueService";
 import {issueCategoryService} from "../../services/IssueCategoryService";
 import {feedbackService} from "../../services/FeedbackService";
 import {municipalService} from "../../services/MunicipalService";
+import {SimpleMap} from "../map/map";
 
 let sharedIssues = sharedComponentData({issues: []})
 let sharedFeedback = sharedComponentData({feedback: []})
@@ -49,6 +50,9 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     issueText: string = '';
     rank: number = -1;
 
+    lat: number = 0
+    long: number = 0
+
     render() {
         if(!this.state.clickedStatus && this.statusSelect.current != null) {
             this.statusSelect.current.classList.add('show')
@@ -66,9 +70,9 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
         return (
             <div>
                 <div className="issue-container">
+                    <Status status={this.issue.statusId} id={this.issue.issueId}/>
                     <div className="issue-split d-flex flex-row">
                         <div className="issue-large">
-                            <Status status={this.issue.statusId} id={this.issue.issueId}/>
                             <div className="card">
                                 <div className="card-body issue-large-card">
                                     <div className="d-flex flex-row">
@@ -109,7 +113,9 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                 </div>
                             </div>
                         </div>
-                        <div className="issue-map-container">
+                        <div className="card issue-map-container">
+                            {console.log(this.lat + " " + this.long)}
+                            <SimpleMap lat={this.long} lng={this.lat}/>
                         </div>
                     </div>
                     <h4 className="feedback-title">Oppdateringer</h4>
@@ -137,6 +143,8 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
         issueService.getIssue(this.props.match.params.issueId)
             .then(issue => {
                 this.issue = issue;
+                this.lat = this.issue.latitude
+                this.long = this.issue.longitude
                 issueCategoryService.getCategory(this.issue.categoryId)
                     .then(category => {
                         this.categoryName = category.name

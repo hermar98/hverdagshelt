@@ -54,30 +54,39 @@ function createMapOptions(maps) {
 }
 export class SimpleMap extends Component<{ lat: number, lng: number }> {
   //TODO: Add Issue latlng
-  center = { lat: this.props.lat, lng: this.props.lng };
-  lat = this.props.lat;
-  lng = this.props.lng;
+  center = null;
 
   render() {
-    return (
-      // Important! Always set the container height explicitly
-      <div style={{ height: '50vh', width: '100%' }}>
-        <GoogleMap
-          bootstrapURLKeys={{ key: 'AIzaSyCVd-3sSATNkNAa5jRe9U6_t8wR5YkH480', language: 'no' }}
-          defaultCenter={this.center}
-          defaultZoom={15}
-          hoverDistance={30}
-          options={createMapOptions}
-          onClick={event => this.onClick(event)}
-          onChildClick={event => this.onChildClick(event)}
-          onChange={event => this.onChange(event)}
-          yesIWantToUseGoogleMapApiInternals
-        >
-          <MyGreatPlace lat={this.center.lat} lng={this.center.lng} text="" />
-          {/* <MyGreatPlace lat={this.lat} lng={this.lng} text="" /> */}
-        </GoogleMap>
-      </div>
-    );
+      return (
+        this.renderMap()
+      )
+  }
+
+  renderMap() {
+    this.center = { lat: this.props.lat, lng: this.props.lng };
+    if(this.center.lat != 0 && this.center.lng != 0) {
+        return (
+            // Important! Always set the container height explicitly
+            <div style={{ height: '100%', width: '100%' }}>
+                <GoogleMap
+                    bootstrapURLKeys={{ key: 'AIzaSyCVd-3sSATNkNAa5jRe9U6_t8wR5YkH480', language: 'no' }}
+                    defaultCenter={this.center}
+                    defaultZoom={12}
+                    hoverDistance={30}
+                    options={createMapOptions}
+                    onClick={event => this.onClick(event)}
+                    onChildClick={event => this.onChildClick(event)}
+                    onChange={event => this.onChange(event)}
+                    yesIWantToUseGoogleMapApiInternals
+                >
+                    <MyGreatPlace lat={this.center.lat} lng={this.center.lng} text="" />
+                    {/* <MyGreatPlace lat={this.lat} lng={this.lng} text="" /> */}
+                </GoogleMap>
+            </div>
+        );
+    }else{
+      return null
+    }
   }
 
   onClick = ({ x, y, lat, lng, event }) => {
