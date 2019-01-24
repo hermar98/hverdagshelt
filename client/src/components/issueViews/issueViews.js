@@ -47,6 +47,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     feedbackContent: string = '';
     categoryName: string = '';
     issueText: string = '';
+    rank: number = -1;
 
     render() {
         if(!this.state.clickedStatus && this.statusSelect.current != null) {
@@ -72,7 +73,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                             <div className="card-body issue-large-card">
                                 <div className="d-flex flex-row">
                                     <p id="date-large" className="date">{formatDate(this.issue.createdAt)}</p>
-                                    <ButtonGroup onclickC={this.onEdit} onclickT={this.onDelete} rank={1} />
+                                    <ButtonGroup onclickC={this.onEdit} onclickT={this.onDelete} id={this.issue.userId} />
                                     <StatusButton status={this.issue.statusId} onclick={() => {
                                         let rank = 0
                                         userService.getUser(tokenManager.getUserId())
@@ -112,22 +113,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                         return <IssueFeedback feedback={feedback} userId={this.issue.userId}/>
                     })}
                     <div className="feedback-button">
-                        <div>
-                            <button ref={this.addFeedbackButton} className="btn image-button" type="button" onClick={() => {
-                                let rank = 0
-                                userService.getUser(this.issue.userId)
-                                    .then(user => rank = user.rank)
-                                    .catch(error => console.error("Error: ", error))
-
-                                if(tokenManager.getUserId() == this.issue.userId || rank == 3) {
-                                    this.addFeedbackButton.current.classList.add('show')
-                                    this.addFeedbackForm.current.classList.remove('show')
-                                    window.scrollTo(0, document.body.scrollHeight);
-                                }
-                            }}>
-                                <img id="add-image-button" src="../../images/add.png" />
-                            </button>
-                        </div>
+                        { this.renderAddButton() }
                     </div>
                     <div ref={this.addFeedbackForm} className="feedback-container show">
                         <div className="form-group">
@@ -159,6 +145,30 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                 sharedFeedback.feedback = data;
             })
             .catch(error => console.error("Error: ", error))
+        userService.getUser(tokenManager.getUserId())
+            .then(user => {
+                this.rank = user.rank
+            })
+            .catch(error => console.error("Error: ", error))
+    }
+
+    renderAddButton(){
+        if (this.rank == 3 || tokenManager.getUserId() == this.issue.userId) {
+            return (
+                <div>
+                    <button ref={this.addFeedbackButton} className="btn image-button" type="button"
+                            onClick={() => {
+                                this.addFeedbackButton.current.classList.add('show')
+                                this.addFeedbackForm.current.classList.remove('show')
+                                window.scrollTo(0, document.body.scrollHeight);
+                            }}>
+                        <img id="add-image-button" src="../../images/add.png"/>
+                    </button>
+                </div>
+            )
+        }else{
+            return null
+        }
     }
 
     onClick (val: number) {
@@ -496,7 +506,7 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
                                     <img className="card-img profile-image" src={this.user.profilePicture}/>
                                 </div>
                                 <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{formatDate(this.props.feedback.createdAt)}</p></div>
-                            <ButtonGroup onclickC={this.onEdit} onclickT={this.onDelete} />
+                            <ButtonGroupFeedback onclickC={this.onEdit} onclickT={this.onDelete} id={this.props.feedback.userId} />
                         </div>
                         <div className="card-text feedback-text" id={"feedback-text " + this.props.feedback.feedbackId}>
                             {this.props.feedback.content}
@@ -668,7 +678,7 @@ export class HoverButton extends Component<{onclick: function, text: string}> {
     }
 }
 
-export class ButtonGroup extends Component<{onclickC: function, onclickT: function}> {
+export class ButtonGroup extends Component<{onclickC: function, onclickT: function, id: number}> {
 
     rank: number = -1
 
@@ -680,6 +690,12 @@ export class ButtonGroup extends Component<{onclickC: function, onclickT: functi
                     <ImageButton source="../../images/trashcan.png" onclick={this.props.onclickT}/>
                 </div>
             )
+        }else if(tokenManager.getUserId() == this.props.id){
+            return (
+                <div className="options">
+                    <ImageButton source="../../images/cog.png" onclick={this.props.onclickC}/>
+                </div>
+            )
         }else{
             return null
         }
@@ -689,5 +705,20 @@ export class ButtonGroup extends Component<{onclickC: function, onclickT: functi
         userService.getUser(tokenManager.getUserId())
             .then(user => this.rank = user.rank)
             .catch(error => console.error("Error: ", error))
+    }
+}
+
+export class ButtonGroupFeedback extends Component<{onclickC: function, onclickT: function, id: number}> {
+    render() {
+        if(this.props.id == tokenManager.getUserId()) {
+            return (
+                <div className="options">
+                    <ImageButton source="../../images/cog.png" onclick={this.props.onclickC}/>
+                    <ImageButton source="../../images/trashcan.png" onclick={this.props.onclickT}/>
+                </div>
+            )
+        }else{
+            return null
+        }
     }
 }
