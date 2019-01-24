@@ -68,46 +68,50 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
             <div>
                 <SpecificIssueMenu/>
                 <div className="issue-container">
-                    <div className="issue-large">
-                        <Status status={this.issue.statusId} id={this.issue.issueId}/>
-                        <div className="card">
-                            <div className="card-body issue-large-card">
-                                <div className="d-flex flex-row">
-                                    <p className="date date-large">{formatDate(this.issue.createdAt)}</p>
-                                    <ButtonGroup onclickC={this.onEdit} onclickT={this.onDelete} id={this.issue.userId} />
-                                    <StatusButton status={this.issue.statusId} onclick={() => {
-                                        let rank = 0
-                                        userService.getUser(tokenManager.getUserId())
-                                            .then(user => {
-                                                rank = user.rank
-                                                if(rank == 3) {
-                                                    this.setState({
-                                                        clickedStatus: !this.state.clickedStatus
-                                                    })
-                                                }
-                                            })
-                                            .catch(error => console.error("Error: ", error))
-                                    }}/>
-                                </div>
-                                <div className="d-flex flex-row justify-content-end">
-                                    <div className="status-selection" ref={this.statusSelect}>
-                                        <StatusButton status={1} onclick={() => this.onClick(1)} />
-                                        <StatusButton status={2} onclick={() => this.onClick(2)} />
-                                        <StatusButton status={3} onclick={() => this.onClick(3)} />
+                    <div className="issue-split d-flex flex-row">
+                        <div className="issue-large">
+                            <Status status={this.issue.statusId} id={this.issue.issueId}/>
+                            <div className="card">
+                                <div className="card-body issue-large-card">
+                                    <div className="d-flex flex-row">
+                                        <p className="date date-large">{formatDate(this.issue.createdAt)}</p>
+                                        <ButtonGroup onclickC={this.onEdit} onclickT={this.onDelete} id={this.issue.userId} />
+                                        <StatusButton status={this.issue.statusId} onclick={() => {
+                                            let rank = 0
+                                            userService.getUser(tokenManager.getUserId())
+                                                .then(user => {
+                                                    rank = user.rank
+                                                    if(rank == 3) {
+                                                        this.setState({
+                                                            clickedStatus: !this.state.clickedStatus
+                                                        })
+                                                    }
+                                                })
+                                                .catch(error => console.error("Error: ", error))
+                                        }}/>
+                                    </div>
+                                    <div className="d-flex flex-row justify-content-end">
+                                        <div className="status-selection" ref={this.statusSelect}>
+                                            <StatusButton status={1} onclick={() => this.onClick(1)} />
+                                            <StatusButton status={2} onclick={() => this.onClick(2)} />
+                                            <StatusButton status={3} onclick={() => this.onClick(3)} />
+                                        </div>
+                                    </div>
+                                    <p className="date date-large">{this.munName}</p>
+                                    <h5>{this.categoryName}</h5>
+                                    <div className="card-text" ref={this.bodyRef}>
+                                        <p id="issue-large-text">{this.issue.content}</p>
                                     </div>
                                 </div>
-                                <p className="date date-large">{this.munName}</p>
-                                <h5>{this.categoryName}</h5>
-                                <div className="card-text" ref={this.bodyRef}>
-                                    <p id="issue-large-text">{this.issue.content}</p>
+                                <div className="card-footer issue-images">
+                                    <h4>&nbsp;Bilder</h4>
+                                    <div className="flex-container">
+                                            <img className="issue-image" src={this.issue.image}/>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="card-footer issue-images">
-                                <h4>&nbsp;Bilder</h4>
-                                <div className="flex-container">
-                                        <img className="issue-image" src={this.issue.image}/>
-                                </div>
-                            </div>
+                        </div>
+                        <div className="issue-map-container">
                         </div>
                     </div>
                     <h4 className="feedback-title">Oppdateringer</h4>
