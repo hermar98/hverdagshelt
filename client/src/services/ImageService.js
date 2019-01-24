@@ -1,9 +1,10 @@
 //@flow
 import service from './Service';
 import {Image} from "../models/Image.js";
+import {Issue} from "../models/Issue";
 
 class ImageService{
-    getImage(imageId: number): Promise<Image> {
+    getOneImage(imageId: number): Promise<Image> {
         let token = localStorage.getItem('token');
         if (token) token = JSON.parse(token).jwt;
         return service.get('/secure/image/' + imageId, {
@@ -11,9 +12,20 @@ class ImageService{
         });
     }
 
+    getAllImage(issueId: number): Promise<Issue> {
+        let token = localStorage.getItem('token');
+        if (token) token = JSON.parse(token).jwt;
+        return service.get('/secure/image/issue/' + issueId, {
+            headers: { 'x-access-token': token }
+        });
+    }
+
     uploadImage(image: Image): Promise<Image> {
-        console.log("ON OUR WAY");
-        return service.post('/imageUpload', image);
+        let token = localStorage.getItem('token');
+        if (token) token = JSON.parse(token).jwt;
+        return service.post('secure/imageUpload', image, {
+            headers: { 'x-access-token': token }
+        });
     }
 
     deleteImage(imageId: number): Promise<void> {

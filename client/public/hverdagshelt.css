@@ -26,11 +26,21 @@ body {
 }
 
 div.status > h4 {
-    font-size: 3vh;
+    font-size: 110%;
 }
 .issue-container {margin: 2% 12% 10% 12%}
 .issue-image:hover {
     background-color: #b9bbbe;
+}
+
+.issue-card {
+    border: none !important
+}
+
+.issue-map-container {
+    height: auto;
+    width: 30%;
+    max-height: 400px;
 }
 
 .issue-image-normal {
@@ -44,7 +54,7 @@ div.status > h4 {
 
 .issue-image {
     width: auto;
-    height: 15vw;
+    height: 12vw;
     padding: 1% 1% 1% 1%;
 }
 
@@ -56,6 +66,10 @@ div.status > h4 {
 
 .navlink-large {
     font-size: 140%;
+}
+
+.issue-border {
+    border-bottom: solid lightgrey 1px;
 }
 
 .submitter-info {
@@ -90,8 +104,8 @@ div.status > h4 {
 }
 
 .issue-large {
-    margin-bottom: 10vh;
-    margin-top: 5%
+    margin-bottom: 8%;
+    border: none !important
 }
 
 .feedback-title {
@@ -266,7 +280,7 @@ div.feedback-button div {
 
 #issue-large-text {
     font-size: 110%;
-    margin: 2% 0 2% 0;
+    margin: 2% 0 0 0;
 }
 
 .normal-list-item {
@@ -311,11 +325,15 @@ div.feedback-button div {
 }
 
 .issue-large-card {
-    padding: 6vh 6vh 6vh 6vh
+    width: 50%;
+    padding: 2% 2% 2% 2% !important;
+    border: none !important
 }
 
 .issue-images {
     margin-top: 3%;
+    padding: 1% 1% 1% 1%;
+    background-color: whitesmoke;
 }
 
 .cat-name {
@@ -332,7 +350,7 @@ div.feedback-button div {
     padding: 2% 2% 1% 2%;
 }
 
-#date-large {
+.date-large {
     margin-top: 1.5%;
 }
 

@@ -168,9 +168,6 @@ Municipal.hasMany(Event, { foreignKey: 'munId' });
 Municipal.belongsToMany(User, { through: 'UserMunicipal', foreignKey: 'munId' });
 User.belongsToMany(Municipal, { through: 'UserMunicipal', foreignKey: 'userId' });
 
-User.belongsToMany(Issue, { through: 'UserIssue', foreignKey: 'userId' });
-Issue.belongsToMany(User, { through: 'UserIssue', foreignKey: 'issueId' });
-
 Issue.belongsTo(IssueCategory, { foreignKey: 'categoryId' });
 Issue.belongsTo(Status, { foreignKey: 'statusId' });
 Issue.hasMany(Feedback, { foreignKey: 'issueId' });
@@ -181,6 +178,9 @@ User.hasMany(Event, { foreignKey: 'userId' });
 User.hasMany(Feedback, { foreignKey: 'userId' });
 
 Event.belongsTo(EventCategory, { foreignKey: 'categoryId' });
+
+User.belongsToMany(Issue, { through: 'UserIssue', foreignKey: 'userId' });
+Issue.belongsToMany(User, { through: 'UserIssue', foreignKey: 'issueId' });
 
 //Municipal.belongsTo(County, {foreignKey: 'fk_companyname', targetKey: 'name'});
 //hasOne, target model is the foreign key
