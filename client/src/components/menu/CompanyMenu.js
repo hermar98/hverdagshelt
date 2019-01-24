@@ -17,7 +17,7 @@ import { history } from '../../index';
 import { Municipal } from '../../models/Municipal';
 import { userService } from '../../services/UserService';
 
-export class FeedMenu extends Component {
+export class CompanyMenu extends Component {
   user = null;
   municipal = new Municipal();
   munId = localStorage.getItem('munId');
@@ -45,16 +45,14 @@ export class FeedMenu extends Component {
       return (
         <div>
           <NavBar>
-            <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
-            <NavBar.Button onClick={this.toRegisterIssue}>Registrer Sak</NavBar.Button>
-            <NavBar.Button className="focus" onClick={this.toFeed}>
-              Min Feed
-            </NavBar.Button>
+            <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'} to={'/saker'}>
+              Hverdagshelt
+            </NavBar.Brand>
+            <NavBar.Button onClick={this.toCompanyHome}>Hjem</NavBar.Button>
             <NavBar.Dropdown title={this.user.firstName + ' ' + this.user.lastName}>
               <DropdownHeader>{this.user.email}</DropdownHeader>
-              <DropdownFooter>Privatperson</DropdownFooter>
+              <DropdownFooter>Bedrift</DropdownFooter>
               <DropdownDivider />
-              <DropdownItem onClick={this.changeMunicipal}>Endre kommune</DropdownItem>
               <DropdownItem onClick={this.toProfile}>Min profil</DropdownItem>
               <DropdownItem onClick={this.toLogout}>Logg ut</DropdownItem>
             </NavBar.Dropdown>
@@ -73,6 +71,7 @@ export class FeedMenu extends Component {
   }
   toLogout() {
     tokenManager.deleteToken();
+    window.location.reload();
     history.push('/');
   }
   toRegisterIssue() {
@@ -85,8 +84,7 @@ export class FeedMenu extends Component {
     localStorage.removeItem('munId');
     history.push('/');
   }
-
-  toIssue() {
-    history.push('/registrerSak');
+  toCompanyHome() {
+    history.push('/saker');
   }
 }
