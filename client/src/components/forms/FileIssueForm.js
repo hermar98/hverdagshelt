@@ -82,25 +82,6 @@ export default class RegisterIssue extends Component {
     this.issue.image = '';
 
     this.upload.printFaenHode(this.issue);
-
-    // issueService
-    // .addIssue(this.issue)
-    // .then(
-    //     id => {
-    //       if(this.upload!=null){
-    //         if(this.upload instanceof UploadImageButton){
-    //             console.log("I DONT SEEEEE WHATS WRONG");
-    //             this.upload.uploadTheImage(id.issueId);
-    //         } else{
-    //           console.log("Fuck this x2: " + id.issueId);
-    //         }
-    //       } else{
-    //           console.log("fak dis sht: " + id.issueId);
-    //       }
-    //     }
-    // )
-    // .then(history.push('/municipal/' + this.munId + '/issues'))
-    // .catch((error: Error) => Alert.danger(error.message));
   }
 
   mounted() {

@@ -40,7 +40,9 @@ export class FeedPage extends Component {
 
     return (
       <div className="container-fluid">
-        <div className="row page-container">
+          <h2 id="munTitle">Din feed</h2>
+
+          <div className="row page-container">
           <div className="col-lg-6">
             <Card title="Feil/mangler">
               <div className="issue-overview-small">
