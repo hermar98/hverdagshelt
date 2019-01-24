@@ -104,7 +104,7 @@ export class Search extends Component {
     this.clearSearchBox = this.clearSearchBox.bind(this);
   }
 
-  componentDidMount({ map, mapApi, adress } = this.props) {
+  componentDidMount({ map, mapApi } = this.props) {
     const options = {
       // restrict your search to a specific type of result
       // types: ['geocode', 'address', 'establishment', '(regions)', '(cities)'],
@@ -113,6 +113,7 @@ export class Search extends Component {
       // componentRestrictions: { country: ['gb', 'us'] },
       componentRestrictions: { country: ['no'] }
     };
+    console.log('did');
     this.autoComplete = new mapApi.places.Autocomplete(this.searchInput, options);
     this.autoComplete.addListener('place_changed', this.onPlaceChanged);
     this.autoComplete.bindTo('bounds', map);
@@ -141,12 +142,10 @@ export class Search extends Component {
     // this.searchInput.value = '';
   }
 
-  fillSearchBox() {}
-
   render() {
     return (
       // Important! Always set the container height explicitly
-      <div style={{ height: '50vh', width: '100%' }}>
+      <div>
         <input
           ref={ref => {
             this.searchInput = ref;
@@ -158,12 +157,17 @@ export class Search extends Component {
       </div>
     );
   }
+
+  onClick() {
+    this.searchInput.value = 'balls';
+  }
 }
 
 export class BigMap extends Component<{ lat: number, lng: number }> {
   center = { lat: this.props.lat, lng: this.props.lng };
   lat = null;
   lng = null;
+  adress = null;
   constructor(props) {
     super(props);
 
@@ -194,7 +198,15 @@ export class BigMap extends Component<{ lat: number, lng: number }> {
     const { places, mapApiLoaded, mapInstance, mapApi } = this.state;
     return (
       <Fragment>
-        {mapApiLoaded && <Search map={mapInstance} mapApi={mapApi} addplace={this.addPlace} adress={this.adress} />}
+        {mapApiLoaded && (
+          <Search
+            map={mapInstance}
+            mapApi={mapApi}
+            addplace={this.addPlace}
+            adress={this.adress}
+            onClick={this.onClick}
+          />
+        )}
         <GoogleMap
           bootstrapURLKeys={{
             key: 'AIzaSyCVd-3sSATNkNAa5jRe9U6_t8wR5YkH480',
@@ -223,10 +235,15 @@ export class BigMap extends Component<{ lat: number, lng: number }> {
   }
   onClick = ({ x, y, lat, lng, event }) => {
     console.log(x, y, lat, lng, event);
-    mapService.getLoactionByLatLng(lat, lng).then(e => console.log(e));
+    mapService.getLoactionByLatLng(lat, lng).then(e => {
+      this.adress = e.adress;
+      console.log(this.adress);
+      console.log(e);
+    });
     this.lat = lat;
     this.lng = lng;
     // console.log(this.lat, this.lng);
+
     this.state.places = [];
     this.forceUpdate();
   };
