@@ -87,8 +87,10 @@ export default class Login extends Component {
             if(this.user.rank === 0){
               history.push('/aktiver/aktiverBruker');
             }else if(this.user.rank === 1){
+              window.location.reload();
               history.push('/feed');
             }else{
+              window.location.reload();
               history.push('/profil');
             }
 
