@@ -81,7 +81,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                         <ButtonGroup onclickC={this.onEdit} onclickT={this.onDelete} id={this.issue.userId} />
                                         <StatusButton status={this.issue.statusId} onclick={() => {
                                             let rank = 0
-                                            userService.getUser(tokenManager.getUserId())
+                                            userService.getCurrentUser()
                                                 .then(user => {
                                                     rank = user.rank
                                                     if(rank == 3) {
@@ -163,7 +163,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                 sharedFeedback.feedback = data;
             })
             .catch(error => console.error("Error: ", error))
-        userService.getUser(tokenManager.getUserId())
+        userService.getCurrentUser()
             .then(user => {
                 this.rank = user.rank
             })
@@ -174,7 +174,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     }
 
     renderAddButton(){
-        if (this.rank == 3 || tokenManager.getUserId() == this.issue.userId) {
+        if (this.rank == 3 || this.user.userId == this.issue.userId) {
             return (
                 <div>
                     <button ref={this.addFeedbackButton} className="btn" type="button"
@@ -715,7 +715,7 @@ export class ButtonGroup extends Component<{onclickC: function, onclickT: functi
                     <ImageButton source="../../images/trashcan.png" onclick={this.props.onclickT}/>
                 </div>
             )
-        }else if(tokenManager.getUserId() == this.props.id){
+        }else if(this.user.userId == this.props.id){
             return (
                 <div className="options">
                     <ImageButton source="../../images/cog.png" onclick={this.props.onclickC}/>
@@ -727,7 +727,7 @@ export class ButtonGroup extends Component<{onclickC: function, onclickT: functi
     }
 
     mounted () {
-        userService.getUser(tokenManager.getUserId())
+        userService.getCurrentUser()
             .then(user => this.rank = user.rank)
             .catch(error => console.error("Error: ", error))
     }
@@ -735,7 +735,7 @@ export class ButtonGroup extends Component<{onclickC: function, onclickT: functi
 
 export class ButtonGroupFeedback extends Component<{onclickC: function, onclickT: function, id: number}> {
     render() {
-        if(this.props.id == tokenManager.getUserId()) {
+        if(this.props.id == this.user.userId) {
             return (
                 <div className="options">
                     <ImageButton source="../../images/cog.png" onclick={this.props.onclickC}/>

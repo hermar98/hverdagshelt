@@ -10,6 +10,7 @@ import LimitedRegistrationForm from '../forms/LimitedRegistrationForm';
 export class ActivateAccountPage extends Component<{ match: { params: { tokenId: string } } }>{
   isActivated: boolean = false;
   isAdminCreated: boolean = false;
+  user = null;
 
   render() {
     if (this.isActivated) {
@@ -58,8 +59,9 @@ export class ActivateAccountPage extends Component<{ match: { params: { tokenId:
   mounted() {
     userService.checkActivationToken(this.props.match.params.tokenId).then(user => {
       if (!user){
-        userService.getUser(tokenManager.getUserId())
+        userService.getCurrentUser()
           .then(user => {
+            this.user = user;
             if(user.rank !== 0){
               this.isActivated = true;
             }else{

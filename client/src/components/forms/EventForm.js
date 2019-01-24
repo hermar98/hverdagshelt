@@ -12,6 +12,7 @@ import {eventService} from "../../services/EventService";
 import moment from "moment";
 import {HoverButton} from "../issueViews/issueViews";
 //import { UploadImageButton } from '../../components/image/UploadImageButton';
+import {userService} from '../../services/UserService';
 
 export default class EventForm extends Component {
   event = new Event();
