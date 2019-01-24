@@ -157,7 +157,7 @@ class NavBarButton extends Component<{ onClick: () => mixed, children?: React.No
   render() {
     return (
       <form className="form-inline">
-        <button onClick={this.props.onClick} className="custom-nav-btn btn btn-outline-light">
+        <button onClick={this.props.onClick} className="custom-nav-btn btn btn-outline-light" data-toggle="collapse">
           {this.props.children}
         </button>
       </form>
