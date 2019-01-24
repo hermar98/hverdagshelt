@@ -71,7 +71,7 @@ if (root)
                 <Route exact path="/admin" component={AdminPage}/>
                 <Route exact path="/admin/edit/:userId" component={AdminEditPage}/>
                 <Route exact path="/admin/registrerBruker" component={AdminAddPage}/>
-                <Route extact path="/hendelser/:eventId" component={EventInfo} />
+                <Route exact path="/hendelser/:eventId" component={EventInfo} />
                 <Route path="" component={NotFound}/>
               </Switch>
           <Footer />

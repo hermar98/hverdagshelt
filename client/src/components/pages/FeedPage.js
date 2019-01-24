@@ -15,6 +15,7 @@ import NavLink from 'react-router-dom/es/NavLink';
 import { userService } from '../../services/UserService';
 import { tokenManager } from '../../tokenManager';
 import { User } from '../../models/User';
+import { history } from '../../index';
 
 let sharedMunicipals = sharedComponentData({ municipals: [] });
 let sharedIssues = sharedComponentData({ issues: [] });
@@ -34,6 +35,10 @@ export class FeedPage extends Component {
   status: number = 0;
 
   render() {
+    const hasMunicipals = sharedMunicipals.municipals.length != 0;
+    const hasEvents = sharedEvents.events.length != 0;
+    const hasIssues = sharedIssues.issues.length != 0;
+
     return (
       <div>
         <FeedMenu />
@@ -79,6 +84,7 @@ export class FeedPage extends Component {
                       onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
                         this.issueSort = event.target.value;
                         this.sortIssues();
+                        console.log(hasMunicipals)
                       }}
                     >
                       <option value={1}>Nyeste</option>
@@ -88,7 +94,7 @@ export class FeedPage extends Component {
                 </div>
               </div>
               <ul className="container-fluid">
-                {Array.from(
+                {hasMunicipals ? (hasIssues ? (Array.from(
                   new Set(
                     sharedIssues.issues
                       .filter(e => {
@@ -99,12 +105,19 @@ export class FeedPage extends Component {
                         );
                       })
                       .map(e => (
+
                         <li key={e.issueId} className="list-group-item">
                           <IssueSmall issue={e} munId={e.munId} />
                         </li>
                       ))
                   )
-                )}
+                )): (
+                    <li key={0}>
+                      <p id="noIssues">Denne kommunen har ingen registrerte saker...</p> </li>)) : (
+                  <li key={0}>
+                    <p id="feedInfo">Du har ikke valgt kommuner enda...</p>
+                    <p id="feedLink" onClick={this.toProfile}>Gå til profilsiden for å velge kommuner du vil følge</p></li>
+                  )}
               </ul>
             </Card>
           </div>
@@ -140,7 +153,7 @@ export class FeedPage extends Component {
                 </div>
               </div>
               <ul className="container-fluid">
-                {Array.from(
+                {hasMunicipals ?(hasEvents ? (Array.from(
                   new Set(
                     sharedEvents.events
                       .filter(e => {
@@ -152,6 +165,12 @@ export class FeedPage extends Component {
                         </li>
                       ))
                   )
+                )) : (
+                  <li key={0}>
+                    <p id="noEvents">Denne kommunen har ingen registrerte hendelser...</p> </li>)) : (
+                  <li key={0}>
+                    <p id="feedInfo">Du har ikke valgt kommuner enda...</p>
+                    <p id="feedLink" onClick={this.toProfile}>Gå til profilsiden for å velge kommuner du vil følge</p></li>
                 )}
               </ul>
             </Card>
@@ -266,5 +285,9 @@ export class FeedPage extends Component {
       });
       console.log(this.eventSort);
     }
+  }
+
+  toProfile(){
+    history.push('/profil');
   }
 }
