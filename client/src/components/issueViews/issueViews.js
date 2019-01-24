@@ -10,6 +10,7 @@ import {issueService} from "../../services/IssueService";
 import {issueCategoryService} from "../../services/IssueCategoryService";
 import {feedbackService} from "../../services/FeedbackService";
 import {municipalService} from "../../services/MunicipalService";
+import {SimpleMap} from "../map/map";
 
 let sharedIssues = sharedComponentData({issues: []})
 let sharedFeedback = sharedComponentData({feedback: []})
@@ -45,7 +46,12 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     issue = new Issue();
     feedbackContent: string = '';
     categoryName: string = '';
+    munName: string = '';
     issueText: string = '';
+    rank: number = -1;
+
+    lat: number = 0
+    long: number = 0
 
     render() {
         if(!this.state.clickedStatus && this.statusSelect.current != null) {
@@ -64,40 +70,47 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
         return (
             <div>
                 <div className="issue-container">
+                    <Status status={this.issue.statusId} id={this.issue.issueId}/>
                     <div className="issue-large">
-                        <Status status={this.issue.statusId} id={this.issue.issueId}/>
-                        <div className="card">
-                            <div className="card-body issue-large-card">
-                                <div className="d-flex flex-row">
-                                    <p id="date-large" className="date">{formatDate(this.issue.createdAt)}</p>
-                                    <ButtonGroup onclickC={this.onEdit} onclickT={this.onDelete} rank={1} />
-                                    <StatusButton status={this.issue.statusId} onclick={() => {
-                                        let rank = 0
-                                        userService.getUser(tokenManager.getUserId())
-                                            .then(user => {
-                                                rank = user.rank
-                                                if(rank == 3) {
-                                                    this.setState({
-                                                        clickedStatus: !this.state.clickedStatus
-                                                    })
-                                                }
-                                            })
-                                            .catch(error => console.error("Error: ", error))
-                                    }}/>
-                                </div>
-                                <div className="d-flex flex-row justify-content-end">
-                                    <div className="status-selection" ref={this.statusSelect}>
-                                        <StatusButton status={1} onclick={() => this.onClick(1)} />
-                                        <StatusButton status={2} onclick={() => this.onClick(2)} />
-                                        <StatusButton status={3} onclick={() => this.onClick(3)} />
+                        <div className="">
+                            <div className="card d-flex flex-row">
+                                <div className="card-body issue-large-card">
+                                    <div className="d-flex flex-row">
+                                        <p className="date date-large">{formatDate(this.issue.createdAt)}</p>
+                                        <ButtonGroup onclickC={this.onEdit} onclickT={this.onDelete} id={this.issue.userId} />
+                                        <StatusButton status={this.issue.statusId} onclick={() => {
+                                            let rank = 0
+                                            userService.getUser(tokenManager.getUserId())
+                                                .then(user => {
+                                                    rank = user.rank
+                                                    if(rank == 3) {
+                                                        this.setState({
+                                                            clickedStatus: !this.state.clickedStatus
+                                                        })
+                                                    }
+                                                })
+                                                .catch(error => console.error("Error: ", error))
+                                        }}/>
+                                    </div>
+                                    <div className="d-flex flex-row justify-content-end">
+                                        <div className="status-selection" ref={this.statusSelect}>
+                                            <StatusButton status={1} onclick={() => this.onClick(1)} />
+                                            <StatusButton status={2} onclick={() => this.onClick(2)} />
+                                            <StatusButton status={3} onclick={() => this.onClick(3)} />
+                                        </div>
+                                    </div>
+                                    <p className="date date-large">{this.munName}</p>
+                                    <h5>{this.categoryName}</h5>
+                                    <div className="card-text" ref={this.bodyRef}>
+                                        <p id="issue-large-text">{this.issue.content}</p>
                                     </div>
                                 </div>
-                                <h5>{this.categoryName}</h5>
-                                <div className="card-text" ref={this.bodyRef}>
-                                    <p id="issue-large-text">{this.issue.content}</p>
+                                <div className="issue-map-container">
+                                    {console.log(this.lat + " " + this.long)}
+                                    <SimpleMap lat={this.long} lng={this.lat}/>
                                 </div>
                             </div>
-                            <div className="card-footer issue-images">
+                            <div className="issue-images">
                                 <h4>&nbsp;Bilder</h4>
                                 <div className="flex-container">
                                         <img className="issue-image" src={this.issue.image}/>
@@ -110,22 +123,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                         return <IssueFeedback feedback={feedback} userId={this.issue.userId}/>
                     })}
                     <div className="feedback-button">
-                        <div>
-                            <button ref={this.addFeedbackButton} className="btn image-button" type="button" onClick={() => {
-                                let rank = 0
-                                userService.getUser(this.issue.userId)
-                                    .then(user => rank = user.rank)
-                                    .catch(error => console.error("Error: ", error))
-
-                                if(tokenManager.getUserId() == this.issue.userId || rank == 3) {
-                                    this.addFeedbackButton.current.classList.add('show')
-                                    this.addFeedbackForm.current.classList.remove('show')
-                                    window.scrollTo(0, document.body.scrollHeight);
-                                }
-                            }}>
-                                <img id="add-image-button" src="../../images/add.png" />
-                            </button>
-                        </div>
+                        { this.renderAddButton() }
                     </div>
                     <div ref={this.addFeedbackForm} className="feedback-container show">
                         <div className="form-group">
@@ -145,9 +143,16 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
         issueService.getIssue(this.props.match.params.issueId)
             .then(issue => {
                 this.issue = issue;
+                this.lat = this.issue.latitude
+                this.long = this.issue.longitude
                 issueCategoryService.getCategory(this.issue.categoryId)
                     .then(category => {
                         this.categoryName = category.name
+                    })
+                    .catch(error => console.error("Error: ", error))
+                municipalService.getMunicipal(this.issue.munId)
+                    .then(mun => {
+                        this.munName = mun.name
                     })
                     .catch(error => console.error("Error: ", error))
             })
@@ -157,6 +162,30 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                 sharedFeedback.feedback = data;
             })
             .catch(error => console.error("Error: ", error))
+        userService.getUser(tokenManager.getUserId())
+            .then(user => {
+                this.rank = user.rank
+            })
+            .catch(error => console.error("Error: ", error))
+    }
+
+    renderAddButton(){
+        if (this.rank == 3 || tokenManager.getUserId() == this.issue.userId) {
+            return (
+                <div>
+                    <button ref={this.addFeedbackButton} className="btn image-button" type="button"
+                            onClick={() => {
+                                this.addFeedbackButton.current.classList.add('show')
+                                this.addFeedbackForm.current.classList.remove('show')
+                                window.scrollTo(0, document.body.scrollHeight);
+                            }}>
+                        <img id="add-image-button" src="../../images/add.png"/>
+                    </button>
+                </div>
+            )
+        }else{
+            return null
+        }
     }
 
     onClick (val: number) {
@@ -296,10 +325,10 @@ export class IssueSmall extends Component<{issue: Issue, munId: number}> {
                     <div className="d-flex flex-row issue-flex justify-content-between">
                         <div className="view-text">
                             <h5>
-                                {this.munName + " Kommune"}
+                                {this.categoryName}
                             </h5>
                             <p className="cat-name">
-                                {this.categoryName}
+                                {this.munName + " Kommune"}
                             </p>
                             <p className="date">{formatDate(this.props.issue.createdAt)}</p>
                         </div>
@@ -494,7 +523,7 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
                                     <img className="card-img profile-image" src={this.user.profilePicture}/>
                                 </div>
                                 <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{formatDate(this.props.feedback.createdAt)}</p></div>
-                            <ButtonGroup onclickC={this.onEdit} onclickT={this.onDelete} />
+                            <ButtonGroupFeedback onclickC={this.onEdit} onclickT={this.onDelete} id={this.props.feedback.userId} />
                         </div>
                         <div className="card-text feedback-text" id={"feedback-text " + this.props.feedback.feedbackId}>
                             {this.props.feedback.content}
@@ -666,7 +695,7 @@ export class HoverButton extends Component<{onclick: function, text: string}> {
     }
 }
 
-export class ButtonGroup extends Component<{onclickC: function, onclickT: function}> {
+export class ButtonGroup extends Component<{onclickC: function, onclickT: function, id: number}> {
 
     rank: number = -1
 
@@ -678,6 +707,12 @@ export class ButtonGroup extends Component<{onclickC: function, onclickT: functi
                     <ImageButton source="../../images/trashcan.png" onclick={this.props.onclickT}/>
                 </div>
             )
+        }else if(tokenManager.getUserId() == this.props.id){
+            return (
+                <div className="options">
+                    <ImageButton source="../../images/cog.png" onclick={this.props.onclickC}/>
+                </div>
+            )
         }else{
             return null
         }
@@ -687,5 +722,20 @@ export class ButtonGroup extends Component<{onclickC: function, onclickT: functi
         userService.getUser(tokenManager.getUserId())
             .then(user => this.rank = user.rank)
             .catch(error => console.error("Error: ", error))
+    }
+}
+
+export class ButtonGroupFeedback extends Component<{onclickC: function, onclickT: function, id: number}> {
+    render() {
+        if(this.props.id == tokenManager.getUserId()) {
+            return (
+                <div className="options">
+                    <ImageButton source="../../images/cog.png" onclick={this.props.onclickC}/>
+                    <ImageButton source="../../images/trashcan.png" onclick={this.props.onclickT}/>
+                </div>
+            )
+        }else{
+            return null
+        }
     }
 }
