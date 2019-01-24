@@ -46,6 +46,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     issue = new Issue();
     feedbackContent: string = '';
     categoryName: string = '';
+    munName: string = '';
     issueText: string = '';
     rank: number = -1;
 
@@ -72,7 +73,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                         <div className="card">
                             <div className="card-body issue-large-card">
                                 <div className="d-flex flex-row">
-                                    <p id="date-large" className="date">{formatDate(this.issue.createdAt)}</p>
+                                    <p className="date date-large">{formatDate(this.issue.createdAt)}</p>
                                     <ButtonGroup onclickC={this.onEdit} onclickT={this.onDelete} id={this.issue.userId} />
                                     <StatusButton status={this.issue.statusId} onclick={() => {
                                         let rank = 0
@@ -95,6 +96,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                         <StatusButton status={3} onclick={() => this.onClick(3)} />
                                     </div>
                                 </div>
+                                <p className="date date-large">{this.munName}</p>
                                 <h5>{this.categoryName}</h5>
                                 <div className="card-text" ref={this.bodyRef}>
                                     <p id="issue-large-text">{this.issue.content}</p>
@@ -136,6 +138,11 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                 issueCategoryService.getCategory(this.issue.categoryId)
                     .then(category => {
                         this.categoryName = category.name
+                    })
+                    .catch(error => console.error("Error: ", error))
+                municipalService.getMunicipal(this.issue.munId)
+                    .then(mun => {
+                        this.munName = mun.name
                     })
                     .catch(error => console.error("Error: ", error))
             })
@@ -308,10 +315,10 @@ export class IssueSmall extends Component<{issue: Issue, munId: number}> {
                     <div className="d-flex flex-row issue-flex justify-content-between">
                         <div className="view-text">
                             <h5>
-                                {this.munName + " Kommune"}
+                                {this.categoryName}
                             </h5>
                             <p className="cat-name">
-                                {this.categoryName}
+                                {this.munName + " Kommune"}
                             </p>
                             <p className="date">{formatDate(this.props.issue.createdAt)}</p>
                         </div>
