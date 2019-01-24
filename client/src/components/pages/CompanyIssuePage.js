@@ -33,10 +33,13 @@ export class ContractorView extends Component<{match: { params: { munId: number}
     }
 
     mounted () {
-        issueService.getIssuesByUser(tokenManager.getUserId())
-            .then(issues => {
-                this.issues = issues
-            })
-            .catch(error => console.error("Error: ", error))
+        userService.getUsers()
+            .then(user => {
+                issueService.getIssuesByUser(user.userId)
+                    .then(issues => {
+                        this.issues = issues
+                    })
+                    .catch(error => console.error("Error: ", error))
+            }).catch(error => console.error("Error: ", error))
     }
 }

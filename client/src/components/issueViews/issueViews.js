@@ -47,6 +47,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     feedbackContent: string = '';
     categoryName: string = '';
     issueText: string = '';
+    user = null;
 
     render() {
         if(!this.state.clickedStatus && this.statusSelect.current != null) {
@@ -114,7 +115,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                     .then(user => rank = user.rank)
                                     .catch(error => console.error("Error: ", error))
 
-                                if(tokenManager.getUserId() == this.issue.userId || rank == 3) {
+                                if(this.user.userId == this.issue.userId || rank == 3) {
                                     this.addFeedbackButton.current.classList.add('show')
                                     this.addFeedbackForm.current.classList.remove('show')
                                     window.scrollTo(0, document.body.scrollHeight);
@@ -154,6 +155,9 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                 sharedFeedback.feedback = data;
             })
             .catch(error => console.error("Error: ", error))
+        userService.getCurrentUser()
+            .then(user => this.user = user)
+            .catch(error => console.error("Error: ", error))
     }
 
     onClick (val: number) {
@@ -176,7 +180,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
         feedback.name = '';
         feedback.content = this.feedbackContent;
         feedback.issueId = this.issue.issueId;
-        feedback.userId = tokenManager.getUserId()
+        feedback.userId = this.user.userId;
         feedbackService.addFeedback(feedback)
             .then(res => {
                 this.addFeedbackButton.current.classList.remove('show')
@@ -521,7 +525,7 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
     }
 
     onEdit() {
-        if(tokenManager.getUserId() == this.props.feedback.userId) {
+        if(this.user.userId == this.props.feedback.userId) {
             let inp = document.createElement('input')
             let btn = document.createElement('button')
             let text = document.getElementById('feedback-text ' + this.props.feedback.feedbackId)
@@ -556,7 +560,7 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
             .then(user => rank = user.rank)
             .catch(error => console.error("Error: ", error))
 
-        if(tokenManager.getUserId() == this.props.feedback.userId) {
+        if(this.user.userId == this.props.feedback.userId) {
             if (confirm("Are you sure?")) {
                 feedbackService.deleteFeedback(this.props.feedback.feedbackId)
                     .then(res => {

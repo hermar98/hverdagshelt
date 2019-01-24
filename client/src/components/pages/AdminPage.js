@@ -116,17 +116,12 @@ export class AdminPage extends Component {
                     })).catch((error: Error) => Alert.danger(error.message));
             }).catch((error: Error) => console.log(error));
 
-        userService
-            .getToken()
-            .then(() => {
-                userService
-                    .getUser(tokenManager.getUserId())
-                    .then(user => {
-                        this.userId = user.userId;
-                    })
-                    .catch((error: Error) => console.log(error));
-            })
-            .catch((error: Error) => console.log(error));
+            userService
+                .getCurrentUser()
+                .then(user => {
+                    this.userId = user.userId;
+                })
+                .catch((error: Error) => console.log(error));
     }
 
     getRankName(rank: number): string {

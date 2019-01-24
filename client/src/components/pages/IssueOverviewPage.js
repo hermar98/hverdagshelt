@@ -34,9 +34,9 @@ export class IssueView extends Component {
 
   mounted() {
 
-    userService.getUser(tokenManager.getUserId())
+    userService.getCurrentUser()
         .then(user => {
-          this.munId = user.munId
+          this.munId = user.munId;
             issueService
                 .getIssuesByMunicipal(this.munId)
                 .then(issues => {

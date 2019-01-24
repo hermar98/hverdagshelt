@@ -18,7 +18,7 @@ export default class EventForm extends Component {
   filteredCategories = [];
   category = new EventCategory();
   munId = localStorage.getItem('munId');
-  userId = tokenManager.getUserId();
+  user = null;
   dropdownToggle = "";
   startDate = Date;
   startTime = null;
@@ -92,7 +92,7 @@ export default class EventForm extends Component {
     this.event.timeStart = moment(this.startDate + " " + this.startTime);
     this.event.timeEnd = moment(this.endDate + " " + this.endTime);
     this.event.munId = this.munId;
-    this.event.userId = this.userId;
+    this.event.userId = this.user.userId;
 
     eventService
       .addEvent(this.event)
@@ -101,6 +101,10 @@ export default class EventForm extends Component {
   }
 
   mounted() {
+    userService.getCurrentUser()
+        .then(user => this.user = user)
+        .catch((error: Error) => Alert.danger(error.message));
+
     eventCategoryService
       .getCategories()
       .then(e => {

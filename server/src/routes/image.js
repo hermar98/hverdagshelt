@@ -57,7 +57,7 @@ app.post('/imageUpload', (req, res) => {
 });
 
 
-app.post('/secure/image', (req: Request, res: Response) => {
+app.post('/image', (req: Request, res: Response) => {
     // const values = Object.values(req.files);
     // const promises = values.map(image => cloudinary.uploader.upload(image.path));
     // Promise.all(promises).then(results => res.json(results));
@@ -71,13 +71,13 @@ app.post('/secure/image', (req: Request, res: Response) => {
 
 
 
-app.get('/secure/image//:id', (req: Request, res: Response) => {
+app.get('/image//:id', (req: Request, res: Response) => {
     return IssuePicture.findOne({
         where: { imageId: Number(req.params.id) }
     }).then(user => (user ? res.send(user) : res.sendStatus(404)));
 });
 
-app.delete('/secure/image/:id', (req: Request, res: Response) => {
+app.delete('/image/:id', (req: Request, res: Response) => {
     return IssuePicture.destroy({
         where: { pictureId: req.params.userId }
         }).then(

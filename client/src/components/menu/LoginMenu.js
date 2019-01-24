@@ -20,6 +20,8 @@ import { Municipal } from '../../models/Municipal';
 import { userService } from '../../services/UserService';
 
 export class LoginMenu extends Component {
+  user = null;
+
   render() {
     return (
       <NavBar>
@@ -46,17 +48,12 @@ export class LoginMenu extends Component {
     }
 
     f();
-    userService
-      .getToken()
-      .then(() => {
-        userService
-          .getUser(tokenManager.getUserId())
-          .then(user => {
-            this.user = user;
-          })
-          .catch((error: Error) => console.log(error));
-      })
-      .catch((error: Error) => console.log(error));
+      userService
+        .getCurrentUser()
+        .then(user => {
+          this.user = user;
+        })
+        .catch((error: Error) => console.log(error));
   }
   async go() {
     //$FlowFixMe

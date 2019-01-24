@@ -44,23 +44,20 @@ export class UserProfilePage extends Component {
     f();
 
     userService
-
-      .getUser(tokenManager.getUserId())
-      .then(rows => (this.user = rows))
-      .catch(error => console.log(error));
-
-    issueService
-
-      .getIssuesByUser(tokenManager.getUserId())
-      .then(rows => (this.issues = rows))
-      .catch(error => console.log(error));
-
-    userMunicipalService
-      .getUserMunicipals(tokenManager.getUserId())
+      .getCurrentUser()
       .then(rows => {
-        sharedMunicipals.municipals = rows;
-      })
-      .catch(error => console.log(error));
+          this.user = rows;
+          issueService
+              .getIssuesByUser(this.user.userId)
+              .then(rows => (this.issues = rows))
+              .catch(error => console.log(error));
+          userMunicipalService
+              .getUserMunicipals(this.user.userId)
+              .then(rows => {
+                  sharedMunicipals.municipals = rows;
+              })
+              .catch(error => console.log(error));
+      }).catch(error => console.log(error));
   }
 
   handleAddMunicipal() {
@@ -71,7 +68,7 @@ export class UserProfilePage extends Component {
 
     if (municipal != null) {
       this.newMunicipalId = municipal.munId;
-      userMunicipalService.addUserMunicipal(tokenManager.getUserId(), this.newMunicipalId);
+      userMunicipalService.addUserMunicipal(this.user.userId, this.newMunicipalId);
       sharedMunicipals.municipals.push(municipal);
       this.newMunicipalName = '';
     }
@@ -90,7 +87,7 @@ export class UserProfilePage extends Component {
 
   deleteUserMunicipal(munId: number) {
     userMunicipalService
-      .deleteUserMunicipal(tokenManager.getUserId(), munId)
+      .deleteUserMunicipal(this.user.userId, munId)
       .then(rows => (sharedMunicipals.municipals = sharedMunicipals.municipals.filter(e => e.munId !== munId)))
       .catch(error => console.log(error));
   }
