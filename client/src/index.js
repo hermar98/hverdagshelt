@@ -27,7 +27,7 @@ import {RegisterEventPage} from './components/pages/RegisterEventPage';
 import createHashHistory from 'history/createHashHistory';
 import ProfilePage from './components/pages/ProfilePage/ProfilePage';
 import AdminAddPage from './components/pages/AdminAddPage';
-import {CompanyDelIssuePage} from './components/pages/CompanyDelIssuePage';
+import { CompanyDelIssuePage } from './components/pages/CompanyDelIssuePage';
 
 // Reload application when not in production environment
 
