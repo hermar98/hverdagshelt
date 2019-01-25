@@ -37,6 +37,7 @@ body {
     width: 65px !important;
     height: auto;
 }
+
 .profile-image-container {
     border-radius: 50% !important;
     border: gray solid 3px;
@@ -274,8 +275,8 @@ div.feedback-button div {
     border: solid 1px lightgray;
 }
 
-.show {
-    display: none
+.show-issue {
+    display: none !important;
 }
 
 .feedback-text {
@@ -312,7 +313,9 @@ div.feedback-button div {
 }
 
 #edit-input-feedback {
-    margin: 3% 0 2% 0
+    margin: 3% 0 2% 0;
+    min-height: 30vh;
+    height: auto;
 }
 
 #edit-button-feedback:hover {
