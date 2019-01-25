@@ -20,7 +20,6 @@ import { userService } from '../../services/UserService';
 export class MunEmployeeMenu extends Component {
   user = null;
   municipal = new Municipal();
-  munId = localStorage.getItem('munId');
   className = '';
   className2 = '';
   mounted() {
@@ -43,15 +42,16 @@ export class MunEmployeeMenu extends Component {
           <NavBar>
             <NavBar.Brand
               image={'../../images/hverdagshelt-logo-white.svg'}
-              to={'/kommune/' + localStorage.getItem('munId') + '/saker'}
+              to={'/kommune/' + this.user.munId}
               onClick={this.toMunEmployeeHome2}
             >
               Hverdagshelt
             </NavBar.Brand>
-            <NavBar.Button onClick={this.toRegisterEvent}>Registrer Event</NavBar.Button>
             <NavBar.Button className2={this.className2} onClick={this.toMunEmployeeHome}>
               Hjem
             </NavBar.Button>
+            <NavBar.Button onClick={this.toRegisterEvent}>Registrer Event</NavBar.Button>
+            <NavBar.Button onClick={this.toManageIssues}>Administrer Saker</NavBar.Button>
             <NavBar.Dropdown className={this.className} title={this.user.firstName + ' ' + this.user.lastName}>
               <DropdownHeader>{this.user.email}</DropdownHeader>
               <DropdownFooter>Kommuneansatt</DropdownFooter>
@@ -86,11 +86,15 @@ export class MunEmployeeMenu extends Component {
     localStorage.removeItem('munId');
     history.push('/');
   }
-
   toMunEmployeeHome() {
-    history.push('/kommune/' + localStorage.getItem('munId') + '/saker');
-    console.log(',soc,lsd,c');
+    history.push('/kommune/' + this.user.munId);
     this.className = '';
+  }
+
+  toManageIssues() {
+    history.push('/kommune/' + this.user.munId + '/saker');
+    this.className = '';
+    this.className2 = '';
   }
   toMunEmployeeHome2() {
     this.className = '';

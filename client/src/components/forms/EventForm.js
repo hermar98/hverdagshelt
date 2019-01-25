@@ -152,6 +152,7 @@ export default class EventForm extends Component {
       </Card>
     );
   }
+
   renderMap() {
     const { places, mapApiLoaded, mapInstance, mapApi } = this.state;
     if (this.center.lat != 0 && this.center.lng != 0) {
@@ -188,6 +189,7 @@ export default class EventForm extends Component {
       return null;
     }
   }
+
   save() {
     if (!this.form.checkValidity()) {
       console.log('TRYKKET PÅ');

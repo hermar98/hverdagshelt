@@ -84,6 +84,7 @@ export class CompanyMenu extends Component {
   toCompanyHome() {
     history.push('/saker');
     this.className = '';
+    this.className2 = 'homefocus';
   }
   toCompanyHome2() {
     this.className = '';
