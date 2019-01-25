@@ -1,5 +1,5 @@
 body {
-  padding-top: 50px;
+    padding-top: 75px;
 }
 
 @media (min-width: 1100px) {
@@ -13,26 +13,34 @@ body {
 }
 
 @media (min-width: 611px) {
-  .profile-left {
-    grid-column: 1;
-    display: grid;
-    grid-template-columns: 48% 4% 48%;
-  }
-  .issue-container {
-    margin: 2% 12% 25% 12%;
-  }
-  .page-container {
-    margin: 2% 4% 20% 4%;
-  }
+    .profile-left {
+        grid-column: 1;
+        display: grid;
+        grid-template-columns: 48% 4% 48%;
+    }
+    .issue-container {margin: 2% 12% 25% 12%}
+    .page-container {
+        margin: 2% 4% 20% 4%;
+    }
+    .issue-image-normal {
+        width: 40vh;
+        height: auto;
+        margin: auto;
+    }
 }
 
-@media (max-width: 610px) {
-  .issue-container {
-    margin: 2% 2% 25% 2%;
-  }
-  .page-container {
-    margin: 2% 0 20% 0;
-  }
+@media (max-width: 610px){
+    .issue-container {margin: 2% 2% 25% 2%}
+    .page-container {
+        margin: 2% 0 20% 0;
+    }
+    .issue-flex {
+        flex-wrap: wrap;
+    }
+    .issue-image-normal {
+        width: 100%;
+        height: auto;
+    }
 }
 
 .profile-image {
@@ -40,6 +48,7 @@ body {
   width: 65px !important;
   height: auto;
 }
+
 .profile-image-container {
   border-radius: 50% !important;
   border: gray solid 3px;
@@ -47,17 +56,17 @@ body {
   opacity: 0.4;
 }
 
-.status-blocked {
-  background-color: #ffa191;
-}
-.status-pending {
-  background-color: #fdff91;
-}
-.status-finished {
-  background-color: #acff91;
-}
+.status-blocked {background-color: #ffa191}
+.status-pending {background-color: #fdff91}
+.status-finished {background-color: #acff91}
+.status-notstarted {background-color: #b9bbbe}
 .status {
   padding: 0 0.25% 0 0.25%;
+}
+
+.issue-flex {
+    align-content: center;
+    align-items: center;
 }
 
 .card-title h2 {
@@ -83,15 +92,6 @@ div.status > h4 {
 .issue-map-container {
   height: auto;
   width: 30%;
-}
-
-.issue-image-normal {
-  width: 21vw;
-  height: auto;
-}
-
-.issue-image-normal-container {
-  margin-right: 3%;
 }
 
 .issue-image {
@@ -239,10 +239,6 @@ div.feedback-button div {
   justify-content: end;
 }
 
-.issue-flex {
-  align-items: center;
-}
-
 .issue-small {
   padding: 1% 1% 0% 1%;
 }
@@ -257,7 +253,7 @@ div.feedback-button div {
 }
 
 #issue-normal-content {
-  font-size: 1.2vw;
+    font-size: 90%;
 }
 
 #issue-normal-title {
@@ -285,8 +281,8 @@ div.feedback-button div {
   border: solid 1px lightgray;
 }
 
-.show {
-  display: none;
+.show-issue {
+    display: none !important;
 }
 
 .feedback-text {
@@ -324,7 +320,9 @@ div.feedback-button div {
 }
 
 #edit-input-feedback {
-  margin: 3% 0 2% 0;
+    margin: 3% 0 2% 0;
+    min-height: 30vh;
+    height: auto;
 }
 
 #edit-button-feedback:hover {
@@ -518,10 +516,18 @@ random
 /*
 Event
  */
-#event-image-small {
-  margin-left: auto;
-  height: 100px;
-  width: 100px;
+.event-image-small {
+    margin-left: auto;
+    height: 100px;
+    width: 100px;
+}
+
+.event-time {
+    color: #4e555b;
+}
+
+.event-view {
+    margin-bottom: 3%;
 }
 
 /*Image upload*/
