@@ -21,8 +21,9 @@ export class UserMenu extends Component {
   user = null;
   municipal = new Municipal();
   munId = localStorage.getItem('munId');
-  className = '';
-  className2 = '';
+  activeProfile = '';
+  activeFeed = '';
+  activeIssue = '';
 
   mounted() {
     userService
@@ -38,18 +39,20 @@ export class UserMenu extends Component {
       return (
         <div>
           <NavBar>
-            <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'} to="/feed" onClick={this.toHome2}>
+            <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'} to="/" onClick={this.toHome}>
               Hverdagshelt
             </NavBar.Brand>
-            <NavBar.Button onClick={this.toRegisterIssue}>Registrer Sak</NavBar.Button>
-            <NavBar.Button className2={this.className2} onClick={this.toFeed}>
+            <NavBar.Button className={this.activeRegIssue} onClick={this.toRegisterIssue}>
+              Registrer Sak
+            </NavBar.Button>
+            <NavBar.Button className={this.activeFeed} onClick={this.toFeed}>
               Min Feed
             </NavBar.Button>
-            <NavBar.Dropdown className={this.className} title={this.user.firstName + ' ' + this.user.lastName}>
+            <NavBar.Dropdown className={this.activeProfile} title={this.user.firstName + ' ' + this.user.lastName}>
               <DropdownHeader>{this.user.email}</DropdownHeader>
               <DropdownFooter>Privatperson</DropdownFooter>
               <DropdownDivider />
-              <DropdownItem onClick={this.changeMunicipal}>Endre kommune</DropdownItem>
+              <DropdownItem onClick={this.changeMunicipal}>Søk på kommune</DropdownItem>
               <DropdownItem onClick={this.toProfile}>Min profil</DropdownItem>
               <DropdownItem onClick={this.toLogout}>Logg ut</DropdownItem>
             </NavBar.Dropdown>
@@ -61,14 +64,21 @@ export class UserMenu extends Component {
   }
   toProfile() {
     history.push('/profil');
-    this.className = 'profilefocus';
-    this.className2 = '';
+    this.activeProfile = 'btnfocus';
+    this.activeFeed = '';
+    this.activeRegEvent = '';
   }
 
   toFeed() {
     history.push('/feed');
-    this.className = '';
-    this.className2 = 'homefocus';
+    this.activeFeed = 'btnfocus';
+    this.activeProfile = '';
+    this.activeRegIssue = '';
+  }
+  toHome() {
+    this.activeFeed = '';
+    this.activeProfile = '';
+    this.activeRegIssue = '';
   }
   toLogout() {
     tokenManager.deleteToken();
@@ -77,22 +87,15 @@ export class UserMenu extends Component {
   }
   toRegisterIssue() {
     history.push('/registrerSak');
-    this.className = '';
-    this.className2 = '';
+    this.activeRegIssue = 'btnfocus';
+    this.activeFeed = '';
+    this.activeProfile = '';
   }
   changeMunicipal() {
     localStorage.removeItem('munId');
     history.push('/');
-  }
-
-  toIssue() {
-    history.push('/registrerSak');
-    this.className = '';
-    this.className2 = '';
-  }
-  toHome2() {
-    this.className = '';
-    this.className2 = 'homefocus';
-    console.log(this.className2);
+    this.activeFeed = '';
+    this.activeProfile = '';
+    this.activeRegIssue = '';
   }
 }

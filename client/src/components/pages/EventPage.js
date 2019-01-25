@@ -214,10 +214,12 @@ export class EventInfo extends Component<{ match: { params: { eventId: number } 
 
   delete(){
     if (confirm("Are you sure?")) {
-      eventService
-        .deleteEvent(this.event.eventId)
-        .then(e => history.push('/kommune/' + this.user.munId))
-        .catch(e => console.log(e));
+      if(this.user.munId === this.event.munId) {
+        eventService
+          .deleteEvent(this.event.eventId)
+          .then(e => history.push('/kommune/' + this.user.munId))
+          .catch(e => console.log(e));
+      }
     }
   }
 }
