@@ -49,11 +49,11 @@ body {
   border-radius: 50% !important;
   width: 65px !important;
   height: auto;
+  border: gray solid 3px;
 }
 
 .profile-image-container {
   border-radius: 50% !important;
-  border: gray solid 3px;
   margin: 2% 2% 2% 2%;
   opacity: 0.4;
 }
@@ -177,7 +177,7 @@ div.status > h4 {
 }
 
 .sort-box {
-  padding: 1% 1% 0% 1%;
+  padding: 1% 1% 0 1%;
   margin-bottom: 1%;
   background-color: #3d3d3d;
 }
@@ -247,7 +247,7 @@ div.feedback-button div {
 }
 
 .issue-small {
-  padding: 1% 1% 0% 1%;
+  padding: 1% 1% 0 1%;
 }
 
 .status-image {
