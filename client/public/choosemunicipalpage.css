@@ -113,10 +113,8 @@ ul {
     width: 100%;
   }
   #munInputForm-Button {
-    position: inherit;
-    width: 20%;
-    left: 37.5%;
-    right: 37.5%;
+    width: 100%;
+    margin-top: 5px;
   }
 
   .autocomplete {

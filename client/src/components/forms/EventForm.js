@@ -18,7 +18,7 @@ import { userService } from '../../services/UserService';
 import { createMapOptions, MyGreatPlace, Search } from '../map/map';
 import { mapService } from '../../services/mapService';
 import { municipalService } from '../../services/MunicipalService';
-import {Fragment} from "react";
+import { Fragment } from 'react';
 
 export default class EventForm extends Component {
   event = new Event();
@@ -33,10 +33,10 @@ export default class EventForm extends Component {
   endDate = Date;
   endTime = null;
 
-  center = { lat: 61.84525971271803, lng: 9.260079962159239 };
+  center = { lat: 0, lng: 0 };
   lat = null;
   lng = null;
-  adress = null;
+  adress = 'null';
   allMuns = [];
 
   constructor(props) {
@@ -46,7 +46,8 @@ export default class EventForm extends Component {
       mapApiLoaded: false,
       mapInstance: null,
       mapApi: null,
-      places: []
+      places: [],
+      address: this.adress
     };
   }
 
@@ -54,7 +55,8 @@ export default class EventForm extends Component {
     this.setState({
       mapApiLoaded: true,
       mapInstance: map,
-      mapApi: maps
+      mapApi: maps,
+      address: 'null'
     });
   };
 
@@ -64,6 +66,7 @@ export default class EventForm extends Component {
     this.lng = null;
     console.log(place.formatted_address);
     this.adress = place.formatted_address;
+    this.setState({ address: place.formatted_address });
     let tmp = this.adress.toString().split(/[\s,]+/);
     this.matchMun(tmp);
     this.forceUpdate();
@@ -77,7 +80,6 @@ export default class EventForm extends Component {
   };
 
   render() {
-    const { places, mapApiLoaded, mapInstance, mapApi } = this.state;
     return (
       <Card title="Registrer event/hendelse">
         <form ref={e => (this.form = e)}>
@@ -137,50 +139,54 @@ export default class EventForm extends Component {
             onChange={e => (this.endDate = e.target.value)}
             onChange2={e => (this.endTime = e.target.value)}
           />
-          <div className="form-group row justify-content-center" style={{height: '300px'}}>
-            <div className="col-12 col-md-4 justify-content-center">
-            <Fragment>
-              {mapApiLoaded && <Search map={mapInstance} mapApi={mapApi} addplace={this.addPlace}/>}
-              <GoogleMap
-                bootstrapURLKeys={{
-                  key: 'AIzaSyCVd-3sSATNkNAa5jRe9U6_t8wR5YkH480',
-                  language: 'no',
-                  libraries: ['places', 'geometry']
-                }}
-                defaultCenter={this.center}
-                defaultZoom={5}
-                hoverDistance={30}
-                options={createMapOptions}
-                onClick={event => this.onClick(event)}
-                onChildClick={event => this.onChildClick(event)}
-                onChange={event => this.onChange(event)}
-                yesIWantToUseGoogleMapApiInternals
-                onGoogleApiLoaded={({ map, maps }) => this.apiHasLoaded(map, maps)}
-              >
-                {/* <MyGreatPlace lat={this.center.lat} lng={this.center.lng} text="" /> */}
-                <MyGreatPlace lat={this.lat} lng={this.lng} text="" />
-                {!isEmpty(places) &&
-                  places.map(place => (
-                    <MyGreatPlace
-                      key=""
-                      lat={place.geometry.location.lat()}
-                      lng={place.geometry.location.lng()}
-                      text=""
-                    />
-                  ))}
-              </GoogleMap>
-            </Fragment>
-            </div>
+          <div className="form-group row justify-content-center" style={{ height: '300px' }}>
+            <div className="col-12 col-md-4 justify-content-center">{this.renderMap()}</div>
           </div>
           <Form.FileInput>Legg til bilde (valgfritt) </Form.FileInput>
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
-              <HoverButton onclick={this.save} text="Registrer Event" />
+              <HoverButton type="submit" onclick={this.save} text="Registrer Event" />
             </div>
           </div>
         </form>
       </Card>
     );
+  }
+  renderMap() {
+    const { places, mapApiLoaded, mapInstance, mapApi } = this.state;
+    if (this.center.lat != 0 && this.center.lng != 0) {
+      return (
+        <Fragment>
+          {mapApiLoaded && <Search map={mapInstance} mapApi={mapApi} addplace={this.addPlace} />}
+
+          <GoogleMap
+            bootstrapURLKeys={{
+              key: 'AIzaSyCVd-3sSATNkNAa5jRe9U6_t8wR5YkH480',
+              language: 'no',
+              libraries: ['places', 'geometry']
+            }}
+            defaultCenter={this.center}
+            defaultZoom={9}
+            hoverDistance={30}
+            options={createMapOptions}
+            onClick={event => this.onClick(event)}
+            onChildClick={event => this.onChildClick(event)}
+            onChange={event => this.onChange(event)}
+            yesIWantToUseGoogleMapApiInternals
+            onGoogleApiLoaded={({ map, maps }) => this.apiHasLoaded(map, maps)}
+          >
+            {/* <MyGreatPlace lat={this.center.lat} lng={this.center.lng} text="" /> */}
+            <MyGreatPlace lat={this.lat} lng={this.lng} text="" />
+            {!isEmpty(places) &&
+              places.map(place => (
+                <MyGreatPlace key="" lat={place.geometry.location.lat()} lng={place.geometry.location.lng()} text="" />
+              ))}
+          </GoogleMap>
+        </Fragment>
+      );
+    } else {
+      return null;
+    }
   }
   save() {
     if (!this.form.checkValidity()) {
@@ -205,7 +211,15 @@ export default class EventForm extends Component {
   mounted() {
     userService
       .getCurrentUser()
-      .then(user => (this.user = user))
+      .then(user => {
+        this.user = user;
+        console.log(user.munId);
+        municipalService
+          .getMunicipal(user.munId)
+          .then(e =>
+            mapService.getLoactionByAdress(e.name).then(d => console.log((this.center = d[0].geometry.location)))
+          );
+      })
       .catch((error: Error) => Alert.danger(error.message));
 
     eventCategoryService
@@ -216,6 +230,8 @@ export default class EventForm extends Component {
         this.categories.push(first);
       })
       .catch((error: Error) => Alert.danger(error.message));
+
+    municipalService.getMunicipals().then(e => (this.allMuns = e));
   }
 
   matchMun(arr: String[]) {
@@ -235,10 +251,13 @@ export default class EventForm extends Component {
     mapService.getLoactionByLatLng(lat, lng).then(e => {
       console.log(e[0]);
       this.adress = e[0].formatted_address;
+      this.setState({ address: e[0].formatted_address });
+
       let reg = e[0].formatted_address.match(/Norge/);
       if (reg && reg.includes('Norge')) {
         console.log(this.adress);
         let tmp = this.adress.toString().split(/[\s,]+/);
+        console.log(tmp);
         this.matchMun(tmp);
         // console.log('Norway');
       } else {

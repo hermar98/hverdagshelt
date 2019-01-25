@@ -146,7 +146,7 @@ export default class RegisterIssue extends Component {
           />
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
-              <HoverButton onclick={this.save} text="Send Inn" />
+              <HoverButton type='submit' onclick={this.save} text="Send Inn" />
             </div>
           </div>
         </form>
