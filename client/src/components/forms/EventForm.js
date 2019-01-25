@@ -20,7 +20,6 @@ export default class EventForm extends Component {
   categories = [];
   filteredCategories = [];
   category = new EventCategory();
-  munId = localStorage.getItem('munId');
   user = null;
   dropdownToggle = "";
   startDate = Date;
@@ -92,12 +91,12 @@ export default class EventForm extends Component {
     this.event.latitude = 5678;
     this.event.timeStart = moment(this.startDate + " " + this.startTime);
     this.event.timeEnd = moment(this.endDate + " " + this.endTime);
-    this.event.munId = this.munId;
+    this.event.munId = this.user.munId;
     this.event.userId = this.user.userId;
 
     eventService
       .addEvent(this.event)
-      .then(history.push('/kommune/' + this.munId))
+      .then(history.push('/kommune/' + this.event.munId))
       .catch((error: Error) => Alert.danger(error.message));
   }
 

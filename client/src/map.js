@@ -13,9 +13,9 @@ const mapsClient = require('@google/maps').createClient({
 export class Map extends Component {
   render() {
     return (
-      <div style={{ height: '50vh', width: '100%' }}>
+      <div style={{ height: '50vh', width: '50%' }}>
         {/* <SimpleMap lat={63.33} lng={10.43} /> */}
-        <BigMap lat={63.33} lng={10.43} />
+        <BigMap />
       </div>
     );
   }

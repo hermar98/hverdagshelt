@@ -32,7 +32,7 @@ export class MyGreatPlace extends Component<{ text?: string }> {
   }
 }
 
-function createMapOptions(maps) {
+export function createMapOptions(maps) {
   return {
     zoomControl: false,
     mapTypeControl: false,
@@ -52,6 +52,7 @@ function createMapOptions(maps) {
     ]
   };
 }
+
 export class SimpleMap extends Component<{ lat: number, lng: number }> {
   //TODO: Add Issue latlng
   center = null;
@@ -145,7 +146,7 @@ export class Search extends Component {
   };
 
   clearSearchBox() {
-    // this.searchInput.value = '';
+    this.searchInput.value = '';
   }
 
   render() {
@@ -166,8 +167,8 @@ export class Search extends Component {
   }
 }
 
-export class BigMap extends Component<{ lat: number, lng: number }> {
-  center = { lat: this.props.lat, lng: this.props.lng };
+export class BigMap extends Component {
+  center = { lat: 61.84525971271803, lng: 9.260079962159239 };
   lat = null;
   lng = null;
   adress = null;
@@ -186,8 +187,7 @@ export class BigMap extends Component<{ lat: number, lng: number }> {
     this.setState({
       mapApiLoaded: true,
       mapInstance: map,
-      mapApi: maps,
-      adress: 'Elgesetergate 19'
+      mapApi: maps
     });
   };
 
@@ -210,7 +210,7 @@ export class BigMap extends Component<{ lat: number, lng: number }> {
             libraries: ['places', 'geometry']
           }}
           defaultCenter={this.center}
-          defaultZoom={15}
+          defaultZoom={5}
           hoverDistance={30}
           options={createMapOptions}
           onClick={event => this.onClick(event)}
