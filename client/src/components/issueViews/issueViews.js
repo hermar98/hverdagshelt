@@ -158,10 +158,10 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                         this.munName = mun.name
                     })
                     .catch(error => console.error("Error: ", error));
-                console.log("id client: " + this.issue.issueId)
+                console.log("id client: " + this.issue.issueId);
                 imageService.getAllImage(this.issue.issueId)
                     .then(data => {
-                        console.log(data.IssuePictures)
+                        console.log(data.IssuePictures);
                         this.images = data.IssuePictures
                     })
                     .catch(error => console.error("Error: ", error))
@@ -189,8 +189,8 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                 <div>
                     <button ref={this.addFeedbackButton} className="btn" type="button"
                             onClick={() => {
-                                this.addFeedbackButton.current.classList.add('show-issue')
-                                this.addFeedbackForm.current.classList.remove('show-issue')
+                                this.addFeedbackButton.current.classList.add('show-issue');
+                                this.addFeedbackForm.current.classList.remove('show-issue');
                                 window.scrollBy(0, 250);
                             }}>
                         <img id="add-image-button" src="../../images/add.png"/>
@@ -224,13 +224,13 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
         feedback.userId = this.user.userId;
         feedbackService.addFeedback(feedback)
             .then(res => {
-                this.addFeedbackButton.current.classList.remove('show-issue')
-                this.addFeedbackForm.current.classList.add('show-issue')
+                this.addFeedbackButton.current.classList.remove('show-issue');
+                this.addFeedbackForm.current.classList.add('show-issue');
                 feedbackService.getFeedbacks(this.props.match.params.issueId)
                     .then(data => {
                         sharedFeedback.feedback = data;
                     })
-                    .catch(error => console.error("Error: ", error))
+                    .catch(error => console.error("Error: ", error));
                 this.feedbackContent = '';
             })
             .catch(error => console.error("Error: ", error))
@@ -238,9 +238,9 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     }
 
     onEdit() {
-        this.issueText = this.issue.content
-        let inp = document.createElement('textarea')
-        let btn = document.createElement('button')
+        this.issueText = this.issue.content;
+        let inp = document.createElement('textarea');
+        let btn = document.createElement('button');
         let text = document.getElementById('issue-large-text')
         this.bodyRef.current.removeChild(text)
         inp.id = 'edit-input-feedback'

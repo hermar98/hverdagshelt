@@ -49,11 +49,11 @@ body {
   border-radius: 50% !important;
   width: 65px !important;
   height: auto;
+  border: gray solid 3px;
 }
 
 .profile-image-container {
   border-radius: 50% !important;
-  border: gray solid 3px;
   margin: 2% 2% 2% 2%;
   opacity: 0.4;
 }
