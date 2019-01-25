@@ -54,21 +54,20 @@ export default class UploadImageButton extends Component {
     });
   }
 
-  uploadEventImage(): Promise<string>{
+  uploadEventImage(): Promise<string> {
     const files = Array.from(shared.tFiles);
     this.setState({ uploading: true });
-    let urlNew = "image";
+    let urlNew = 'image';
 
     files.forEach(file => {
       let image: Image;
       image = {
-        imageSource: file.path,
+        imageSource: file.path
       };
 
-      imageService.uploadEventImage(image)
-        .then(url => {
-          urlNew = url;
-        })
+      imageService.uploadEventImage(image).then(url => {
+        urlNew = url;
+      });
     });
     return urlNew;
   }
@@ -113,7 +112,7 @@ export default class UploadImageButton extends Component {
     }
 
     return (
-      <div className="justify-content-center row">
+      <div className="form-group justify-content-center row">
         <div className="col-12 col-md-4 ">
           <div className="image-upload-form">
             <div className="card image-upload-container">
