@@ -1,18 +1,15 @@
-import ReactDOM from 'react-dom';
 import * as React from 'react';
-import { Component } from 'react-simplified';
-import { EventCategory } from '../../models/EventCategory.js';
-import { eventCategoryService } from '../../services/EventCategoryService';
-import { Alert, DisplayEvent } from '../../widgets';
-import { Issue } from '../../models/Issue';
-import { User } from '../../models/User';
-import { ImageButton, Status } from '../issueViews/issueViews';
+import {Component} from 'react-simplified';
+import {eventCategoryService} from '../../services/EventCategoryService';
+import {Alert} from '../../widgets';
+import {Issue} from '../../models/Issue';
+import {ImageButton, Status} from '../issueViews/issueViews';
 import moment from 'moment';
-import { eventService } from '../../services/EventService';
-import { Event } from '../../models/Event';
-import { SimpleMap } from '../map/map';
-import { userService } from '../../services/UserService';
-import { history } from '../../index';
+import {eventService} from '../../services/EventService';
+import {Event} from '../../models/Event';
+import {SimpleMap} from '../map/map';
+import {userService} from '../../services/UserService';
+import {history} from '../../index';
 
 let formatDate = function(date: Date) {
   if (date != null) {

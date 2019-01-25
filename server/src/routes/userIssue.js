@@ -36,7 +36,7 @@ app.get('/secure/freeUsersIssues/:statusId', (req: Request, res: Response) => {
         required: false
       }
     ],
-    where: { '$Users.userId$': null, statusId: req.params.statusId }
+    where: { '$Users.userId$': null, $or: [{statusId: 1}, {statusId: 2}, {statusId: 3}] }
     // where: { statusId: Number(req.params.statusId)}
   }).then(user => (user ? res.send(user) : res.sendStatus(404)));
 });
@@ -51,7 +51,7 @@ app.get('/secure/UsersIssues/:rank/status/:statusId', (req: Request, res: Respon
                 // through: { model: UserIssue, as: 'UserIssues' },
                 // attributes: [],
                 required:   false,
-                where: {statusId: req.params.statusId}
+                where: {$or: [{statusId: 1}, {statusId: 2}, {statusId: 3}]}
             }
         ],
         where: {rank: req.params.rank},
