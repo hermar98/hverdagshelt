@@ -115,33 +115,32 @@ export class EventLarge extends Component<{ event: Event }> {
 }
 
 export class EventSmall extends Component<{ event: Event }> {
-  textLength = 50;
-  text: string =
-    'apiegy8bs fnmangsm aiosd gnosdgjn mjoaen ksmfia sfbdmawjo srndfmes fgkmvser dvmawrs dgnkvma wrodvm dsdgjn ovsdvj nsdvjnsdg jnovsdv jnsdvj nosdvj';
+
+    textLength = 50;
 
   render() {
-    return (
-      <div className="card event-view">
-        <a id="a-hover" href={'/#/hendelser/' + this.props.event.eventId}>
-          <img src="../../images/arrowRightTrans.png" />
-        </a>
-        <div className="d-flex flex-row issue-flex">
-          <div className="issue-image-normal-container">
-            <img className="issue-image-normal" src={this.props.event.image} />
+      return (
+          <div className="card event-view">
+              <a id="a-hover" href={"/#/hendelser/" + this.props.event.eventId}>
+                  <img src="../../images/arrowRightTrans.png" />
+              </a>
+              <div className="d-flex flex-row issue-flex">
+                  <div className="issue-image-normal-container">
+                      <img className="issue-image-normal" src={this.props.event.image}/>
+                  </div>
+                  <div>
+                      <div className="card-body">
+                          <h4>{this.props.event.title}</h4>
+                        <p id="issue-normal-content">{(this.props.event.content).substring(0, 90) + " . . ."}</p>
+                      </div>
+                  </div>
+              </div>
+              <div className="card-footer d-flex flex-row justify-content-between">
+                  <h6 className="event-time">{"Fra: " + formatDate(this.props.event.timeStart)}</h6>
+                  <h6 className="event-time">{"Til: " + formatDate(this.props.event.timeEnd)}</h6>
+              </div>
           </div>
-          <div>
-            <div className="card-body">
-              <h4>{this.props.event.title}</h4>
-              <p id="issue-normal-content">{this.text.substring(0, 90) + ' . . .'}</p>
-            </div>
-          </div>
-        </div>
-        <div className="card-footer d-flex flex-row justify-content-between">
-          <h6 className="event-time">{'Fra: ' + formatDate(this.props.event.timeStart)}</h6>
-          <h6 className="event-time">{'Til: ' + formatDate(this.props.event.timeEnd)}</h6>
-        </div>
-      </div>
-    );
+      )
   }
 
   mounted() {}
