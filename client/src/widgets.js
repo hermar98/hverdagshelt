@@ -382,7 +382,7 @@ class FormInputDateTime extends Component<{
   render() {
     return (
       <div className="form-group row justify-content-center">
-        <div className="form-group col-md-3 col-8">
+        <div className="form-group col-md-2 col-lg-3 col-8">
           <label>{this.props.label}</label>
           <input
             id={this.props.id}
@@ -396,7 +396,7 @@ class FormInputDateTime extends Component<{
             placeholder={this.props.placeholder}
           />
         </div>
-        <div className="form-group col-md-1 col-4">
+        <div className="form-group col-md-2 col-lg-1 col-4">
           <label>{this.props.label2}</label>
           <input className="form-control" type="time" value={this.props.value2} onChange={this.props.onChange2} />
         </div>
