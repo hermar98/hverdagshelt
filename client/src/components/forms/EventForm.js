@@ -140,7 +140,9 @@ export default class EventForm extends Component {
             onChange2={e => (this.endTime = e.target.value)}
           />
           <div className="form-group row justify-content-center" style={{ height: '300px' }}>
-            <div className="col-12 col-md-4 justify-content-center">{this.renderMap()}</div>
+            <div className="col-12 col-md-4 justify-content-center">
+              <div className="mapcontainer">{this.renderMap()}</div>
+            </div>
           </div>
           <Form.FileInput>Legg til bilde (valgfritt) </Form.FileInput>
           <div className="container h-100">
