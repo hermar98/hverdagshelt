@@ -387,9 +387,10 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
                         <div id="sort-push" className="form-group">
                             <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
                                 <option value={0}>Alle</option>
-                                <option value={1}>Ikke behandlet</option>
-                                <option value={2}>Under behandling</option>
-                                <option value={3}>Behandlet</option>
+                                <option value={1}>Ikke påbegynt</option>
+                                <option value={2}>Ikke behandlet</option>
+                                <option value={3}>Under behandling</option>
+                                <option value={4}>Behandlet</option>
                             </select>
                         </div>
                         <div className="form-group">
@@ -557,7 +558,8 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
         userService.getUser(this.props.feedback.userId)
             .then(user => {
                 this.user = user
-                switch(user.rank){
+                console.log(this.user.rank)
+                switch(this.user.rank){
                     case 1: this.source = "../../images/private.png"; break;
                     case 2: this.source = "../../images/worker.png"; break;
                     case 3: this.source = "../../images/municipal.png"; break;
