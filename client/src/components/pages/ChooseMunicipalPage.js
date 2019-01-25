@@ -19,7 +19,6 @@ export class ChooseMunicipalPage extends Component {
     return (
       <div>
         <div className="bg-image" />
-        {console.log('he')};
         <div className="col-lg-12">
           <div className="fg">
             <div className="fg-card">
@@ -35,7 +34,7 @@ export class ChooseMunicipalPage extends Component {
                     <div className="munInputForm justify-content-center row">
                       <form id="munInputForm-Form" autoComplete="off">
                         <input id="munInputForm-Input" type="text" name="municipal" placeholder="Velg kommune" />
-                        <HoverButton className="ero" onclick={this.go} text="Gå" />
+                        <HoverButton id="munInputForm-Button" onclick={this.go} text="Gå" />
                       </form>
                     </div>
                   </div>

@@ -2,11 +2,10 @@
 /* eslint eqeqeq: "off" */
 
 import * as React from 'react';
-import { Component } from 'react-simplified';
-import { NavLink } from 'react-router-dom';
+import {Component} from 'react-simplified';
+import {NavLink} from 'react-router-dom';
 import moment from 'moment';
-import { issueCategoryService } from './services/IssueCategoryService.js';
-import { eventCategoryService } from './services/EventCategoryService.js';
+import {eventCategoryService} from './services/EventCategoryService.js';
 
 /**
  * Renders alert messages using Bootstrap classes.

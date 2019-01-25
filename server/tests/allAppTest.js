@@ -77,8 +77,9 @@ describe('User tests', () => {
         console.log(response.body);
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
-
-        expect(response.body.length).toEqual((await User.count())-1); // 12 Users - 1 disabled User since disabled users doesn't return.
+        let userCount = await User.count();
+        console.log(userCount);
+        expect(response.body.length).toEqual(userCount-2);
     });
 
     //Get one user  with id
@@ -98,42 +99,43 @@ describe('User tests', () => {
             '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722'
         );
     });
-    // //Post user TODO: POST isnt working...
-    // test('POST /users', async () => {
-    //     let totalUsers = await User.count(); // entries in database
-    //     console.log(totalUsers);
-    //     let user = { firstName: 'A', lastName: 'B', email: 'c@c.no', rank: 1, salt: '123', hashStr: '234' };
-    //     const response = await request(app)
-    //         .post('/users')
-    //         .send(user)
-    //         .set({ 'x-access-token': token });
-    //     expect(response.statusCode).toBe(200);
-    //     expect(await User.count()).toEqual(totalUsers + 1);
-    // });
-    // //Put user TODO: PUT isnt working...
-    //
-    // test('PUT /users/:id', async () => {
-    //     const updateUserResponse = await request(app)
-    //         .put('/users/1')
-    //         .send({ firstName: 'Jørgen' })
-    //         .set({ 'x-access-token': token });
-    //
-    //     expect(updateUserResponse.statusCode).toBe(200);
-    //
-    //     const response = await request(app)
-    //         .get('/users/1')
-    //         .set({ 'x-access-token': token });
-    //
-    //     expect(response.body.firstName).toBe('Jørgen');
-    //     expect(response.body.lastName).toBe('Andersson');
-    //     expect(response.body.email).toBe('test@test.no');
-    //     expect(response.body.rank).toBe(4);
-    //     expect(response.body.salt).toBe('a83f4da094cc247b');
-    //     expect(response.body.hashStr).toBe(
-    //         '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722'
-    //     );
-    //
-    // });
+    //Post user
+    test('POST /users', async () => {
+        let totalUsers = await User.count(); // entries in database
+        console.log(totalUsers);
+        let user = { firstName: 'A', lastName: 'B', email: 'c@c.no', rank: 3, password:'1', munId:null, salt: '123', hashStr: '234' };
+        const response = await request(app)
+            .post('/users')
+            .send(user)
+            .set({ 'x-access-token': token });
+        expect(response.statusCode).toBe(200);
+        expect(await User.count()).toEqual(totalUsers + 1);
+    });
+    //Put user
+
+    test('PUT /users/:id', async () => {
+        const updateUserResponse = await request(app)
+            .put('/users/1')
+            .send({ firstName: 'Jørgen' })
+            .set({ 'x-access-token': token });
+
+        expect(updateUserResponse.statusCode).toBe(200);
+
+        const response = await request(app)
+            .get('/users/1')
+            .set({ 'x-access-token': token });
+        console.log(response.body);
+
+        expect(response.body.firstName).toBe('Jørgen');
+        expect(response.body.lastName).toBe('Andersson');
+        expect(response.body.email).toBe('test@test.no');
+        expect(response.body.rank).toBe(4);
+        expect(response.body.salt).toBe('a83f4da094cc247b');
+        expect(response.body.hashStr).toBe(
+            '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722'
+        );
+
+    });
 
     test('PUT /users/:id', async () => {
         const updateUserResponse = await request(app)
