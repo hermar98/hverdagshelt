@@ -9,6 +9,7 @@ import {ImageButton} from '../issueViews/issueViews.js';
 import {tokenManager} from '../../tokenManager';
 import {history} from '../../index.js';
 import {HoverButton} from "../issueViews/issueViews";
+import {redirectService} from "../../redirectService";
 
 export class AdminPage extends Component {
     userId = 0;
@@ -138,16 +139,18 @@ export class AdminPage extends Component {
                                 };
                             }))
                     )
-                    .catch((error: Error) => Alert.danger(error.message));
+                    .catch((error: Error) => console.log(error));
             })
             .catch((error: Error) => console.log(error));
 
         userService
             .getCurrentUser()
-            .then(user => {
-                this.userId = user.userId;
-            })
-            .catch((error: Error) => console.log(error));
+            .then(user => this.userId = user.userId)
+            .catch((error: Error) => {
+                console.log(error);
+            });
+
+        redirectService.redirect(4);
     }
 
     getRankName(rank: number): string {
@@ -303,8 +306,9 @@ export class AdminEditPage extends Component<{ match: { params: { userId: number
     mounted() {
         userService
             .getUser(this.props.match.params.userId)
-            .then(user => (this.user = user))
-            .catch((error: Error) => Alert.danger(error.message));
+            .then(user => this.user = user).catch((error: Error) => Alert.danger(error.message));
+
+        redirectService.redirect(4);
     }
 
     save() {

@@ -3,6 +3,7 @@ import { Component, sharedComponentData } from 'react-simplified';
 import { Redirect, NavLink } from 'react-router-dom';
 import { HoverButton, IssueOverviewSmall, IssueOverviewNormal } from '../issueViews/issueViews';
 import { issueService } from '../../services/IssueService';
+import { userService } from '../../services/UserService';
 import { tokenManager } from '../../tokenManager';
 
 export class ContractorView extends Component<{ match: { params: { munId: number } } }> {
@@ -22,7 +23,7 @@ export class ContractorView extends Component<{ match: { params: { munId: number
   }
 
     mounted () {
-        userService.getUsers()
+        userService.getCurrentUser()
             .then(user => {
                 issueService.getIssuesByUser(user.userId)
                     .then(issues => {
