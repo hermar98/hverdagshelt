@@ -18,6 +18,7 @@ import { userService } from '../../services/UserService';
 import { createMapOptions, MyGreatPlace, Search } from '../map/map';
 import { mapService } from '../../services/mapService';
 import { municipalService } from '../../services/MunicipalService';
+import {Fragment} from "react";
 
 export default class EventForm extends Component {
   event = new Event();
@@ -76,6 +77,7 @@ export default class EventForm extends Component {
   };
 
   render() {
+    const { places, mapApiLoaded, mapInstance, mapApi } = this.state;
     return (
       <Card title="Registrer event/hendelse">
         <form ref={e => (this.form = e)}>
@@ -135,9 +137,10 @@ export default class EventForm extends Component {
             onChange={e => (this.endDate = e.target.value)}
             onChange2={e => (this.endTime = e.target.value)}
           />
-          <div style={{ height: '50vh', width: '50%' }}>
+          <div className="form-group row justify-content-center" style={{height: '300px'}}>
+            <div className="col-12 col-md-4 justify-content-center">
             <Fragment>
-              {mapApiLoaded && <Search map={mapInstance} mapApi={mapApi} addplace={this.addPlace} />}
+              {mapApiLoaded && <Search map={mapInstance} mapApi={mapApi} addplace={this.addPlace}/>}
               <GoogleMap
                 bootstrapURLKeys={{
                   key: 'AIzaSyCVd-3sSATNkNAa5jRe9U6_t8wR5YkH480',
@@ -167,8 +170,8 @@ export default class EventForm extends Component {
                   ))}
               </GoogleMap>
             </Fragment>
+            </div>
           </div>
-
           <Form.FileInput>Legg til bilde (valgfritt) </Form.FileInput>
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
@@ -186,8 +189,8 @@ export default class EventForm extends Component {
     }
 
     this.event.image = 'imagefile.img';
-    this.event.longitude = 1234;
-    this.event.latitude = 5678;
+    this.event.longitude = this.long;
+    this.event.latitude = this.lat;
     this.event.timeStart = moment(this.startDate + ' ' + this.startTime);
     this.event.timeEnd = moment(this.endDate + ' ' + this.endTime);
     this.event.munId = this.user.munId;
