@@ -374,7 +374,6 @@ A list of issues in small view
 export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[]}> {
 
     status: number = 0;
-    timesort: number = 0;
     category: number = 0;
     categories: [] = [];
 
@@ -401,15 +400,6 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
                                 })}
                             </select>
                         </div>
-                    </div>
-                    <div className="form-group">
-                        <select className="form-control" id="statusSelect" value={this.timesort} onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
-                            this.timesort = event.target.value;
-                            this.handleOnChange()
-                        }}>
-                            <option value={0}>Nyeste</option>
-                            <option value={1}>Eldste</option>
-                        </select>
                     </div>
                 </div>
                 <ul className="list-group issue-small-list">
@@ -438,14 +428,6 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
         issueCategoryService.getCategories()
             .then(res => this.categories = res)
             .catch(error => console.error("Error: ", error))
-    }
-
-    handleOnChange () {
-        if(this.timesort == 0) {
-            this.props.issues.sort((a, b) => a.createdAt < b.createdAt)
-        }else if (this.timesort == 1) {
-            this.props.issues.sort((a, b) => a.createdAt > b.createdAt)
-        }
     }
 }
 
