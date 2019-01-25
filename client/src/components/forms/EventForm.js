@@ -191,7 +191,7 @@ export default class EventForm extends Component {
   }
 
   save() {
-    if (!this.form.checkValidity()) {
+    if (!this.form.checkValidity() || !this.lat || !this.lng) {
       console.log('TRYKKET PÅ');
       return;
     }
@@ -259,7 +259,7 @@ export default class EventForm extends Component {
       if (reg && reg.includes('Norge')) {
         console.log(this.adress);
         let tmp = this.adress.toString().split(/[\s,]+/);
-        console.log(tmp);
+        console.log(tmp ? tmp : 'not a valid mun');
         this.matchMun(tmp);
         // console.log('Norway');
       } else {
