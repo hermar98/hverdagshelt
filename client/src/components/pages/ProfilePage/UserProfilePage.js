@@ -141,7 +141,6 @@ export class UserProfilePage extends Component {
                 </ul>
               </div>
             </div>
-            <br />
             <div className="change-password-profile">
               <ChangePasswordForm />
             </div>
