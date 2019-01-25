@@ -1,0 +1,25 @@
+.TOSMain{
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 2%;
+    margin-bottom: 5%;
+}
+
+.TOSH1{
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: underline rgb(33,202,220);
+    font-size: 60px;
+}
+
+.TOSH2{
+    text-transform: uppercase;
+    text-decoration: underline rgb(33,202,220);
+    font-size:40px;
+
+}
+
+.TOSp{
+    text-align: justify;
+    font-size: 18px;
+}

@@ -1,12 +1,49 @@
 
 body {
-    background-color: #f7f7f7;
-    font-family: Helvetica;
+    padding-top: 50px;
 }
 
+@media (min-width: 1100px){
+    .profile-page-container {
+        display: grid;
+        grid-template-columns: 48% 4% 48%;
+    }
+    .slim-profile {
+        padding: 0 15% 0 15%;
+    }
+}
 
-.page-container {
-    margin: 2% 5% 10% 5%;
+@media (min-width: 611px) {
+    .profile-left {
+        grid-column: 1;
+        display: grid;
+        grid-template-columns: 48% 4% 48%;
+    }
+    .issue-container {margin: 2% 12% 25% 12%}
+    .profile-image {
+        border: gray solid 1px;
+        border-radius: 50% !important;
+        width: 65px !important;
+        height: auto;
+        margin: 1vh 1vh 1vh 1vh;
+    }
+    .page-container {
+        margin: 2% 4% 20% 4%;
+    }
+}
+
+@media (max-width: 610px){
+    .issue-container {margin: 2% 2% 25% 2%}
+    .profile-image {
+        border: gray solid 1px;
+        border-radius: 50% !important;
+        width: 65px !important;
+        height: auto;
+        margin: 1vh 1vh 1vh 1vh;
+    }
+    .page-container {
+        margin: 2% 0 20% 0;
+    }
 }
 
 .status-blocked {background-color: #ffa191}
@@ -22,21 +59,28 @@ body {
 }
 
 .issue-overview-small-item {
-    margin-bottom: 5px;
+    padding: 0 0 0 0;
 }
 
 div.status > h4 {
-    font-size: 3vh;
+    font-size: 110%;
 }
-.issue-container {margin: 2% 12% 10% 12%}
 .issue-image:hover {
     background-color: #b9bbbe;
+}
+
+.issue-card {
+    border: none !important
+}
+
+.issue-map-container {
+    height: auto;
+    width: 30%;
 }
 
 .issue-image-normal {
     width: 21vw;
     height: auto;
-    min-height: 12.5vw;
 }
 
 .issue-image-normal-container {
@@ -45,7 +89,7 @@ div.status > h4 {
 
 .issue-image {
     width: auto;
-    height: 15vw;
+    height: 30vh;
     padding: 1% 1% 1% 1%;
 }
 
@@ -57,6 +101,10 @@ div.status > h4 {
 
 .navlink-large {
     font-size: 140%;
+}
+
+.issue-border {
+    border-bottom: solid lightgrey 1px;
 }
 
 .submitter-info {
@@ -82,17 +130,9 @@ div.status > h4 {
     padding: 1% 1% 1% 1%;
 }
 
-.profile-image {
-    border: gray solid 1px;
-    border-radius: 50%;
-    height: 9vh;
-    width: 9vh;
-    margin: 1vh 1vh 1vh 1vh;
-}
-
 .issue-large {
-    margin-bottom: 10vh;
-    margin-top: 5%
+    margin-bottom: 8%;
+    border: none !important
 }
 
 .feedback-title {
@@ -103,7 +143,7 @@ div.status > h4 {
 
 .hover-button:hover {
     color: black;
-    background-color: white;
+    background-color: lightskyblue;
 }
 
 .image-button:hover {
@@ -112,14 +152,20 @@ div.status > h4 {
 
 .image-button {
     background-color: white;
-    height: 8vh;
+    height: 50px;
+    width: 50px;
     border-radius: 0;
 }
 
 .image-button img {
-    width: 4vh;
-    height: 4vh;
+    width: 110%;
+    height: 75%;
 }
+
+/*.issue-small-list {
+    max-height: 360px;
+    overflow: auto;
+}*/
 
 .sort-box {
     padding: 1% 1% 0% 1%;
@@ -130,7 +176,7 @@ div.status > h4 {
 .hover-button {
     border: #4e555b 1px solid;
     background-color: #3d3d3d;
-    height: 90%;
+    color:white;
 }
 
 div.feedback-button {
@@ -193,8 +239,8 @@ div.feedback-button div {
 }
 
 .status-image {
-    width: 4.5vh;
-    height: 4.5vh;
+    width: 30px;
+    height: 30px;
 }
 
 .issue-normal {
@@ -220,6 +266,11 @@ div.feedback-button div {
     font-size: 75%;
 }
 
+.issue-normal-item {
+    padding: 0 0 0 0;
+    margin-bottom: 2%;
+}
+
 .status-selection {
     position: absolute;
     border: solid 1px lightgray;
@@ -229,7 +280,7 @@ div.feedback-button div {
     display: none
 }
 
-#feedback-text {
+.feedback-text {
     margin: 3% 0 2% 0;
 }
 
@@ -237,7 +288,7 @@ div.feedback-button div {
     border-bottom: lightgray solid 1px;
 }
 
-.btn:focus, .btn:active {
+.hover-button:focus, .hover-button:active {
     outline: none !important;
     background-color: #d8d8d8;
     box-shadow: none;
@@ -255,11 +306,26 @@ div.feedback-button div {
 
 #issue-large-text {
     font-size: 110%;
-    margin: 2% 0 2% 0;
+    margin: 2% 0 0 0;
 }
 
 .normal-list-item {
     padding: 0 0 0 0;
+}
+
+#edit-input-feedback {
+    margin: 3% 0 2% 0
+}
+
+#edit-button-feedback:hover {
+    color: black;
+    background-color: white;
+}
+
+#edit-button-feedback {
+    color: white;
+    background-color: #3d3d3d;
+    border: solid 1px black;
 }
 
 .view-text {
@@ -268,7 +334,7 @@ div.feedback-button div {
 
 .status-label {
     font-size: 110%;
-    opacity: 0.6;
+    color: #4e555b;
 }
 .status-box {
     border-bottom: lightgray 2px solid;
@@ -279,12 +345,26 @@ div.feedback-button div {
     margin-bottom: 1.5vh;
 }
 
+.issue-small-item {
+    padding: 1% 2% 0 2%;
+    margin-bottom: 2%;
+}
+
 .issue-large-card {
-    padding: 6vh 6vh 6vh 6vh
+    width: 50%;
+    padding: 2% 2% 2% 2% !important;
+    border: none !important
 }
 
 .issue-images {
     margin-top: 3%;
+    padding: 1% 1% 1% 1%;
+    background-color: whitesmoke;
+}
+
+.cat-name {
+    font-size: 105%;
+    color: #686868;
 }
 
 .feedback {
@@ -296,7 +376,7 @@ div.feedback-button div {
     padding: 2% 2% 1% 2%;
 }
 
-#date-large {
+.date-large {
     margin-top: 1.5%;
 }
 
@@ -330,40 +410,39 @@ div.feedback-button div {
 Profile-page
  */
 
-.profile-page-container {
-    display: grid;
-    grid-template-columns: 48% 4% 48%;
-}
-
 .profile-issues {
     grid-column: 3;
-}
-
-.profile-left {
-    grid-column: 1;
-    display: grid;
-    grid-template-columns: 50% 50%;
 }
 
 .profile-info {
     grid-column: 1;
     grid-row: 1;
-    margin-right: 5%;
+    margin-bottom: 5%;
 }
 
 .profile-info card {
     border: none
 }
 
+.profile-info2 {
+    grid-column: 1/4;
+    grid-row: 1;
+}
+
 .municipal {
     padding: 4% 4% 4% 4%;
-    grid-column: 2;
+    grid-column: 3;
 
 }
 
+.municipal-2 {
+    border: none !important;
+}
+
 .change-password-profile {
-    grid-column: 1 / 3;
+    grid-column: 1 / 4;
     margin-top: 1%;
+    margin-bottom: 5%;
     padding-top: 3%;
     background-color: white;
     border: solid lightgrey 1px;
@@ -375,14 +454,13 @@ Profile-page
     overflow-y: scroll;
 }
 
+.mun-input {
+    width: 70% !important;
+}
+
 #municipal-title {
     align-self: center;
     justify-self: center;
-}
-
-#municipalInput {
-    align-self: center;
-    height: 8vh;
 }
 
 .add-municipal-field {
@@ -400,7 +478,7 @@ Profile-page
 }
 
 .my-profile {
-    margin: 2% 0 1% 0
+    margin: 3% 0 1% 0
 }
 
 /*
@@ -411,8 +489,78 @@ random
     margin-top: 7%;
     margin-bottom: 15%;
 }
+
+#t-head:hover {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+    cursor: pointer;
+}
+
 .notfound-container{
     margin: 2% 12% 2% 12%;
     text-align:center;
+}
+.autocomplete-items {
+    border: solid lightgrey 1px;
+}
 
+/*
+Event
+ */
+#event-image-small {
+    margin-left: auto;
+    height: 100px;
+    width: 100px;
+}
+
+/*Image upload*/
+.image-upload-container {
+    position:relative;
+    display: grid;
+    margin-bottom: 15px;
+    padding-top: 15px;
+    padding-bottom:15px;
+    text-align:center;
+    font-size: 18px;
+    font-weight:bold;
+    width:100%;
+    z-index:0;
+    grid-template-rows: auto auto auto;
+}
+.image-upload-text {
+    /*background-color: #1e7e34;*/
+    grid-row: 1;
+}
+.image-upload-list{
+    position:relative;
+    margin-left: 0  !important;
+    grid-row: 2;
+    height:300px;
+    text-align:center;
+    overflow-y:auto;
+}
+.image-upload-images-text {
+    position: absolute;
+    align-self: center;
+    color: deeppink;
+    z-index:5;
+}
+.image-upload-images {
+    width:100%;
+    z-index:6;
+    display:inline-block;
+}
+.image-upload-image {
+    position: relative;
+    max-height:300px;
+}
+.image-upload-form {
+    width: 50%;
+    margin:auto;
+}
+.image-upload-button {
+    margin: auto;
+    grid-row:3;
 }

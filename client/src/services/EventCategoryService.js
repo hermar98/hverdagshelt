@@ -1,34 +1,48 @@
 //@flow
 import {EventCategory} from "../models/EventCategory";
 import service from "./Service";
+import {tokenManager} from '../tokenManager.js';
 
 class EventCategoryService {
   getCategories(): Promise<EventCategory[]> {
-    let token = localStorage.getItem('token');
-    if (token) token = JSON.parse(token).jwt;
-    return service.get('/secure/eventCat', {
-      headers: {'x-access-token': token}
-    });
+    return service.get('/eventCat');
   }
 
   getCategory(categoryId: number): Promise<EventCategory> {
-    let token = localStorage.getItem('token');
-    if (token) token = JSON.parse(token).jwt;
-    return service.get('/secure/eventCat/' + categoryId, {
-      headers: {'x-access-token': token}
-    });
+    return service.get('/eventCat/' + categoryId);
   }
 
   updateCategory(category: EventCategory): Promise<void> {
-    return service.put('/secure/eventCat/' + category.categoryId, category);
+    let token = tokenManager.getJwt();
+    tokenManager.getNewToken()
+        .then(newToken => tokenManager.updateToken(newToken))
+        .catch((error: Error) => console.log(error));
+
+    return service.put('/eventCat/' + category.categoryId, category, {
+        headers: {'x-access-token': token}
+    });
   }
 
   addCategory(category: EventCategory): Promise<number> {
-    return service.post('/secure/eventCat', category);
+      let token = tokenManager.getJwt();
+      tokenManager.getNewToken()
+          .then(newToken => tokenManager.updateToken(newToken))
+          .catch((error: Error) => console.log(error));
+
+      return service.post('/eventCat', category, {
+          headers: {'x-access-token': token}
+      });
   }
 
   deleteCategory(categoryId: number): Promise<void> {
-    return service.delete('/secure/eventCat/' + categoryId);
+      let token = tokenManager.getJwt();
+      tokenManager.getNewToken()
+          .then(newToken => tokenManager.updateToken(newToken))
+          .catch((error: Error) => console.log(error));
+
+      return service.delete('/eventCat/' + categoryId, {
+          headers: {'x-access-token': token}
+      });
   }
 }
 

@@ -8,6 +8,8 @@ import { userService } from '../../../services/UserService';
 import {tokenManager} from '../../../tokenManager.js'
 import { municipalService } from '../../../services/MunicipalService';
 import { history } from '../../../index';
+import {MunEmployeeProfilePage} from "./MunEmployeeProfilePage";
+import {ContractorProfilePage} from "./ContractorProfilePage";
 
 
 export default class ProfilePage extends Component {
@@ -17,43 +19,33 @@ export default class ProfilePage extends Component {
     if (this.user) {
       if (this.user.rank === 1) {
         return (
-          <div>
-            <UserProfilePage/>
-          </div>
+          <UserProfilePage/>
         );
       } else if (this.user.rank === 2) {
         return (
-          <div></div>
+          <ContractorProfilePage/>
         );
       } else if (this.user.rank === 3) {
         return (
-          <div></div>
+          <MunEmployeeProfilePage/>
         );
       } else if (this.user.rank === 4) {
         return (
-          <div>
             <AdminProfilePage/>
-          </div>
         );
       }
     }
-    return(
-      <div>
-        {this.logout()}
-      </div>
-    );
+      return (
+        <div>
+        </div>
+      );
   }
 
   mounted() {
     userService
-      .getToken()
-      .then(() => {
-        userService
-          .getUser(tokenManager.getUserId())
-          .then(user => {
-            this.user = user;
-          })
-          .catch((error: Error) => console.log(error));
+      .getCurrentUser()
+      .then(user => {
+        this.user = user;
       })
       .catch((error: Error) => console.log(error));
   }

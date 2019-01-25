@@ -6,10 +6,10 @@ import { autocomplete, glob } from '../../../public/autocomplete';
 import { municipalService } from '../../services/MunicipalService';
 import { history } from '../../index';
 import { Municipal } from '../../models/Municipal';
-import { NewMenu } from '../../components/menu/NewMenu';
-import { tokenManager } from "../../tokenManager";
-import { Card} from "../../widgets";
-
+import { tokenManager } from '../../tokenManager';
+import { Button } from '../../widgets';
+import { Card } from '../../widgets';
+import { HoverButton } from '../issueViews/issueViews';
 
 let municipalObjects;
 //TODO: fix input
@@ -18,27 +18,41 @@ export class ChooseMunicipalPage extends Component {
   render() {
     return (
       <div>
-        <div className="bg-image"></div>
-        <div>
-          <NewMenu />
-        </div>
-
-        <div className="fg">
-          <Card>
-            <div className="fg-grid">
-              <div className="fg-logo">
-                <img src={"../../images/hverdagshelt-logo-lightblue.svg"}width='100px'/><p>HverdagsHelt</p>
-              </div>
-              <div className="fg-input autocomplete">
-                <form autoComplete="off">
-                  <div>
-                    <input id="municipalInput" type="text" name="municipal" placeholder="Velg kommune" />
-                    <button value="" type="button" onClick={this.go}>Gå</button>
+        <div className="bg-image" />
+        <div className="col-lg-12">
+          <div className="fg">
+            <div className="fg-card">
+              <div className="fg-grid">
+                <div className="fg-logo">
+                  <div className="justify-content-center row">
+                    <img className="fg-image" src={'../../images/hverdagshelt-logo-black.svg'} />
                   </div>
-                </form>
+                  <div className="justify-content-center row">HverdagsHelt</div>
+                </div>
+                <div className="fg-input">
+                  <div className="justify-content-center row">
+                    <div className="munInputForm justify-content-center row">
+                      <form id="munInputForm-Form" autoComplete="off">
+                        <input id="munInputForm-Input" type="text" name="municipal" placeholder="Velg kommune" />
+                        <HoverButton id="munInputForm-Button" onclick={this.go} text="Gå" />
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div className="fg-content">
+                  <div className="justify-content-center row">
+                    <h5>Information:</h5>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel suscipit metus, eget condimentum
+                      velit. Vestibulum auctor tincidunt lectus. Integer nec dolor quis ligula convallis fringilla vel
+                      ac urna. Nunc vitae risus sagittis, accumsan augue vel, mattis ipsum. Suspendisse dignissim
+                      hendrerit suscipit.
+                    </p>
+                  </div>
+                </div>
               </div>
+            </div>
           </div>
-          </Card>
         </div>
       </div>
     );
@@ -53,7 +67,7 @@ export class ChooseMunicipalPage extends Component {
       let result = await promise;
       let municipals = result.map(e => e.name);
 
-      autocomplete(document.getElementById('municipalInput'), municipals);
+      autocomplete(document.getElementById('munInputForm-Input'), municipals);
     }
 
     f();

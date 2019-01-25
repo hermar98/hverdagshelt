@@ -1,12 +1,12 @@
 // @flow
 
-import ReactDOM from 'react-dom';
 import * as React from 'react';
-import { Component } from 'react-simplified';
-import { User } from '../../models/User.js';
-import { Alert, NavBar, Form, Card, Button } from '../../widgets';
-import { userService } from '../../services/UserService.js';
-import { history } from '../../index.js';
+import {Component} from 'react-simplified';
+import {User} from '../../models/User.js';
+import {Card, Form} from '../../widgets';
+import {userService} from '../../services/UserService.js';
+import {history} from '../../index.js';
+import {HoverButton} from '../issueViews/issueViews';
 
 export default class RegistrationForm extends Component {
   user = new User();
@@ -71,7 +71,7 @@ export default class RegistrationForm extends Component {
           {this.emailRegistered ? <Form.Alert type="danger" text="E-posten er allerede registrert" /> : <div />}
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
-              <Button.Basic onClick={this.save}>Lag bruker</Button.Basic>
+              <HoverButton type="submit" onclick={this.save} text="Lag Bruker" />
             </div>
           </div>
         </form>
@@ -101,7 +101,7 @@ export default class RegistrationForm extends Component {
 
     userService
       .addUser(this.user)
-      .then(() => history.push('/loggInn'))
+      .then(() => history.push('/aktiver/aktiverBruker'))
       .catch((error: Error) => {
         console.log(error);
         this.emailRegistered = true;

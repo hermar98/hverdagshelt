@@ -1,17 +1,16 @@
 import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
-import {Redirect, NavLink} from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 import { Feedback} from '../../models/Feedback';
-import { NewMenu } from '../menu/NewMenu';
-import {tokenManager} from "../../tokenManager";
 import {User} from "../../models/User";
 import {Issue} from "../../models/Issue";
 import {userService} from "../../services/UserService";
 import {issueService} from "../../services/IssueService";
 import {issueCategoryService} from "../../services/IssueCategoryService";
 import {feedbackService} from "../../services/FeedbackService";
+import {municipalService} from "../../services/MunicipalService";
+import {SimpleMap} from "../map/map";
 
-let sharedIssues = sharedComponentData({issues: []})
 let sharedFeedback = sharedComponentData({feedback: []})
 
 let formatDate = function (date: Date) {
@@ -35,6 +34,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
         this.statusSelect = React.createRef()
         this.addFeedbackButton = React.createRef()
         this.addFeedbackForm = React.createRef()
+        this.bodyRef = React.createRef()
         this.state = {
             clickedStatus: false,
             clickedDelete: false
@@ -44,6 +44,13 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     issue = new Issue();
     feedbackContent: string = '';
     categoryName: string = '';
+    munName: string = '';
+    issueText: string = '';
+    user: User = new User();
+    rank: number = -1;
+
+    lat: number = 0
+    long: number = 0
 
     render() {
         if(!this.state.clickedStatus && this.statusSelect.current != null) {
@@ -61,37 +68,47 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
 
         return (
             <div>
-                <NewMenu/>
                 <div className="issue-container">
+                    <Status status={this.issue.statusId} id={this.issue.issueId}/>
                     <div className="issue-large">
-                        <Status status={this.issue.statusId} id={this.issue.issueId}/>
-                        <div className="card">
-                            <div className="card-body issue-large-card">
-                                <div className="d-flex flex-row">
-                                    <p id="date-large" className="date">{formatDate(this.issue.createdAt)}</p>
-                                    <div className="options">
-                                        <ImageButton source="../../images/cog.png" onclick="Edited" />
-                                        <ImageButton source="../../images/trashcan.png" onclick={() => this.onDelete()} />
+                        <div className="">
+                            <div className="card d-flex flex-row">
+                                <div className="card-body issue-large-card">
+                                    <div className="d-flex flex-row">
+                                        <p className="date date-large">{formatDate(this.issue.createdAt)}</p>
+                                        <ButtonGroup onclickC={this.onEdit} onclickT={this.onDelete} id={this.issue.userId} />
+                                        <StatusButton status={this.issue.statusId} onclick={() => {
+                                            let rank = 0
+                                            userService.getCurrentUser()
+                                                .then(user => {
+                                                    rank = user.rank
+                                                    if(rank == 3) {
+                                                        this.setState({
+                                                            clickedStatus: !this.state.clickedStatus
+                                                        })
+                                                    }
+                                                })
+                                                .catch(error => console.error("Error: ", error))
+                                        }}/>
                                     </div>
-                                    <StatusButton status={this.issue.statusId} onclick={() => {
-                                        this.setState({
-                                            clickedStatus: !this.state.clickedStatus
-                                        })
-                                    }}/>
-                                </div>
-                                <div className="d-flex flex-row justify-content-end">
-                                    <div className="status-selection" ref={this.statusSelect}>
-                                        <StatusButton status={1} onclick={() => this.onClick(1)} />
-                                        <StatusButton status={2} onclick={() => this.onClick(2)} />
-                                        <StatusButton status={3} onclick={() => this.onClick(3)} />
+                                    <div className="d-flex flex-row justify-content-end">
+                                        <div className="status-selection" ref={this.statusSelect}>
+                                            <StatusButton status={1} onclick={() => this.onClick(1)} />
+                                            <StatusButton status={2} onclick={() => this.onClick(2)} />
+                                            <StatusButton status={3} onclick={() => this.onClick(3)} />
+                                        </div>
+                                    </div>
+                                    <p className="date date-large">{this.munName}</p>
+                                    <h5>{this.categoryName}</h5>
+                                    <div className="card-text" ref={this.bodyRef}>
+                                        <p id="issue-large-text">{this.issue.content}</p>
                                     </div>
                                 </div>
-                                <h5>{this.categoryName}</h5>
-                                <div className="card-text">
-                                    <p id="issue-large-text">{this.issue.content}</p>
+                                <div className="issue-map-container">
+                                    <SimpleMap lat={this.lat} lng={this.long}/>
                                 </div>
                             </div>
-                            <div className="card-footer issue-images">
+                            <div className="issue-images">
                                 <h4>&nbsp;Bilder</h4>
                                 <div className="flex-container">
                                         <img className="issue-image" src={this.issue.image}/>
@@ -101,18 +118,10 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                     </div>
                     <h4 className="feedback-title">Oppdateringer</h4>
                     {sharedFeedback.feedback.map(feedback => {
-                        return <IssueFeedback feedback={feedback}/>
+                        return <IssueFeedback feedback={feedback} userId={this.issue.userId}/>
                     })}
                     <div className="feedback-button">
-                        <div>
-                            <button ref={this.addFeedbackButton} className="btn image-button" type="button" onClick={() => {
-                                this.addFeedbackButton.current.classList.add('show')
-                                this.addFeedbackForm.current.classList.remove('show')
-                                window.scrollTo(0, document.body.scrollHeight);
-                            }}>
-                                <img id="image-button-image" src="../../images/add.png" />
-                            </button>
-                        </div>
+                        { this.renderAddButton() }
                     </div>
                     <div ref={this.addFeedbackForm} className="feedback-container show">
                         <div className="form-group">
@@ -129,13 +138,19 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
 
     mounted () {
         window.scrollTo(0, 0);
-        console.log(this.props.match.params.issueId)
         issueService.getIssue(this.props.match.params.issueId)
             .then(issue => {
                 this.issue = issue;
+                this.lat = this.issue.latitude
+                this.long = this.issue.longitude
                 issueCategoryService.getCategory(this.issue.categoryId)
                     .then(category => {
                         this.categoryName = category.name
+                    })
+                    .catch(error => console.error("Error: ", error))
+                municipalService.getMunicipal(this.issue.munId)
+                    .then(mun => {
+                        this.munName = mun.name
                     })
                     .catch(error => console.error("Error: ", error))
             })
@@ -145,6 +160,34 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                 sharedFeedback.feedback = data;
             })
             .catch(error => console.error("Error: ", error))
+        userService.getCurrentUser()
+            .then(user => {
+                this.user = user;
+                this.rank = user.rank
+            })
+            .catch(error => console.error("Error: ", error))
+        userService.getCurrentUser()
+            .then(user => this.user = user)
+            .catch(error => console.error("Error: ", error))
+    }
+
+    renderAddButton(){
+        if (this.rank == 3 || this.user.userId == this.issue.userId) {
+            return (
+                <div>
+                    <button ref={this.addFeedbackButton} className="btn" type="button"
+                            onClick={() => {
+                                this.addFeedbackButton.current.classList.add('show')
+                                this.addFeedbackForm.current.classList.remove('show')
+                                window.scrollBy(0, 250);
+                            }}>
+                        <img id="add-image-button" src="../../images/add.png"/>
+                    </button>
+                </div>
+            )
+        }else{
+            return null
+        }
     }
 
     onClick (val: number) {
@@ -153,7 +196,6 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
             .then(res => {
                 issueService.getIssue(this.issue.issueId)
                     .then(issue => {
-                        console.log("hadad")
                         this.issue = issue;
                         this.setState({clickedStatus: !this.state.clickedStatus})
                     })
@@ -167,7 +209,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
         feedback.name = '';
         feedback.content = this.feedbackContent;
         feedback.issueId = this.issue.issueId;
-        feedback.userId = tokenManager.getUserId()
+        feedback.userId = this.user.userId;
         feedbackService.addFeedback(feedback)
             .then(res => {
                 this.addFeedbackButton.current.classList.remove('show')
@@ -180,10 +222,39 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                 this.feedbackContent = '';
             })
             .catch(error => console.error("Error: ", error))
+
+    }
+
+    onEdit() {
+        this.issueText = this.issue.content
+        let inp = document.createElement('input')
+        let btn = document.createElement('button')
+        let text = document.getElementById('issue-large-text')
+        this.bodyRef.current.removeChild(text)
+        inp.id = 'edit-input-feedback'
+        inp.value = this.issueText
+        inp.onchange = (event) => (this.issueText = event.target.value)
+        inp.classList.add('form-control')
+        btn.id = 'edit-button-feedback'
+        btn.onclick = () => this.onEditComplete(inp, btn, text)
+        btn.classList.add('btn')
+        btn.innerHTML = "Endre"
+        this.bodyRef.current.append(inp)
+        this.bodyRef.current.append(btn)
+    }
+
+    onEditComplete (inp, btn, text) {
+        this.issue.content = this.issueText
+        issueService.updateIssue(this.issue)
+            .then()
+            .catch(error => console.error("Error: ", error))
+        this.bodyRef.current.removeChild(inp)
+        this.bodyRef.current.removeChild(btn)
+        this.bodyRef.current.append(text)
     }
 
     onDelete() {
-        if(confirm("Are you sure?")) {
+        if (confirm("Are you sure?")) {
             issueService.deleteIssue(this.issue.issueId)
                 .then(res => {
                     this.setState({
@@ -193,7 +264,6 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                 .catch(error => console.error("Error: ", error))
         }
     }
-
 }
 
 /*
@@ -223,7 +293,7 @@ export class IssueNormal extends Component<{issue: Issue, munId: number}>{
                             </h5>
                         </div>
                     </div>
-                    <p>Status:&nbsp;&nbsp;</p>
+                    <p className="status-label">Status:&nbsp;&nbsp;</p>
                     <StatusImage status={this.props.issue.statusId} />
                 </div>
             </div>
@@ -245,6 +315,7 @@ Small view of an issue that displays only the title and the status
 export class IssueSmall extends Component<{issue: Issue, munId: number}> {
 
     categoryName: string = '';
+    munName: string = '';
 
     render() {
         return (
@@ -255,12 +326,15 @@ export class IssueSmall extends Component<{issue: Issue, munId: number}> {
                 <div>
                     <div className="d-flex flex-row issue-flex justify-content-between">
                         <div className="view-text">
-                            <p className="date">{formatDate(this.props.issue.createdAt)}</p>
                             <h5>
                                 {this.categoryName}
                             </h5>
+                            <p className="cat-name">
+                                {this.munName + " Kommune"}
+                            </p>
+                            <p className="date">{formatDate(this.props.issue.createdAt)}</p>
                         </div>
-                        <p>Status:&nbsp;&nbsp;</p>
+                        <p className="status-label">Status:&nbsp;&nbsp;</p>
                         <StatusImage status={this.props.issue.statusId} />
                     </div>
                 </div>
@@ -274,6 +348,11 @@ export class IssueSmall extends Component<{issue: Issue, munId: number}> {
                 this.categoryName = category.name
             })
             .catch(error => console.error("Error: ", error))
+        municipalService.getMunicipal(this.props.issue.munId)
+            .then(mun => {
+                this.munName = mun.name
+            })
+            .catch(error => console.error("Error: ", error))
     }
 }
 
@@ -282,7 +361,84 @@ A list of issues in small view
  */
 export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[]}> {
 
-    status: number = 1;
+    status: number = 0;
+    timesort: number = 0;
+    category: number = 0;
+    categories: [] = [];
+
+    render () {
+      const hasIssues = this.props.issues.length != 0;
+        return (
+            <div>
+                <div className="d-flex flex-row sort-box justify-content-between">
+                    <div className="d-flex flex-row justify-content-start">
+                        <div id="sort-push" className="form-group">
+                            <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
+                                <option value={0}>Alle</option>
+                                <option value={1}>Ikke behandlet</option>
+                                <option value={2}>Under behandling</option>
+                                <option value={3}>Behandlet</option>
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <select className="form-control" value={this.category} onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.category = event.target.value)}>
+                                <option value={0}>Alle</option>
+                                {this.categories.map(cat => {
+                                    return <option value={cat.categoryId}>{cat.name}</option>
+                                })}
+                            </select>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <select className="form-control" id="statusSelect" value={this.timesort} onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
+                            this.timesort = event.target.value;
+                            this.handleOnChange()
+                        }}>
+                            <option value={0}>Nyeste</option>
+                            <option value={1}>Eldste</option>
+                        </select>
+                    </div>
+                </div>
+                <ul className="list-group issue-small-list">
+                    {hasIssues ? (this.props.issues.map((issue,index) => {
+                        if ((this.status == issue.statusId || this.status == 0) && (this.category == issue.categoryId || this.category == 0)) {
+                            return(
+                                <li key={index} className="list-group-item issue-small-item">
+                                    <IssueSmall issue={issue} munId={this.props.munId}/>
+                                </li>
+                            )
+                        }
+                    }) ) : (
+                      <li key={0}>
+                        <p id="noIssues">Denne kommunen har ingen registrerte saker...</p> </li>
+                    )}
+                </ul>
+            </div>
+        )
+    }
+
+    mounted (){
+        window.scrollTo(0, 0);
+        issueCategoryService.getCategories()
+            .then(res => this.categories = res)
+            .catch(error => console.error("Error: ", error))
+    }
+
+    handleOnChange () {
+        if(this.timesort == 0) {
+            this.props.issues.sort((a, b) => a.createdAt < b.createdAt)
+        }else if (this.timesort == 1) {
+            this.props.issues.sort((a, b) => a.createdAt > b.createdAt)
+        }
+    }
+}
+
+/*
+A list of issues in normal view
+ */
+export class IssueOverviewNormal extends Component<{munId: number, issues: Issue[]}> {
+
+    status: number = 0;
     timesort: number = 0;
     category: number = 0;
     categories: [] = []
@@ -323,8 +479,8 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
                     {this.props.issues.map((issue,index) => {
                         if ((this.status == issue.statusId || this.status == 0) && (this.category == issue.categoryId || this.category == 0)) {
                             return(
-                                <li key={index} className="list-group-item">
-                                    <IssueSmall issue={issue} munId={this.props.munId}/>
+                                <li key={index} className="issue-normal-item list-group-item">
+                                    <IssueNormal issue={issue} munId={this.props.munId}/>
                                 </li>
                             )
                         }
@@ -351,76 +507,32 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
 }
 
 /*
-A list of issues in normal view
- */
-export class IssueOverviewNormal extends Component<{munId: number, issues: Issue[]}> {
-
-    status: number = 0;
-    timesort: number = 0;
-
-    render () {
-        return (
-            <div className="issue-overview-normal issue-container">
-                <div className="d-flex flex-row sort-box justify-content-between">
-                    <div className="form-group">
-                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
-                            <option value={0}>Alle</option>
-                            <option value={1}>Ikke behandlet</option>
-                            <option value={2}>Under behandling</option>
-                            <option value={3}>Behandlet</option>
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
-                            this.timesort = event.target.value;
-                            this.onChange();
-                        }}>
-                            <option value={0}>Nyeste</option>
-                            <option value={1}>Eldste</option>
-                        </select>
-                    </div>
-                </div>
-                <ul className="list-group">
-                    {this.props.issues.map(issue => {
-                        if (this.status == issue.statusId || this.status == 0) {
-                            return (
-                                <li className="list-group-item  issue-item normal-list-item">
-                                    <IssueNormal issue={issue} munId={this.props.munId}/>
-                                </li>
-                            )
-                        }
-                    })}
-                </ul>
-            </div>
-        )
-    }
-
-    onChange () {
-        console.log("sort")
-    }
-}
-
-/*
 Widget for displaying a single feedback-card with name, date, profile-picture and content
  */
-export class IssueFeedback extends Component<{feedback: Feedback}> {
+export class IssueFeedback extends Component<{feedback: Feedback, userId: number}> {
+
+    constructor(props) {
+        super(props)
+        this.bodyRef = React.createRef()
+    }
 
     user = new User()
+    feedText: string = ''
+    source: string  = ''
 
     render() {
         return (
             <div className="feedback" feedback={this.props.feedback}>
                 <div className="card feedback-card">
-                    <div className="card-body">
+                    <div id={"feedback-body " + this.props.feedback.feedbackId} className="card-body" ref={this.bodyRef}>
                         <div className="d-flex flex-row submitter">
                                 <div className="p-2">
-                                    <img className="card-img profile-image" src={this.user.profilePicture}/>
+                                    <img className="card-img profile-image" src={this.source}/>
                                 </div>
                                 <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{formatDate(this.props.feedback.createdAt)}</p></div>
-                            <ImageButton source="../../images/cog.png" onclick="Edited" />
-                            <ImageButton source="../../images/trashcan.png" onclick={() => this.onDelete()}/>
+                            <ButtonGroupFeedback onclickC={this.onEdit} onclickT={this.onDelete} id={this.props.feedback.userId} />
                         </div>
-                        <div id="feedback-text" className="card-text">
+                        <div className="card-text feedback-text" id={"feedback-text " + this.props.feedback.feedbackId}>
                             {this.props.feedback.content}
                         </div>
                     </div>
@@ -433,18 +545,61 @@ export class IssueFeedback extends Component<{feedback: Feedback}> {
         userService.getUser(this.props.feedback.userId)
             .then(user => {
                 this.user = user
-                console.log(JSON.stringify(this.user))
+                switch(user.rank){
+                    case 1: this.source = "../../images/private.png"; break;
+                    case 2: this.source = "../../images/contractor.png"; break;
+                    case 3: this.source = "../../images/worker.png"; break;
+                    default: break;
+                }
             })
             .catch(error => console.error("Error", error))
+        this.feedText = this.props.feedback.content
+    }
+
+    onEdit() {
+        if(this.user.userId == this.props.feedback.userId) {
+            let inp = document.createElement('input')
+            let btn = document.createElement('button')
+            let text = document.getElementById('feedback-text ' + this.props.feedback.feedbackId)
+            let parent = document.getElementById('feedback-body ' + this.props.feedback.feedbackId)
+            parent.removeChild(text)
+            inp.id = 'edit-input-feedback'
+            inp.value = this.feedText
+            inp.onchange = (event) => (this.feedText = event.target.value)
+            inp.classList.add('form-control')
+            btn.id = 'edit-button-feedback'
+            btn.onclick = () => this.onEditComplete(inp, btn, text, parent)
+            btn.classList.add('btn')
+            btn.innerHTML = "Endre"
+            parent.append(inp)
+            parent.append(btn)
+        }
+    }
+
+    onEditComplete (inp, btn, text, parent) {
+        this.props.feedback.content = this.feedText
+        feedbackService.updateFeedback(this.props.feedback)
+            .then()
+            .catch(error => console.error("Error: ", error))
+        parent.removeChild(inp)
+        parent.removeChild(btn)
+        parent.append(text)
     }
 
     onDelete() {
-        if(confirm("Are you sure?")) {
-            feedbackService.deleteFeedback(this.props.feedback.feedbackId)
-                .then(res => {
-                    sharedFeedback.feedback.splice(sharedFeedback.feedback.indexOf(this.props.feedback), 1)
-                })
-                .catch(error => console.error("Error: ", error))
+        let rank = 0
+        userService.getUser(this.props.userId)
+            .then(user => rank = user.rank)
+            .catch(error => console.error("Error: ", error))
+
+        if(this.user.userId == this.props.feedback.userId) {
+            if (confirm("Are you sure?")) {
+                feedbackService.deleteFeedback(this.props.feedback.feedbackId)
+                    .then(res => {
+                        sharedFeedback.feedback.splice(sharedFeedback.feedback.indexOf(this.props.feedback), 1)
+                    })
+                    .catch(error => console.error("Error: ", error))
+            }
         }
     }
 }
@@ -543,12 +698,72 @@ export class ImageButton extends Component<{source: string, onclick: function}> 
     }
 }
 
-export class HoverButton extends Component<{onclick: function, text: string}> {
+export class HoverButton extends Component<{id?: string, type?:string, onclick: function, text: string}> {
     render () {
         return (
-            <button className="btn hover-button" type="button" onClick={this.props.onclick} >
+                <button id={this.props.id ? this.props.id:''} type={this.props.type ? this.props.type:'button'} className="btn hover-button" onClick={this.props.onclick} >
                 {this.props.text}
             </button>
         )
+    }
+}
+
+export class ButtonGroup extends Component<{onclickC: function, onclickT: function, id: number}> {
+
+    rank: number = -1
+    user: User = new User()
+
+    render() {
+        if(this.rank == 3) {
+            return (
+                <div className="options">
+                    <ImageButton source="../../images/cog.png" onclick={this.props.onclickC}/>
+                    <ImageButton source="../../images/trashcan.png" onclick={this.props.onclickT}/>
+                </div>
+            )
+        }else if(this.user.userId == this.props.id){
+            return (
+                <div className="options">
+                    <ImageButton source="../../images/cog.png" onclick={this.props.onclickC}/>
+                </div>
+            )
+        }else{
+            return null
+        }
+    }
+
+    mounted () {
+        userService.getCurrentUser()
+            .then(user => {
+                this.user = user
+                this.rank = user.rank
+            })
+            .catch(error => console.error("Error: ", error))
+    }
+}
+
+export class ButtonGroupFeedback extends Component<{onclickC: function, onclickT: function, id: number}> {
+
+    user: User = new User()
+
+    render() {
+        if(this.props.id == this.user.userId) {
+            return (
+                <div className="options">
+                    <ImageButton source="../../images/cog.png" onclick={this.props.onclickC}/>
+                    <ImageButton source="../../images/trashcan.png" onclick={this.props.onclickT}/>
+                </div>
+            )
+        }else{
+            return null
+        }
+    }
+
+    mounted () {
+        userService.getCurrentUser()
+            .then(user => {
+                this.user = user
+            })
+            .catch(error => console.error("Error: ", error))
     }
 }

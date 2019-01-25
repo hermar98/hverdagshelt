@@ -13,14 +13,17 @@ export class Footer extends Component {
           <div className="navbar-footer">
             <ul className="nav navbar-nav navbar-right" id="footer">
               <form className="form-inline">
-                <NavLink to={"/vilkår"}>
-                  <li><a href="/vilkår" id="footerText">Vilkår for bruk</a></li>
+                <NavLink id="footerText" to={"/vilkår"}>
+                  <li>Vilkår for bruk</li>
                 </NavLink>
-                <NavLink to={"#"}>
-                 <li><a id="footerText">Tlf:</a></li>
+                <NavLink id="footerText" to={"#"}>
+                 <li>Tlf</li>
                 </NavLink>
-                <NavLink to={"#"}>
-                  <li><a id="footerText">Epost: hverdagsheltas@gmail.com</a></li>
+                <NavLink id="footerText" to={"#"}>
+                  <li>Epost: hverdagsheltas@gmail.com</li>
+                </NavLink>
+                <NavLink id="footerText" to="/statistikk" >
+                  <li>Statistikk</li>
                 </NavLink>
               </form>
             </ul>
