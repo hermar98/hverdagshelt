@@ -19,7 +19,7 @@ export class StatisticsPage extends Component {
 
   render() {
     return (
-      <div>
+      <div className="mb-5">
         <div className="mt-3" align="center">
           <h1>Statistikk</h1>
           <p>Antall registrerte saker per måned i en kommune</p>

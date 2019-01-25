@@ -32,7 +32,7 @@ export default class Login extends Component {
             />
             <div className="container h-100">
               <div className="row h-100 justify-content-center align-items-center">
-                <HoverButton onclick={this.login} text="Send Epost"/>
+                <HoverButton onclick={this.login} type="submit" text="Send Epost"/>
               </div>
             </div>
             <div className="container h-100">
