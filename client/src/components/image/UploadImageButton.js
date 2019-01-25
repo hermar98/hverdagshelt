@@ -88,34 +88,38 @@ export default class UploadImageButton extends Component {
     let $imagePreview = null;
 
     if (imagePreviewUrl) {
-      $imagePreview = <img src={this.state.imagePreviewUrl} />;
+      $imagePreview = <img src={this.state.imagePreviewUrl} alt="upload image"/>;
     } else {
-      $imagePreview = <div>Velg ett eller flere bilder:</div>;
+      $imagePreview = <div>Velg ett eller flere bilder (valgfritt):</div>;
     }
 
     return (
-      <div className="image-upload-form">
-        <div className="card image-upload-container">
-          <div className="image-upload-text">{$imagePreview}</div>
-          <div className="card image-upload-list">
-            <div className="image-upload-images-text">No Images Uploaded!</div>
-            {Array.from(shared.tFiles).map(function(e, i) {
-              console.log(e);
-              if (e.path) {
-                return (
-                  <div key={i} className="image-upload-images">
-                    <img className="image-upload-image" src={e.path} />
-                  </div>
-                );
-              }
-            })}
+        <div className="justify-content-center row">
+          <div className="col-12 col-md-4 ">
+            <div className="image-upload-form">
+              <div className="card image-upload-container">
+                <div className="image-upload-text">{$imagePreview}</div>
+                <div className="card image-upload-list">
+                  <div className="image-upload-images-text">Ingen bilder opplastet!</div>
+                  {Array.from(shared.tFiles).map(function(e, i) {
+                    console.log(e);
+                    if (e.path) {
+                      return (
+                        <div key={i} className="image-upload-images">
+                          <img className="image-upload-image" src={e.path} alt="Upload image" />
+                        </div>
+                      );
+                    }
+                  })}
+                </div>
+                <div className="image-upload-button">
+                  <input type="file" onChange={e => this.fileSelectedHandler(e)} size="60" />
+                </div>
+                {/*<button type={"btn"} className="btn" onClick={() => this.postImage(1)}/>*/}
+              </div>
+            </div>
           </div>
-          <div className="image-upload-button">
-            <input type="file" onChange={e => this.fileSelectedHandler(e)} size="60" />
-          </div>
-          {/*<button type={"btn"} className="btn" onClick={() => this.postImage(1)}/>*/}
         </div>
-      </div>
     );
   }
   //onSubmit={e => this.postImage(e)}

@@ -47,9 +47,11 @@
     margin-right: 15px;
   }
 
-  .dropdown-menu {
-    position: relative !important;
-    width: 100% !important;
+  .dropdown-item {
+    padding: 0.25rem 0.5rem !important;
+  }
+  .dropdown-header {
+    padding: 0.5rem 0.5rem !important;
   }
   .btnfocus {
     background-color: white !important;
