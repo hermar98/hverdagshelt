@@ -1,6 +1,7 @@
 //@flow
 import {Issue, User, UserIssue} from '../models';
 import Sequelize from "../../flow-typed/npm/sequelize_v4.x.x";
+import {tokenManager} from "../tokenManager";
 
 type Request = express$Request;
 type Response = express$Response;
@@ -49,7 +50,7 @@ app.get('/secure/UsersIssues/:rank/status/:statusId', (req: Request, res: Respon
                 as: 'Issues',
                 // through: { model: UserIssue, as: 'UserIssues' },
                 // attributes: [],
-                required:   true,
+                required:   false,
                 where: {statusId: req.params.statusId}
             }
         ],

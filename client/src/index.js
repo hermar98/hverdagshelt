@@ -73,7 +73,7 @@ if (root)
           <Route exact path="/admin/administerKategorier" component={AdminHandleCategories} />
           <Route exact path="/hendelser/:eventId" component={EventInfo} />
           <Route exact path="/map" component={Map} />
-          <Route exact path="/yoyo" component={ CompanyDelIssuePage} />
+          <Route exact path="/delegerSaker" component={ CompanyDelIssuePage} />
           <Route path="" component={NotFound} />
         </Switch>
         <Footer />

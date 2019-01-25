@@ -17,8 +17,8 @@ let shared = sharedComponentData({chosenIssues: []});
 let formatDate = function (date: Date) {
     if(date != null) {
         let str: string = date;
-        str = str.substring(0, str.length - 8)
-        str = str.replace("T", " KL. ")
+        str = str.substring(0, str.length - 8);
+        str = str.replace("T", " KL. ");
         return str;
     }
 };
@@ -34,8 +34,8 @@ export class CompanyDelIssuePage extends Component<{munId: number}> {
         } else {
             let munId = 10;
             return (
-                <div>
-                    <div>
+                <div style={{marginBottom: "50px"}}>
+                    <div style={{float: "left"}}>
                         <h1>Unassigned Issues</h1>
                         {(sharedIssues.issues).map(function (e, i) {
                             console.log("BOYYYY1 i: " + i);
@@ -49,7 +49,7 @@ export class CompanyDelIssuePage extends Component<{munId: number}> {
                         })
                         }
                     </div>
-                    <div>
+                    <div style={{float:"right"}}>
                         <h1>Assigned Issues</h1>
                         {(sharedComp.companies).map(function (e, i) {
                             console.log("BOYYYY2 i: " + i);
@@ -69,13 +69,16 @@ export class CompanyDelIssuePage extends Component<{munId: number}> {
     }
 
     mounted(){
+        sharedIssues.issues = [];
+        sharedComp.companies = [];
+        shared.chosenIssues = [];
         userIssueService.getAllFreeUserIssues(2).then(e=>{
             e.map(f=>{
                 sharedIssues.issues.push(f);
             });
         }).catch(error => console.error("Error: ", error));
 
-        userIssueService.getAllUserIssues(3, 2).then(e=>{
+        userIssueService.getAllUserIssues(2, 2).then(e=>{
             e.map(f=>{
                 sharedComp.companies.push(f);
             });
@@ -92,47 +95,59 @@ export class CompanyDelIssuePage extends Component<{munId: number}> {
 
 class CompanyCard extends Component<{user: User, munId: number}> {
 
-    johnny: User = null;
-    johnnyIssues: Issue[] = null;
+    curCompany: User = null;
+    compIssues: Issue[] = null;
 
     state = {
-        boi: false,
+        loaded: false,
     };
-
+///////////////////////////////////////////////////////////////////////////////////////////////////
     jason(){
         Array.from(shared.chosenIssues).map(e => {
-            userIssueService.addUserIssue(this.props.user.userId, e.issueId).then(
-                shared.chosenIssues.filter(() => true)
-            );
+            userIssueService.addUserIssue(this.props.user.userId, e.issueId)
         });
 
+        sharedIssues.issues = [];
+        sharedComp.companies = [];
+        shared.chosenIssues = [];
+        userIssueService.getAllFreeUserIssues(2).then(e=>{
+            e.map(f=>{
+                sharedIssues.issues.push(f);
+            });
+        }).catch(error => console.error("Error: ", error));
+
+        userIssueService.getAllUserIssues(2, 2).then(e=>{
+            e.map(f=>{
+                sharedComp.companies.push(f);
+            });
+        }).catch(error => console.error("Error: ", error));
     }
     
     render() {
-        let mons = this.johnny;
-        if(this.state.boi == false){
+        let mons = this.curCompany;
+        if(this.state.loaded == false){
             return null;
         } else {
             return (
-                <div style={{height: '200px', width: '600px', backgroundColor: "yellow"}}>
+                <div style={{height: 'auto', width: '600px', outline: "5px solid black"}}>
                     <div>
-                        <h1>{this.johnny.firstName}</h1>
-                        <p>{this.johnny.email}</p>
+                        <h1>{this.curCompany.firstName}</h1>
+                        <p>{this.curCompany.email}</p>
                         <p>{this.munId}</p>
+                        <button style={{backgroundColor: "blue"}} className={"btn"} type={"button"} onClick={this.jason}>Submit to this company</button>
                     </div>
                     <div>
-                    {this.johnnyIssues.map(function (e, i) {
+                    {this.compIssues.map(function (e, i) {
                         console.log(e);
                         if (e) {
                             return (
                                 <div>
-                                    <IssueCard key={i} munId={2} issue={e} companyQ={true} user={mons}/>
+                                    <IssueView key={i} munId={2} issue={e} companyQ={true} user={mons}/>
                                 </div>
                                 )
                             }
                         })
                     }
-                    (<button style={{width: 50, height: 50}} className={"btn"} type={"button"} onClick={this.jason}>Submit to this company</button>);
                     </div>
                 </div>
             );
@@ -141,11 +156,11 @@ class CompanyCard extends Component<{user: User, munId: number}> {
 
     mounted(){
         console.log(this.props.user);
-        this.johnny = this.props.user;
-        this.johnnyIssues = this.johnny.Issues;
-        console.log(this.johnny);
+        this.curCompany = this.props.user;
+        this.compIssues = this.curCompany.Issues;
+        console.log(this.curCompany);
         this.setState({
-            boi: true
+            loaded: true
         })
     }
 
@@ -157,73 +172,83 @@ class CompanyCard extends Component<{user: User, munId: number}> {
 class IssueCard extends Component<{issue: Issue, munId: number, companyQ: boolean}> {
     render() {
         return (
-            <div style={{height: '200px', width: '600px', backgroundColor: "red"}}>
+            <div style={{height: '200px', width: '600px'}}>
                 <div>
-                    <IssueView style={{height: '200px', width: '200px'}} companyQ={this.props.companyQ} issue={this.props.issue} munId={this.props.munId}/>
-                </div>
-                <div>
-                    <h1>ISSUE</h1>
+                    <IssueView style={{paddingColor: 'black', padding: "5px"}} companyQ={this.props.companyQ} issue={this.props.issue} munId={this.props.munId}/>
                 </div>
             </div>
         );
     }
-
-    mounted(){
-        console.log("heyIssue ")
-    }
-
-    unmount(){
-        console.log("heyIssue " + 2)
-    }
 }
 
-class IssueView extends Component<{issue: Issue, munId: number, companyQ: boolean, user?: User}> {
+class IssueView extends Component<{issue: Issue, munId: number, companyQ: boolean, user: User}> {
 
     categoryName: string = '';
 
-    styleWhite = {backgroundColor: "grey", width: 100, height: 100};
-    styleNormal = {backgroundColor: "blue", width: 100, height: 100};
-    theStyle = this.styleWhite;
+    styleWhite = {backgroundColor: "grey", width: 150, height: 50};
+    styleNormal = {backgroundColor: "blue", width: 150, height: 50};
+    theStyle = this.styleNormal;
+    joIssue = this.props.issue;
 
-    state = {
-        boi: false,
-    };
+    filterFilter(issue: Issue){
+        let a = (issue.issueId != this.props.issue.issueId);
+        return a;
+    }
 
-    cohnJena(){
-        console.log("LETS GO");
-        if(this.state.boi==false){
-            console.log("HEY");
-            this.setState({boi: true});
+    selectedQ(){
+        if(this.state.loaded==false){
+            this.setState({loaded: true});
             this.theStyle = this.styleWhite;
             shared.chosenIssues.push(this.props.issue);
         } else{
-            this.setState({boi: false});
+            this.setState({loaded: false});
             this.theStyle = this.styleNormal;
-            console.log("HO");
-            shared.chosenIssues.filter(e => {e.issueId==this.props.issue.issueId});
+            let a = shared.chosenIssues.filter(issue => this.filterFilter(issue));
+            shared.chosenIssues = a;
         }
     }
+//////////////////////////////////////////////////////////////////////////
+    deleteUserIssue(){
+        if(!this.props.user){
+            console.log("Deleting Issue doesn't work")
+        } else {
+            userIssueService.deleteUserIssue(this.props.user.userId, this.props.issue.issueId).then(()=> {
+                    sharedIssues.issues = [];
+                    sharedComp.companies = [];
+                    shared.chosenIssues = [];
+                }).then(() =>{
+                    userIssueService.getAllFreeUserIssues(2).then(e=>{
+                        e.map(f=>{
+                            sharedIssues.issues.push(f);
+                        });
+                    }).catch(error => console.error("Error: ", error));
 
-    jasonStatham(){
-        userIssueService.deleteUserIssue(this.props.user.userId, this.props.issue.issueId);
+                    userIssueService.getAllUserIssues(2, 2).then(e=>{
+                        e.map(f=>{
+                            sharedComp.companies.push(f);
+                        });
+                    }).catch(error => console.error("Error: ", error));
+                }
+            );
+        }
 
     }
 
-    johnCena(){
+    buttonChoise(){
         if(this.props.companyQ==false){
             return (<button style={this.theStyle} className={"btn"} type={"button"} onClick={
-                    this.cohnJena
-            }>:O</button>);
+                    this.selectedQ
+            }>Select</button>);
         } else{
-            return (<button style={this.styleNOrmal} className={"btn"} type={"button"} onClick={
-                this.jasonStatham
-            }>:O</button>);
+            return (<button style={this.styleNormal} className={"btn"} type={"button"} onClick={
+                this.deleteUserIssue
+            }>Delete</button>);
         }
     }
 
     render() {
         return (
-            <div className="issue-small issue-hover" issue={this.props.issue}>
+            <div style={{outline: "5px solid black"}} className="issue-small issue-hover" issue={this.props.issue}>
                 <div>
                     <div className="d-flex flex-row issue-flex justify-content-between">
                         <div className="view-text">
@@ -233,9 +258,9 @@ class IssueView extends Component<{issue: Issue, munId: number, companyQ: boolea
                             </h5>
                         </div>
                         <div>
-                            {this.johnCena()}
+                            {this.buttonChoise()}
                         </div>
-                        <button className={"btn"} type={"button"} onClick={event => {history.push("/#/saker/" + this.props.issue.issueId)}}>Go to issue</button>
+                        <button className={"btn"} type={"button"} onClick={event => {history.push("/saker/" + this.props.issue.issueId)}}>Go to issue</button>
                     </div>
                 </div>
             </div>
