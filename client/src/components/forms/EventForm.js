@@ -218,10 +218,9 @@ export default class EventForm extends Component {
     eventService
       .addEvent(this.event)
       .then(res => (this.event.eventId = res.eventId))
+      .then(this.upload.uploadEventImage(this.event))
       .then(history.push('/kommune/' + this.event.munId))
       .catch((error: Error) => Alert.danger(error.message));
-
-    this.upload.uploadEventImage(this.event);
   }
 
   mounted() {
