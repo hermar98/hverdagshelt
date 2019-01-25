@@ -73,14 +73,9 @@ export default class RegisterIssue extends Component {
     return (
       <Card title="Registrer sak">
         <form ref={e => (this.form = e)}>
-          <Form.Input
-            type="text"
-            onChange={event => (this.issue.title = event.target.value)}
-            required
-            placeholder="Skriv en passende tittel"
-          />
           <div className="form-group row justify-content-center">
             <div className="col-sm-10 col-lg-4 justify-content-center">
+              <label>Kategori</label>
               <select
                 required
                 className="form-control"
@@ -102,12 +97,15 @@ export default class RegisterIssue extends Component {
           </div>
           <Form.InputLarge
             type="text"
+            label="Innhold"
             onChange={event => (this.issue.content = event.target.value)}
             required
-            placeholder="Skriv innholdet i saken"
+            placeholder="Skriv inn detaljer om saken..."
           />
           <div className="form-group row justify-content-center" style={{ height: '400px', padding: '0 0 40px 0' }}>
             <div className="col-12 col-md-4 justify-content-center">
+              <label>Velg lokasjon</label><br/>
+              <small>Skriv inn en adresse eller klikk på kartet.</small><br/>
               <Fragment>
                 {mapApiLoaded && <Search map={mapInstance} mapApi={mapApi} addplace={this.addPlace} />}
                 <GoogleMap
@@ -141,11 +139,13 @@ export default class RegisterIssue extends Component {
               </Fragment>
             </div>
           </div>
-          <UploadImageButton
-            ref={boy => {
-              this.upload = boy;
-            }}
-          />
+          <div className="mt-5">
+            <UploadImageButton
+              ref={boy => {
+                this.upload = boy;
+              }}
+            />
+          </div>
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
               <HoverButton type="submit" onclick={this.save} text="Send Inn" />
