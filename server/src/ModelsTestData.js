@@ -644,101 +644,7 @@ class ModelsTestData {
     return User.bulkCreate(
       [
         {
-          firstName: 'Vegard',
-          lastName: 'Andersson',
-          email: 'test@test.no',
-          rank: 4,
-          salt: 'a83f4da094cc247b',
-          hashStr:
-            '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
-          munId: 5016,
-          profilePicture: '',
-          Municipal: [{ munId: 528 }, { munId: 5027 }]
-        },
-        {
-          firstName: 'Christian',
-          lastName: 'Axell',
-          email: 'cdaxell@stud.ntnu.no',
-          rank: 3,
-          salt: 'a83f4da094cc247b',
-          hashStr:
-            '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
-          munId: 528,
-          profilePicture:
-            'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
-        },
-        {
-          firstName: 'Sebastian',
-          lastName: 'Andresen',
-          email: 'sebasman@stud.ntnu.no',
-          rank: 1,
-          salt: 'a83f4da094cc247b',
-          hashStr:
-            '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
-          munId: 1504,
-          profilePicture:
-            'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
-        },
-        {
-          firstName: 'Trond Jacob',
-          lastName: 'Rondestvedt',
-          email: 'trondjro@stud.ntnu.no',
-          rank: 1,
-          salt: 'b79ryp98',
-          hashStr: '897dfjsodif5vxd4c5vsldfskdclz97cyw7e3o2inJKHaospk902',
-          munId: 528,
-          profilePicture:
-            'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
-        },
-        {
-          firstName: 'Sander',
-          lastName: 'Nicolausson',
-          email: 'sandern@stud.ntnu.no',
-          rank: 2,
-          salt: 'a83f4da094cc247b',
-          hashStr:
-            '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
-          munId: 528,
-          profilePicture:
-            'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
-        },
-        {
-          firstName: 'Jørgen',
-          lastName: 'Aasvestad',
-          email: 'jorgaas@stud.ntnu.no',
-          rank: 4,
-          salt: 'a83f4da094cc247b',
-          hashStr:
-            '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
-          munId: 528,
-          profilePicture:
-            'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
-        },
-        {
-          firstName: 'Herman Ryen',
-          lastName: 'Martinsen',
-          email: 'HermanRM@stud.ntnu.no',
-          rank: 1,
-          salt: 'a83f4da094cc247b',
-          hashStr:
-            '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
-          munId: 528,
-          profilePicture:
-            'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
-        },
-        {
-          firstName: 'Herman',
-          lastName: 'Christiansen',
-          email: 'hermanc@stud.ntnu.no',
-          rank: 0,
-          salt: 'a83f4da094cc247b',
-          hashStr:
-            '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
-          munId: 528,
-          profilePicture:
-            'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
-        },
-        {
+          userId: 1,
           firstName: 'Privat',
           lastName: 'Person',
           email: 'privat@hh.no',
@@ -751,6 +657,7 @@ class ModelsTestData {
             'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
         },
         {
+          userId: 2,
           firstName: 'Bedrift',
           lastName: 'Ansatt',
           email: 'bedrift@hh.no',
@@ -763,6 +670,7 @@ class ModelsTestData {
             'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
         },
         {
+          userId: 3,
           firstName: 'Kommune',
           lastName: 'Ansatt',
           email: 'kommune@hh.no',
@@ -775,6 +683,7 @@ class ModelsTestData {
             'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
         },
         {
+          userId: 4,
           firstName: 'Admin',
           lastName: 'Istrator',
           email: 'admin@hh.no',
@@ -801,40 +710,32 @@ class ModelsTestData {
   createStatuses() {
     return Status.bulkCreate([
       {
-        statusId: 6,
-        name: 'Ikke Behandlet'
+        statusId: 1,
+        name: 'Ikke påbegynt'
       },
       {
         statusId: 2,
-        name: 'Under Behandling'
+        name: 'Ikke behandlet'
       },
       {
         statusId: 3,
-        name: 'Saken er fikset!'
+        name: 'Under behandling!'
       },
       {
         statusId: 4,
-        name: 'Saken ble forlatt'
+        name: 'Behandlet'
       },
-      {
-        statusId: 5,
-        name: 'Saken er slettet'
-      },
-      {
-        statusId: 1,
-        name: 'Situation Normal, All fucked upp'
-      }
     ]);
   }
 
   createIssueCategory() {
     return IssueCategory.bulkCreate([
-      { name: 'Fyllikere på gata som ødeleger lamper' },
-      { name: 'En veilys er ødelagt' },
-      { name: 'Et veihul på gata' },
+      { name: 'Vei og gate' },
+      { name: 'Søppel' },
+      { name: 'Vann og avløp' },
       { name: 'Grafitti på offentlig bygning' },
-      { name: 'Sømpel dumpet' },
-      { name: 'Forlatt Sykkel' }
+      { name: 'Parker' },
+      { name: 'Annet' },
     ]);
   }
 
@@ -842,157 +743,155 @@ class ModelsTestData {
     return Issue.bulkCreate([
       {
         issueId: 1,
-        title: 'Dumme folk ødeleger lømp',
-        content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
+        title: ' - ',
+        content: 'Stort hull i asfalten utenfor huset mitt',
         image:
-          'https://www.thesun.co.uk/wp-content/uploads/2018/07/AF-COMPOSITE-FIGHT.jpg?strip=all&quality=100&w=750&h=500&crop=1',
-        longitude: 60.656877,
-        latitude: 10.824107,
+          'https://bit.ly/2MxG3yl',
+        longitude: 10.426896,
+        latitude: 63.424035,
         createdAt: new Date(2018, 12, 24, 12),
-        munId: 528,
+        munId: 5001,
         userId: 1,
         categoryId: 1,
         statusId: 1
       },
-
       {
         issueId: 2,
-        title: 'Veilys på gata hjemme er ødelagt',
-        content: 'Et veilys på gata har blitt ødelagt',
-        image: 'http://www.otera.no/image/20111206015-kopi.jpeg?w=1200',
-        longitude: 60.661293,
-        latitude: 10.828996,
+        title: ' - ',
+        content: 'Det mangler et innkjøring forbudt-skilt',
+        image: 'https://bit.ly/2TebCQu',
+        longitude: 10.402096,
+        latitude: 63.403585,
         createdAt: new Date(2018, 12, 25, 12),
-        munId: 528,
-        userId: 3,
-        categoryId: 2,
+        munId: 5001,
+        userId: 1,
+        categoryId: 1,
         statusId: 2
       },
 
       {
         issueId: 3,
-        title: 'Dårlig grafitti på skole veggen',
-        content: 'Det er dårlig grafitti på skole veggen',
+        title: ' - ',
+        content: 'Det er grafitti på veggen på nordsiden av rådhuset',
         image: 'http://i.imgur.com/so8Ea.jpg',
-        longitude: 60.684721,
-        latitude: 10.841522,
+        longitude: 10.815972,
+        latitude: 60.677127,
         createdAt: new Date(2018, 12, 26, 12),
         munId: 528,
-        userId: 2,
+        userId: 1,
         categoryId: 4,
         statusId: 2
       },
 
       {
         issueId: 4,
-        title: 'Veilys ødelagt på 33',
-        content: 'I have a question for god. WHYYYYYYYYYYY. Is this light broken',
-        image: 'https://i.ytimg.com/vi/MPNN_nVwG5w/maxresdefault.jpg',
-        longitude: 60.68273,
-        latitude: 10.831514,
+        title: ' - ',
+        content: 'Det ligger veldig mye søppel utenfor videregående',
+        image: 'https://bit.ly/2CJ1uZ2',
+        longitude: 10.818270,
+        latitude: 60.677106,
         createdAt: new Date(2018, 12, 27, 12),
         munId: 528,
         userId: 1,
-        categoryId: 1,
-        statusId: 1
+        categoryId: 2,
+        statusId: 3
       },
 
       {
         issueId: 5,
-        title: 'Veilys på gata hjemme er ødelagt',
+        title: ' - ',
         content: 'Et veilys på gata har blitt ødelagt',
-        image: 'http://www.otera.no/image/20111206015-kopi.jpeg?w=1200',
-        longitude: 60.661293,
-        latitude: 10.828996,
+        image: 'https://bit.ly/2TdYV8l',
+        longitude: 10.813355,
+        latitude: 60.665955,
         createdAt: new Date(2018, 12, 27, 12),
         munId: 528,
-        userId: 3,
-        categoryId: 2,
+        userId: 1,
+        categoryId: 1,
         statusId: 2
       },
 
       {
         issueId: 6,
-        title: 'Dårlig grafitti på skole veggen',
-        content: 'Det er dårlig grafitti på skole veggen',
-        image: 'http://i.imgur.com/so8Ea.jpg',
-        longitude: 60.684721,
-        latitude: 10.841522,
+        title: ' - ',
+        content: 'Avløpet ved Kalvskinnet er tett. Det ligger vann overalt',
+        image: 'https://bit.ly/2MyRt4S',
+        longitude: 10.389589,
+        latitude: 63.428072,
         createdAt: new Date(2018, 12, 27, 12),
         munId: 5001,
-        userId: 2,
-        categoryId: 4,
-        statusId: 6
+        userId: 1,
+        categoryId: 3,
+        statusId: 3
       },
 
       {
         issueId: 7,
-        title: 'Veilys ødelagt på 33',
-        content: 'I have a question for god. WHYYYYYYYYYYY. Is this light broken',
-        image: 'https://i.ytimg.com/vi/MPNN_nVwG5w/maxresdefault.jpg',
-        longitude: 60.68273,
-        latitude: 10.831514,
+        title: ' - ',
+        content: 'Benkene i parken er ødelagt',
+        image: 'https://bit.ly/2WhGK3n',
+        longitude: 10.399241,
+        latitude: 63.425528,
         createdAt: new Date(2018, 12, 27, 12),
         munId: 5001,
-        userId: 6,
-        categoryId: 2,
-        statusId: 3
+        userId: 1,
+        categoryId: 5,
+        statusId: 2
       },
       {
         issueId: 8,
-        title: 'Dumme folk ødeleger lømp',
-        content: 'Disse dumme folka som komemr rett fra byen ødeleger lamper kvelden til midtnatt',
+        title: ' - ',
+        content: 'Knuste ruter på torget',
         image:
-          'https://www.thesun.co.uk/wp-content/uploads/2018/07/AF-COMPOSITE-FIGHT.jpg?strip=all&quality=100&w=750&h=500&crop=1',
-        longitude: 60.656877,
-        latitude: 10.824107,
+          'https://bit.ly/2G0CfEw',
+        longitude: 10.393795,
+        latitude: 63.431156,
         createdAt: new Date(2018, 12, 27, 12),
         munId: 5001,
         userId: 1,
         categoryId: 1,
-        statusId: 1
+        statusId: 3
       },
 
       {
         issueId: 9,
-        title: 'Veilys på gata hjemme er ødelagt',
-        content: 'Et veilys på gata har blitt ødelagt',
-        image: 'http://www.otera.no/image/20111206015-kopi.jpeg?w=1200',
-        longitude: 60.661293,
-        latitude: 10.828996,
+        title: ' - ',
+        content: 'Malingen på huset ved togstasjonen trenger seg et strøk til',
+        image: 'https://bit.ly/2RbHOSB',
+        longitude: 11.759949,
+        latitude: 63.422487,
         createdAt: new Date(2018, 12, 27, 12),
-        munId: 5001,
-        userId: 3,
-        categoryId: 2,
+        munId: 5034,
+        userId: 1,
+        categoryId: 6,
         statusId: 2
       },
 
       {
         issueId: 10,
-        title: 'Dårlig grafitti på skole veggen',
-        content: 'Det er dårlig grafitti på skole veggen',
-        image: 'http://i.imgur.com/so8Ea.jpg',
-        longitude: 60.684721,
-        latitude: 10.841522,
+        title: ' - ',
+        content: 'Gamlebrua holder på å falle sammen',
+        image: 'https://bit.ly/2S8xgbt',
+        longitude: 11.739906,
+        latitude: 63.414214,
         createdAt: new Date(2018, 12, 27, 12),
-        munId: 5001,
-        userId: 2,
-        categoryId: 4,
-        statusId: 6
+        munId: 5034,
+        userId: 1,
+        categoryId: 1,
+        statusId: 2
       },
-
       {
         issueId: 11,
-        title: 'Veilys ødelagt på 33',
-        content: 'I have a question for god. WHYYYYYYYYYYY. Is this light broken',
-        image: 'https://i.ytimg.com/vi/MPNN_nVwG5w/maxresdefault.jpg',
-        longitude: 60.68273,
-        latitude: 10.831514,
+        title: ' - ',
+        content: 'Veien opp til Vardetun er i ferd med å ramle ut',
+        image: 'https://bit.ly/2RiYPuo',
+        longitude: 11.729229,
+        latitude: 63.407931,
         createdAt: new Date(2018, 12, 27, 12),
-        munId: 5001,
-        userId: 6,
-        categoryId: 2,
-        statusId: 3
+        munId: 5034,
+        userId: 1,
+        categoryId: 1,
+        statusId: 2
       }
     ]);
   }
@@ -1000,17 +899,17 @@ class ModelsTestData {
   createFeedback() {
     return Feedback.bulkCreate([
       {
-        name: 'Dumme folk er dumme',
+        name: 'Test',
         content: 'Vi skal fikse dette!',
         date: new Date(2018, 12, 27, 12),
         userId: '2',
         issueId: '1'
       },
       {
-        name: 'Veilyset på 33 er fisket!',
-        content: 'Veilyset er fikset!',
+        name: 'Test',
+        content: 'Dette skal vi rydde opp i straks!',
         date: new Date(2018, 12, 27, 12),
-        userId: '2',
+        userId: '3',
         issueId: '4'
       }
     ]);
@@ -1019,16 +918,16 @@ class ModelsTestData {
   createEventCategory() {
     return EventCategory.bulkCreate([
       {
-        name: 'Annet'
-      },
-      {
-        name: 'Party'
-      },
-      {
         name: 'Konsert'
       },
       {
-        name: 'Galleri'
+        name: 'Marknad'
+      },
+      {
+        name: 'Sportsarrangement'
+      },
+      {
+        name: 'Annet'
       }
     ]);
   }
@@ -1036,28 +935,28 @@ class ModelsTestData {
   crateEvent() {
     return Event.bulkCreate([
       {
-        title: 'party at the house man!',
-        content: 'Det skal være party at the house!',
-        image: 'notin',
-        longitude: 60.652168,
-        latitude: 10.822102,
+        title: 'Konsert med Bjarne Brøndbo',
+        content: 'Bjarne Brøndbo kommer snart til Østre Toten! Billetter til salgs nå',
+        image: 'https://bit.ly/2S5XCLe',
+        longitude: 10.815972,
+        latitude: 60.677127,
         timeStart: new Date(2019, 1, 22),
         timeEnd: new Date(2019, 1, 25),
-        userId: '1',
+        userId: '3',
         categoryId: 1,
         munId: 528
       },
       {
-        title: 'PARTIET FORSETTER!',
-        content: 'DET FORRIGE PARTY FORSETTER HOS ANDERS!',
-        image: 'notin',
-        longitude: 60.655754,
-        latitude: 10.817339,
+        title: 'Rosenborg - RB Leibzig',
+        content: 'Rosenborg møter RB Leibzig på hjemmebane. Dette vil du ikke gå glipp av',
+        image: 'https://bit.ly/2DAzacP',
+        longitude: 10.404213,
+        latitude: 63.412261,
         timeStart: new Date(2019, 1, 23),
         timeEnd: new Date(2019, 1, 26),
-        userId: '2',
-        categoryId: 1,
-        munId: 528
+        userId: '3',
+        categoryId: 3,
+        munId: 5001
       }
     ]);
   }
@@ -1070,6 +969,10 @@ class ModelsTestData {
       },
       {
         munId: 528,
+        userId: 1
+      },
+      {
+        munId: 5034,
         userId: 1
       }
     ]);
@@ -1084,6 +987,14 @@ class ModelsTestData {
       {
         issueId: 1,
         userId: 2
+      },
+      {
+        issueId: 3,
+        userId: 3
+      },
+      {
+        issueId: 2,
+        userId: 3
       }
     ]);
   }
