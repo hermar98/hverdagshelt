@@ -1,21 +1,9 @@
 import * as React from 'react';
-import { Component } from 'react-simplified';
-import {
-  Alert,
-  NavBar,
-  Form,
-  Card,
-  Button,
-  DropdownHeader,
-  DropdownFooter,
-  DropdownDivider,
-  DropdownItem
-} from '../../widgets';
-import { municipalService } from '../../services/MunicipalService.js';
-import { tokenManager } from '../../tokenManager';
-import { history } from '../../index';
-import { Municipal } from '../../models/Municipal';
-import { userService } from '../../services/UserService';
+import {Component} from 'react-simplified';
+import {DropdownDivider, DropdownFooter, DropdownHeader, DropdownItem, NavBar} from '../../widgets';
+import {tokenManager} from '../../tokenManager';
+import {history} from '../../index';
+import {userService} from '../../services/UserService';
 
 export class MunEmployeeMenu extends Component {
   user = null;
@@ -23,6 +11,7 @@ export class MunEmployeeMenu extends Component {
   activeMunPage = 'btnfocus';
   activeRegEvent = '';
   activeAdmIssues = '';
+  activeAdmBedrift = '';
   mounted() {
     userService
       .getCurrentUser()
@@ -52,6 +41,9 @@ export class MunEmployeeMenu extends Component {
             <NavBar.Button className={this.activeAdmIssues} onClick={this.toManageIssues}>
               Administrer Saker
             </NavBar.Button>
+            <NavBar.Button className={this.activeAdmBedrift} onClick={this.toManageBedrift}>
+              Administrer Bedrifter
+            </NavBar.Button>
             <NavBar.Dropdown className={this.activeProfile} title={this.user.firstName + ' ' + this.user.lastName}>
               <DropdownHeader>{this.user.email}</DropdownHeader>
               <DropdownFooter>Kommuneansatt</DropdownFooter>
@@ -71,6 +63,7 @@ export class MunEmployeeMenu extends Component {
     this.activeMunPage = '';
     this.activeRegEvent = '';
     this.activeAdmIssues = '';
+    this.activeAdmBedrift = '';
   }
 
   toLogout() {
@@ -85,6 +78,7 @@ export class MunEmployeeMenu extends Component {
     this.activeMunPage = '';
     this.activeProfile = '';
     this.activeAdmIssues = '';
+    this.activeAdmBedrift = '';
   }
   toMunPage() {
     history.push('/kommune/' + this.user.munId);
@@ -92,12 +86,14 @@ export class MunEmployeeMenu extends Component {
     this.activeProfile = '';
     this.activeRegEvent = '';
     this.activeAdmIssues = '';
+    this.activeAdmBedrift = '';
   }
   toMunPage2() {
     this.activeMunPage = 'btnfocus';
     this.activeProfile = '';
     this.activeRegEvent = '';
     this.activeAdmIssues = '';
+    this.activeAdmBedrift = '';
   }
 
   toManageIssues() {
@@ -106,5 +102,14 @@ export class MunEmployeeMenu extends Component {
     this.activeMunPage = '';
     this.activeProfile = '';
     this.activeRegEvent = '';
+    this.activeAdmBedrift = '';
+  }
+  toManageBedrift() {
+    history.push('/delegerSaker');
+    this.activeAdmIssues = '';
+    this.activeMunPage = '';
+    this.activeProfile = '';
+    this.activeRegEvent = '';
+    this.activeAdmBedrift = 'btnfocus';
   }
 }
