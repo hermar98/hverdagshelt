@@ -151,7 +151,7 @@ describe('User tests', () => {
 
         expect(response.body.firstName).toBe('Jørgen');
         expect(response.body.email).toBe('j@j.j');
-        expect(response.body.rank).toBe(3);
+        expect(response.body.rank).toBe(1);
     });
 
     //Delete user
