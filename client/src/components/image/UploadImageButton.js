@@ -54,6 +54,25 @@ export default class UploadImageButton extends Component {
     });
   }
 
+  uploadEventImage(): Promise<string>{
+    const files = Array.from(shared.tFiles);
+    this.setState({ uploading: true });
+    let urlNew = "image";
+
+    files.forEach(file => {
+      let image: Image;
+      image = {
+        imageSource: file.path,
+      };
+
+      imageService.uploadEventImage(image)
+        .then(url => {
+          urlNew = url;
+        })
+    });
+    return urlNew;
+  }
+
   printFaenHode(issue: Issue) {
     issueService
       .addIssue(issue)

@@ -65,7 +65,7 @@ export class UserMenu extends Component {
     history.push('/profil');
     this.activeProfile = 'btnfocus';
     this.activeFeed = '';
-    this.activeRegEvent = '';
+    this.activeRegIssue = '';
   }
 
   toFeed() {
