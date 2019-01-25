@@ -635,7 +635,6 @@ class Status extends Component<{status: number, id: number}> {
     }
 }
 
-
 /*
 Widget for displaying the image of a status
  */
