@@ -8,6 +8,9 @@ body {
         display: grid;
         grid-template-columns: 48% 4% 48%;
     }
+    .slim-profile {
+        padding: 0 15% 0 15%;
+    }
 }
 
 @media (min-width: 611px) {
