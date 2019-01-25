@@ -2,6 +2,7 @@
 
 import ReactDOM from 'react-dom';
 import * as React from 'react';
+import {Redirect} from 'react-router-dom';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert, NavBar, Form, Card, Button } from '../../widgets';
@@ -57,13 +58,13 @@ export default class NewPasswordForm extends Component {
           .getCurrentUser()
           .then(user => {
               if (user.rank === 1) {
-                  history.push('/minSide');
+                  return <Redirect to={'/minSide'}/>;
               } else if (user.rank === 2) {
-                  history.push('/bedrift');
+                  return <Redirect to={'/bedrift'}/>;
               } else if (user.rank === 3) {
-                  history.push('/kommune/' + user.munId);
+                  return <Redirect to={'/kommune/' + user.munId}/>;
               } else if (user.rank === 4) {
-                  history.push('/admin');
+                  return <Redirect to={'/admin'}/>;
               }
           })
           .catch((error : Error) => {

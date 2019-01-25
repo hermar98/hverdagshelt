@@ -234,8 +234,8 @@ export default class EventForm extends Component {
         this.user = user;
         if (user.userId === 1) {
           history.push('/minSide');
-        } else if (user.userId === 3) {
-          history.push('/kommune/' + user.munId);
+        } else if (user.userId === 2) {
+          history.push('/bedrift');
         } else if (user.userId === 4) {
           history.push('/admin');
         }

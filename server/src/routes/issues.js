@@ -204,7 +204,7 @@ app.post('/issues', (req: Request, res: Response) => {
                         userId: req.body.userId
                     }
                 }).then(user => mailSender.sendEmail(user.email, "Din sak har blitt registrert!", "Hei " + user.firstName + " " +
-                    user.lastName + "!\n\nDin sak '" + req.body.title + "' har nå blitt registrert i systemet, og en av våre fremste ansatte vil så fort" +
+                    user.lastName + "!\n\nDin sak har nå blitt registrert i systemet, og en av våre fremste ansatte vil så fort" +
                     " som mulig påbegynne saksbehandlingen. Tusen takk for at du melder inn feil, og bidrar til å gjøre Norge et bedre sted!\n\nMed vennlig hilsen\n" +
                     "Hverdagshelt AS"));
             }
