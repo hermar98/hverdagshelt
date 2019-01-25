@@ -6,7 +6,7 @@ import { autocomplete, glob } from '../../../public/autocomplete';
 import { eventService } from '../../services/EventService';
 import { Alert, Card } from '../../widgets';
 import { history } from '../../index';
-import { IssueOverviewSmall, IssueSmall } from '../issueViews/issueViews';
+import { IssueOverviewSmallPrivate } from '../issueViews/issueViews';
 import { municipalService } from '../../services/MunicipalService';
 import { DisplayEvent2, EventLarge, EventSmall } from './EventPage';
 import NavLink from 'react-router-dom/es/NavLink';
@@ -37,7 +37,7 @@ export class MunicipalPage extends Component<{ match: { params: { munId: number 
           <div className="col-lg-6">
             <Card title="Feil/mangler">
               <ul className="container-fluid">
-                <IssueOverviewSmall issues={this.issues} />
+                <IssueOverviewSmallPrivate issues={this.issues} />
               </ul>
             </Card>
           </div>

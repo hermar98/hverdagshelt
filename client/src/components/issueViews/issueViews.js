@@ -371,7 +371,7 @@ export class IssueSmall extends Component<{issue: Issue, munId: number}> {
 /*
 A list of issues in small view
  */
-export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[]}> {
+export class IssueOverviewSmallPrivate extends Component<{munId: number, issues: Issue[]}> {
 
     status: number = 0;
     category: number = 0;
@@ -429,6 +429,69 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
             .then(res => this.categories = res)
             .catch(error => console.error("Error: ", error))
     }
+}
+
+/*
+A list of issues in small view
+ */
+export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[]}> {
+
+  status: number = 0;
+  category: number = 0;
+  categories: [] = [];
+
+  render () {
+    const hasIssues = this.props.issues.length != 0;
+    return (
+      <div>
+        <div className="d-flex flex-row sort-box justify-content-between">
+          <div className="d-flex flex-row justify-content-start">
+            <div id="sort-push" className="form-group">
+              <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
+                <option value={0}>Alle</option>
+                <option value={1}>Ikke påbegynt</option>
+                <option value={2}>Ikke behandlet</option>
+                <option value={3}>Under behandling</option>
+                <option value={4}>Behandlet</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <select className="form-control" value={this.category} onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.category = event.target.value)}>
+                <option value={0}>Alle</option>
+                {this.categories.map(cat => {
+                  return <option value={cat.categoryId}>{cat.name}</option>
+                })}
+              </select>
+            </div>
+          </div>
+        </div>
+        <ul className="list-group issue-small-list">
+          {hasIssues ? (this.props.issues.map((issue,index) => {
+            if ((this.status == issue.statusId || this.status == 0) && (this.category == issue.categoryId || this.category == 0)) {
+              return(
+                <li key={index} className="list-group-item issue-small-item">
+                  <IssueSmall issue={issue} munId={this.props.munId}/>
+                </li>
+              )
+            }
+          }) ) : (
+            <li key={0}>
+              <div className="d-flex flex-row justify-content-center">
+                <p id="noIssues">Ingen saker</p>
+              </div>
+            </li>
+          )}
+        </ul>
+      </div>
+    )
+  }
+
+  mounted (){
+    window.scrollTo(0, 0);
+    issueCategoryService.getCategories()
+      .then(res => this.categories = res)
+      .catch(error => console.error("Error: ", error))
+  }
 }
 
 /*
