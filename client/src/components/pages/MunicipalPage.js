@@ -17,6 +17,7 @@ export class MunicipalPage extends Component<{ match: { params: { munId: number 
   issues = [];
   events = [];
   municipal = new Municipal();
+  date = new Date(Date.now());
 
   render() {
     const hasEvents = this.events.length != 0;
@@ -69,11 +70,16 @@ export class MunicipalPage extends Component<{ match: { params: { munId: number 
               </div>
               <ul className="list-group issue-small-list">
                 {hasEvents ? (
-                  this.events.map(e => (
-                    <li key={e.eventId}>
-                      <EventSmall event={e} />
-                    </li>
-                  ))
+                  this.events.filter(e => {
+                      return (
+                          new Date(e.timeEnd) > this.date
+                      );
+                  })
+                    .map(e => (
+                          <li key={e.eventId}>
+                              <EventSmall event={e} />
+                          </li>
+                    ))
                 ) : (
                   <li key={0}>
                     <p id="noIssues">Denne kommunen har ingen registrerte events...</p>{' '}

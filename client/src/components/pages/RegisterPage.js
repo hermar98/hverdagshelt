@@ -11,7 +11,7 @@ export class RegisterPage extends Component {
 
   render() {
     return (
-      <div>
+      <div className="mb-5">
         <RegistrationForm />
       </div>
     );

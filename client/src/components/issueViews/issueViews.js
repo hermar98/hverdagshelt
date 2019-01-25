@@ -65,7 +65,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
             this.setState({
                 clickedDelete: false
             });
-            return <Redirect to={"/kommune/" + this.props.match.params.munId + "/issues"} />
+            return <Redirect to={"/profil"} />
         }
 
         return (
@@ -404,7 +404,7 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
                 </div>
                 <ul className="list-group issue-small-list">
                     {hasIssues ? (this.props.issues.map((issue,index) => {
-                        if ((this.status == issue.statusId || this.status == 0) && (this.category == issue.categoryId || this.category == 0)) {
+                        if ((this.status == issue.statusId || this.status == 0) && (this.category == issue.categoryId || this.category == 0) && issue.statusId !== 1) {
                             return(
                                 <li key={index} className="list-group-item issue-small-item">
                                     <IssueSmall issue={issue} munId={this.props.munId}/>

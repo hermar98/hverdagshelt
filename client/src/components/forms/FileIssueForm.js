@@ -177,6 +177,7 @@ export default class RegisterIssue extends Component {
       userService
           .getCurrentUser()
           .then(user => {
+            this.user = user;
               if (user.rank === 2) {
                   history.push('/bedrift');
               } else if (user.rank === 3) {
