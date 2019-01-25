@@ -106,7 +106,7 @@ export default class RegisterIssue extends Component {
             required
             placeholder="Skriv innholdet i saken"
           />
-          <div className="form-group row justify-content-center" style={{ height: '300px' }}>
+          <div className="form-group row justify-content-center" style={{ height: '400px', padding: '0 0 40px 0' }}>
             <div className="col-12 col-md-4 justify-content-center">
               <Fragment>
                 {mapApiLoaded && <Search map={mapInstance} mapApi={mapApi} addplace={this.addPlace} />}

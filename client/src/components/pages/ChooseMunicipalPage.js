@@ -1,5 +1,4 @@
 // @flow
-
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { autocomplete, glob } from '../../../public/autocomplete';
@@ -7,14 +6,12 @@ import { municipalService } from '../../services/MunicipalService';
 import { history } from '../../index';
 import { Municipal } from '../../models/Municipal';
 import { tokenManager } from '../../tokenManager';
-import { Button } from '../../widgets';
-import { Card } from '../../widgets';
 import { HoverButton } from '../issueViews/issueViews';
 
 let municipalObjects;
-//TODO: fix input
+
 export class ChooseMunicipalPage extends Component {
-  munId = localStorage.getItem('munId');
+  // munId = localStorage.getItem('munId');
   render() {
     return (
       <div>

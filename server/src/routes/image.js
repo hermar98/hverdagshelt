@@ -115,6 +115,7 @@ app.get('/image/:id', (req: Request, res: Response) => {
 });
 
 app.get('/image/issue/:issueId', (req: Request, res: Response) => {
+    console.log("server id: " + req.params.issueId)
     return Issue.findOne({
         // where: { '$Issues.issueId$': Number(req.params.issueId) },
         include: [

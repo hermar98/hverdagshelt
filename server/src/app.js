@@ -11,6 +11,7 @@ import jwt from 'jsonwebtoken';
 import path from 'path';
 import {mailSender} from "./MailSender";
 import {tokenManager} from './tokenManager.js';
+import bodyParser from 'body-parser';
 
 
 //Flow type checking
@@ -23,7 +24,8 @@ const crypto = require('crypto');
 
 let app: Application = express();
 app.use(express.static(public_path));
-app.use(express.json()); // For parsing application/json
+app.use(express.json({limit: '50mb'})); // For parsing application/json
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 let secretKey = fs.readFileSync('./secret.key', 'utf8');
 

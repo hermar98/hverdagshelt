@@ -76,29 +76,26 @@ export default class UploadImageButton extends Component {
 
     return (
       <div className="image-upload-form">
-          <div className="card image-upload-container">
-              <div className="image-upload-text">
-                  {$imagePreview}
-              </div>
-                <div className="card image-upload-list">
-                    <div className="image-upload-images-text">No Images Uploaded!</div>
-                  {Array.from(shared.tFiles).map(function(e, i) {
-                    console.log(e);
-                    if (e.path) {
-                      return (
-                        <div key={i} className="image-upload-images">
-                          <img className="image-upload-image" src={e.path} />
-                        </div>
-                      );
-                    }
-                  })}
-
-                </div>
-              <div className="image-upload-button">
-                  <input type="file" onChange={e => this.fileSelectedHandler(e)} size="60"/>
-              </div>
-        {/*<button type={"btn"} className="btn" onClick={() => this.postImage(1)}/>*/}
+        <div className="card image-upload-container">
+          <div className="image-upload-text">{$imagePreview}</div>
+          <div className="card image-upload-list">
+            <div className="image-upload-images-text">No Images Uploaded!</div>
+            {Array.from(shared.tFiles).map(function(e, i) {
+              console.log(e);
+              if (e.path) {
+                return (
+                  <div key={i} className="image-upload-images">
+                    <img className="image-upload-image" src={e.path} />
+                  </div>
+                );
+              }
+            })}
           </div>
+          <div className="image-upload-button">
+            <input type="file" onChange={e => this.fileSelectedHandler(e)} size="60" />
+          </div>
+          {/*<button type={"btn"} className="btn" onClick={() => this.postImage(1)}/>*/}
+        </div>
       </div>
     );
   }

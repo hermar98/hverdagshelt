@@ -20,13 +20,6 @@ body {
         grid-template-columns: 48% 4% 48%;
     }
     .issue-container {margin: 2% 12% 25% 12%}
-    .profile-image {
-        border: gray solid 1px;
-        border-radius: 50% !important;
-        width: 65px !important;
-        height: auto;
-        margin: 1vh 1vh 1vh 1vh;
-    }
     .page-container {
         margin: 2% 4% 20% 4%;
     }
@@ -34,16 +27,21 @@ body {
 
 @media (max-width: 610px){
     .issue-container {margin: 2% 2% 25% 2%}
-    .profile-image {
-        border: gray solid 1px;
-        border-radius: 50% !important;
-        width: 65px !important;
-        height: auto;
-        margin: 1vh 1vh 1vh 1vh;
-    }
     .page-container {
         margin: 2% 0 20% 0;
     }
+}
+
+.profile-image {
+    border-radius: 50% !important;
+    width: 65px !important;
+    height: auto;
+}
+.profile-image-container {
+    border-radius: 50% !important;
+    border: gray solid 3px;
+    margin: 2% 2% 2% 2%;
+    opacity: 0.4;
 }
 
 .status-blocked {background-color: #ffa191}
