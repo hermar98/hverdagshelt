@@ -85,7 +85,7 @@ export default class UploadImageButton extends Component {
                     if (e.path) {
                       return (
                         <div key={i} className="image-upload-images">
-                          <img className="image-upload-image" src={e.path} alt="Upload image"/>
+                          <img className="image-upload-image" src={e.path} alt="Upload image" />
                         </div>
                       );
                     }
