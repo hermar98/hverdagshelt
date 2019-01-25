@@ -672,7 +672,7 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
 /*
 A colored status-bar. The number decides which status is rendered
  */
-class Status extends Component<{status: number, id: number}> {
+export class Status extends Component<{status: number, id: number}> {
     render () {
         switch (this.props.status){
             case 1: return (
@@ -707,7 +707,7 @@ class Status extends Component<{status: number, id: number}> {
 /*
 Widget for displaying the image of a status
  */
-class StatusImage extends Component<{status: number}> {
+export class StatusImage extends Component<{status: number}> {
     render () {
         switch (this.props.status){
             case 1: return (
