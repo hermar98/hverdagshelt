@@ -189,7 +189,7 @@ export default class EventForm extends Component {
     }
 
     this.event.image = 'imagefile.img';
-    this.event.longitude = this.long;
+    this.event.longitude = this.lng;
     this.event.latitude = this.lat;
     this.event.timeStart = moment(this.startDate + ' ' + this.startTime);
     this.event.timeEnd = moment(this.endDate + ' ' + this.endTime);

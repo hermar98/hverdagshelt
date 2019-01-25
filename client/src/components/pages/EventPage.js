@@ -5,10 +5,14 @@ import { EventCategory } from '../../models/EventCategory.js';
 import { eventCategoryService } from '../../services/EventCategoryService';
 import { Alert, DisplayEvent } from '../../widgets';
 import { Issue } from '../../models/Issue';
-import { Status } from '../issueViews/issueViews';
+import {User} from '../../models/User';
+import {ImageButton, Status} from '../issueViews/issueViews';
 import moment from 'moment';
 import { eventService } from '../../services/EventService';
 import { Event } from '../../models/Event';
+import {SimpleMap} from "../map/map";
+import {userService} from "../../services/UserService";
+import { history } from '../../index';
 
 export class EventPage extends Component {
   events = [];
@@ -137,6 +141,8 @@ export class EventSmall extends Component<{ event: Event }> {
 export class EventInfo extends Component<{ match: { params: { eventId: number } } }> {
   event = null;
   eventCategory = null;
+  user = null;
+  isMunEmployee: boolean = false;
 
   render() {
     if (!this.event) return null;
@@ -148,9 +154,14 @@ export class EventInfo extends Component<{ match: { params: { eventId: number } 
           <div className="card">
             <img className="card-img-top" src={this.event.image} />
             <div className="card-body">
+              <div className="row justify-content-between">
               <h2 className="card-title">{this.event.title}</h2>
+                {this.isMunEmployee ? <div><ImageButton source="../../images/trashcan.png" onclick={this.delete}/></div> : <div></div>}
+              </div>
               <p className="card-text">
-                <small>
+                <div className="row justify-content-between">
+                <div>
+                  <small>
                   <b>Kategori: </b>
                   {this.eventCategory.name}
                   <br />
@@ -162,9 +173,16 @@ export class EventInfo extends Component<{ match: { params: { eventId: number } 
                   <br />
                   <b>Sted (koordinater): </b>
                   {this.event.latitude + ', ' + this.event.longitude}
-                </small>
+                  <br/>
+                  </small>
+                  <br/>
+                  <p className="card-text">{this.event.content}</p>
+                </div>
+                  <div style={{height: '300px', width: '300px', float: 'right'}}>
+                        <SimpleMap lat={this.event.latitude} lng={this.event.longitude}/>
+                    </div>
+                </div>
               </p>
-              <p className="card-text">{this.event.content}</p>
             </div>
           </div>
         </div>
@@ -177,11 +195,28 @@ export class EventInfo extends Component<{ match: { params: { eventId: number } 
       .getEvent(this.props.match.params.eventId)
       .then(event => {
         this.event = event;
+        userService
+          .getCurrentUser()
+          .then(user => {
+            this.user = user;
+            if(this.user.rank === 3 && this.user.munId === this.event.munId){
+              this.isMunEmployee = true;
+            }})
+          .catch(e => console.log(e));
         eventCategoryService
           .getCategory(event.categoryId)
           .then(eventCategory => (this.eventCategory = eventCategory))
           .catch((error: Error) => Alert.danger(error.message));
       })
       .catch((error: Error) => Alert.danger(error.message));
+  }
+
+  delete(){
+    if (confirm("Are you sure?")) {
+      eventService
+        .deleteEvent(this.event.eventId)
+        .then(e => history.push('/kommune/' + this.user.munId))
+        .catch(e => console.log(e));
+    }
   }
 }
