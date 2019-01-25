@@ -1,25 +1,13 @@
 import * as React from 'react';
-import { Component } from 'react-simplified';
-import {
-  Alert,
-  NavBar,
-  Form,
-  Card,
-  Button,
-  DropdownHeader,
-  DropdownFooter,
-  DropdownDivider,
-  DropdownItem
-} from '../../widgets';
-import { municipalService } from '../../services/MunicipalService.js';
-import { tokenManager } from '../../tokenManager';
-import { history } from '../../index';
-import { Municipal } from '../../models/Municipal';
-import { userService } from '../../services/UserService';
-import { UserMenu } from './UserMenu';
-import { CompanyMenu } from './CompanyMenu';
-import { MunEmployeeMenu } from './MunEmployeeMenu';
-import { AdminMenu } from './AdminMenu';
+import {Component} from 'react-simplified';
+import {NavBar} from '../../widgets';
+import {tokenManager} from '../../tokenManager';
+import {history} from '../../index';
+import {userService} from '../../services/UserService';
+import {UserMenu} from './UserMenu';
+import {CompanyMenu} from './CompanyMenu';
+import {MunEmployeeMenu} from './MunEmployeeMenu';
+import {AdminMenu} from './AdminMenu';
 
 export class Menu extends Component {
   user = null;

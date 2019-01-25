@@ -145,7 +145,7 @@ export default class EventForm extends Component {
           <Form.FileInput>Legg til bilde (valgfritt) </Form.FileInput>
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
-              <HoverButton onclick={this.save} text="Registrer Event" />
+              <HoverButton type="submit" onclick={this.save} text="Registrer Event" />
             </div>
           </div>
         </form>
