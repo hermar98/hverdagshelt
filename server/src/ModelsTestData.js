@@ -647,7 +647,7 @@ class ModelsTestData {
           userId: 1,
           firstName: 'Privat',
           lastName: 'Person',
-          email: 'privat@hh.no',
+          email: 'sander-nico@hotmail.com',
           rank: 1,
           salt: 'a83f4da094cc247b',
           hashStr:
