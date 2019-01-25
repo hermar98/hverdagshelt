@@ -19,6 +19,7 @@ import { createMapOptions, MyGreatPlace, Search } from '../map/map';
 import { mapService } from '../../services/mapService';
 import { municipalService } from '../../services/MunicipalService';
 import { Fragment } from 'react';
+import UploadImageButton from "../image/UploadImageButton";
 
 export default class EventForm extends Component {
   event = new Event();
@@ -32,6 +33,7 @@ export default class EventForm extends Component {
   startTime = null;
   endDate = Date;
   endTime = null;
+  upload: UploadImageButton = null;
 
   upload: UploadImageButton = null;
 
@@ -146,11 +148,16 @@ export default class EventForm extends Component {
               <div className="mapcontainer">{this.renderMap()}</div>
             </div>
           </div>
+          <div className="form-group row mt-4 justify-content-center">
+            <div className="col-12 col-md-4 justify-content-center">
           <UploadImageButton
             ref={boy => {
               this.upload = boy;
             }}
           />
+            </div>
+          </div>
+          <Form.FileInput>Legg til bilde (valgfritt) </Form.FileInput>
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
               <HoverButton type="submit" onclick={this.save} text="Registrer Event" />
@@ -204,7 +211,9 @@ export default class EventForm extends Component {
       return;
     }
 
-    this.event.image = 'imagefile.img';
+    let image = this.upload.uploadEventImage();
+    console.log(image)
+    this.event.image = image;
     this.event.longitude = this.lng;
     this.event.latitude = this.lat;
     this.event.timeStart = moment(this.startDate + ' ' + this.startTime);
@@ -215,13 +224,15 @@ export default class EventForm extends Component {
 
     // console.log(this.event.image);
 
-    eventService
-      .addEvent(this.event)
-      .then(res => (this.event.eventId = res.eventId))
-      .then(history.push('/kommune/' + this.event.munId))
-      .catch((error: Error) => Alert.danger(error.message));
-
-    this.upload.uploadEventImage(this.event);
+    this.upload.uploadEventImage()
+      .then(e => {
+          this.event.image = e
+          eventService
+            .addEvent(this.event)
+            .then(history.push('/kommune/' + this.event.munId))
+            .catch((error: Error) => Alert.danger(error.message));
+        }
+      );
   }
 
   mounted() {

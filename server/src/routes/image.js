@@ -98,6 +98,39 @@ app.post('/secure/imageUpload', (req: Request, res: Response) => {
   });
 });
 
+app.post('/secure/eventImageUpload', (req: Request, res: Response) => {
+  console.log("WELCOME");
+  console.log(req.body.imageSource);
+  let url = "imagefile";
+
+  cloudinary.config({
+    api_key: '116338133913663',
+    cloud_name: 'hverdagshelt',
+    api_secret: '3jKfbWIScMM2x_iVi78AfKC4yDg'
+  });
+
+  if(!req.body.imageSource){
+    res.sendStatus(200);
+    console.log("shit, no imageSource");
+    return null;
+  } else{
+    console.log(req.body.imageSource);
+  }
+
+  cloudinary.v2.uploader.upload(req.body.imageSource, function(error, result) {
+    if(!result){
+      res.sendStatus(200);
+      console.log("Shit boy, imageUpload failed");
+      return null;
+    } else{
+      url = result.url;
+      console.log("imageupload sucess " + result.url);
+    }
+  });
+  return url;
+});
+
+
 app.post('/image', (req: Request, res: Response) => {
   // const values = Object.values(req.files);
   // const promises = values.map(image => cloudinary.uploader.upload(image.path));
