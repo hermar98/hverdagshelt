@@ -22,7 +22,7 @@ let formatDate = function (date: Date) {
         return str;
     }
     return;
-}
+};
 
 
 /*
@@ -84,7 +84,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                             userService.getCurrentUser()
                                                 .then(user => {
                                                     rank = user.rank;
-                                                    if(rank === 3) {
+                                                    if(rank === 3 || rank === 2) {
                                                         this.setState({
                                                             clickedStatus: !this.state.clickedStatus
                                                         })
@@ -115,7 +115,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                 <h4>&nbsp;Bilder</h4>
                                 <div className="flex-container">
                                     {this.images.map(image => {
-                                        return <img className="issue-image" src={image.imageSource} />
+                                        return <img className="issue-image" src={image.imageSource} alt="issue image"/>
                                     })}
                                 </div>
                             </div>
@@ -184,7 +184,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     }
 
     renderAddButton(){
-        if (this.rank === 3 || this.user.userId === this.issue.userId) {
+        if (this.rank === 3 || this.rank === 2 || this.user.userId === this.issue.userId) {
             return (
                 <div>
                     <button ref={this.addFeedbackButton} className="btn" type="button"
@@ -193,7 +193,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                 this.addFeedbackForm.current.classList.remove('show-issue');
                                 window.scrollBy(0, 250);
                             }}>
-                        <img id="add-image-button" src="../../images/add.png"/>
+                        <img id="add-image-button" src="../../images/add.png" alt="add button"/>
                     </button>
                 </div>
             )
@@ -241,27 +241,27 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
         this.issueText = this.issue.content;
         let inp = document.createElement('textarea');
         let btn = document.createElement('button');
-        let text = document.getElementById('issue-large-text')
-        this.bodyRef.current.removeChild(text)
-        inp.id = 'edit-input-feedback'
-        inp.value = this.issueText
-        inp.onchange = (event) => (this.issueText = event.target.value)
-        inp.classList.add('form-control')
-        btn.id = 'edit-button-feedback'
-        btn.onclick = () => this.onEditComplete(inp, btn, text)
-        btn.classList.add('btn')
-        btn.innerHTML = "Endre"
-        this.bodyRef.current.append(inp)
+        let text = document.getElementById('issue-large-text');
+        this.bodyRef.current.removeChild(text);
+        inp.id = 'edit-input-feedback';
+        inp.value = this.issueText;
+        inp.onchange = (event) => (this.issueText = event.target.value);
+        inp.classList.add('form-control');
+        btn.id = 'edit-button-feedback';
+        btn.onclick = () => this.onEditComplete(inp, btn, text);
+        btn.classList.add('btn');
+        btn.innerHTML = "Endre";
+        this.bodyRef.current.append(inp);
         this.bodyRef.current.append(btn)
     }
 
     onEditComplete (inp, btn, text) {
-        this.issue.content = this.issueText
+        this.issue.content = this.issueText;
         issueService.updateIssue(this.issue)
             .then()
-            .catch(error => console.error("Error: ", error))
-        this.bodyRef.current.removeChild(inp)
-        this.bodyRef.current.removeChild(btn)
+            .catch(error => console.error("Error: ", error));
+        this.bodyRef.current.removeChild(inp);
+        this.bodyRef.current.removeChild(btn);
         this.bodyRef.current.append(text)
     }
 

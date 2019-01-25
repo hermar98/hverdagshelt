@@ -1,21 +1,9 @@
 import * as React from 'react';
-import { Component } from 'react-simplified';
-import {
-  Alert,
-  NavBar,
-  Form,
-  Card,
-  Button,
-  DropdownHeader,
-  DropdownFooter,
-  DropdownDivider,
-  DropdownItem
-} from '../../widgets';
-import { municipalService } from '../../services/MunicipalService.js';
-import { tokenManager } from '../../tokenManager';
-import { history } from '../../index';
-import { Municipal } from '../../models/Municipal';
-import { userService } from '../../services/UserService';
+import {Component} from 'react-simplified';
+import {DropdownDivider, DropdownFooter, DropdownHeader, DropdownItem, NavBar} from '../../widgets';
+import {tokenManager} from '../../tokenManager';
+import {history} from '../../index';
+import {userService} from '../../services/UserService';
 
 export class CompanyMenu extends Component {
   user = null;
@@ -70,7 +58,7 @@ export class CompanyMenu extends Component {
     history.push('/');
   }
   toCompanyHome() {
-    history.push('/saker');
+    history.push('/bedrift');
     this.activeMyIssues = 'btnfocus';
     this.activeProfile = '';
   }

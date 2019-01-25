@@ -1,13 +1,12 @@
 // @flow
 
 import * as React from 'react';
-import { Component } from 'react-simplified';
+import {Component} from 'react-simplified';
 import {UserProfilePage} from "./UserProfilePage";
 import {AdminProfilePage} from "./AdminProfilePage";
-import { userService } from '../../../services/UserService';
+import {userService} from '../../../services/UserService';
 import {tokenManager} from '../../../tokenManager.js'
-import { municipalService } from '../../../services/MunicipalService';
-import { history } from '../../../index';
+import {history} from '../../../index';
 import {MunEmployeeProfilePage} from "./MunEmployeeProfilePage";
 import {ContractorProfilePage} from "./ContractorProfilePage";
 

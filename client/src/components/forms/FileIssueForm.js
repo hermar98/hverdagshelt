@@ -1,22 +1,20 @@
 // @flow
 
-import ReactDOM from 'react-dom';
 import * as React from 'react';
-import { Fragment } from 'react';
-import { Component } from 'react-simplified';
-import { Issue } from '../../models/Issue.js';
-import { issueCategoryService } from '../../services/IssueCategoryService.js';
-import { Alert, Form, Card, Button } from '../../widgets';
-import { history } from '../../index';
+import {Fragment} from 'react';
+import {Component} from 'react-simplified';
+import {Issue} from '../../models/Issue.js';
+import {issueCategoryService} from '../../services/IssueCategoryService.js';
+import {Alert, Card, Form} from '../../widgets';
+import {history} from '../../index';
 import GoogleMap from 'google-map-react';
 import isEmpty from 'lodash.isempty';
-import { tokenManager } from '../../tokenManager';
-import { userService } from '../../services/UserService';
+import {userService} from '../../services/UserService';
 import UploadImageButton from '../image/UploadImageButton';
-import { HoverButton } from '../issueViews/issueViews';
-import { createMapOptions, MyGreatPlace, Search } from '../map/map';
-import { mapService } from '../../services/mapService';
-import { municipalService } from '../../services/MunicipalService';
+import {HoverButton} from '../issueViews/issueViews';
+import {createMapOptions, MyGreatPlace, Search} from '../map/map';
+import {mapService} from '../../services/mapService';
+import {municipalService} from '../../services/MunicipalService';
 
 export default class RegisterIssue extends Component {
   issue = new Issue();
@@ -170,7 +168,7 @@ export default class RegisterIssue extends Component {
     this.issue.longitude = this.lng;
     this.issue.image = '';
 
-    this.upload.printFaenHode(this.issue);
+    this.upload.printHode(this.issue);
   }
 
   mounted() {

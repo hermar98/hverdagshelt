@@ -1,19 +1,15 @@
-import ReactDOM from 'react-dom';
 import * as React from 'react';
-import { Component, sharedComponentData } from 'react-simplified';
+import {Component} from 'react-simplified';
 
-import { Alert, NavBar, Form, Card, Button } from '../../../widgets';
+import {Card} from '../../../widgets';
 import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
-import { userMunicipalService } from '../../../services/UserMunicipalService';
-import { autocomplete, glob } from '../../../../public/autocomplete';
-import { IssueSmall, IssueNormal, IssueOverviewSmall, ImageButton } from '../../issueViews/issueViews';
-import { tokenManager } from '../../../tokenManager';
-import { userService } from '../../../services/UserService';
-import { issueService } from '../../../services/IssueService';
-import { municipalService } from '../../../services/MunicipalService';
-import { User } from '../../../models/User';
-import { Issue } from '../../../models/Issue';
-import { Municipal } from '../../../models/Municipal';
+import {IssueOverviewSmall} from '../../issueViews/issueViews';
+import {userService} from '../../../services/UserService';
+import {userIssueService} from '../../../services/UserIssues';
+import {municipalService} from '../../../services/MunicipalService';
+import {User} from '../../../models/User';
+import {Issue} from '../../../models/Issue';
+import {Municipal} from '../../../models/Municipal';
 
 export class ContractorProfilePage extends Component {
   user: User = new User();
@@ -24,14 +20,14 @@ export class ContractorProfilePage extends Component {
     userService
       .getCurrentUser()
       .then(rows =>{
-        this.user = rows
+        this.user = rows;
         municipalService
           .getMunicipal(this.user.munId)
           .then(mun => this.municipal = mun)
           .catch(error => console.log(error));
 
-        issueService
-            .getIssuesByUser(this.user.userId)
+        userIssueService
+            .getUserIssues(this.user.userId)
             .then(rows => (this.issues = rows))
             .catch(error => console.log(error));
       })
