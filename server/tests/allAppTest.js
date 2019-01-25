@@ -77,9 +77,9 @@ describe('User tests', () => {
         console.log(response.body);
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
-        let userCount = await User.count();
+        let userCount = 4;
         console.log(userCount);
-        expect(response.body.length).toEqual(userCount-2);
+        expect(response.body.length).toEqual(userCount);
     });
 
     //Get one user  with id
@@ -90,10 +90,10 @@ describe('User tests', () => {
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
 
-        expect(response.body.firstName).toBe('Vegard');
-        expect(response.body.lastName).toBe('Andersson');
-        expect(response.body.email).toBe('test@test.no');
-        expect(response.body.rank).toBe(4);
+        expect(response.body.firstName).toBe('Privat');
+        expect(response.body.lastName).toBe('Person');
+        expect(response.body.email).toBe('privat@hh.no');
+        expect(response.body.rank).toBe(1);
         expect(response.body.salt).toBe('a83f4da094cc247b');
         expect(response.body.hashStr).toBe(
             '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722'
@@ -127,9 +127,9 @@ describe('User tests', () => {
         console.log(response.body);
 
         expect(response.body.firstName).toBe('Jørgen');
-        expect(response.body.lastName).toBe('Andersson');
-        expect(response.body.email).toBe('test@test.no');
-        expect(response.body.rank).toBe(4);
+        expect(response.body.lastName).toBe('Person');
+        expect(response.body.email).toBe('privat@hh.no');
+        expect(response.body.rank).toBe(1);
         expect(response.body.salt).toBe('a83f4da094cc247b');
         expect(response.body.hashStr).toBe(
             '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722'
@@ -151,7 +151,7 @@ describe('User tests', () => {
 
         expect(response.body.firstName).toBe('Jørgen');
         expect(response.body.email).toBe('j@j.j');
-        expect(response.body.rank).toBe(4);
+        expect(response.body.rank).toBe(1);
     });
 
     //Delete user
@@ -247,11 +247,11 @@ describe('Event tests', () => {
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
 
-        expect(response.body.title).toBe('party at the house man!');
-        expect(response.body.content).toBe('Det skal være party at the house!');
-        expect(response.body.longitude).toBe(60.652168);
-        expect(response.body.latitude).toBe(10.822102);
-        expect(response.body.userId).toBe(1);
+        expect(response.body.title).toBe('Konsert med Bjarne Brøndbo');
+        expect(response.body.content).toBe('Bjarne Brøndbo kommer snart til Østre Toten! Billetter til salgs nå');
+        expect(response.body.longitude).toBe(10.815972);
+        expect(response.body.latitude).toBe(60.677127);
+        expect(response.body.userId).toBe(3);
         expect(response.body.categoryId).toBe(1);
     });
     //Update one event with id
@@ -374,7 +374,7 @@ describe('Issue tests', () => {
         expect(response.type).toEqual('application/json');
 
         expect(response.body.issueId).toBe(1);
-        expect(response.body.title).toBe('Dumme folk ødeleger lømp');
+        expect(response.body.title).toBe(' - ');
         /*expect(response.body.content).toBe(
           'Ein artikkel er ein sakprosasjanger som legg vekt på saksinnhaldet medan personlege trekk ved teksten er nedtona. Oppbygginga av ein artikkel er logisk og velor\n' +
             'dna og følgjer ofte ei klassisk tredeling med innleiing, midtdel og konklusjon. Språket er normalprosa med moderat bruk av litterære verkemiddel. Det er stort spenn i meiningsinnhald\n' +
@@ -382,8 +382,8 @@ describe('Issue tests', () => {
             'evet i ei avis. Artikkelsjangrane varierer også mykje i lengde og informasjonsmengde. Her utgjer den minste nyhendeartikkelen i ei avis, notisen, eit ytterpunkt, medan fagartikkelen\n' +
             'er døme på artiklar som kan vera lange og innhaldsrike'
         );*/
-        expect(response.body.longitude).toBe(60.656877);
-        expect(response.body.latitude).toBe(10.824107);
+        expect(response.body.longitude).toBe(10.426896);
+        expect(response.body.latitude).toBe(63.424035);
         //expect(response.body.munId).toBe(2012);
         //expect(response.body.userId).toBe(1);
         //expect(response.body.categoryId).toBe(1);
@@ -409,7 +409,7 @@ describe('Issue tests', () => {
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
 
-        expect(response.body.length).toEqual(3);
+        expect(response.body.length).toEqual(11);
     });
     //Update issue with id
     test('PUT /issues/:id', async () => {
@@ -521,12 +521,12 @@ describe('Issue Category Test', () => {
 describe('userIssues tests',() => {
     //GET /users/:id/issues
     test('GET /users/:id/issues', async ()=>{
-        const r1 = await request(app).post('/users/1/issues/2 ').set({ 'x-access-token': token });
-        const r2 = await request(app).post('/users/1/issues/3').set({ 'x-access-token': token });
+        const r1 = await request(app).post('/users/4/issues/2 ').set({ 'x-access-token': token });
+        const r2 = await request(app).post('/users/4/issues/3').set({ 'x-access-token': token });
         expect(r1.statusCode).toBe(200);
         expect(r2.statusCode).toBe(200);
 
-        const response = await request(app).get('/users/1/issues').set({ 'x-access-token': token });
+        const response = await request(app).get('/users/4/issues').set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
         console.log(response.body);
@@ -539,7 +539,7 @@ describe('userIssues tests',() => {
     test('POST /users/:userId/issues/:issueId', async () => {
         let count = await UserIssue.count(); // entries in database
         const response = await request(app)
-            .post('/users/1/issues/4')
+            .post('/users/4/issues/9')
             .set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(await UserIssue.count()).toEqual(count + 1);
@@ -548,7 +548,7 @@ describe('userIssues tests',() => {
     test('DELETE /users/:userId/issues/:issueId', async () => {
         let count = await UserIssue.count();
         const response = await request(app)
-            .delete('/users/1/issues/2')
+            .delete('/users/4/issues/2')
             .set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(await UserIssue.count()).toBe(count - 1);

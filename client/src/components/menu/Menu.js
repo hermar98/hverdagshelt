@@ -1,13 +1,13 @@
 import * as React from 'react';
-import {Component} from 'react-simplified';
-import {NavBar} from '../../widgets';
-import {tokenManager} from '../../tokenManager';
-import {history} from '../../index';
-import {userService} from '../../services/UserService';
-import {UserMenu} from './UserMenu';
-import {CompanyMenu} from './CompanyMenu';
-import {MunEmployeeMenu} from './MunEmployeeMenu';
-import {AdminMenu} from './AdminMenu';
+import { Component } from 'react-simplified';
+import { NavBar } from '../../widgets';
+import { tokenManager } from '../../tokenManager';
+import { history } from '../../index';
+import { userService } from '../../services/UserService';
+import { UserMenu } from './UserMenu';
+import { CompanyMenu } from './CompanyMenu';
+import { MunEmployeeMenu } from './MunEmployeeMenu';
+import { AdminMenu } from './AdminMenu';
 
 export class Menu extends Component {
   user = null;
@@ -42,41 +42,12 @@ export class Menu extends Component {
       </div>
     );
   }
-  toProfile() {
-    history.push('/profil');
-  }
-
-  toFeed() {
-    history.push('/feed');
-  }
 
   toLogin() {
     history.push('/loggInn');
   }
   toRegister() {
     history.push('/registrer');
-  }
-  toLogout() {
-    tokenManager.deleteToken();
-    history.push('/');
-  }
-  toRegisterIssue() {
-    history.push('/registrerSak');
-  }
-  toRegisterEvent() {
-    history.push('/registrerEvent');
-  }
-  toMunEmployeeProfile() {
-    history.push('/profil');
-  }
-  toMunEmployeeHome() {
-    history.push('/kommune/' + localStorage.getItem('munId') + '/saker'); //TODO: ansatt hjemside
-  }
-  toCompanyEmployeeHome() {
-    history.push('/saker');
-  }
-  toAdminHome() {
-    history.push('/admin');
   }
 
   changeMunicipal() {

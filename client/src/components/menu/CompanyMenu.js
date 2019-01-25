@@ -22,7 +22,7 @@ export class CompanyMenu extends Component {
   municipal = new Municipal();
   munId = localStorage.getItem('munId');
   activeProfile = '';
-  activeHome = '';
+  activeMyIssues = '';
 
   mounted() {
     userService
@@ -49,8 +49,8 @@ export class CompanyMenu extends Component {
             >
               Hverdagshelt
             </NavBar.Brand>
-            <NavBar.Button className={this.activeHome} onClick={this.toCompanyHome}>
-              Hjem
+            <NavBar.Button className={this.activeMyIssues} onClick={this.toCompanyHome}>
+              Mine Saker
             </NavBar.Button>
             <NavBar.Dropdown className={this.activeProfile} title={this.user.firstName + ' ' + this.user.lastName}>
               <DropdownHeader>{this.user.email}</DropdownHeader>
@@ -68,7 +68,7 @@ export class CompanyMenu extends Component {
   toProfile() {
     history.push('/profil');
     this.activeProfile = 'btnfocus';
-    this.activeHome = '';
+    this.activeMyIssues = '';
   }
   toLogout() {
     tokenManager.deleteToken();
@@ -77,11 +77,11 @@ export class CompanyMenu extends Component {
   }
   toCompanyHome() {
     history.push('/saker');
-    this.activeHome = 'btnfocus';
+    this.activeMyIssues = 'btnfocus';
     this.activeProfile = '';
   }
   toCompanyHome2() {
-    this.activeHome = 'btnfocus';
+    this.activeMyIssues = 'btnfocus';
     this.activeProfile = '';
   }
 }
