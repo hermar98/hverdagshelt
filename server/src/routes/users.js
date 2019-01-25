@@ -90,9 +90,28 @@ app.put('/users/:id', (req: Request, res: Response) => {
 
     let tokenData = tokenManager.verifyToken(req.headers['x-access-token']);
     if (tokenData) {
-        if (tokenData.rank === 4) {
-            let passwordSalt = passwordHash.genRandomString(16);
-            let passwordData = passwordHash.sha512(password, passwordSalt);
+        if (tokenData.rank === 4 || tokenData.userId === Number(req.params.id)) {
+            if(password) {
+                let passwordSalt = passwordHash.genRandomString(16);
+                let passwordData = passwordHash.sha512(password, passwordSalt);
+
+                return User.update(
+                    {
+                        firstName: firstName,
+                        lastName: lastName,
+                        email: email,
+                        rank: rank,
+                        munId: munId,
+                        salt: passwordSalt,
+                        hashStr: passwordData.passwordHash
+                    },
+                    { where: { userId: req.params.id } }
+                ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
+                    .catch(err => {
+                        console.log(err);
+                        res.sendStatus(409);
+                    });
+            }
 
             return User.update(
                 {
@@ -101,8 +120,6 @@ app.put('/users/:id', (req: Request, res: Response) => {
                     email: email,
                     rank: rank,
                     munId: munId,
-                    salt: passwordSalt,
-                    hashStr: passwordData.passwordHash
                 },
                 { where: { userId: req.params.id } }
             ).then(count => (count ? res.sendStatus(200) : res.sendStatus(404)))
@@ -110,6 +127,7 @@ app.put('/users/:id', (req: Request, res: Response) => {
                     console.log(err);
                     res.sendStatus(409);
                 });
+
         } else {
             res.sendStatus(401);
         }

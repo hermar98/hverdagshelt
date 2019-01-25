@@ -16,13 +16,6 @@ export class ContractorView extends Component<{ match: { params: { munId: number
           <div className="issue-overview-left">
             <IssueOverviewNormal issues={this.issues} />
           </div>
-          <div className="issue-options">
-            <div className="buttons row justify-content-center">
-              <HoverButton onclick={console.log('hello')} text="Trykk" />
-              <HoverButton onclick={console.log('hello')} text="Trykk" />
-              <HoverButton onclick={console.log('hello')} text="Trykk" />
-            </div>
-          </div>
         </div>
       </div>
     );
