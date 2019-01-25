@@ -12,6 +12,8 @@ import { AdminMenu } from './AdminMenu';
 export class Menu extends Component {
   user = null;
 
+  activeLogin = '';
+  activeRegister = '';
   mounted() {
     userService
       .getCurrentUser()
@@ -35,9 +37,15 @@ export class Menu extends Component {
     return (
       <div>
         <NavBar>
-          <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
-          <NavBar.Button onClick={this.toLogin}>Logg Inn</NavBar.Button>
-          <NavBar.Button onClick={this.toRegister}>Registrer Bruker</NavBar.Button>
+          <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'} onClick={this.toHome}>
+            Hverdagshelt
+          </NavBar.Brand>
+          <NavBar.Button className={this.activeLogin} onClick={this.toLogin}>
+            Logg Inn
+          </NavBar.Button>
+          <NavBar.Button className={this.activeRegister} onClick={this.toRegister}>
+            Registrer Bruker
+          </NavBar.Button>
         </NavBar>
       </div>
     );
@@ -45,13 +53,16 @@ export class Menu extends Component {
 
   toLogin() {
     history.push('/loggInn');
+    this.activeLogin = 'btnfocus';
+    this.activeRegister = '';
   }
   toRegister() {
     history.push('/registrer');
+    this.activeRegister = 'btnfocus';
+    this.activeLogin = '';
   }
-
-  changeMunicipal() {
-    localStorage.removeItem('munId');
-    history.push('/');
+  toHome() {
+    this.activeRegister = '';
+    this.activeLogin = '';
   }
 }

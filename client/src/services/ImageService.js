@@ -28,6 +28,14 @@ class ImageService{
         });
     }
 
+      uploadEventImage(image: Image): Promise<string> {
+        let token = localStorage.getItem('token');
+        if (token) token = JSON.parse(token).jwt;
+        return service.post('/secure/eventImageUpload', image, {
+          headers: { 'x-access-token': token }
+        });
+      }
+
     deleteImage(imageId: number): Promise<void> {
         let token = localStorage.getItem('token');
         if (token) token = JSON.parse(token).jwt;

@@ -12,6 +12,7 @@ import { EventCategory } from '../../models/EventCategory';
 import { sharedComponentData } from 'react-simplified';
 import { Alert } from '../../widgets';
 import { Component } from 'react-simplified';
+import {history} from "../../index";
 
 let sharedIssueCategories = sharedComponentData({issueCategory: []});
 let sharedEventCategories = sharedComponentData({eventCategory: []});
@@ -99,6 +100,22 @@ export class AdminHandleCategories extends Component {
       .getCategories()
       .then(eCat => (sharedEventCategories.eventCategory = eCat))
       .catch((error: Error) => Alert.danger(error.message));
+
+      userService
+          .getCurrentUser()
+          .then(user => {
+              if (user.rank === 1) {
+                  history.push('/minSide');
+              } else if (user.rank === 2) {
+                  history.push('/bedrift');
+              } else if (user.rank === 3) {
+                  history.push('/kommune/' + user.munId);
+              }
+          })
+          .catch((error : Error) => {
+              console.log(error);
+              history.push('/');
+          })
   }
 
 

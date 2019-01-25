@@ -84,7 +84,6 @@ export class FeedPage extends Component {
                       id="statusSelect"
                       onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
                         this.issueSort = event.target.value;
-                        this.sortIssues();
                       }}
                     >
                       <option value={1}>Nyeste</option>
@@ -107,12 +106,22 @@ export class FeedPage extends Component {
                             );
                           })
                           .sort((a, b) => {
-                            if (a.createdAt < b.createdAt) {
-                              return 1;
-                            } else if (a.createdAt > b.createdAt) {
-                              return -1;
-                            } else {
+                            if(this.issueSort == 1){
+                              if (a.createdAt < b.createdAt) {
+                                return 1;
+                              } else if (a.createdAt > b.createdAt) {
+                                return -1;
+                              } else {
                               return 0;
+                            }
+                            }else if(this.issueSort == 2){
+                              if (a.createdAt > b.createdAt) {
+                                return 1;
+                              } else if (a.createdAt < b.createdAt) {
+                                return -1;
+                              } else {
+                                return 0;
+                              }
                             }
                           })
                           .map(e => (
@@ -161,7 +170,6 @@ export class FeedPage extends Component {
                     id="statusSelect"
                     onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
                       this.eventSort = event.target.value;
-                      this.sortEvents();
                     }}
                   >
                     <option value={2}>Eldste</option>
@@ -182,13 +190,22 @@ export class FeedPage extends Component {
                             );
                           })
                           .sort((a, b) => {
-                            if (a.timeStart > b.timeStart) {
-                              return 1;
-                            } else if (a.timeStart < b.timeStart) {
-                              return -1;
-                            } else {
-                              return 0;
-                            }
+                            if(this.eventSort == 2) {
+                              if (a.timeStart > b.timeStart) {
+                                return 1;
+                              } else if (a.timeStart < b.timeStart) {
+                                return -1;
+                              } else {
+                                return 0;
+                              }
+                            }else if(this.eventSort == 1)
+                              if (a.timeStart < b.timeStart) {
+                                return 1;
+                              } else if (a.timeStart > b.timeStart) {
+                                return -1;
+                              } else {
+                                return 0;
+                              }
                           })
                           .map(e => (
                             <li key={e.eventId}>
@@ -219,10 +236,21 @@ export class FeedPage extends Component {
   }
 
   mounted() {
+    window.scrollTo(0,0);
+    sharedMunicipals = sharedComponentData({ municipals: [] });
+    sharedIssues = sharedComponentData({ issues: [] });
+    sharedEvents = sharedComponentData({ events: [] });
     userService
       .getCurrentUser()
       .then(user => {
         this.user = user;
+        if (user.rank === 2) {
+            history.push('/bedrift');
+        } else if (user.rank === 3) {
+            history.push('/kommune/' + user.munId);
+        } else if (user.rank === 4) {
+            history.push('/admin');
+        }
         //GET all municipals a user has subscribed to
         userMunicipalService
           .getUserMunicipals(this.user.userId)
@@ -252,7 +280,10 @@ export class FeedPage extends Component {
           })
           .catch((error: Error) => Alert.danger(error.message));
       })
-      .catch((error: Error) => console.log(error));
+      .catch((error: Error) => {
+        console.log(error);
+        history.push('/');
+      });
 
     //GET all issueCategories
     issueCategoryService
@@ -264,61 +295,8 @@ export class FeedPage extends Component {
       .getCategories()
       .then(cat => (this.eCategories = cat))
       .catch((error: Error) => Alert.danger(error.message));
-
-    console.log(this.date);
   }
 
-  sortIssues() {
-    if (this.issueSort == 1) {
-      sharedIssues.issues.sort(function(a, b) {
-        if (a.createdAt < b.createdAt) {
-          return 1;
-        } else if (a.createdAt > b.createdAt) {
-          return -1;
-        } else {
-          return 0;
-        }
-      });
-      console.log(this.issueSort);
-    } else if (this.issueSort == 2) {
-      sharedIssues.issues.sort(function(a, b) {
-        if (a.createdAt > b.createdAt) {
-          return 1;
-        } else if (a.createdAt < b.createdAt) {
-          return -1;
-        } else {
-          return 0;
-        }
-      });
-      console.log(this.issueSort);
-    }
-  }
-
-  sortEvents() {
-    if (this.eventSort == 1) {
-      sharedEvents.events.sort(function(a, b) {
-        if (a.timeStart < b.timeStart) {
-          return 1;
-        } else if (a.timeStart > b.timeStart) {
-          return -1;
-        } else {
-          return 0;
-        }
-      });
-      console.log(this.eventSort);
-    } else if (this.eventSort == 2) {
-      sharedEvents.events.sort(function(a, b) {
-        if (a.timeStart > b.timeStart) {
-          return 1;
-        } else if (a.timeStart < b.timeStart) {
-          return -1;
-        } else {
-          return 0;
-        }
-      });
-      console.log(this.eventSort);
-    }
-  }
 
   toProfile() {
     history.push('/profil');

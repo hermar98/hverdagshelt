@@ -22,7 +22,7 @@ export class UserMenu extends Component {
   municipal = new Municipal();
   munId = localStorage.getItem('munId');
   activeProfile = '';
-  activeFeed = '';
+  activeFeed = 'btnfocus';
   activeIssue = '';
 
   mounted() {
@@ -65,7 +65,7 @@ export class UserMenu extends Component {
     history.push('/profil');
     this.activeProfile = 'btnfocus';
     this.activeFeed = '';
-    this.activeRegEvent = '';
+    this.activeRegIssue = '';
   }
 
   toFeed() {

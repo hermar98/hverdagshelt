@@ -45,6 +45,25 @@ export default class Login extends Component {
     );
   }
 
+  mounted() {
+      userService
+          .getCurrentUser()
+          .then(user => {
+              if (user.rank === 1) {
+                  history.push('/minSide');
+              } else if (user.rank === 2) {
+                  history.push('/bedrift');
+              } else if (user.rank === 3) {
+                  history.push('/kommune/' + user.munId);
+              } else if (user.rank === 4) {
+                  history.push('/admin');
+              }
+          })
+          .catch((error : Error) => {
+              console.log(error);
+          })
+  }
+
   login() {
     if (!this.form || !this.form.checkValidity()) {
       return;

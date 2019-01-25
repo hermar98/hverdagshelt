@@ -54,7 +54,7 @@ if (root)
           <Route exact path="/loggInn" component={LoginPage} />
           <Route exact path="/registrer" component={RegisterPage} />
           <Route exact path="/glemtPassord" component={ForgotPassword} />
-          <Route exact path="/glemtPassord/nullstill" component={NewPasswordPage} />
+          <Route exact path="/glemtPassord/:token" component={NewPasswordPage} />
           <Route exact path="/vilkår" component={TermsOfService} />
           <Route exact path="/profil" component={ProfilePage} />
           <Route exact path="/saker/:issueId" component={IssueLarge} />
@@ -62,18 +62,17 @@ if (root)
           <Route exact path="/registrerEvent" component={RegisterEventPage} />
           <Route exact path="/minSide" component={FeedPage} />
           <Route exact path="/kommune/:munId" component={MunicipalPage} />
-          <Route exact path="/image" component={AlternativeUpload} />
           <Route exact path="/aktiver/:tokenId" component={ActivateAccountPage} />
           <Route exact path="/kommune/:munId/saker" component={IssueView} />
-          <Route exact path="/saker" component={ContractorView} />
+          <Route exact path="/bedrift" component={ContractorView} />
           <Route exact path="/statistikk" component={StatisticsPage} />
           <Route exact path="/admin" component={AdminPage} />
           <Route exact path="/admin/edit/:userId" component={AdminEditPage} />
           <Route exact path="/admin/registrerBruker" component={AdminAddPage} />
           <Route exact path="/admin/administerKategorier" component={AdminHandleCategories} />
           <Route exact path="/hendelser/:eventId" component={EventInfo} />
-          <Route exact path="/map" component={Map} />
           <Route exact path="/delegerSaker" component={ CompanyDelIssuePage} />
+
           <Route path="" component={NotFound} />
         </Switch>
         <Footer />

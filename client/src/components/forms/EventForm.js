@@ -13,7 +13,7 @@ import { tokenManager } from '../../tokenManager';
 import { eventService } from '../../services/EventService';
 import moment from 'moment';
 import { HoverButton } from '../issueViews/issueViews';
-//import { UploadImageButton } from '../../components/image/UploadImageButton';
+import UploadImageButton from '../image/UploadImageButton';
 import { userService } from '../../services/UserService';
 import { createMapOptions, MyGreatPlace, Search } from '../map/map';
 import { mapService } from '../../services/mapService';
@@ -32,6 +32,9 @@ export default class EventForm extends Component {
   startTime = null;
   endDate = Date;
   endTime = null;
+  upload: UploadImageButton = null;
+
+  upload: UploadImageButton = null;
 
   center = { lat: 0, lng: 0 };
   lat = null;
@@ -103,7 +106,7 @@ export default class EventForm extends Component {
                   }
                 }}
               >
-                <option selected disabled value="">
+                <option disabled value="">
                   Velg kategori..
                 </option>
                 {this.categories.map(cat => (
@@ -139,12 +142,17 @@ export default class EventForm extends Component {
             onChange={e => (this.endDate = e.target.value)}
             onChange2={e => (this.endTime = e.target.value)}
           />
-          <div className="form-group row justify-content-center" style={{ height: '300px' }}>
+          <div className="form-group row justify-content-center">
             <div className="col-12 col-md-4 justify-content-center">
               <div className="mapcontainer">{this.renderMap()}</div>
             </div>
           </div>
-          <Form.FileInput>Legg til bilde (valgfritt) </Form.FileInput>
+
+          <UploadImageButton
+            ref={boy => {
+              this.upload = boy;
+            }}
+          />
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
               <HoverButton type="submit" onclick={this.save} text="Registrer Event" />
@@ -198,16 +206,23 @@ export default class EventForm extends Component {
       return;
     }
 
-    this.event.image = 'imagefile.img';
+    let image = this.upload.uploadEventImage();
+    console.log(image);
+    this.event.image = image;
     this.event.longitude = this.lng;
     this.event.latitude = this.lat;
     this.event.timeStart = moment(this.startDate + ' ' + this.startTime);
     this.event.timeEnd = moment(this.endDate + ' ' + this.endTime);
     this.event.munId = this.user.munId;
     this.event.userId = this.user.userId;
+    this.event.image = null;
+
+    // console.log(this.event.image);
 
     eventService
       .addEvent(this.event)
+      .then(res => (this.event.eventId = res.eventId))
+      .then(this.upload.uploadEventImage(this.event))
       .then(history.push('/kommune/' + this.event.munId))
       .catch((error: Error) => Alert.danger(error.message));
   }
@@ -217,14 +232,23 @@ export default class EventForm extends Component {
       .getCurrentUser()
       .then(user => {
         this.user = user;
-        console.log(user.munId);
+        if (user.userId === 1) {
+          history.push('/minSide');
+        } else if (user.userId === 3) {
+          history.push('/kommune/' + user.munId);
+        } else if (user.userId === 4) {
+          history.push('/admin');
+        }
         municipalService
           .getMunicipal(user.munId)
           .then(e =>
             mapService.getLoactionByAdress(e.name).then(d => console.log((this.center = d[0].geometry.location)))
           );
       })
-      .catch((error: Error) => Alert.danger(error.message));
+      .catch((error: Error) => {
+        console.log(error);
+        history.push('/');
+      });
 
     eventCategoryService
       .getCategories()

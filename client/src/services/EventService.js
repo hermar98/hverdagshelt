@@ -1,7 +1,7 @@
 //@flow
-import {Event} from "../models/Event";
-import service from "./Service";
-import {tokenManager} from "../tokenManager";
+import { Event } from '../models/Event';
+import service from './Service';
+import { tokenManager } from '../tokenManager';
 
 class EventService {
   getEvents(): Promise<Event[]> {
@@ -17,11 +17,12 @@ class EventService {
   }
 
   updateEvent(event: Event): Promise<void> {
-      let token = tokenManager.getJwt();
-      tokenManager.getNewToken()
-          .then(newToken => tokenManager.updateToken(newToken))
-          .catch((error: Error) => console.log(error));
-
+    let token = tokenManager.getJwt();
+    tokenManager
+      .getNewToken()
+      .then(newToken => tokenManager.updateToken(newToken))
+      .catch((error: Error) => console.log(error));
+    console.log('Update', event.eventId);
     return service.put('/events/' + event.eventId, event, {
       headers: {
         'x-access-token': token
@@ -30,10 +31,11 @@ class EventService {
   }
 
   addEvent(event: Event): Promise<number> {
-      let token = tokenManager.getJwt();
-      tokenManager.getNewToken()
-          .then(newToken => tokenManager.updateToken(newToken))
-          .catch((error: Error) => console.log(error));
+    let token = tokenManager.getJwt();
+    tokenManager
+      .getNewToken()
+      .then(newToken => tokenManager.updateToken(newToken))
+      .catch((error: Error) => console.log(error));
 
     return service.post('/events', event, {
       headers: {
@@ -43,16 +45,17 @@ class EventService {
   }
 
   deleteEvent(eventId: number): Promise<void> {
-      let token = tokenManager.getJwt();
-      tokenManager.getNewToken()
-          .then(newToken => tokenManager.updateToken(newToken))
-          .catch((error: Error) => console.log(error));
+    let token = tokenManager.getJwt();
+    tokenManager
+      .getNewToken()
+      .then(newToken => tokenManager.updateToken(newToken))
+      .catch((error: Error) => console.log(error));
 
-      return service.delete('/events/' + eventId, {
-        headers: {
-          'x-access-token': token
-        }
-      });
+    return service.delete('/events/' + eventId, {
+      headers: {
+        'x-access-token': token
+      }
+    });
   }
 }
 

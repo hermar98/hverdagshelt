@@ -138,7 +138,7 @@ export class AdminPage extends Component {
                                 };
                             }))
                     )
-                    .catch((error: Error) => Alert.danger(error.message));
+                    .catch((error: Error) => console.log(error));
             })
             .catch((error: Error) => console.log(error));
 
@@ -146,8 +146,18 @@ export class AdminPage extends Component {
             .getCurrentUser()
             .then(user => {
                 this.userId = user.userId;
+                if (user.rank === 1) {
+                    history.push('/minSide');
+                } else if (user.rank === 2) {
+                    history.push('/bedrift');
+                } else if (user.rank === 3) {
+                    history.push('/kommune/' + user.munId);
+                }
             })
-            .catch((error: Error) => console.log(error));
+            .catch((error: Error) => {
+                console.log(error);
+                history.push('/');
+            });
     }
 
     getRankName(rank: number): string {
@@ -303,8 +313,23 @@ export class AdminEditPage extends Component<{ match: { params: { userId: number
     mounted() {
         userService
             .getUser(this.props.match.params.userId)
-            .then(user => (this.user = user))
-            .catch((error: Error) => Alert.danger(error.message));
+            .then(user => this.user = user).catch((error: Error) => Alert.danger(error.message));
+
+        userService
+            .getCurrentUser()
+            .then(user => {
+                if (user.rank === 1) {
+                    history.push('/minSide');
+                } else if (user.rank === 2) {
+                    history.push('/bedrift');
+                } else if (user.rank === 3) {
+                    history.push('/kommune/' + user.munId);
+                }
+            })
+            .catch((error : Error) => {
+                console.log(error);
+                history.push('/');
+            })
     }
 
     save() {

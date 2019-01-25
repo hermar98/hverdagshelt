@@ -5,14 +5,24 @@ import { EventCategory } from '../../models/EventCategory.js';
 import { eventCategoryService } from '../../services/EventCategoryService';
 import { Alert, DisplayEvent } from '../../widgets';
 import { Issue } from '../../models/Issue';
-import {User} from '../../models/User';
-import {ImageButton, Status} from '../issueViews/issueViews';
+import { User } from '../../models/User';
+import { ImageButton, Status } from '../issueViews/issueViews';
 import moment from 'moment';
 import { eventService } from '../../services/EventService';
 import { Event } from '../../models/Event';
-import {SimpleMap} from "../map/map";
-import {userService} from "../../services/UserService";
+import { SimpleMap } from '../map/map';
+import { userService } from '../../services/UserService';
 import { history } from '../../index';
+
+let formatDate = function(date: Date) {
+  if (date != null) {
+    let str: string = date;
+    str = str.substring(0, str.length - 8);
+    str = str.replace('T', ' KL. ');
+    return str;
+  }
+  return;
+};
 
 export class EventPage extends Component {
   events = [];
@@ -47,7 +57,7 @@ export class DisplayEvent2 extends Component<{ event: Event }> {
       <div className="issue-normal" event={this.props.event}>
         <div className="d-flex flex-row issue-flex">
           <div className="p-2">
-            <img className="card-img issue-image" src={this.props.event.image} alt="sak bilde"/>
+            <img className="card-img issue-image" src={this.props.event.image} alt="sak bilde" />
           </div>
           <div className="p-2">
             <h1>{this.props.event.title}</h1>
@@ -105,35 +115,32 @@ export class EventLarge extends Component<{ event: Event }> {
 }
 
 export class EventSmall extends Component<{ event: Event }> {
-  textLength = 50;
+
+    textLength = 50;
 
   render() {
-    return (
-      <div className="card">
-        <a id="a-hover" href={'#/hendelser/' + this.props.event.eventId}>
-          <img src="../../images/arrowRightTrans.png" alt="right arrow" />
-        </a>
-        <div className="card-body">
-          <div className="row">
-            <h5 className="card-title">{this.props.event.title}</h5>
-            <img id="event-image-small" src={this.props.event.image} alt="hendelse bilde" />
+      return (
+          <div className="card event-view">
+              <a id="a-hover" href={"/#/hendelser/" + this.props.event.eventId}>
+                  <img src="../../images/arrowRightTrans.png" />
+              </a>
+              <div className="d-flex flex-row issue-flex">
+                  <div className="issue-image-normal-container">
+                      <img className="issue-image-normal" src={this.props.event.image}/>
+                  </div>
+                  <div>
+                      <div className="card-body">
+                          <h4>{this.props.event.title}</h4>
+                        <p id="issue-normal-content">{(this.props.event.content).substring(0, 90) + " . . ."}</p>
+                      </div>
+                  </div>
+              </div>
+              <div className="card-footer d-flex flex-row justify-content-between">
+                  <h6 className="event-time">{"Fra: " + formatDate(this.props.event.timeStart)}</h6>
+                  <h6 className="event-time">{"Til: " + formatDate(this.props.event.timeEnd)}</h6>
+              </div>
           </div>
-        </div>
-        <div>
-          {this.props.event.content <= this.textLength
-            ? this.props.event.content
-            : this.props.event.content.substring(0, this.textLength) + '...'}
-        </div>
-        <div className="card-footer">
-          <small className="text-muted-left">
-            {'Starter: ' + moment(this.props.event.timeStart).format('DD.MM HH:mm')}
-          </small>
-          <small className="text-muted-right">
-            {'Slutter: ' + moment(this.props.event.timeEnd).format('DD.MM HH:mm')}
-          </small>
-        </div>
-      </div>
-    );
+      )
   }
 
   mounted() {}
@@ -153,35 +160,41 @@ export class EventInfo extends Component<{ match: { params: { eventId: number } 
       <div>
         <div className="container my-4">
           <div className="card">
-            <img className="card-img-top" src={this.event.image} alt="hendelse bilde"/>
+            <img className="card-img-top" src={this.event.image} alt="hendelse bilde" />
             <div className="card-body">
               <div className="row justify-content-between">
-              <h2 className="card-title">{this.event.title}</h2>
-                {this.isMunEmployee ? <div><ImageButton source="../../images/trashcan.png" onclick={this.delete}/></div> : <div></div>}
+                <h2 className="card-title">{this.event.title}</h2>
+                {this.isMunEmployee ? (
+                  <div>
+                    <ImageButton source="../../images/trashcan.png" onclick={this.delete} />
+                  </div>
+                ) : (
+                  <div />
+                )}
               </div>
               <p className="card-text">
                 <div className="row justify-content-between">
-                <div>
-                  <small>
-                  <b>Kategori: </b>
-                  {this.eventCategory.name}
-                  <br />
-                  <b>Fra: </b>
-                  {moment(this.event.timeStart).format('DD.MM.YYYY HH:mm')}
-                  <br />
-                  <b>Til: </b>
-                  {moment(this.event.timeEnd).format('DD.MM.YYYY HH:mm')}
-                  <br />
-                  <b>Sted (koordinater): </b>
-                  {this.event.latitude + ', ' + this.event.longitude}
-                  <br/>
-                  </small>
-                  <br/>
-                  <p className="card-text">{this.event.content}</p>
-                </div>
-                  <div style={{height: '300px', width: '300px', float: 'right'}}>
-                        <SimpleMap lat={this.event.latitude} lng={this.event.longitude}/>
-                    </div>
+                  <div>
+                    <small>
+                      <b>Kategori: </b>
+                      {this.eventCategory.name}
+                      <br />
+                      <b>Fra: </b>
+                      {moment(this.event.timeStart).format('DD.MM.YYYY HH:mm')}
+                      <br />
+                      <b>Til: </b>
+                      {moment(this.event.timeEnd).format('DD.MM.YYYY HH:mm')}
+                      <br />
+                      <b>Sted (koordinater): </b>
+                      {this.event.latitude + ', ' + this.event.longitude}
+                      <br />
+                    </small>
+                    <br />
+                    <p className="card-text">{this.event.content}</p>
+                  </div>
+                  <div style={{ height: '300px', width: '300px', float: 'right' }}>
+                    <SimpleMap lat={this.event.latitude} lng={this.event.longitude} />
+                  </div>
                 </div>
               </p>
             </div>
@@ -200,9 +213,10 @@ export class EventInfo extends Component<{ match: { params: { eventId: number } 
           .getCurrentUser()
           .then(user => {
             this.user = user;
-            if(this.user.rank === 3 && this.user.munId === this.event.munId){
+            if (this.user.rank === 3 && this.user.munId === this.event.munId) {
               this.isMunEmployee = true;
-            }})
+            }
+          })
           .catch(e => console.log(e));
         eventCategoryService
           .getCategory(event.categoryId)
@@ -212,9 +226,9 @@ export class EventInfo extends Component<{ match: { params: { eventId: number } 
       .catch((error: Error) => Alert.danger(error.message));
   }
 
-  delete(){
-    if (confirm("Are you sure?")) {
-      if(this.user.munId === this.event.munId) {
+  delete() {
+    if (confirm('Are you sure?')) {
+      if (this.user.munId === this.event.munId) {
         eventService
           .deleteEvent(this.event.eventId)
           .then(e => history.push('/kommune/' + this.user.munId))

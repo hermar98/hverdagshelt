@@ -25,6 +25,7 @@ export default class RegisterIssue extends Component {
   munId = null;
   munName = null;
   upload: UploadImageButton = null;
+  user = null;
   allMuns = [];
 
   center = { lat: 61.84525971271803, lng: 9.260079962159239 };
@@ -84,7 +85,7 @@ export default class RegisterIssue extends Component {
                   if (this.issue) this.issue.categoryId = parseInt(e.target.value);
                 }}
               >
-                <option disabled selected value="">
+                <option disabled value="">
                   Velg kategori..
                 </option>
                 {this.categories.map(cat => (
@@ -104,7 +105,8 @@ export default class RegisterIssue extends Component {
           />
           <div className="row justify-content-center">
             <div className="col-12 col-md-4 justify-content-center">
-              <label>Velg lokasjon</label><br/>
+              <label>Velg lokasjon</label>
+              <br />
               <small>Skriv inn en adresse eller klikk på kartet.</small>
               <div className="mapcontainer">
                 <Fragment>
@@ -172,10 +174,21 @@ export default class RegisterIssue extends Component {
   }
 
   mounted() {
-    userService
-      .getCurrentUser()
-      .then(user => (this.user = user))
-      .catch((error: Error) => Alert.danger(error.message));
+      userService
+          .getCurrentUser()
+          .then(user => {
+              if (user.rank === 2) {
+                  history.push('/bedrift');
+              } else if (user.rank === 3) {
+                  history.push('/kommune/' + user.munId);
+              } else if (user.rank === 4) {
+                  history.push('/admin');
+              }
+          })
+          .catch((error : Error) => {
+              console.log(error);
+              history.push('/');
+          });
 
     issueCategoryService
       .getCategories()

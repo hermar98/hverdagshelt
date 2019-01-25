@@ -563,7 +563,6 @@ describe('userMunicipals tests',() => {
         const r2 = await request(app).post('/users/1/mun/216').set({ 'x-access-token': token });
         expect(r1.statusCode).toBe(200);
         expect(r2.statusCode).toBe(200);
-        // console.log('POST FINISHED')
         const response = await request(app).get('/users/1/mun').set({ 'x-access-token': token });
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');

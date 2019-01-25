@@ -56,9 +56,9 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
 
     render() {
         if(!this.state.clickedStatus && this.statusSelect.current != null) {
-            this.statusSelect.current.classList.add('show')
+            this.statusSelect.current.classList.add('show-issue')
         }else if(this.statusSelect.current != null){
-            this.statusSelect.current.classList.remove('show')
+            this.statusSelect.current.classList.remove('show-issue')
         }
 
         if(this.state.clickedDelete){
@@ -78,7 +78,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                 <div className="card-body issue-large-card">
                                     <div className="d-flex flex-row">
                                         <p className="date date-large">{formatDate(this.issue.createdAt)}</p>
-                                        <ButtonGroup onclickC={this.onEdit} onclickT={this.onDelete} id={this.issue.userId} />
+                                        <ButtonGroup onclickC={this.onEdit} onclickT={this.onDelete} id={this.issue.userId} status={this.issue.statusId}/>
                                         <StatusButton status={this.issue.statusId} onclick={() => {
                                             let rank = 0;
                                             userService.getCurrentUser()
@@ -98,6 +98,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                             <StatusButton status={1} onclick={() => this.onClick(1)} />
                                             <StatusButton status={2} onclick={() => this.onClick(2)} />
                                             <StatusButton status={3} onclick={() => this.onClick(3)} />
+                                            <StatusButton status={4} onclick={() => this.onClick(4)} />
                                         </div>
                                     </div>
                                     <p className="date date-large">{this.munName + " Kommune"}</p>
@@ -127,7 +128,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                     <div className="feedback-button">
                         { this.renderAddButton() }
                     </div>
-                    <div ref={this.addFeedbackForm} className="feedback-container show">
+                    <div ref={this.addFeedbackForm} className="feedback-container show-issue">
                         <div className="form-group">
                             <textarea className="form-control" placeholder="skriv feedback..." rows={8} value={this.feedbackContent} onChange={
                                 event => (this.feedbackContent = event.target.value)
@@ -188,8 +189,8 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                 <div>
                     <button ref={this.addFeedbackButton} className="btn" type="button"
                             onClick={() => {
-                                this.addFeedbackButton.current.classList.add('show')
-                                this.addFeedbackForm.current.classList.remove('show')
+                                this.addFeedbackButton.current.classList.add('show-issue')
+                                this.addFeedbackForm.current.classList.remove('show-issue')
                                 window.scrollBy(0, 250);
                             }}>
                         <img id="add-image-button" src="../../images/add.png"/>
@@ -223,8 +224,8 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
         feedback.userId = this.user.userId;
         feedbackService.addFeedback(feedback)
             .then(res => {
-                this.addFeedbackButton.current.classList.remove('show')
-                this.addFeedbackForm.current.classList.add('show')
+                this.addFeedbackButton.current.classList.remove('show-issue')
+                this.addFeedbackForm.current.classList.add('show-issue')
                 feedbackService.getFeedbacks(this.props.match.params.issueId)
                     .then(data => {
                         sharedFeedback.feedback = data;
@@ -238,7 +239,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
 
     onEdit() {
         this.issueText = this.issue.content
-        let inp = document.createElement('input')
+        let inp = document.createElement('textarea')
         let btn = document.createElement('button')
         let text = document.getElementById('issue-large-text')
         this.bodyRef.current.removeChild(text)
@@ -373,7 +374,6 @@ A list of issues in small view
 export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[]}> {
 
     status: number = 0;
-    timesort: number = 0;
     category: number = 0;
     categories: [] = [];
 
@@ -386,9 +386,10 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
                         <div id="sort-push" className="form-group">
                             <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
                                 <option value={0}>Alle</option>
-                                <option value={1}>Ikke behandlet</option>
-                                <option value={2}>Under behandling</option>
-                                <option value={3}>Behandlet</option>
+                                <option value={1}>Ikke påbegynt</option>
+                                <option value={2}>Ikke behandlet</option>
+                                <option value={3}>Under behandling</option>
+                                <option value={4}>Behandlet</option>
                             </select>
                         </div>
                         <div className="form-group">
@@ -399,15 +400,6 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
                                 })}
                             </select>
                         </div>
-                    </div>
-                    <div className="form-group">
-                        <select className="form-control" id="statusSelect" value={this.timesort} onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
-                            this.timesort = event.target.value;
-                            this.handleOnChange()
-                        }}>
-                            <option value={0}>Nyeste</option>
-                            <option value={1}>Eldste</option>
-                        </select>
                     </div>
                 </div>
                 <ul className="list-group issue-small-list">
@@ -421,7 +413,10 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
                         }
                     }) ) : (
                       <li key={0}>
-                        <p id="noIssues">Denne kommunen har ingen registrerte saker...</p> </li>
+                          <div className="d-flex flex-row justify-content-center">
+                             <p id="noIssues">Ingen saker</p>
+                          </div>
+                        </li>
                     )}
                 </ul>
             </div>
@@ -433,14 +428,6 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
         issueCategoryService.getCategories()
             .then(res => this.categories = res)
             .catch(error => console.error("Error: ", error))
-    }
-
-    handleOnChange () {
-        if(this.timesort == 0) {
-            this.props.issues.sort((a, b) => a.createdAt < b.createdAt)
-        }else if (this.timesort == 1) {
-            this.props.issues.sort((a, b) => a.createdAt > b.createdAt)
-        }
     }
 }
 
@@ -553,10 +540,12 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
     }
 
     mounted () {
+        console.log(this.props.feedback.userId)
         userService.getUser(this.props.feedback.userId)
             .then(user => {
                 this.user = user
-                switch(user.rank){
+                console.log(this.user)
+                switch(this.user.rank){
                     case 1: this.source = "../../images/private.png"; break;
                     case 2: this.source = "../../images/worker.png"; break;
                     case 3: this.source = "../../images/municipal.png"; break;
@@ -569,7 +558,7 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
 
     onEdit() {
         if(this.user.userId == this.props.feedback.userId) {
-            let inp = document.createElement('input')
+            let inp = document.createElement('textarea')
             let btn = document.createElement('button')
             let text = document.getElementById('feedback-text ' + this.props.feedback.feedbackId)
             let parent = document.getElementById('feedback-body ' + this.props.feedback.feedbackId)
@@ -624,18 +613,24 @@ class Status extends Component<{status: number, id: number}> {
     render () {
         switch (this.props.status){
             case 1: return (
+                <div className="status status-notstarted">
+                    <h4>{"Ikke påbegynt"}</h4>
+                </div>
+            )
+                break;
+            case 2: return (
                     <div className="status status-blocked">
                         <h4>{"Ikke behandlet"}</h4>
                     </div>
                 )
                 break;
-            case 2: return (
+            case 3: return (
                     <div className="status status-pending">
                         <h4>{"Under behandling"}</h4>
                     </div>
             )
                 break;
-            case 3: return (
+            case 4: return (
                     <div className="status status-finished">
                         <h4>{"Behandlet"}</h4>
                     </div>
@@ -654,15 +649,20 @@ class StatusImage extends Component<{status: number}> {
         switch (this.props.status){
             case 1: return (
                 <div>
+                    <img className="status-image" src="../../images/notStarted.png" />
+                </div>
+            )
+            case 2: return (
+                <div>
                     <img className="status-image" src="../../images/blockedTrans.png" />
                 </div>
             )
                 break;
-            case 2: return (
+            case 3: return (
                 <img className="status-image" src="../../images/pendingTrans.png" />
             )
                 break;
-            case 3: return (
+            case 4: return (
                 <img className="status-image" src="../../images/finishedTrans.png" />
             )
                 break;
@@ -679,14 +679,17 @@ class StatusButton extends Component<{status: number, onclick: function}> {
     render () {
         switch (this.props.status){
             case 1: return (
+                <ImageButton source="../../images/notStarted.png" onclick={this.props.onclick}/>
+            )
+            case 2: return (
                 <ImageButton source="../../images/blockedTrans.png" onclick={this.props.onclick}/>
             )
                 break;
-            case 2: return (
+            case 3: return (
                 <ImageButton source="../../images/pendingTrans.png" onclick={this.props.onclick}/>
             )
                 break;
-            case 3: return (
+            case 4: return (
                 <ImageButton source="../../images/finishedTrans.png" onclick={this.props.onclick}/>
             )
                 break;
@@ -718,20 +721,20 @@ export class HoverButton extends Component<{id?: string, type?:string, onclick: 
     }
 }
 
-export class ButtonGroup extends Component<{onclickC: function, onclickT: function, id: number}> {
+export class ButtonGroup extends Component<{onclickC: function, onclickT: function, id: number, status: number}> {
 
     rank: number = -1
     user: User = new User()
 
     render() {
-        if(this.rank == 3) {
+        if(this.rank == 3 || this.user.userId == this.props.id && this.props.status == 1 ) {
             return (
                 <div className="options">
                     <ImageButton source="../../images/cog.png" onclick={this.props.onclickC}/>
                     <ImageButton source="../../images/trashcan.png" onclick={this.props.onclickT}/>
                 </div>
             )
-        }else if(this.user.userId == this.props.id){
+        }else if(this.user.userId == this.props.id ){
             return (
                 <div className="options">
                     <ImageButton source="../../images/cog.png" onclick={this.props.onclickC}/>
