@@ -5,6 +5,7 @@ import { HoverButton, IssueOverviewSmall, IssueOverviewNormal } from '../issueVi
 import { issueService } from '../../services/IssueService';
 import { userService } from '../../services/UserService';
 import { history } from '../../index.js';
+import {userIssueService} from '../../services/UserIssues';
 import { tokenManager } from '../../tokenManager';
 
 export class ContractorView extends Component<{ match: { params: { munId: number } } }> {
@@ -33,9 +34,10 @@ export class ContractorView extends Component<{ match: { params: { munId: number
                 } else if (user.userId === 4) {
                     history.push('/admin');
                 }
-                issueService.getIssuesByUser(user.userId)
+                userIssueService.getUserIssues(user.userId)
                     .then(issues => {
-                        this.issues = issues
+                        console.log(issues);
+                        this.issues = issues;
                     })
                     .catch(error => console.error("Error: ", error))
             }).catch(error => {

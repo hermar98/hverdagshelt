@@ -8,7 +8,7 @@ export class UserIssues {
     getUserIssues(userId: number): Promise<Issue[]> {
         let token = localStorage.getItem('token');
         if (token) token = JSON.parse(token).jwt;
-        return service.get('/secure/users/' + userId + '/issues', {
+        return service.get('/secure/usersIssue/' + userId, {
             headers: {'x-access-token': token}
         });
     }
