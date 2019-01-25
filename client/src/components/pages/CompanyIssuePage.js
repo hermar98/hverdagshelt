@@ -15,7 +15,7 @@ export class ContractorView extends Component<{ match: { params: { munId: number
         <div className="card issue-view-container">
           <h2 className="card-title">Dine tildelte saker</h2>
           <div className="issue-overview-left">
-            <IssueOverviewNormal issues={this.issues} />
+            <IssueOverviewSmall issues={this.issues} />
           </div>
         </div>
       </div>
