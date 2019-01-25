@@ -72,17 +72,6 @@ export class UserProfilePage extends Component {
     }
   }
 
-  delete(issueId: number) {
-    if (this.issues.find(e => e.issueId === issueId).statusId === 6) {
-      issueService
-        .deleteIssue(issueId)
-        .then(rows => (this.issues = this.issues.filter(e => e.issueId !== issueId)))
-        .catch(error => console.log(error));
-    } else {
-      console.log('Not allowed to delete this issue  ');
-    }
-  }
-
   deleteUserMunicipal(munId: number) {
     userMunicipalService
       .deleteUserMunicipal(this.user.userId, munId)
