@@ -72,7 +72,7 @@ export default class RegistrationForm extends Component {
           {this.emailRegistered ? <Form.Alert type="danger" text="E-posten er allerede registrert" /> : <div />}
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
-              <HoverButton onclick={this.save} text="Lag Bruker" />
+              <HoverButton type="submit" onclick={this.save} text="Lag Bruker" />
             </div>
           </div>
         </form>

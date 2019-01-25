@@ -698,10 +698,10 @@ export class ImageButton extends Component<{source: string, onclick: function}> 
     }
 }
 
-export class HoverButton extends Component<{onclick: function, text: string}> {
+export class HoverButton extends Component<{id?: string, type?:string, onclick: function, text: string}> {
     render () {
         return (
-            <button className="btn hover-button" type="button" onClick={this.props.onclick} >
+                <button id={this.props.id ? this.props.id:''} type={this.props.type ? this.props.type:'button'} className="btn hover-button" onClick={this.props.onclick} >
                 {this.props.text}
             </button>
         )

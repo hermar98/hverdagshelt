@@ -47,7 +47,7 @@ export default class Login extends Component {
             {this.state.loginError ? <Form.Alert text="Feil e-post og/eller passord" type="danger" /> : <div />}
             <div className="container h-100">
               <div className="row h-100 justify-content-center align-items-center">
-                <HoverButton onclick={this.login} text="Logg Inn"/>
+                <HoverButton type="submit" onclick={this.login} text="Logg Inn"/>
               </div>
             </div>
           </form>

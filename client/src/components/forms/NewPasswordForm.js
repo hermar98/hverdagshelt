@@ -44,7 +44,7 @@ export default class NewPasswordForm extends Component {
           />
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
-              <HoverButton onclick={this.login} text="Bytt Passord"/>
+              <HoverButton type="submit" onclick={this.login} text="Bytt Passord"/>
             </div>
             {this.state.passwordError ? <Form.Alert type="danger" text="Sørg for at passordene er like" /> : <div />}
           </div>
