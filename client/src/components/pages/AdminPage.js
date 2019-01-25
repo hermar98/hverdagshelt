@@ -39,7 +39,9 @@ export class AdminPage extends Component {
               <div className="col-sm-3">
                 <select className="form-control" onChange={event => (this.filterMun = event.target.value)}>
                   <option value={0}>Alle kommuner</option>
-                  {this.municipals.map(mun => (
+                  {this.municipals.sort(function(a, b) {
+                      return a.name.localeCompare(b.name);
+                  }).map(mun => (
                     <option value={mun.munId}>{mun.name}</option>
                   ))}
                 </select>
