@@ -130,6 +130,10 @@ export class Search extends Component {
     mapApi.event.clearInstanceListeners(this.searchInput);
   }
 
+  componentWillReceiveProps() {
+    this.searchInput.value = '';
+  }
+
   onPlaceChanged = ({ map, addplace } = this.props) => {
     const place = this.autoComplete.getPlace();
 
