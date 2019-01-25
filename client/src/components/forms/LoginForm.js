@@ -1,13 +1,13 @@
 // @flow
 
 import * as React from 'react';
-import {Component} from 'react-simplified';
-import {Button, Card, Form} from '../../widgets';
-import {tokenManager} from '../../tokenManager.js';
-import {history} from '../../index';
-import {User} from '../../models/User';
-import {userService} from '../../services/UserService';
-import {HoverButton} from "../issueViews/issueViews";
+import { Component } from 'react-simplified';
+import { Button, Card, Form } from '../../widgets';
+import { tokenManager } from '../../tokenManager.js';
+import { history } from '../../index';
+import { User } from '../../models/User';
+import { userService } from '../../services/UserService';
+import { HoverButton } from '../issueViews/issueViews';
 
 export default class Login extends Component {
   state = {
@@ -43,7 +43,7 @@ export default class Login extends Component {
             {this.state.loginError ? <Form.Alert text="Feil e-post og/eller passord" type="danger" /> : <div />}
             <div className="container h-100">
               <div className="row h-100 justify-content-center align-items-center">
-                <HoverButton type="submit" onclick={this.login} text="Logg Inn"/>
+                <HoverButton type="submit" onclick={this.login} text="Logg Inn" />
               </div>
             </div>
           </form>
@@ -61,8 +61,8 @@ export default class Login extends Component {
     userService
       .getCurrentUser()
       .then(user => {
-        if(!user){
-          tokenManager.deleteToken()
+        if (!user) {
+          tokenManager.deleteToken();
         }
         console.log(user);
         history.push('/profil');
@@ -79,27 +79,28 @@ export default class Login extends Component {
       .login(this.email, this.password)
       .then(token => {
         tokenManager.addToken(token);
-        userService.getCurrentUser()
-          .then(user =>{
+        userService
+          .getCurrentUser()
+          .then(user => {
             this.user = user;
-            if(this.user.rank === 0){
+            if (this.user.rank === 0) {
               tokenManager.deleteToken();
               history.push('/aktiver/aktiverBruker');
-            }else if(this.user.rank === 1){
+            } else if (this.user.rank === 1) {
               window.location.reload();
-              history.push('/feed');
-            }else if(this.user.rank === 2){
+              history.push('/minSide');
+            } else if (this.user.rank === 2) {
               window.location.reload();
               history.push('/saker');
-            }else if(this.user.rank === 3){
+            } else if (this.user.rank === 3) {
               window.location.reload();
               history.push('/kommune/' + this.user.munId);
-            }else{
+            } else {
               window.location.reload();
               history.push('/admin');
             }
           })
-          .catch((error: Error) => console.log(error))
+          .catch((error: Error) => console.log(error));
       })
       .catch((error: Error) => {
         console.log(error);
