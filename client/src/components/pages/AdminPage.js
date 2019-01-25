@@ -242,7 +242,6 @@ export class AdminEditPage extends Component<{ match: { params: { userId: number
 
     return (
       <div>
-        <IssueMenu />
         <Card title="Rediger bruker">
           <form ref={e => (this.form = e)} onSubmit={e => e.preventDefault()}>
             <Form.Input type="email" label="E-post" required value={this.user.email} readOnly />
@@ -290,7 +289,7 @@ export class AdminEditPage extends Component<{ match: { params: { userId: number
 
   mounted() {
     userService
-      .getCurrentUser()
+      .getUser(this.props.match.params.userId)
       .then(user => (this.user = user))
       .catch((error: Error) => Alert.danger(error.message));
   }
