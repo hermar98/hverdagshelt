@@ -63,7 +63,7 @@ export default class NewPasswordForm extends Component {
     }
 
     userService
-      .newPassword(window.location.hash.slice(8), this.password)
+      .newPassword(window.location.hash.slice(14), this.password)
       .then(token => {
         localStorage.setItem('token', JSON.stringify(token));
         history.push('/kommune/' + this.munId);

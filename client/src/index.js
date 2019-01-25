@@ -53,7 +53,7 @@ if (root)
           <Route exact path="/loggInn" component={LoginPage} />
           <Route exact path="/registrer" component={RegisterPage} />
           <Route exact path="/glemtPassord" component={ForgotPassword} />
-          <Route exact path="/glemtPassord/nullstill" component={NewPasswordPage} />
+          <Route exact path="/glemtPassord/:token" component={NewPasswordPage} />
           <Route exact path="/vilkår" component={TermsOfService} />
           <Route exact path="/profil" component={ProfilePage} />
           <Route exact path="/saker/:issueId" component={IssueLarge} />

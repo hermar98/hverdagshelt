@@ -85,7 +85,6 @@ class UserService {
   }
 
   newPassword(token: string, password: string): Promise<JSON> {
-    console.log(password + 'serivee');
     return service
       .put('/reset/' + token, {
         password: password
