@@ -98,6 +98,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                             <StatusButton status={1} onclick={() => this.onClick(1)} />
                                             <StatusButton status={2} onclick={() => this.onClick(2)} />
                                             <StatusButton status={3} onclick={() => this.onClick(3)} />
+                                            <StatusButton status={4} onclick={() => this.onClick(4)} />
                                         </div>
                                     </div>
                                     <p className="date date-large">{this.munName + " Kommune"}</p>
@@ -624,18 +625,24 @@ class Status extends Component<{status: number, id: number}> {
     render () {
         switch (this.props.status){
             case 1: return (
+                <div className="status status-notstarted">
+                    <h4>{"Ikke påbegynt"}</h4>
+                </div>
+            )
+                break;
+            case 2: return (
                     <div className="status status-blocked">
                         <h4>{"Ikke behandlet"}</h4>
                     </div>
                 )
                 break;
-            case 2: return (
+            case 3: return (
                     <div className="status status-pending">
                         <h4>{"Under behandling"}</h4>
                     </div>
             )
                 break;
-            case 3: return (
+            case 4: return (
                     <div className="status status-finished">
                         <h4>{"Behandlet"}</h4>
                     </div>
@@ -654,15 +661,20 @@ class StatusImage extends Component<{status: number}> {
         switch (this.props.status){
             case 1: return (
                 <div>
+                    <img className="status-image" src="../../images/notStarted.png" />
+                </div>
+            )
+            case 2: return (
+                <div>
                     <img className="status-image" src="../../images/blockedTrans.png" />
                 </div>
             )
                 break;
-            case 2: return (
+            case 3: return (
                 <img className="status-image" src="../../images/pendingTrans.png" />
             )
                 break;
-            case 3: return (
+            case 4: return (
                 <img className="status-image" src="../../images/finishedTrans.png" />
             )
                 break;
@@ -679,14 +691,17 @@ class StatusButton extends Component<{status: number, onclick: function}> {
     render () {
         switch (this.props.status){
             case 1: return (
+                <ImageButton source="../../images/notStarted.png" onclick={this.props.onclick}/>
+            )
+            case 2: return (
                 <ImageButton source="../../images/blockedTrans.png" onclick={this.props.onclick}/>
             )
                 break;
-            case 2: return (
+            case 3: return (
                 <ImageButton source="../../images/pendingTrans.png" onclick={this.props.onclick}/>
             )
                 break;
-            case 3: return (
+            case 4: return (
                 <ImageButton source="../../images/finishedTrans.png" onclick={this.props.onclick}/>
             )
                 break;

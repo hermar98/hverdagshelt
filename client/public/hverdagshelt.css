@@ -48,6 +48,7 @@ body {
 .status-blocked {background-color: #ffa191}
 .status-pending {background-color: #fdff91}
 .status-finished {background-color: #acff91}
+.status-notstarted {background-color: #b9bbbe}
 .status {
     padding: 0 .25% 0 .25%;
 }
