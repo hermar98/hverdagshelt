@@ -142,7 +142,7 @@ app.post('/register', (req: Request, res: Response) => {
       res.sendStatus(200);
       mailSender.sendEmail(emailS, "Aktivering av bruker", "Hei " + firstNameS + " " + lastNameS + "!\n\nTakk for din registrering og velkommen " +
         "til Hverdagshelt. For å aktivere din bruker vennligst trykk følgende link:\nhttp://localhost:3000/#/aktiver/" + token +
-      "\n\nHvis du ikke har registrert bruker hos oss, vennligst se bort fra denne mailen.\n\nMed vennlig hilsen\n" + "Hverdagshelt AS (Young Fleinar Inc.)");
+      "\n\nHvis du ikke har registrert bruker hos oss, vennligst se bort fra denne mailen.\n\nMed vennlig hilsen\n" + "Hverdagshelt AS");
     }
   });
 });
