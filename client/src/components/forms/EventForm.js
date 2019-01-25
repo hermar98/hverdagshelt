@@ -13,7 +13,7 @@ import { tokenManager } from '../../tokenManager';
 import { eventService } from '../../services/EventService';
 import moment from 'moment';
 import { HoverButton } from '../issueViews/issueViews';
-//import { UploadImageButton } from '../../components/image/UploadImageButton';
+import UploadImageButton from '../image/UploadImageButton';
 import { userService } from '../../services/UserService';
 import { createMapOptions, MyGreatPlace, Search } from '../map/map';
 import { mapService } from '../../services/mapService';
@@ -32,6 +32,8 @@ export default class EventForm extends Component {
   startTime = null;
   endDate = Date;
   endTime = null;
+
+  upload: UploadImageButton = null;
 
   center = { lat: 0, lng: 0 };
   lat = null;
@@ -103,7 +105,7 @@ export default class EventForm extends Component {
                   }
                 }}
               >
-                <option selected disabled value="">
+                <option disabled value="">
                   Velg kategori..
                 </option>
                 {this.categories.map(cat => (
@@ -144,7 +146,11 @@ export default class EventForm extends Component {
               <div className="mapcontainer">{this.renderMap()}</div>
             </div>
           </div>
-          <Form.FileInput>Legg til bilde (valgfritt) </Form.FileInput>
+          <UploadImageButton
+            ref={boy => {
+              this.upload = boy;
+            }}
+          />
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
               <HoverButton type="submit" onclick={this.save} text="Registrer Event" />
@@ -205,11 +211,17 @@ export default class EventForm extends Component {
     this.event.timeEnd = moment(this.endDate + ' ' + this.endTime);
     this.event.munId = this.user.munId;
     this.event.userId = this.user.userId;
+    this.event.image = null;
+
+    // console.log(this.event.image);
 
     eventService
       .addEvent(this.event)
+      .then(res => (this.event.eventId = res.eventId))
       .then(history.push('/kommune/' + this.event.munId))
       .catch((error: Error) => Alert.danger(error.message));
+
+    this.upload.uploadEventImage(this.event);
   }
 
   mounted() {

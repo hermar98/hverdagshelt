@@ -18,6 +18,5 @@ app.get('/municipals/:id', (req: Request, res: Response) => {
 });
 
 app.post('/municipalsId/', (req: Request, res: Response) => {
-  console.log(req.body);
   return Municipal.findOne({ where: { name: req.body.name } }).then(mun => (mun ? res.send(mun) : res.sendStatus(404)));
 });
