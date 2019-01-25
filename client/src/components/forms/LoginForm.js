@@ -88,11 +88,16 @@ export default class Login extends Component {
             }else if(this.user.rank === 1){
               window.location.reload();
               history.push('/feed');
+            }else if(this.user.rank === 2){
+              window.location.reload();
+              history.push('/saker');
+            }else if(this.user.rank === 3){
+              window.location.reload();
+              history.push('/kommune/' + this.user.munId);
             }else{
               window.location.reload();
-              history.push('/profil');
+              history.push('/admin');
             }
-
           })
           .catch((error: Error) => console.log(error))
       })
