@@ -22,7 +22,7 @@ export class AdminMenu extends Component {
   municipal = new Municipal();
   munId = localStorage.getItem('munId');
   activeProfile = '';
-  activeHome = '';
+  activeAdmUsers = '';
   activeAdmCat = '';
 
   mounted() {
@@ -43,11 +43,11 @@ export class AdminMenu extends Component {
       return (
         <div>
           <NavBar>
-            <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'} to={'/admin'} onClick={this.toAdminHome2}>
+            <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'} to={'/admin'} onClick={this.toAdmUsers2}>
               Hverdagshelt
             </NavBar.Brand>
-            <NavBar.Button className={this.activeHome} onClick={this.toAdminHome}>
-              Hjem
+            <NavBar.Button className={this.activeAdmUsers} onClick={this.toAdmUsers}>
+              Administrer Brukere
             </NavBar.Button>
             <NavBar.Button className={this.activeAdmCat} onClick={this.toManageCategories}>
               Administrer Kategorier
@@ -68,7 +68,7 @@ export class AdminMenu extends Component {
   toProfile() {
     history.push('/profil');
     this.activeProfile = 'btnfocus';
-    this.activeHome = '';
+    this.activeAdmUsers = '';
     this.activeAdmCat = '';
   }
 
@@ -78,21 +78,21 @@ export class AdminMenu extends Component {
     history.push('/');
   }
 
-  toAdminHome() {
+  toAdmUsers() {
     history.push('/admin');
-    this.activeHome = 'btnfocus';
+    this.activeAdmUsers = 'btnfocus';
     this.activeProfile = '';
     this.activeAdmCat = '';
   }
-  toAdminHome2() {
-    this.activeHome = 'btnfocus';
+  toAdmUsers2() {
+    this.activeAdmUsers = 'btnfocus';
     this.activeProfile = '';
     this.activeAdmCat = '';
   }
   toManageCategories() {
     history.push('/admin/administerKategorier');
     this.activeAdmCat = 'btnfocus';
-    this.activeHome = '';
+    this.activeAdmUsers = '';
     this.activeProfile = '';
   }
 }

@@ -21,7 +21,7 @@ export class MunEmployeeMenu extends Component {
   user = null;
   municipal = new Municipal();
   activeProfile = '';
-  activeHome = '';
+  activeMunPage = '';
   activeRegEvent = '';
   activeAdmIssues = '';
   mounted() {
@@ -45,12 +45,12 @@ export class MunEmployeeMenu extends Component {
             <NavBar.Brand
               image={'../../images/hverdagshelt-logo-white.svg'}
               to={'/kommune/' + this.user.munId}
-              onClick={this.toMunEmployeeHome2}
+              onClick={this.toMunPage2}
             >
               Hverdagshelt
             </NavBar.Brand>
-            <NavBar.Button className={this.activeHome} onClick={this.toMunEmployeeHome}>
-              Hjem
+            <NavBar.Button className={this.activeMunPage} onClick={this.toMunPage}>
+              Kommuneside
             </NavBar.Button>
             <NavBar.Button className={this.activeRegEvent} onClick={this.toRegisterEvent}>
               Registrer Event
@@ -74,7 +74,7 @@ export class MunEmployeeMenu extends Component {
   toProfile() {
     history.push('/profil');
     this.activeProfile = 'btnfocus';
-    this.activeHome = '';
+    this.activeMunPage = '';
     this.activeRegEvent = '';
     this.activeAdmIssues = '';
   }
@@ -88,19 +88,19 @@ export class MunEmployeeMenu extends Component {
   toRegisterEvent() {
     history.push('/registrerEvent');
     this.activeRegEvent = 'btnfocus';
-    this.activeHome = '';
+    this.activeMunPage = '';
     this.activeProfile = '';
     this.activeAdmIssues = '';
   }
-  toMunEmployeeHome() {
+  toMunPage() {
     history.push('/kommune/' + this.user.munId);
-    this.activeHome = 'btnfocus';
+    this.activeMunPage = 'btnfocus';
     this.activeProfile = '';
     this.activeRegEvent = '';
     this.activeAdmIssues = '';
   }
-  toMunEmployeeHome2() {
-    this.activeHome = 'btnfocus';
+  toMunPage2() {
+    this.activeMunPage = 'btnfocus';
     this.activeProfile = '';
     this.activeRegEvent = '';
     this.activeAdmIssues = '';
@@ -109,7 +109,7 @@ export class MunEmployeeMenu extends Component {
   toManageIssues() {
     history.push('/kommune/' + this.user.munId + '/saker');
     this.activeAdmIssues = 'btnfocus';
-    this.activeHome = '';
+    this.activeMunPage = '';
     this.activeProfile = '';
     this.activeRegEvent = '';
   }

@@ -11,19 +11,7 @@
     border-left: none !important;
     border-top: none !important;
   }
-  .custom-nav-btn:focus {
-    background-color: white !important;
-    color: black !important;
-    margin-top: 0px !important;
-    padding-top: 0px !important;
-    padding-bottom: 0px !important;
-    font-size: 18px !important;
-    height: 60px !important;
-    border-radius: 0px !important;
-    border-bottom: none !important;
-    border-left: none !important;
-    border-top: none !important;
-  }
+
   .footer {
     position: fixed;
     bottom: 0;
@@ -63,22 +51,6 @@
     width: 100% !important;
     text-align: center !important;
     position: static !important;
-    border-radius: 0px !important;
-    border-right: none !important;
-    border-left: none !important;
-  }
-  .custom-nav-btn:focus {
-    background-color: white !important;
-    color: black !important;
-    margin-top: 0px !important;
-    padding-top: 0px !important;
-    padding-bottom: 0px !important;
-    font-size: 18px !important;
-    height: 60px !important;
-    width: 100% !important;
-    text-align: center !important;
-    align-items: center !important;
-    position: relative !important;
     border-radius: 0px !important;
     border-right: none !important;
     border-left: none !important;
