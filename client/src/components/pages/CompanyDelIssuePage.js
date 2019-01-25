@@ -8,6 +8,7 @@ import { history } from '../../index';
 import {User} from "../../models/User.js"
 import {Issue} from "../../models/Issue.js"
 import {issueCategoryService} from "../../services/IssueCategoryService";
+import {HoverButton, StatusImage} from "../issueViews/issueViews";
 
 let sharedIssues = sharedComponentData({issues: []});
 let sharedComp = sharedComponentData({companies: []});
@@ -34,23 +35,23 @@ export class CompanyDelIssuePage extends Component<{munId: number}> {
         } else {
             let munId = 10;
             return (
-                <div className="d-flex flex-row" id='delMainBox'>
-                    <div className="card" id="hello">
-                        <h1>Unassigned Issues</h1>
+                <div className="d-flex flex-row justify-content-between comp-container" id='delMainBox'>
+                    <div className="comp-left">
+                        <h2>Udelegerte saker</h2>
+                        <br />
                         {(sharedIssues.issues).map(function (e, i) {
                             console.log("BOYYYY1 i: " + i);
                             if (e) {
                                 return (
-                                    <div>
-                                        <IssueCard key={i} munId={munId} issue={e} companyQ={false}/>
-                                    </div>
+                                    <IssueCard key={i} munId={munId} issue={e} companyQ={false}/>
                                 )
                             }
                         })
                         }
                     </div>
-                    <div>
-                        <h1>Assigned Issues</h1>
+                    <div className="comp-right">
+                        <h2>Delegerte saker</h2>
+                        <br />
                         {console.log(sharedComp.companies)}
                         {(sharedComp.companies).map(function (e, i) {
                             console.log("BOYYYY2 i: " + i);
@@ -111,17 +112,20 @@ class CompanyCard extends Component<{user: User, munId: number}> {
         sharedIssues.issues = [];
         sharedComp.companies = [];
         shared.chosenIssues = [];
-        userIssueService.getAllFreeUserIssues(2).then(e=>{
-            e.map(f=>{
-                sharedIssues.issues.push(f);
-            });
-        }).catch(error => console.error("Error: ", error));
 
-        userIssueService.getAllUserIssues(2, 2).then(e=>{
-            e.map(f=>{
-                sharedComp.companies.push(f);
-            });
-        }).catch(error => console.error("Error: ", error));
+
+        setTimeout(() => {userIssueService.getAllFreeUserIssues(2).then(e=>{
+                e.map(f=>{
+                    sharedIssues.issues.push(f);
+                });
+            }).catch(error => console.error("Error: ", error));
+
+            userIssueService.getAllUserIssues(2, 2).then(e=>{
+                e.map(f=>{
+                    sharedComp.companies.push(f);
+                });
+            }).catch(error => console.error("Error: ", error));}, 400)
+
     }
     
     render() {
@@ -130,12 +134,14 @@ class CompanyCard extends Component<{user: User, munId: number}> {
             return null;
         } else {
             return (
-                <div className="card">
+                <div className="card comp-card">
                     <div>
-                        <h1>{this.curCompany.firstName}</h1>
+                        <h3>{this.curCompany.firstName}</h3>
                         <p>{this.curCompany.email}</p>
                         <p>{this.munId}</p>
-                        <button style={{backgroundColor: "blue"}} className={"btn"} type={"button"} onClick={this.jason}>Submit to this company</button>
+                        <div className="d-flex flex-row justify-content-center submit-comp-button">
+                            <HoverButton type="button" onclick={this.jason} text="Deleger hit"/>
+                        </div>
                     </div>
                     <div>
                     {this.compIssues.map(function (e, i) {
@@ -173,10 +179,8 @@ class CompanyCard extends Component<{user: User, munId: number}> {
 class IssueCard extends Component<{issue: Issue, munId: number, companyQ: boolean}> {
     render() {
         return (
-            <div style={{height: '200px', width: '600px'}}>
-                <div>
-                    <IssueView style={{paddingColor: 'black', padding: "5px"}} companyQ={this.props.companyQ} issue={this.props.issue} munId={this.props.munId}/>
-                </div>
+            <div>
+                <IssueView style={{paddingColor: 'black', padding: "5px"}} companyQ={this.props.companyQ} issue={this.props.issue} munId={this.props.munId}/>
             </div>
         );
     }
@@ -186,10 +190,14 @@ class IssueView extends Component<{issue: Issue, munId: number, companyQ: boolea
 
     categoryName: string = '';
 
-    styleWhite = {backgroundColor: "grey", width: 150, height: 50};
-    styleNormal = {backgroundColor: "blue", width: 150, height: 50};
+    styleWhite = {backgroundColor: "lightgrey"};
+    styleNormal = {backgroundColor: "#192f42"};
     theStyle = this.styleNormal;
     joIssue = this.props.issue;
+
+    state = {
+        loaded: false
+    }
 
     filterFilter(issue: Issue){
         let a = (issue.issueId != this.props.issue.issueId);
@@ -237,31 +245,34 @@ class IssueView extends Component<{issue: Issue, munId: number, companyQ: boolea
 
     buttonChoise(){
         if(this.props.companyQ==false){
-            return (<button style={this.theStyle} className={"btn"} type={"button"} onClick={
-                    this.selectedQ
-            }>Select</button>);
+            return (<button style={this.theStyle} className="btn comp-button" type="button" onClick={this.selectedQ}>Velg</button>)
         } else{
-            return (<button style={this.styleNormal} className={"btn"} type={"button"} onClick={
-                this.deleteUserIssue
-            }>Delete</button>);
+            return (<HoverButton type="button" onclick={this.deleteUserIssue} text="Fjern"/>);
         }
     }
 
     render() {
         return (
-            <div style={{outline: "5px solid black"}} className="issue-small issue-hover" issue={this.props.issue}>
+            <div className="issue-small issue-hover card issue-view-comp" issue={this.props.issue}>
                 <div>
+                    <a id="a-hover" href={"/#/saker/" + this.props.issue.issueId}>
+                        <img src="../../images/arrowRightTrans.png" />
+                    </a>
+                    <div className="d-flex flex-row justify-content-between">
+                        <p className="date">{formatDate(this.props.issue.createdAt)}</p>
+                        <p>Status:&nbsp; &nbsp; </p>
+                        <StatusImage status={this.props.issue.statusId} />
+                    </div>
                     <div className="d-flex flex-row issue-flex justify-content-between">
                         <div className="view-text">
-                            <p className="date">{formatDate(this.props.issue.createdAt)}</p>
                             <h5>
                                 {this.categoryName}
                             </h5>
+                            <br />
                         </div>
-                        <div>
+                        <div id="velg-button">
                             {this.buttonChoise()}
                         </div>
-                        <button className={"btn"} type={"button"} onClick={event => {history.push("/saker/" + this.props.issue.issueId)}}>Go to issue</button>
                     </div>
                 </div>
             </div>
