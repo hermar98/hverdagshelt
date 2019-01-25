@@ -1,18 +1,12 @@
 // @flow
-
-import ReactDOM from 'react-dom';
 import * as React from 'react';
-import { Component } from 'react-simplified';
-import { User } from '../../models/User.js';
-import { Alert, NavBar, Form, Card, Button } from '../../widgets';
-import { userService } from '../../services/UserService.js';
-import { history } from '../../index.js';
+import {Component} from 'react-simplified';
+import {User} from '../../models/User.js';
+import {Card, Form} from '../../widgets';
+import {userService} from '../../services/UserService.js';
+import {history} from '../../index.js';
 import {municipalService} from "../../services/MunicipalService";
-import {Municipal} from "../../models/Municipal";
-import {autocomplete, glob} from "../../../public/autocomplete";
 import {HoverButton} from "../issueViews/issueViews";
-
-let municipalObjects;
 
 export default class AdminAddPage extends Component {
   user = new User();
@@ -60,19 +54,21 @@ export default class AdminAddPage extends Component {
                 required
                 className="form-control"
                 value={this.user.munId}
-                onChange={(e: SyntheticInputEvent<HTMLInputElement>) => this.user.munId = parseInt(e.target.value)}>
+                onChange={(e: SyntheticInputEvent<HTMLInputElement>) => {
+                    this.user.munId = parseInt(e.target.value);
+                }}>
                 {this.municipals.map(mun =>
                   <option key={mun.munId} value={mun.munId}>{mun.name}</option>
                 )}
               </select>
             </div>
           </div>
-            : <div></div>
+            : <div />
           }
           {this.emailRegistered ? <Form.Alert text="E-posten er allerede registrert" /> : <div />}
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
-              <HoverButton onclick={this.save} text="Lag Bruker" text="Lag Bruker"/>
+              <HoverButton onclick={this.save}  text="Lag Bruker"/>
             </div>
           </div>
         </form>

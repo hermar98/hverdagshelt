@@ -4,6 +4,8 @@ import { Redirect, NavLink } from 'react-router-dom';
 import { HoverButton, IssueOverviewSmall, IssueOverviewNormal } from '../issueViews/issueViews';
 import { issueService } from '../../services/IssueService';
 import { userService } from '../../services/UserService';
+import { history } from '../../index.js';
+import {userIssueService} from '../../services/UserIssues';
 import { tokenManager } from '../../tokenManager';
 
 export class ContractorView extends Component<{ match: { params: { munId: number } } }> {
@@ -25,11 +27,22 @@ export class ContractorView extends Component<{ match: { params: { munId: number
     mounted () {
         userService.getCurrentUser()
             .then(user => {
-                issueService.getIssuesByUser(user.userId)
+                if (user.userId === 1) {
+                    history.push('/minSide');
+                } else if (user.userId === 3) {
+                    history.push('/kommune/' + user.userId);
+                } else if (user.userId === 4) {
+                    history.push('/admin');
+                }
+                userIssueService.getUserIssues(user.userId)
                     .then(issues => {
-                        this.issues = issues
+                        console.log(issues);
+                        this.issues = issues;
                     })
                     .catch(error => console.error("Error: ", error))
-            }).catch(error => console.error("Error: ", error))
+            }).catch(error => {
+                console.error(error);
+                history.push('/');
+            })
     }
 }

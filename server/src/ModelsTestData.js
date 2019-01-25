@@ -652,7 +652,7 @@ class ModelsTestData {
           salt: 'a83f4da094cc247b',
           hashStr:
             '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
-          munId: 528,
+          munId: 5001,
           profilePicture:
             'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
         },
@@ -665,7 +665,7 @@ class ModelsTestData {
           salt: 'a83f4da094cc247b',
           hashStr:
             '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
-          munId: 528,
+          munId: 5001,
           profilePicture:
             'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
         },
@@ -678,7 +678,7 @@ class ModelsTestData {
           salt: 'a83f4da094cc247b',
           hashStr:
             '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
-          munId: 528,
+          munId: 5001,
           profilePicture:
             'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
         },
@@ -691,7 +691,7 @@ class ModelsTestData {
           salt: 'a83f4da094cc247b',
           hashStr:
             '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
-          munId: 528,
+          munId: 5001,
           profilePicture:
             'https://pbs.twimg.com/profile_images/3304502717/94414e5d246ae893f1080cdc10e0d245_400x400.jpeg'
         }

@@ -32,7 +32,7 @@ export default class Login extends Component {
             />
             <div className="container h-100">
               <div className="row h-100 justify-content-center align-items-center">
-                <HoverButton onclick={this.login} text="Send Epost"/>
+                <HoverButton onclick={this.login} type="submit" text="Send Epost"/>
               </div>
             </div>
             <div className="container h-100">
@@ -43,6 +43,25 @@ export default class Login extends Component {
         </Card>
       </div>
     );
+  }
+
+  mounted() {
+      userService
+          .getCurrentUser()
+          .then(user => {
+              if (user.rank === 1) {
+                  history.push('/minSide');
+              } else if (user.rank === 2) {
+                  history.push('/bedrift');
+              } else if (user.rank === 3) {
+                  history.push('/kommune/' + user.munId);
+              } else if (user.rank === 4) {
+                  history.push('/admin');
+              }
+          })
+          .catch((error : Error) => {
+              console.log(error);
+          })
   }
 
   login() {

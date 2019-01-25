@@ -72,7 +72,7 @@ export default class UploadImageButton extends Component {
     return urlNew;
   }
 
-  printFaenHode(issue: Issue) {
+  printHode(issue: Issue) {
     issueService
       .addIssue(issue)
       .then(id => {

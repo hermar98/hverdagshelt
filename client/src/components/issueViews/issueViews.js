@@ -22,7 +22,7 @@ let formatDate = function (date: Date) {
         return str;
     }
     return;
-}
+};
 
 
 /*
@@ -65,7 +65,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
             this.setState({
                 clickedDelete: false
             });
-            return <Redirect to={"/kommune/" + this.props.match.params.munId + "/issues"} />
+            return <Redirect to={"/profil"} />
         }
 
         return (
@@ -84,7 +84,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                             userService.getCurrentUser()
                                                 .then(user => {
                                                     rank = user.rank;
-                                                    if(rank === 3) {
+                                                    if(rank === 3 || rank === 2) {
                                                         this.setState({
                                                             clickedStatus: !this.state.clickedStatus
                                                         })
@@ -115,7 +115,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                 <h4>&nbsp;Bilder</h4>
                                 <div className="flex-container">
                                     {this.images.map(image => {
-                                        return <img className="issue-image" src={image.imageSource} />
+                                        return <img className="issue-image" src={image.imageSource} alt="issue image"/>
                                     })}
                                 </div>
                             </div>
@@ -158,10 +158,10 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                         this.munName = mun.name
                     })
                     .catch(error => console.error("Error: ", error));
-                console.log("id client: " + this.issue.issueId)
+                console.log("id client: " + this.issue.issueId);
                 imageService.getAllImage(this.issue.issueId)
                     .then(data => {
-                        console.log(data.IssuePictures)
+                        console.log(data.IssuePictures);
                         this.images = data.IssuePictures
                     })
                     .catch(error => console.error("Error: ", error))
@@ -184,16 +184,16 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     }
 
     renderAddButton(){
-        if (this.rank === 3 || this.user.userId === this.issue.userId) {
+        if (this.rank === 3 || this.rank === 2 || this.user.userId === this.issue.userId) {
             return (
                 <div>
                     <button ref={this.addFeedbackButton} className="btn" type="button"
                             onClick={() => {
-                                this.addFeedbackButton.current.classList.add('show-issue')
-                                this.addFeedbackForm.current.classList.remove('show-issue')
+                                this.addFeedbackButton.current.classList.add('show-issue');
+                                this.addFeedbackForm.current.classList.remove('show-issue');
                                 window.scrollBy(0, 250);
                             }}>
-                        <img id="add-image-button" src="../../images/add.png"/>
+                        <img id="add-image-button" src="../../images/add.png" alt="add button"/>
                     </button>
                 </div>
             )
@@ -224,13 +224,13 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
         feedback.userId = this.user.userId;
         feedbackService.addFeedback(feedback)
             .then(res => {
-                this.addFeedbackButton.current.classList.remove('show-issue')
-                this.addFeedbackForm.current.classList.add('show-issue')
+                this.addFeedbackButton.current.classList.remove('show-issue');
+                this.addFeedbackForm.current.classList.add('show-issue');
                 feedbackService.getFeedbacks(this.props.match.params.issueId)
                     .then(data => {
                         sharedFeedback.feedback = data;
                     })
-                    .catch(error => console.error("Error: ", error))
+                    .catch(error => console.error("Error: ", error));
                 this.feedbackContent = '';
             })
             .catch(error => console.error("Error: ", error))
@@ -238,30 +238,30 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     }
 
     onEdit() {
-        this.issueText = this.issue.content
-        let inp = document.createElement('textarea')
-        let btn = document.createElement('button')
-        let text = document.getElementById('issue-large-text')
-        this.bodyRef.current.removeChild(text)
-        inp.id = 'edit-input-feedback'
-        inp.value = this.issueText
-        inp.onchange = (event) => (this.issueText = event.target.value)
-        inp.classList.add('form-control')
-        btn.id = 'edit-button-feedback'
-        btn.onclick = () => this.onEditComplete(inp, btn, text)
-        btn.classList.add('btn')
-        btn.innerHTML = "Endre"
-        this.bodyRef.current.append(inp)
+        this.issueText = this.issue.content;
+        let inp = document.createElement('textarea');
+        let btn = document.createElement('button');
+        let text = document.getElementById('issue-large-text');
+        this.bodyRef.current.removeChild(text);
+        inp.id = 'edit-input-feedback';
+        inp.value = this.issueText;
+        inp.onchange = (event) => (this.issueText = event.target.value);
+        inp.classList.add('form-control');
+        btn.id = 'edit-button-feedback';
+        btn.onclick = () => this.onEditComplete(inp, btn, text);
+        btn.classList.add('btn');
+        btn.innerHTML = "Endre";
+        this.bodyRef.current.append(inp);
         this.bodyRef.current.append(btn)
     }
 
     onEditComplete (inp, btn, text) {
-        this.issue.content = this.issueText
+        this.issue.content = this.issueText;
         issueService.updateIssue(this.issue)
             .then()
-            .catch(error => console.error("Error: ", error))
-        this.bodyRef.current.removeChild(inp)
-        this.bodyRef.current.removeChild(btn)
+            .catch(error => console.error("Error: ", error));
+        this.bodyRef.current.removeChild(inp);
+        this.bodyRef.current.removeChild(btn);
         this.bodyRef.current.append(text)
     }
 
@@ -371,10 +371,9 @@ export class IssueSmall extends Component<{issue: Issue, munId: number}> {
 /*
 A list of issues in small view
  */
-export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[]}> {
+export class IssueOverviewSmallPrivate extends Component<{munId: number, issues: Issue[]}> {
 
     status: number = 0;
-    timesort: number = 0;
     category: number = 0;
     categories: [] = [];
 
@@ -402,19 +401,10 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
                             </select>
                         </div>
                     </div>
-                    <div className="form-group">
-                        <select className="form-control" id="statusSelect" value={this.timesort} onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
-                            this.timesort = event.target.value;
-                            this.handleOnChange()
-                        }}>
-                            <option value={0}>Nyeste</option>
-                            <option value={1}>Eldste</option>
-                        </select>
-                    </div>
                 </div>
                 <ul className="list-group issue-small-list">
                     {hasIssues ? (this.props.issues.map((issue,index) => {
-                        if ((this.status == issue.statusId || this.status == 0) && (this.category == issue.categoryId || this.category == 0)) {
+                        if ((this.status == issue.statusId || this.status == 0) && (this.category == issue.categoryId || this.category == 0) && issue.statusId !== 1) {
                             return(
                                 <li key={index} className="list-group-item issue-small-item">
                                     <IssueSmall issue={issue} munId={this.props.munId}/>
@@ -439,14 +429,69 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
             .then(res => this.categories = res)
             .catch(error => console.error("Error: ", error))
     }
+}
 
-    handleOnChange () {
-        if(this.timesort == 0) {
-            this.props.issues.sort((a, b) => a.createdAt < b.createdAt)
-        }else if (this.timesort == 1) {
-            this.props.issues.sort((a, b) => a.createdAt > b.createdAt)
-        }
-    }
+/*
+A list of issues in small view
+ */
+export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[]}> {
+
+  status: number = 0;
+  category: number = 0;
+  categories: [] = [];
+
+  render () {
+    const hasIssues = this.props.issues.length != 0;
+    return (
+      <div>
+        <div className="d-flex flex-row sort-box justify-content-between">
+          <div className="d-flex flex-row justify-content-start">
+            <div id="sort-push" className="form-group">
+              <select className="form-control" id="statusSelect" onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.status = event.target.value)}>
+                <option value={0}>Alle</option>
+                <option value={1}>Ikke påbegynt</option>
+                <option value={2}>Ikke behandlet</option>
+                <option value={3}>Under behandling</option>
+                <option value={4}>Behandlet</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <select className="form-control" value={this.category} onChange={(event): SyntheticInputEvent<HTMLInputElement> => (this.category = event.target.value)}>
+                <option value={0}>Alle</option>
+                {this.categories.map(cat => {
+                  return <option value={cat.categoryId}>{cat.name}</option>
+                })}
+              </select>
+            </div>
+          </div>
+        </div>
+        <ul className="list-group issue-small-list">
+          {hasIssues ? (this.props.issues.map((issue,index) => {
+            if ((this.status == issue.statusId || this.status == 0) && (this.category == issue.categoryId || this.category == 0)) {
+              return(
+                <li key={index} className="list-group-item issue-small-item">
+                  <IssueSmall issue={issue} munId={this.props.munId}/>
+                </li>
+              )
+            }
+          }) ) : (
+            <li key={0}>
+              <div className="d-flex flex-row justify-content-center">
+                <p id="noIssues">Ingen saker</p>
+              </div>
+            </li>
+          )}
+        </ul>
+      </div>
+    )
+  }
+
+  mounted (){
+    window.scrollTo(0, 0);
+    issueCategoryService.getCategories()
+      .then(res => this.categories = res)
+      .catch(error => console.error("Error: ", error))
+  }
 }
 
 /*
@@ -627,7 +672,7 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
 /*
 A colored status-bar. The number decides which status is rendered
  */
-class Status extends Component<{status: number, id: number}> {
+export class Status extends Component<{status: number, id: number}> {
     render () {
         switch (this.props.status){
             case 1: return (
@@ -662,7 +707,7 @@ class Status extends Component<{status: number, id: number}> {
 /*
 Widget for displaying the image of a status
  */
-class StatusImage extends Component<{status: number}> {
+export class StatusImage extends Component<{status: number}> {
     render () {
         switch (this.props.status){
             case 1: return (

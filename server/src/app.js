@@ -1,13 +1,9 @@
 // @flow
 
-import {
-  User
-} from './models.js';
+import {User} from './models.js';
 
 import * as passwordHash from './passwordHash.js';
 import express from 'express';
-import fs from 'fs';
-import jwt from 'jsonwebtoken';
 import path from 'path';
 import {mailSender} from "./MailSender";
 import {tokenManager} from './tokenManager.js';
@@ -27,7 +23,6 @@ app.use(express.static(public_path));
 app.use(express.json({limit: '50mb'})); // For parsing application/json
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
-let secretKey = fs.readFileSync('./secret.key', 'utf8');
 
 app.get('/token', (req: Request, res: Response) => {
     let tokenData = tokenManager.verifyToken(req.headers['x-access-token']);
@@ -86,7 +81,7 @@ app.post('/register', (req: Request, res: Response) => {
   // if (!(req.body instanceof Object)) return res.sendStatus(400);
   //Flow type checking mixed src: https://github.com/flow-typed/flow-typed/issues/812
   const body = req.body !== null && typeof req.body === 'object' ? req.body : {};
-  const { firstName, lastName, email, rank, password } = body;
+  const { firstName, lastName, email, rank, password, munId } = body;
   let emailS: string = (email: any);
   let firstNameS: string = (firstName: any);
   let lastNameS: string = (lastName: any);
@@ -103,9 +98,7 @@ app.post('/register', (req: Request, res: Response) => {
   });
 
   let passwordSalt = null;
-  let passwordData = {
-    passwordHash: null
-  }
+  let passwordData = {passwordHash: null};
 
   if(password) {
     passwordSalt = passwordHash.genRandomString(16);
@@ -126,17 +119,15 @@ app.post('/register', (req: Request, res: Response) => {
     firstName: firstName,
     lastName: lastName,
     email: email,
+    munId: munId,
     rank: userRank,
     salt: passwordSalt,
     hashStr: passwordData.passwordHash,
     activateAccountToken: token
   }).then(count => {
     if(!count){
-      console.log("Something went wrong")
       res.sendStatus(404);
     }else{
-      console.log("Nothing wrong here, please continue");
-
       res.sendStatus(200);
       mailSender.sendEmail(emailS, "Aktivering av bruker", "Hei " + firstNameS + " " + lastNameS + "!\n\nTakk for din registrering og velkommen " +
         "til Hverdagshelt. For å aktivere din bruker vennligst trykk følgende link:\nhttp://localhost:3000/#/aktiver/" + token +
@@ -147,7 +138,7 @@ app.post('/register', (req: Request, res: Response) => {
 
 app.put('/activate/:token', (req: Request, res: Response) => {
   const body = req.body !== null && typeof req.body === 'object' ? req.body : {};
-  const { firstName, lastName, munId, rank, password } = body;
+  const { firstName, lastName, munId, password } = body;
   let isAdminCreated = false;
   if(firstName && lastName && password){
     isAdminCreated = true;

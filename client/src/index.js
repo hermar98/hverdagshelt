@@ -1,34 +1,33 @@
 // @flow
 import ReactDOM from 'react-dom';
 import * as React from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
-import { Alert } from './widgets';
-import { Footer } from './components/menu/Footer';
-import { FileIssuePage } from './components/pages/FileIssuePage';
-import { LoginPage } from './components/pages/LoginPage';
-import { RegisterPage } from './components/pages/RegisterPage';
-import { EventInfo } from './components/pages/EventPage';
-import { FeedPage } from './components/pages/FeedPage';
-import { ChooseMunicipalPage } from './components/pages/ChooseMunicipalPage';
-import { Menu } from './components/menu/Menu';
-import { IssueLarge } from './components/issueViews/issueViews';
-import { ForgotPassword } from './components/pages/ForgotPassword.js';
-import { NewPasswordPage } from './components/pages/NewPasswordPage.js';
-import { StatisticsPage } from './components/pages/StatisticsPage.js';
-import { TermsOfService } from './components/pages/TermsOfServicePage.js';
-import { AdminPage, AdminEditPage } from './components/pages/AdminPage.js';
-import { AlternativeUpload } from './components/image/AlternativeUpload.js';
-import { AdminHandleCategories } from './components/pages/AdminHandleCategories';
-import { MunicipalPage } from './components/pages/MunicipalPage';
-import { NotFound } from './components/pages/NotFound';
-import { IssueView } from './components/pages/IssueOverviewPage';
-import { ContractorView } from './components/pages/CompanyIssuePage';
-import { ActivateAccountPage } from './components/pages/ActivateAccountPage';
-import { Map } from './map';
-import { RegisterEventPage } from './components/pages/RegisterEventPage';
+import {HashRouter, Route, Switch} from 'react-router-dom';
+import {Alert} from './widgets';
+import {Footer} from './components/menu/Footer';
+import {FileIssuePage} from './components/pages/FileIssuePage';
+import {LoginPage} from './components/pages/LoginPage';
+import {RegisterPage} from './components/pages/RegisterPage';
+import {EventInfo} from './components/pages/EventPage';
+import {FeedPage} from './components/pages/FeedPage';
+import {ChooseMunicipalPage} from './components/pages/ChooseMunicipalPage';
+import {Menu} from './components/menu/Menu';
+import {IssueLarge} from './components/issueViews/issueViews';
+import {ForgotPassword} from './components/pages/ForgotPassword.js';
+import {NewPasswordPage} from './components/pages/NewPasswordPage.js';
+import {StatisticsPage} from './components/pages/StatisticsPage.js';
+import {TermsOfService} from './components/pages/TermsOfServicePage.js';
+import {AdminEditPage, AdminPage} from './components/pages/AdminPage.js';
+import {AdminHandleCategories} from './components/pages/AdminHandleCategories';
+import {MunicipalPage} from './components/pages/MunicipalPage';
+import {NotFound} from './components/pages/NotFound';
+import {IssueView} from './components/pages/IssueOverviewPage';
+import {ContractorView} from './components/pages/CompanyIssuePage';
+import {ActivateAccountPage} from './components/pages/ActivateAccountPage';
+import {RegisterEventPage} from './components/pages/RegisterEventPage';
 import createHashHistory from 'history/createHashHistory';
 import ProfilePage from './components/pages/ProfilePage/ProfilePage';
 import AdminAddPage from './components/pages/AdminAddPage';
+import { CompanyDelIssuePage } from './components/pages/CompanyDelIssuePage';
 
 // Reload application when not in production environment
 
@@ -61,7 +60,6 @@ if (root)
           <Route exact path="/registrerEvent" component={RegisterEventPage} />
           <Route exact path="/minSide" component={FeedPage} />
           <Route exact path="/kommune/:munId" component={MunicipalPage} />
-          <Route exact path="/image" component={AlternativeUpload} />
           <Route exact path="/aktiver/:tokenId" component={ActivateAccountPage} />
           <Route exact path="/kommune/:munId/saker" component={IssueView} />
           <Route exact path="/bedrift" component={ContractorView} />
@@ -71,7 +69,8 @@ if (root)
           <Route exact path="/admin/registrerBruker" component={AdminAddPage} />
           <Route exact path="/admin/administerKategorier" component={AdminHandleCategories} />
           <Route exact path="/hendelser/:eventId" component={EventInfo} />
-          <Route exact path="/map" component={Map} />
+          <Route exact path="/delegerSaker" component={ CompanyDelIssuePage} />
+
           <Route path="" component={NotFound} />
         </Switch>
         <Footer />
