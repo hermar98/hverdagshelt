@@ -11,6 +11,7 @@ import {municipalService} from "../../services/MunicipalService";
 import {Municipal} from "../../models/Municipal";
 import {autocomplete, glob} from "../../../public/autocomplete";
 import {HoverButton} from "../issueViews/issueViews";
+import {redirectService} from '../../redirectService.js';
 
 let municipalObjects;
 
@@ -114,5 +115,7 @@ export default class AdminAddPage extends Component {
         })
       })
       .catch(error => console.log(error));
+
+    redirectService.redirect(4);
   }
 }

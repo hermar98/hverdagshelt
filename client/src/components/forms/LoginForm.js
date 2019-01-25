@@ -91,7 +91,7 @@ export default class Login extends Component {
               history.push('/minSide');
             } else if (this.user.rank === 2) {
               window.location.reload();
-              history.push('/saker');
+              history.push('/bedrift');
             } else if (this.user.rank === 3) {
               window.location.reload();
               history.push('/kommune/' + this.user.munId);
