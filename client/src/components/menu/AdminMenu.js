@@ -86,6 +86,7 @@ export class AdminMenu extends Component {
   toAdminHome() {
     history.push('/admin');
     this.className = '';
+    this.className2 = 'homefocus';
   }
   toAdminHome2() {
     this.className = '';
