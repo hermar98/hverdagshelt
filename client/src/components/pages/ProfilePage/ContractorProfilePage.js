@@ -22,25 +22,25 @@ export class ContractorProfilePage extends Component {
 
   mounted() {
     userService
-      .getUser(tokenManager.getUserId())
-      .then(rows => {
-        this.user = rows;
+      .getCurrentUser()
+      .then(rows =>{
+        this.user = rows
         municipalService
           .getMunicipal(this.user.munId)
-          .then(mun => (this.municipal = mun))
+          .then(mun => this.municipal = mun)
           .catch(error => console.log(error));
-      })
-      .catch(error => console.log(error));
 
-    issueService
-      .getIssuesByUser(tokenManager.getUserId())
-      .then(rows => (this.issues = rows))
+        issueService
+            .getIssuesByUser(this.user.userId)
+            .then(rows => (this.issues = rows))
+            .catch(error => console.log(error));
+      })
       .catch(error => console.log(error));
   }
 
   render() {
     return (
-      <div>
+      <div className="container-fluid">
         <h4 className="row justify-content-center my-profile">Min Profil</h4>
         <div className="profile-page-container page-container">
           <div className="profile-left">

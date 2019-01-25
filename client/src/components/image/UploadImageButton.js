@@ -60,7 +60,7 @@ export default class UploadImageButton extends Component {
       .then(id => {
         this.uploadTheImage(id.issueId);
       })
-      .then(history.push('/municipal/' + this.munId + '/issues'))
+      .then(history.push('/profil/'))
       .catch((error: Error) => Alert.danger(error.message));
   }
 

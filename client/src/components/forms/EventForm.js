@@ -12,6 +12,7 @@ import {eventService} from "../../services/EventService";
 import moment from "moment";
 import {HoverButton} from "../issueViews/issueViews";
 //import { UploadImageButton } from '../../components/image/UploadImageButton';
+import {userService} from '../../services/UserService';
 
 export default class EventForm extends Component {
   event = new Event();
@@ -20,7 +21,7 @@ export default class EventForm extends Component {
   filteredCategories = [];
   category = new EventCategory();
   munId = localStorage.getItem('munId');
-  userId = tokenManager.getUserId();
+  user = null;
   dropdownToggle = "";
   startDate = Date;
   startTime = null;
@@ -33,7 +34,7 @@ export default class EventForm extends Component {
         <form ref={e => (this.form = e)}>
           <Form.Input label="Tittel" type="text" onChange={e => (this.event.title = e.target.value)} required placeholder="Tittel" />
           <div className="form-group row justify-content-center">
-            <div className="col-sm-10 col-lg-4 justify-content-center">
+            <div className="col-12 col-md-4 justify-content-center">
               <select
                 required
                 className="form-control"
@@ -61,8 +62,8 @@ export default class EventForm extends Component {
             placeholder="Innhold/forklarende tekst"
           />
           <Form.InputDateTime label="Startdato" label2="Tidspunkt" required
-                              onChange={e => this.startDate = e.target.value} onChange2={e => this.startTime = e.target.value}/>
-          <Form.InputDateTime label="Sluttdato" label2="Tidspunkt" required
+                              onChange={e => {this.startDate = e.target.value; document.getElementById("dateEnd").setAttribute("min", this.startDate);}} onChange2={e => this.startTime = e.target.value}/>
+          <Form.InputDateTime id="dateEnd" label="Sluttdato" label2="Tidspunkt" required
                               onChange={e => this.endDate = e.target.value} onChange2={e => this.endTime = e.target.value}/>
           <Form.Input
             label="Sted"
@@ -91,7 +92,8 @@ export default class EventForm extends Component {
     this.event.latitude = 5678;
     this.event.timeStart = moment(this.startDate + " " + this.startTime);
     this.event.timeEnd = moment(this.endDate + " " + this.endTime);
-    this.event.userId = this.userId;
+    this.event.munId = this.munId;
+    this.event.userId = this.user.userId;
 
     eventService
       .addEvent(this.event)
@@ -100,6 +102,10 @@ export default class EventForm extends Component {
   }
 
   mounted() {
+    userService.getCurrentUser()
+        .then(user => this.user = user)
+        .catch((error: Error) => Alert.danger(error.message));
+
     eventCategoryService
       .getCategories()
       .then(e => {

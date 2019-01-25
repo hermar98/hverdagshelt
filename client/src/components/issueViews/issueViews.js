@@ -48,6 +48,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     categoryName: string = '';
     munName: string = '';
     issueText: string = '';
+    user = null;
     rank: number = -1;
 
     lat: number = 0
@@ -80,7 +81,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                         <ButtonGroup onclickC={this.onEdit} onclickT={this.onDelete} id={this.issue.userId} />
                                         <StatusButton status={this.issue.statusId} onclick={() => {
                                             let rank = 0
-                                            userService.getUser(tokenManager.getUserId())
+                                            userService.getCurrentUser()
                                                 .then(user => {
                                                     rank = user.rank
                                                     if(rank == 3) {
@@ -107,7 +108,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                 </div>
                                 <div className="issue-map-container">
                                     {console.log(this.lat + " " + this.long)}
-                                    <SimpleMap lat={this.long} lng={this.lat}/>
+                                    <SimpleMap lat={this.lat} lng={this.long}/>
                                 </div>
                             </div>
                             <div className="issue-images">
@@ -162,15 +163,18 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                 sharedFeedback.feedback = data;
             })
             .catch(error => console.error("Error: ", error))
-        userService.getUser(tokenManager.getUserId())
+        userService.getCurrentUser()
             .then(user => {
                 this.rank = user.rank
             })
             .catch(error => console.error("Error: ", error))
+        userService.getCurrentUser()
+            .then(user => this.user = user)
+            .catch(error => console.error("Error: ", error))
     }
 
     renderAddButton(){
-        if (this.rank == 3 || tokenManager.getUserId() == this.issue.userId) {
+        if (this.rank == 3 || this.user.userId == this.issue.userId) {
             return (
                 <div>
                     <button ref={this.addFeedbackButton} className="btn" type="button"
@@ -207,7 +211,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
         feedback.name = '';
         feedback.content = this.feedbackContent;
         feedback.issueId = this.issue.issueId;
-        feedback.userId = tokenManager.getUserId()
+        feedback.userId = this.user.userId;
         feedbackService.addFeedback(feedback)
             .then(res => {
                 this.addFeedbackButton.current.classList.remove('show')
@@ -555,7 +559,7 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
     }
 
     onEdit() {
-        if(tokenManager.getUserId() == this.props.feedback.userId) {
+        if(this.user.userId == this.props.feedback.userId) {
             let inp = document.createElement('input')
             let btn = document.createElement('button')
             let text = document.getElementById('feedback-text ' + this.props.feedback.feedbackId)
@@ -590,7 +594,7 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
             .then(user => rank = user.rank)
             .catch(error => console.error("Error: ", error))
 
-        if(tokenManager.getUserId() == this.props.feedback.userId) {
+        if(this.user.userId == this.props.feedback.userId) {
             if (confirm("Are you sure?")) {
                 feedbackService.deleteFeedback(this.props.feedback.feedbackId)
                     .then(res => {
@@ -718,7 +722,7 @@ export class ButtonGroup extends Component<{onclickC: function, onclickT: functi
                     <ImageButton source="../../images/trashcan.png" onclick={this.props.onclickT}/>
                 </div>
             )
-        }else if(tokenManager.getUserId() == this.props.id){
+        }else if(this.user.userId == this.props.id){
             return (
                 <div className="options">
                     <ImageButton source="../../images/cog.png" onclick={this.props.onclickC}/>
@@ -730,7 +734,7 @@ export class ButtonGroup extends Component<{onclickC: function, onclickT: functi
     }
 
     mounted () {
-        userService.getUser(tokenManager.getUserId())
+        userService.getCurrentUser()
             .then(user => this.rank = user.rank)
             .catch(error => console.error("Error: ", error))
     }
@@ -738,7 +742,7 @@ export class ButtonGroup extends Component<{onclickC: function, onclickT: functi
 
 export class ButtonGroupFeedback extends Component<{onclickC: function, onclickT: function, id: number}> {
     render() {
-        if(this.props.id == tokenManager.getUserId()) {
+        if(this.props.id == this.user.userId) {
             return (
                 <div className="options">
                     <ImageButton source="../../images/cog.png" onclick={this.props.onclickC}/>

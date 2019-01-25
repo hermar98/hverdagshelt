@@ -11,7 +11,7 @@ import {tokenManager} from "../../tokenManager";
 import {HoverButton} from "../issueViews/issueViews";
 
 
-export default class LimitedRegistrationForm extends Component {
+export default class LimitedRegistrationForm extends Component<{tokenId: string}>{
   user = new User();
   repeatPassword = '';
   passwordLengthOk = true;
@@ -54,8 +54,8 @@ export default class LimitedRegistrationForm extends Component {
             title="Passordet må inneholde minst én liten og én stor bokstav, og minst 8 karakterer"
             placeholder="Gjenta passord"
           />
-          {this.passwordLengthOk ? <div /> : <Form.Alert text="Du må bruke minst 8 tegn i passordet ditt" />}
-          {this.passwordsMatch ? <div /> : <Form.Alert text="Passordene samsvarer ikke. Prøv på nytt." />}
+          {this.passwordLengthOk ? <div /> : <Form.Alert type="danger" text="Du må bruke minst 8 tegn i passordet ditt" />}
+          {this.passwordsMatch ? <div /> : <Form.Alert type="danger" text="Passordene samsvarer ikke. Prøv på nytt." />}
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
               <HoverButton onclick={this.save} text="Lag Bruker"/>
@@ -66,7 +66,7 @@ export default class LimitedRegistrationForm extends Component {
     );
   }
   mounted(){
-    userService.checkActivationToken(window.location.hash.slice(11))
+    userService.checkActivationToken(this.props.tokenId)
       .then(user => this.user = user)
       .catch(error => console.log(error));
   }
@@ -91,10 +91,10 @@ export default class LimitedRegistrationForm extends Component {
     }
 
     userService
-      .activateAccount(window.location.hash.slice(11), this.user)
+      .activateAccount(this.props.tokenId, this.user)
       .then(token => {
         tokenManager.addToken(token);
-        history.push('/feed');
+        history.push('/profil');
       })
       .catch((error: Error) => {
         console.log(error);

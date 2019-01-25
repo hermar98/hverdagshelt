@@ -40,7 +40,9 @@ export class FeedPage extends Component {
 
     return (
       <div className="container-fluid">
-        <div className="row page-container">
+          <h2 id="munTitle">Din feed</h2>
+
+          <div className="row page-container">
           <div className="col-lg-6">
             <Card title="Feil/mangler">
               <div className="issue-overview-small">
@@ -180,46 +182,40 @@ export class FeedPage extends Component {
 
   mounted() {
     userService
-      .getToken()
-      .then(() => {
-        userService
-          .getUser(tokenManager.getUserId())
-          .then(user => {
-            this.user = user;
-          })
-          .catch((error: Error) => console.log(error));
+      .getCurrentUser()
+      .then(user => {
+        this.user = user;
+          //GET all municipals a user has subscribed to
+          userMunicipalService
+              .getUserMunicipals(this.user.userId)
+              .then(muns => {
+                  sharedMunicipals.municipals = muns;
+                  sharedMunicipals.municipals.map(e =>
+                      issueService
+                          .getIssuesByMunicipal(e.munId)
+
+                          //GET all Issues registered on the municipals
+                          .then(issues => {
+                              Array.prototype.push.apply(sharedIssues.issues, issues);
+                              console.log(sharedIssues.issues);
+                          })
+                          .catch((error: Error) => Alert.danger(error.message))
+                  );
+
+                  //GET all events registered on the municipals
+                  sharedMunicipals.municipals.map(e =>
+                      eventService
+                          .getEventsByMunicipal(e.munId)
+                          .then(events => {
+                              Array.prototype.push.apply(sharedEvents.events, events);
+                          })
+                          .catch((error: Error) => Alert.danger(error.message))
+                  );
+              })
+              .then(() => console.log(sharedMunicipals.municipals))
+              .catch((error: Error) => Alert.danger(error.message));
       })
       .catch((error: Error) => console.log(error));
-
-    //GET all municipals a user has subscribed to
-    userMunicipalService
-      .getUserMunicipals(tokenManager.getUserId())
-      .then(muns => {
-        sharedMunicipals.municipals = muns;
-        sharedMunicipals.municipals.map(e =>
-          issueService
-            .getIssuesByMunicipal(e.munId)
-
-            //GET all Issues registered on the municipals
-            .then(issues => {
-              Array.prototype.push.apply(sharedIssues.issues, issues);
-              console.log(sharedIssues.issues);
-            })
-            .catch((error: Error) => Alert.danger(error.message))
-        );
-
-        //GET all events registered on the municipals
-        sharedMunicipals.municipals.map(e =>
-          eventService
-            .getEventsByMunicipal(e.munId)
-            .then(events => {
-              Array.prototype.push.apply(sharedEvents.events, events);
-            })
-            .catch((error: Error) => Alert.danger(error.message))
-        );
-      })
-      .then(() => console.log(sharedMunicipals.municipals))
-      .catch((error: Error) => Alert.danger(error.message));
 
     //GET all issueCategories
     issueCategoryService

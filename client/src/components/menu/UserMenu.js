@@ -22,17 +22,13 @@ export class UserMenu extends Component {
   municipal = new Municipal();
   munId = localStorage.getItem('munId');
   className = '';
+  className2 = '';
 
   mounted() {
     userService
-      .getToken()
-      .then(() => {
-        userService
-          .getUser(tokenManager.getUserId())
-          .then(user => {
-            this.user = user;
-          })
-          .catch((error: Error) => console.log(error));
+      .getCurrentUser()
+      .then(user => {
+        this.user = user;
       })
       .catch((error: Error) => console.log(error));
 
@@ -46,9 +42,13 @@ export class UserMenu extends Component {
       return (
         <div>
           <NavBar>
-            <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
+            <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'} to="/feed" onClick={this.toHome2}>
+              Hverdagshelt
+            </NavBar.Brand>
             <NavBar.Button onClick={this.toRegisterIssue}>Registrer Sak</NavBar.Button>
-            <NavBar.Button onClick={this.toFeed}>Min Feed</NavBar.Button>
+            <NavBar.Button className2={this.className2} onClick={this.toFeed}>
+              Min Feed
+            </NavBar.Button>
             <NavBar.Dropdown className={this.className} title={this.user.firstName + ' ' + this.user.lastName}>
               <DropdownHeader>{this.user.email}</DropdownHeader>
               <DropdownFooter>Privatperson</DropdownFooter>
@@ -66,6 +66,7 @@ export class UserMenu extends Component {
   toProfile() {
     history.push('/profil');
     this.className = 'profilefocus';
+    this.className2 = '';
   }
 
   toFeed() {
@@ -80,6 +81,7 @@ export class UserMenu extends Component {
   toRegisterIssue() {
     history.push('/registrerSak');
     this.className = '';
+    this.className2 = '';
   }
   changeMunicipal() {
     localStorage.removeItem('munId');
@@ -89,5 +91,11 @@ export class UserMenu extends Component {
   toIssue() {
     history.push('/registrerSak');
     this.className = '';
+    this.className2 = '';
+  }
+  toHome2() {
+    this.className = '';
+    this.className2 = 'homefocus';
+    console.log(this.className2);
   }
 }

@@ -153,11 +153,15 @@ export class Card extends Component<{ title?: React.Node, children?: React.Node 
   }
 }
 
-class NavBarButton extends Component<{ onClick: () => mixed, children?: React.Node }> {
+class NavBarButton extends Component<{ onClick: () => mixed, className2?: string, children?: React.Node }> {
   render() {
     return (
       <form className="form-inline">
-        <button onClick={this.props.onClick} className="custom-nav-btn btn btn-outline-light" data-toggle="collapse">
+        <button
+          onClick={this.props.onClick}
+          className={'custom-nav-btn btn btn-outline-light ' + this.props.className2}
+          data-toggle="collapse"
+        >
           {this.props.children}
         </button>
       </form>
@@ -165,15 +169,18 @@ class NavBarButton extends Component<{ onClick: () => mixed, children?: React.No
   }
 }
 
-class NavBarBrand extends Component<{ image?: React.Node, to?: string, children?: React.Node }> {
+class NavBarBrand extends Component<{ image?: React.Node, onClick: () => mixed, to: string, children?: React.Node }> {
   render() {
     if (!this.props.children) return null;
-    return (
-      <NavLink className="navbar-brand" exact to={this.props.to ? this.props.to : '/'}>
-        <img src={this.props.image} alt="" width="50px" height="40px" />
 
-        {this.props.children}
-      </NavLink>
+    return (
+      <div onClick={this.props.onClick}>
+        <NavLink className="navbar-brand" exact to={this.props.to ? this.props.to : '/'}>
+          <img src={this.props.image} alt="" width="50px" height="40px" />
+
+          {this.props.children}
+        </NavLink>
+      </div>
     );
   }
 }
@@ -340,7 +347,7 @@ class FormInput extends Component<{
   render() {
     return (
       <div className="form-group row justify-content-center">
-        <div className="col-sm-4 col-sm-offset-4">
+        <div className="col-md-4 col-12">
           <label>{this.props.label}</label>
           <input
             className="form-control"
@@ -360,11 +367,13 @@ class FormInput extends Component<{
 
 class FormInputDateTime extends Component<{
   label?: React.Node,
+  id?: string,
   value?: mixed,
   onChange?: (event: SyntheticInputEvent<HTMLInputElement>) => mixed,
   required?: boolean,
   pattern?: string,
   placeholder?: string,
+  min?: Date,
   onChange2?: (event: SyntheticInputEvent<HTMLInputElement>) => mixed,
   value2?: mixed,
   label2?: React.Node
@@ -372,11 +381,13 @@ class FormInputDateTime extends Component<{
   render() {
     return (
       <div className="form-group row justify-content-center">
-        <div className="form-group col-lg-3 col-sm-7">
+        <div className="form-group col-md-3 col-8">
           <label>{this.props.label}</label>
           <input
+            id={this.props.id}
             className="form-control"
             type="date"
+            min={this.props.min}
             value={this.props.value}
             onChange={this.props.onChange}
             required={this.props.required}
@@ -384,7 +395,7 @@ class FormInputDateTime extends Component<{
             placeholder={this.props.placeholder}
           />
         </div>
-        <div className="form-group col-lg-1 col-sm-3">
+        <div className="form-group col-md-1 col-4">
           <label>{this.props.label2}</label>
           <input className="form-control" type="time" value={this.props.value2} onChange={this.props.onChange2} />
         </div>
@@ -405,7 +416,7 @@ class FormInputBig extends Component<{
   render() {
     return (
       <div className="form-group row justify-content-center">
-        <div className="col-sm-4 col-sm-offset-4">
+        <div className="col-md-4 col-12">
           <label>{this.props.label}</label>
           <textarea
             rows="8"
@@ -431,8 +442,8 @@ class FileInput extends Component<{
     return (
       <form>
         <div className="form-group row">
-          <div className="col-sm-4" />
-          <div className="col-sm-4 col-form-label">
+          <div className="col-md-4 col-12" />
+          <div className="col-md-4 col-form-label">
             <i>{this.props.children}</i>
             <input type="file" className="form-control-file" />
           </div>
