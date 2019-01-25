@@ -28,7 +28,8 @@ import { Map } from './map';
 import { RegisterEventPage } from './components/pages/RegisterEventPage';
 import createHashHistory from 'history/createHashHistory';
 import ProfilePage from './components/pages/ProfilePage/ProfilePage';
-import AdminAddPage from './components/pages/AdminAddPage';
+import AdminAddPage from './components/forms/AdminAddPage';
+import { CompanyDelIssuePage } from './components/pages/CompanyDelIssuePage';
 
 // Reload application when not in production environment
 
@@ -70,6 +71,8 @@ if (root)
           <Route exact path="/admin/registrerBruker" component={AdminAddPage} />
           <Route exact path="/admin/administerKategorier" component={AdminHandleCategories} />
           <Route exact path="/hendelser/:eventId" component={EventInfo} />
+          <Route exact path="/delegerSaker" component={ CompanyDelIssuePage} />
+
           <Route path="" component={NotFound} />
         </Switch>
         <Footer />

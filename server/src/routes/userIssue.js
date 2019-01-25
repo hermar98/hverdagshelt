@@ -1,7 +1,7 @@
 //@flow
-import { Issue, User, UserIssue } from '../models';
-import Sequelize from '../../flow-typed/npm/sequelize_v4.x.x';
-import { tokenManager } from '../tokenManager.js';
+import {Issue, User, UserIssue} from '../models';
+import Sequelize from "../../flow-typed/npm/sequelize_v4.x.x";
+import {tokenManager} from "../tokenManager";
 
 type Request = express$Request;
 type Response = express$Response;
@@ -42,21 +42,21 @@ app.get('/secure/freeUsersIssues/:statusId', (req: Request, res: Response) => {
 });
 
 app.get('/secure/UsersIssues/:rank/status/:statusId', (req: Request, res: Response) => {
-  console.log('oh fuk');
-  return User.findAll({
-    include: [
-      {
-        model: Issue,
-        as: 'Issues',
-        // through: { model: UserIssue, as: 'UserIssues' },
-        // attributes: [],
-        required: true,
-        where: { statusId: req.params.statusId }
-      }
-    ],
-    where: { rank: req.params.rank }
-    // where: { statusId: Number(req.params.statusId)}
-  }).then(user => (user ? res.send(user) : res.sendStatus(404)));
+    console.log("oh fuk");
+    return User.findAll({
+        include: [
+            {
+                model: Issue,
+                as: 'Issues',
+                // through: { model: UserIssue, as: 'UserIssues' },
+                // attributes: [],
+                required:   false,
+                where: {statusId: req.params.statusId}
+            }
+        ],
+        where: {rank: req.params.rank},
+        // where: { statusId: Number(req.params.statusId)}
+    }).then(user => (user ? res.send(user) : res.sendStatus(404)));
 });
 
 app.post('/users/:userId/issues/:issueId', (req: Request, res: Response) => {
