@@ -232,14 +232,23 @@ export default class EventForm extends Component {
       .getCurrentUser()
       .then(user => {
         this.user = user;
-        console.log(user.munId);
+        if (user.userId === 1) {
+          history.push('/minSide');
+        } else if (user.userId === 3) {
+          history.push('/kommune/' + user.munId);
+        } else if (user.userId === 4) {
+          history.push('/admin');
+        }
         municipalService
           .getMunicipal(user.munId)
           .then(e =>
             mapService.getLoactionByAdress(e.name).then(d => console.log((this.center = d[0].geometry.location)))
           );
       })
-      .catch((error: Error) => Alert.danger(error.message));
+      .catch((error: Error) => {
+        console.log(error);
+        history.push('/');
+      });
 
     eventCategoryService
       .getCategories()
