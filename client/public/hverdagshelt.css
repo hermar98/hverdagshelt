@@ -22,7 +22,7 @@ body {
     margin: 2% 12% 25% 12%;
   }
   .page-container {
-    margin: 2% 4% 20% 4%;
+    margin: 2% 4% 10% 4%;
   }
 }
 
@@ -169,10 +169,10 @@ div.status > h4 {
   height: 75%;
 }
 
-/*.issue-small-list {
-    max-height: 360px;
+.issue-small-list {
+    max-height: 600px;
     overflow: auto;
-}*/
+}
 
 .sort-box {
   padding: 1% 1% 0% 1%;
@@ -427,7 +427,7 @@ Profile-page
 .profile-info {
   grid-column: 1;
   grid-row: 1;
-  margin-bottom: 5%;
+  padding: 4% 4% 4% 4%;
 }
 
 .profile-info card {
@@ -459,7 +459,7 @@ Profile-page
 
 .mun-list {
   border: solid lightgray 1px;
-  height: 20vh;
+  height: 40vh;
   overflow-y: scroll;
 }
 
@@ -553,7 +553,7 @@ Event
 .image-upload-images-text {
   position: absolute;
   align-self: center;
-  color: deeppink;
+  color: red;
   z-index: 5;
 }
 .image-upload-images {
@@ -563,11 +563,11 @@ Event
 }
 .image-upload-image {
   position: relative;
-  max-height: 300px;
+  width: 80%;
+  max-width: 200px;
 }
 .image-upload-form {
-  width: 50%;
-  margin: auto;
+  min-width: 400px;
 }
 .image-upload-button {
   margin: auto;
