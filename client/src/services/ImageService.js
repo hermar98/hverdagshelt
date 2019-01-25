@@ -12,7 +12,7 @@ class ImageService{
         });
     }
 
-    getAllImage(issueId: number): Promise<Issue> {
+    getAllImage(issueId: number): Promise<Image[]> {
         let token = localStorage.getItem('token');
         if (token) token = JSON.parse(token).jwt;
         return service.get('/image/issue/' + issueId, {

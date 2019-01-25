@@ -10,14 +10,15 @@ import {issueCategoryService} from "../../services/IssueCategoryService";
 import {feedbackService} from "../../services/FeedbackService";
 import {municipalService} from "../../services/MunicipalService";
 import {SimpleMap} from "../map/map";
+import {imageService} from "../../services/ImageService";
 
-let sharedFeedback = sharedComponentData({feedback: []})
+let sharedFeedback = sharedComponentData({feedback: []});
 
 let formatDate = function (date: Date) {
     if(date != null) {
-        let str: string = date
-        str = str.substring(0, str.length - 8)
-        str = str.replace("T", " KL. ")
+        let str: string = date;
+        str = str.substring(0, str.length - 8);
+        str = str.replace("T", " KL. ");
         return str;
     }
     return;
@@ -30,11 +31,11 @@ Large view of an issue, which includes the title, content, image and status.
 export class IssueLarge extends Component<{match: {params: {issueId: number, munId: number}}}> {
 
     constructor (props) {
-        super(props)
-        this.statusSelect = React.createRef()
-        this.addFeedbackButton = React.createRef()
-        this.addFeedbackForm = React.createRef()
-        this.bodyRef = React.createRef()
+        super(props);
+        this.statusSelect = React.createRef();
+        this.addFeedbackButton = React.createRef();
+        this.addFeedbackForm = React.createRef();
+        this.bodyRef = React.createRef();
         this.state = {
             clickedStatus: false,
             clickedDelete: false
@@ -42,6 +43,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     }
 
     issue = new Issue();
+    images: [] = [];
     feedbackContent: string = '';
     categoryName: string = '';
     munName: string = '';
@@ -49,8 +51,8 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     user: User = new User();
     rank: number = -1;
 
-    lat: number = 0
-    long: number = 0
+    lat: number = 0;
+    long: number = 0;
 
     render() {
         if(!this.state.clickedStatus && this.statusSelect.current != null) {
@@ -62,7 +64,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
         if(this.state.clickedDelete){
             this.setState({
                 clickedDelete: false
-            })
+            });
             return <Redirect to={"/kommune/" + this.props.match.params.munId + "/issues"} />
         }
 
@@ -78,11 +80,11 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                         <p className="date date-large">{formatDate(this.issue.createdAt)}</p>
                                         <ButtonGroup onclickC={this.onEdit} onclickT={this.onDelete} id={this.issue.userId} />
                                         <StatusButton status={this.issue.statusId} onclick={() => {
-                                            let rank = 0
+                                            let rank = 0;
                                             userService.getCurrentUser()
                                                 .then(user => {
-                                                    rank = user.rank
-                                                    if(rank == 3) {
+                                                    rank = user.rank;
+                                                    if(rank === 3) {
                                                         this.setState({
                                                             clickedStatus: !this.state.clickedStatus
                                                         })
@@ -98,7 +100,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                             <StatusButton status={3} onclick={() => this.onClick(3)} />
                                         </div>
                                     </div>
-                                    <p className="date date-large">{this.munName}</p>
+                                    <p className="date date-large">{this.munName + " Kommune"}</p>
                                     <h5>{this.categoryName}</h5>
                                     <div className="card-text" ref={this.bodyRef}>
                                         <p id="issue-large-text">{this.issue.content}</p>
@@ -111,7 +113,10 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                             <div className="issue-images">
                                 <h4>&nbsp;Bilder</h4>
                                 <div className="flex-container">
-                                        <img className="issue-image" src={this.issue.image}/>
+                                    {this.images.map(image => {
+                                        console.log(image.imageSource);
+                                        return <img className="issue-image" src={image.imageSource}/>
+                                    })}
                                 </div>
                             </div>
                         </div>
@@ -141,38 +146,42 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
         issueService.getIssue(this.props.match.params.issueId)
             .then(issue => {
                 this.issue = issue;
-                this.lat = this.issue.latitude
-                this.long = this.issue.longitude
+                this.lat = this.issue.latitude;
+                this.long = this.issue.longitude;
                 issueCategoryService.getCategory(this.issue.categoryId)
                     .then(category => {
                         this.categoryName = category.name
                     })
-                    .catch(error => console.error("Error: ", error))
+                    .catch(error => console.error("Error: ", error));
                 municipalService.getMunicipal(this.issue.munId)
                     .then(mun => {
                         this.munName = mun.name
                     })
+                    .catch(error => console.error("Error: ", error));
+                console.log("id client: " + this.issue.issueId)
+                imageService.getAllImage(this.issue.issueId)
+                    .then(data => this.images = data)
                     .catch(error => console.error("Error: ", error))
             })
-            .catch(error => console.error("Error: ", error))
+            .catch(error => console.error("Error: ", error));
         feedbackService.getFeedbacks(this.props.match.params.issueId)
             .then(data => {
                 sharedFeedback.feedback = data;
             })
-            .catch(error => console.error("Error: ", error))
+            .catch(error => console.error("Error: ", error));
         userService.getCurrentUser()
             .then(user => {
                 this.user = user;
                 this.rank = user.rank
             })
-            .catch(error => console.error("Error: ", error))
+            .catch(error => console.error("Error: ", error));
         userService.getCurrentUser()
             .then(user => this.user = user)
             .catch(error => console.error("Error: ", error))
     }
 
     renderAddButton(){
-        if (this.rank == 3 || this.user.userId == this.issue.userId) {
+        if (this.rank === 3 || this.user.userId === this.issue.userId) {
             return (
                 <div>
                     <button ref={this.addFeedbackButton} className="btn" type="button"
@@ -526,8 +535,8 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
                 <div className="card feedback-card">
                     <div id={"feedback-body " + this.props.feedback.feedbackId} className="card-body" ref={this.bodyRef}>
                         <div className="d-flex flex-row submitter">
-                                <div className="p-2">
-                                    <img className="card-img profile-image" src={this.source}/>
+                                <div className="p-2 profile-image-container">
+                                    <img className="profile-image" src={this.source}/>
                                 </div>
                                 <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{formatDate(this.props.feedback.createdAt)}</p></div>
                             <ButtonGroupFeedback onclickC={this.onEdit} onclickT={this.onDelete} id={this.props.feedback.userId} />
@@ -547,8 +556,8 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
                 this.user = user
                 switch(user.rank){
                     case 1: this.source = "../../images/private.png"; break;
-                    case 2: this.source = "../../images/contractor.png"; break;
-                    case 3: this.source = "../../images/worker.png"; break;
+                    case 2: this.source = "../../images/worker.png"; break;
+                    case 3: this.source = "../../images/municipal.png"; break;
                     default: break;
                 }
             })
