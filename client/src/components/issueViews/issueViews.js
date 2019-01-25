@@ -107,7 +107,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                 </div>
                                 <div className="issue-map-container">
                                     {console.log(this.lat + " " + this.long)}
-                                    <SimpleMap lat={this.long} lng={this.lat}/>
+                                    <SimpleMap lat={this.lat} lng={this.long}/>
                                 </div>
                             </div>
                             <div className="issue-images">
