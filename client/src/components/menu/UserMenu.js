@@ -32,10 +32,6 @@ export class UserMenu extends Component {
       })
       .catch((error: Error) => console.log(error));
 
-    municipalService
-      .getMunicipal(this.munId)
-      .then(municipal => (this.municipal = municipal))
-      .catch((error: Error) => console.log(error));
   }
   render() {
     if (this.user) {
