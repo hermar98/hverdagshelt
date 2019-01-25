@@ -32,6 +32,7 @@ export class FeedPage extends Component {
   issueSort: number = 1;
   eventSort: number = 2;
   status: number = 0;
+  date = new Date(Date.now());
 
   render() {
     const hasMunicipals = sharedMunicipals.municipals.length != 0;
@@ -84,7 +85,6 @@ export class FeedPage extends Component {
                       onChange={(event): SyntheticInputEvent<HTMLInputElement> => {
                         this.issueSort = event.target.value;
                         this.sortIssues();
-                        console.log(hasMunicipals)
                       }}
                     >
                       <option value={1}>Nyeste</option>
@@ -103,6 +103,15 @@ export class FeedPage extends Component {
                           (e.categoryId == this.iCategoryId || this.iCategoryId == 0) &&
                           (e.munId == this.munId || this.munId == 0)
                         );
+                      })
+                      .sort((a, b) => {
+                        if (a.createdAt < b.createdAt) {
+                          return 1;
+                        } else if (a.createdAt > b.createdAt) {
+                          return -1;
+                        } else {
+                          return 0;
+                        }
                       })
                       .map(e => (
 
@@ -157,7 +166,17 @@ export class FeedPage extends Component {
                   new Set(
                     sharedEvents.events
                       .filter(e => {
-                        return e.categoryId == this.eCategoryId || this.eCategoryId == 0;
+                        return (e.categoryId == this.eCategoryId || this.eCategoryId == 0)
+                          && (new Date(e.timeEnd) > this.date);
+                      })
+                      .sort((a, b) => {
+                        if (a.timeStart > b.timeStart) {
+                          return 1;
+                        } else if (a.timeStart < b.timeStart) {
+                          return -1;
+                        } else {
+                          return 0;
+                        }
                       })
                       .map(e => (
                         <li key={e.eventId}>
@@ -197,9 +216,9 @@ export class FeedPage extends Component {
                           //GET all Issues registered on the municipals
                           .then(issues => {
                               Array.prototype.push.apply(sharedIssues.issues, issues);
-                              console.log(sharedIssues.issues);
                           })
-                          .catch((error: Error) => Alert.danger(error.message))
+
+                        .catch((error: Error) => Alert.danger(error.message))
                   );
 
                   //GET all events registered on the municipals
@@ -212,7 +231,6 @@ export class FeedPage extends Component {
                           .catch((error: Error) => Alert.danger(error.message))
                   );
               })
-              .then(() => console.log(sharedMunicipals.municipals))
               .catch((error: Error) => Alert.danger(error.message));
       })
       .catch((error: Error) => console.log(error));
@@ -227,6 +245,8 @@ export class FeedPage extends Component {
       .getCategories()
       .then(cat => (this.eCategories = cat))
       .catch((error: Error) => Alert.danger(error.message));
+
+    console.log(this.date);
   }
 
   sortIssues() {
