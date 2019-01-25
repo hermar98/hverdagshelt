@@ -65,20 +65,18 @@ app.put('/reset/:id', (req: Request, res: Response) => {
   const { password } = body;
 
   let token = req.params.id;
-  console.log(password);
   User.findOne({ where: { resetPasswordToken: token } }).then(user => {
     if (user) {
-      console.log(user.userId);
       let passwordSalt = passwordHash.genRandomString(16);
       let passwordData = passwordHash.sha512(password, passwordSalt);
-      let token = jwt.sign({ email: user.email }, secretKey, { expiresIn: 4000 });
+      let token = tokenManager.signToken(user.userId, user.rank);
       return User.update(
         {
           salt: passwordSalt,
           hashStr: passwordData.passwordHash
         },
         { where: { userId: user.userId } }
-      ).then(count => (count ? res.json({ userId: user.userId, jwt: token }) : res.sendStatus(404)));
+      ).then(count => (count ? res.json({ jwt: token }) : res.sendStatus(404)));
     }
   });
 });

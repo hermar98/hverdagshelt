@@ -19,10 +19,9 @@ import { userService } from '../../services/UserService';
 
 export class AdminMenu extends Component {
   user = null;
-  municipal = new Municipal();
-  munId = localStorage.getItem('munId');
+
   activeProfile = '';
-  activeAdmUsers = '';
+  activeAdmUsers = 'btnfocus';
   activeAdmCat = '';
 
   mounted() {
@@ -31,11 +30,6 @@ export class AdminMenu extends Component {
       .then(user => {
         this.user = user;
       })
-      .catch((error: Error) => console.log(error));
-
-    municipalService
-      .getMunicipal(this.munId)
-      .then(municipal => (this.municipal = municipal))
       .catch((error: Error) => console.log(error));
   }
   render() {

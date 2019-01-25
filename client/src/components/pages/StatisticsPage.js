@@ -26,8 +26,10 @@ export class StatisticsPage extends Component {
           <div className="d-flex justify-content-center">
             <div className="col-sm-3">
               <select className="form-control" onChange={this.changeMunicipality}>
-                {this.municipals.map(municipal => (
-                  <option value={municipal.munId}>{municipal.name}</option>
+                {this.municipals.sort(function (a, b) {
+                  return a.name.localeCompare(b.name);
+                }).map(mun => (
+                  <option value={mun.munId}>{mun.name}</option>
                 ))}
               </select>
             </div>

@@ -13,7 +13,7 @@ import { tokenManager } from '../../tokenManager';
 import { eventService } from '../../services/EventService';
 import moment from 'moment';
 import { HoverButton } from '../issueViews/issueViews';
-//import { UploadImageButton } from '../../components/image/UploadImageButton';
+import UploadImageButton from '../image/UploadImageButton';
 import { userService } from '../../services/UserService';
 import { createMapOptions, MyGreatPlace, Search } from '../map/map';
 import { mapService } from '../../services/mapService';
@@ -33,6 +33,8 @@ export default class EventForm extends Component {
   startTime = null;
   endDate = Date;
   endTime = null;
+  upload: UploadImageButton = null;
+
   upload: UploadImageButton = null;
 
   center = { lat: 0, lng: 0 };
@@ -105,7 +107,7 @@ export default class EventForm extends Component {
                   }
                 }}
               >
-                <option selected disabled value="">
+                <option disabled value="">
                   Velg kategori..
                 </option>
                 {this.categories.map(cat => (
@@ -142,7 +144,9 @@ export default class EventForm extends Component {
             onChange2={e => (this.endTime = e.target.value)}
           />
           <div className="form-group row justify-content-center" style={{ height: '300px' }}>
-            <div className="col-12 col-md-4 justify-content-center">{this.renderMap()}</div>
+            <div className="col-12 col-md-4 justify-content-center">
+              <div className="mapcontainer">{this.renderMap()}</div>
+            </div>
           </div>
           <div className="form-group row mt-4 justify-content-center">
             <div className="col-12 col-md-4 justify-content-center">
@@ -202,7 +206,7 @@ export default class EventForm extends Component {
   }
 
   save() {
-    if (!this.form.checkValidity()) {
+    if (!this.form.checkValidity() || !this.lat || !this.lng) {
       console.log('TRYKKET PÅ');
       return;
     }
@@ -216,6 +220,9 @@ export default class EventForm extends Component {
     this.event.timeEnd = moment(this.endDate + ' ' + this.endTime);
     this.event.munId = this.user.munId;
     this.event.userId = this.user.userId;
+    this.event.image = null;
+
+    // console.log(this.event.image);
 
     this.upload.uploadEventImage()
       .then(e => {
@@ -277,7 +284,7 @@ export default class EventForm extends Component {
       if (reg && reg.includes('Norge')) {
         console.log(this.adress);
         let tmp = this.adress.toString().split(/[\s,]+/);
-        console.log(tmp);
+        console.log(tmp ? tmp : 'not a valid mun');
         this.matchMun(tmp);
         // console.log('Norway');
       } else {

@@ -1,17 +1,19 @@
 import * as React from 'react';
-import {Component} from 'react-simplified';
-import {NavBar} from '../../widgets';
-import {tokenManager} from '../../tokenManager';
-import {history} from '../../index';
-import {userService} from '../../services/UserService';
-import {UserMenu} from './UserMenu';
-import {CompanyMenu} from './CompanyMenu';
-import {MunEmployeeMenu} from './MunEmployeeMenu';
-import {AdminMenu} from './AdminMenu';
+import { Component } from 'react-simplified';
+import { NavBar } from '../../widgets';
+import { tokenManager } from '../../tokenManager';
+import { history } from '../../index';
+import { userService } from '../../services/UserService';
+import { UserMenu } from './UserMenu';
+import { CompanyMenu } from './CompanyMenu';
+import { MunEmployeeMenu } from './MunEmployeeMenu';
+import { AdminMenu } from './AdminMenu';
 
 export class Menu extends Component {
   user = null;
 
+  activeLogin = '';
+  activeRegister = '';
   mounted() {
     userService
       .getCurrentUser()
@@ -35,52 +37,32 @@ export class Menu extends Component {
     return (
       <div>
         <NavBar>
-          <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'}>Hverdagshelt</NavBar.Brand>
-          <NavBar.Button onClick={this.toLogin}>Logg Inn</NavBar.Button>
-          <NavBar.Button onClick={this.toRegister}>Registrer Bruker</NavBar.Button>
+          <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'} onClick={this.toHome}>
+            Hverdagshelt
+          </NavBar.Brand>
+          <NavBar.Button className={this.activeLogin} onClick={this.toLogin}>
+            Logg Inn
+          </NavBar.Button>
+          <NavBar.Button className={this.activeRegister} onClick={this.toRegister}>
+            Registrer Bruker
+          </NavBar.Button>
         </NavBar>
       </div>
     );
   }
-  toProfile() {
-    history.push('/profil');
-  }
-
-  toFeed() {
-    history.push('/feed');
-  }
 
   toLogin() {
     history.push('/loggInn');
+    this.activeLogin = 'btnfocus';
+    this.activeRegister = '';
   }
   toRegister() {
     history.push('/registrer');
+    this.activeRegister = 'btnfocus';
+    this.activeLogin = '';
   }
-  toLogout() {
-    tokenManager.deleteToken();
-    history.push('/');
-  }
-  toRegisterIssue() {
-    history.push('/registrerSak');
-  }
-  toRegisterEvent() {
-    history.push('/registrerEvent');
-  }
-  toMunEmployeeProfile() {
-    history.push('/profil');
-  }
-  toMunEmployeeHome() {
-    history.push('/kommune/' + localStorage.getItem('munId') + '/saker'); //TODO: ansatt hjemside
-  }
-  toCompanyEmployeeHome() {
-    history.push('/saker');
-  }
-  toAdminHome() {
-    history.push('/admin');
-  }
-
-  changeMunicipal() {
-    localStorage.removeItem('munId');
-    history.push('/');
+  toHome() {
+    this.activeRegister = '';
+    this.activeLogin = '';
   }
 }

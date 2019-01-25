@@ -97,7 +97,7 @@ ul {
     top: 48px;
     width: 80%;
     min-width: 100%;
-      z-index: 10;
+    z-index: 10;
   }
   #munInputForm {
     position: relative;
@@ -110,6 +110,8 @@ ul {
   #munInputForm-Button {
     width: 100%;
     margin-top: 5px;
+    padding: 0.6rem 0.7rem !important;
+    vertical-align: bottom !important;
   }
 
   .autocomplete {
@@ -231,10 +233,14 @@ ul {
     top: 48px;
     width: 50%;
     min-width: 100%;
-      z-index: 10;
+    z-index: 10;
   }
   #munInputForm-Form {
     position: relative;
+  }
+  #munInputForm-Button {
+    padding: 0.6rem 1rem !important;
+    vertical-align: bottom !important;
   }
 
   .autocomplete {
@@ -277,3 +283,18 @@ ul {
     font-weight: bold;
   }
 }
+
+.resizeMapBox {
+  /* position: absolute; */
+  z-index: 100;
+  /* left: 0; */
+  width: 100%;
+}
+
+.mapcontainer {
+  position: relative;
+  height: 300px;
+  margin: 0 0 80px 0;
+}
+
+/*}*/

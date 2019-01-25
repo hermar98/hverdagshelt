@@ -73,14 +73,9 @@ export default class RegisterIssue extends Component {
     return (
       <Card title="Registrer sak">
         <form ref={e => (this.form = e)}>
-          <Form.Input
-            type="text"
-            onChange={event => (this.issue.title = event.target.value)}
-            required
-            placeholder="Skriv en passende tittel"
-          />
           <div className="form-group row justify-content-center">
-            <div className="col-sm-10 col-lg-4 justify-content-center">
+            <div className="col-md-4 col-12 justify-content-center">
+              <label>Kategori</label>
               <select
                 required
                 className="form-control"
@@ -89,7 +84,7 @@ export default class RegisterIssue extends Component {
                   if (this.issue) this.issue.categoryId = parseInt(e.target.value);
                 }}
               >
-                <option disabled selected value="">
+                <option disabled value="">
                   Velg kategori..
                 </option>
                 {this.categories.map(cat => (
@@ -102,43 +97,52 @@ export default class RegisterIssue extends Component {
           </div>
           <Form.InputLarge
             type="text"
+            label="Innhold"
             onChange={event => (this.issue.content = event.target.value)}
             required
-            placeholder="Skriv innholdet i saken"
+            placeholder="Skriv inn detaljer om saken..."
           />
-          <div className="form-group row justify-content-center" style={{ height: '400px', padding: '0 0 40px 0' }}>
+          <div className="row justify-content-center">
             <div className="col-12 col-md-4 justify-content-center">
-              <Fragment>
-                {mapApiLoaded && <Search map={mapInstance} mapApi={mapApi} addplace={this.addPlace} />}
-                <GoogleMap
-                  bootstrapURLKeys={{
-                    key: 'AIzaSyCVd-3sSATNkNAa5jRe9U6_t8wR5YkH480',
-                    language: 'no',
-                    libraries: ['places', 'geometry']
-                  }}
-                  defaultCenter={this.center}
-                  defaultZoom={5}
-                  hoverDistance={30}
-                  options={createMapOptions}
-                  onClick={event => this.onClick(event)}
-                  onChildClick={event => this.onChildClick(event)}
-                  onChange={event => this.onChange(event)}
-                  yesIWantToUseGoogleMapApiInternals
-                  onGoogleApiLoaded={({ map, maps }) => this.apiHasLoaded(map, maps)}
-                >
-                  {/* <MyGreatPlace lat={this.center.lat} lng={this.center.lng} text="" /> */}
-                  <MyGreatPlace lat={this.lat} lng={this.lng} text="" />
-                  {!isEmpty(places) &&
-                    places.map(place => (
-                      <MyGreatPlace
-                        key=""
-                        lat={place.geometry.location.lat()}
-                        lng={place.geometry.location.lng()}
-                        text=""
-                      />
-                    ))}
-                </GoogleMap>
-              </Fragment>
+              <label>Velg lokasjon</label>
+              <br />
+              <small>Skriv inn en adresse eller klikk på kartet.</small>
+              <div className="mapcontainer">
+                <Fragment>
+                  {mapApiLoaded && <Search map={mapInstance} mapApi={mapApi} addplace={this.addPlace} />}
+                  <GoogleMap
+                    bootstrapURLKeys={{
+                      key: 'AIzaSyCVd-3sSATNkNAa5jRe9U6_t8wR5YkH480',
+                      language: 'no',
+                      libraries: ['places', 'geometry']
+                    }}
+                    defaultCenter={this.center}
+                    defaultZoom={5}
+                    hoverDistance={30}
+                    options={createMapOptions}
+                    onClick={event => this.onClick(event)}
+                    onChildClick={event => this.onChildClick(event)}
+                    onChange={event => this.onChange(event)}
+                    yesIWantToUseGoogleMapApiInternals
+                    onGoogleApiLoaded={({ map, maps }) => this.apiHasLoaded(map, maps)}
+                  >
+                    {/* <MyGreatPlace lat={this.center.lat} lng={this.center.lng} text="" /> */}
+                    {/* {mapApiLoaded && (
+                    <Search className="resizeMapBox" map={mapInstance} mapApi={mapApi} addplace={this.addPlace} />
+                  )} */}
+                    <MyGreatPlace lat={this.lat} lng={this.lng} text="" />
+                    {!isEmpty(places) &&
+                      places.map(place => (
+                        <MyGreatPlace
+                          key=""
+                          lat={place.geometry.location.lat()}
+                          lng={place.geometry.location.lng()}
+                          text=""
+                        />
+                      ))}
+                  </GoogleMap>
+                </Fragment>
+              </div>
             </div>
           </div>
           <UploadImageButton
@@ -157,7 +161,7 @@ export default class RegisterIssue extends Component {
   }
 
   save() {
-    if (!this.form || !this.form.checkValidity()) return;
+    if (!this.form || !this.form.checkValidity() || !this.lat || !this.lng) return;
 
     this.issue.userId = this.user.userId;
     this.issue.munId = this.munId;

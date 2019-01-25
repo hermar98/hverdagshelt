@@ -1,3 +1,19 @@
+.navbar {
+  background-color: #192f42 !important;
+}
+.footer {
+  background-color: #192f42 !important;
+}
+.sort-box {
+  background-color: #192f42 !important;
+}
+.hover-button {
+  background-color: #192f42 !important;
+}
+.hover-button:hover {
+  background-color: lightblue !important;
+  color: black !important;
+}
 @media (min-width: 621px) {
   .custom-nav-btn {
     color: white;
@@ -31,9 +47,11 @@
     margin-right: 15px;
   }
 
-  .dropdown-menu {
-    position: relative !important;
-    width: 100% !important;
+  .dropdown-item {
+    padding: 0.25rem 0.5rem !important;
+  }
+  .dropdown-header {
+    padding: 0.5rem 0.5rem !important;
   }
   .btnfocus {
     background-color: white !important;
@@ -65,7 +83,7 @@
     /*width: 100%;*/
     text-align: center;
     padding: 5px;
-    display:grid;
+    display: grid;
     grid-template-rows: auto auto;
   }
 
@@ -75,12 +93,12 @@
     font-size: 16px;
   }
   .footerLineOne {
-    grid-row:1;
+    grid-row: 1;
     margin-top: 0;
     margin-bottom: 0;
   }
   .footerLineTwo {
-    grid-row:2;
+    grid-row: 2;
     margin-top: 0;
     margin-bottom: 0;
   }
@@ -127,7 +145,6 @@
   margin-left: 0.1rem;
   margin-right: 0.1rem;
 }
-
 
 .title {
   align-items: center !important;

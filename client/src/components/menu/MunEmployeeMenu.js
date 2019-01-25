@@ -19,9 +19,8 @@ import { userService } from '../../services/UserService';
 
 export class MunEmployeeMenu extends Component {
   user = null;
-  municipal = new Municipal();
   activeProfile = '';
-  activeMunPage = '';
+  activeMunPage = 'btnfocus';
   activeRegEvent = '';
   activeAdmIssues = '';
   mounted() {
@@ -30,11 +29,6 @@ export class MunEmployeeMenu extends Component {
       .then(user => {
         this.user = user;
       })
-      .catch((error: Error) => console.log(error));
-
-    municipalService
-      .getMunicipal(this.munId)
-      .then(municipal => (this.municipal = municipal))
       .catch((error: Error) => console.log(error));
   }
   render() {

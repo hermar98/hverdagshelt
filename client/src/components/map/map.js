@@ -158,6 +158,7 @@ export class Search extends Component {
       // Important! Always set the container height explicitly
       <div>
         <input
+          className="resizeMapBox"
           ref={ref => {
             this.searchInput = ref;
           }}
