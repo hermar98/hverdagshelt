@@ -74,7 +74,7 @@ export default class RegisterIssue extends Component {
       <Card title="Registrer sak">
         <form ref={e => (this.form = e)}>
           <div className="form-group row justify-content-center">
-            <div className="col-sm-10 col-lg-4 justify-content-center">
+            <div className="col-md-4 col-12 justify-content-center">
               <label>Kategori</label>
               <select
                 required
@@ -104,6 +104,8 @@ export default class RegisterIssue extends Component {
           />
           <div className="row justify-content-center">
             <div className="col-12 col-md-4 justify-content-center">
+              <label>Velg lokasjon</label><br/>
+              <small>Skriv inn en adresse eller klikk på kartet.</small>
               <div className="mapcontainer">
                 <Fragment>
                   {mapApiLoaded && <Search map={mapInstance} mapApi={mapApi} addplace={this.addPlace} />}
