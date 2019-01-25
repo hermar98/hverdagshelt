@@ -34,8 +34,8 @@ export class CompanyDelIssuePage extends Component<{munId: number}> {
         } else {
             let munId = 10;
             return (
-                <div style={{marginBottom: "50px"}}>
-                    <div style={{float: "left"}}>
+                <div id='delMainBox'>
+                    <div id="hello">
                         <h1>Unassigned Issues</h1>
                         {(sharedIssues.issues).map(function (e, i) {
                             console.log("BOYYYY1 i: " + i);
