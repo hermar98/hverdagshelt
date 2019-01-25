@@ -1,11 +1,11 @@
-import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 import { imageService } from '../../services/ImageService';
-import { Button } from '../../widgets';
 import { Image } from '../../models/Image';
 import { Issue } from '../../models/Issue';
+import { Event } from '../../models/Event';
 import { issueService } from '../../services/IssueService';
+import { eventService } from '../../services/EventService';
 import { history } from '../../index';
 
 let shared = sharedComponentData({ tFiles: [] });
@@ -47,9 +47,9 @@ export default class UploadImageButton extends Component {
       image = {
         imageSource: file.path,
         title: file.name,
-        issueId: issueId
+        issueId: issueId,
+        event: false
       };
-
       imageService.uploadImage(image);
     });
   }
@@ -62,6 +62,25 @@ export default class UploadImageButton extends Component {
       })
       .then(history.push('/profil/'))
       .catch((error: Error) => Alert.danger(error.message));
+  }
+
+  uploadEventImage(event: Event) {
+    const files = Array.from(shared.tFiles);
+    this.setState({ uploading: true });
+    let path = '';
+    files.forEach(file => {
+      let image: Image;
+      image = {
+        imageSource: file.path,
+        title: file.name,
+        event: true
+      };
+      imageService.uploadImage(image).then(res => {
+        event.image = res;
+        console.log(res);
+        eventService.updateEvent(event);
+      });
+    });
   }
 
   render() {

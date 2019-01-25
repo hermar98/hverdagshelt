@@ -84,7 +84,7 @@ export default class RegisterIssue extends Component {
                   if (this.issue) this.issue.categoryId = parseInt(e.target.value);
                 }}
               >
-                <option disabled selected value="">
+                <option disabled value="">
                   Velg kategori..
                 </option>
                 {this.categories.map(cat => (
@@ -104,7 +104,8 @@ export default class RegisterIssue extends Component {
           />
           <div className="row justify-content-center">
             <div className="col-12 col-md-4 justify-content-center">
-              <label>Velg lokasjon</label><br/>
+              <label>Velg lokasjon</label>
+              <br />
               <small>Skriv inn en adresse eller klikk på kartet.</small>
               <div className="mapcontainer">
                 <Fragment>
