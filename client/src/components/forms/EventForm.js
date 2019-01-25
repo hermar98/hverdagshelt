@@ -19,7 +19,6 @@ import { createMapOptions, MyGreatPlace, Search } from '../map/map';
 import { mapService } from '../../services/mapService';
 import { municipalService } from '../../services/MunicipalService';
 import { Fragment } from 'react';
-import UploadImageButton from "../image/UploadImageButton";
 
 export default class EventForm extends Component {
   event = new Event();
