@@ -20,8 +20,10 @@ import { userService } from '../../services/UserService';
 export class MunEmployeeMenu extends Component {
   user = null;
   municipal = new Municipal();
-  className = '';
-  className2 = '';
+  activeProfile = '';
+  activeMunPage = '';
+  activeRegEvent = '';
+  activeAdmIssues = '';
   mounted() {
     userService
       .getCurrentUser()
@@ -43,16 +45,20 @@ export class MunEmployeeMenu extends Component {
             <NavBar.Brand
               image={'../../images/hverdagshelt-logo-white.svg'}
               to={'/kommune/' + this.user.munId}
-              onClick={this.toMunEmployeeHome2}
+              onClick={this.toMunPage2}
             >
               Hverdagshelt
             </NavBar.Brand>
-            <NavBar.Button className2={this.className2} onClick={this.toMunEmployeeHome}>
-              Hjem
+            <NavBar.Button className={this.activeMunPage} onClick={this.toMunPage}>
+              Kommuneside
             </NavBar.Button>
-            <NavBar.Button onClick={this.toRegisterEvent}>Registrer Event</NavBar.Button>
-            <NavBar.Button onClick={this.toManageIssues}>Administrer Saker</NavBar.Button>
-            <NavBar.Dropdown className={this.className} title={this.user.firstName + ' ' + this.user.lastName}>
+            <NavBar.Button className={this.activeRegEvent} onClick={this.toRegisterEvent}>
+              Registrer Event
+            </NavBar.Button>
+            <NavBar.Button className={this.activeAdmIssues} onClick={this.toManageIssues}>
+              Administrer Saker
+            </NavBar.Button>
+            <NavBar.Dropdown className={this.activeProfile} title={this.user.firstName + ' ' + this.user.lastName}>
               <DropdownHeader>{this.user.email}</DropdownHeader>
               <DropdownFooter>Kommuneansatt</DropdownFooter>
               <DropdownDivider />
@@ -67,8 +73,10 @@ export class MunEmployeeMenu extends Component {
   }
   toProfile() {
     history.push('/profil');
-    this.className = 'profilefocus';
-    this.className2 = '';
+    this.activeProfile = 'btnfocus';
+    this.activeMunPage = '';
+    this.activeRegEvent = '';
+    this.activeAdmIssues = '';
   }
 
   toLogout() {
@@ -79,26 +87,30 @@ export class MunEmployeeMenu extends Component {
 
   toRegisterEvent() {
     history.push('/registrerEvent');
-    this.className = '';
-    this.className2 = '';
+    this.activeRegEvent = 'btnfocus';
+    this.activeMunPage = '';
+    this.activeProfile = '';
+    this.activeAdmIssues = '';
   }
-  changeMunicipal() {
-    localStorage.removeItem('munId');
-    history.push('/');
-  }
-  toMunEmployeeHome() {
+  toMunPage() {
     history.push('/kommune/' + this.user.munId);
-    this.className = '';
+    this.activeMunPage = 'btnfocus';
+    this.activeProfile = '';
+    this.activeRegEvent = '';
+    this.activeAdmIssues = '';
+  }
+  toMunPage2() {
+    this.activeMunPage = 'btnfocus';
+    this.activeProfile = '';
+    this.activeRegEvent = '';
+    this.activeAdmIssues = '';
   }
 
   toManageIssues() {
     history.push('/kommune/' + this.user.munId + '/saker');
-    this.className = '';
-    this.className2 = '';
-  }
-  toMunEmployeeHome2() {
-    this.className = '';
-    this.className2 = 'homefocus';
-    console.log(this.className2);
+    this.activeAdmIssues = 'btnfocus';
+    this.activeMunPage = '';
+    this.activeProfile = '';
+    this.activeRegEvent = '';
   }
 }

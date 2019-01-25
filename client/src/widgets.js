@@ -2,10 +2,10 @@
 /* eslint eqeqeq: "off" */
 
 import * as React from 'react';
-import {Component} from 'react-simplified';
-import {NavLink} from 'react-router-dom';
+import { Component } from 'react-simplified';
+import { NavLink } from 'react-router-dom';
 import moment from 'moment';
-import {eventCategoryService} from './services/EventCategoryService.js';
+import { eventCategoryService } from './services/EventCategoryService.js';
 
 /**
  * Renders alert messages using Bootstrap classes.
@@ -152,13 +152,13 @@ export class Card extends Component<{ title?: React.Node, children?: React.Node 
   }
 }
 
-class NavBarButton extends Component<{ onClick: () => mixed, className2?: string, children?: React.Node }> {
+class NavBarButton extends Component<{ onClick: () => mixed, className?: string, children?: React.Node }> {
   render() {
     return (
       <form className="form-inline">
         <button
           onClick={this.props.onClick}
-          className={'custom-nav-btn btn btn-outline-light ' + this.props.className2}
+          className={'custom-nav-btn btn btn-outline-light ' + this.props.className}
           data-toggle="collapse"
         >
           {this.props.children}
@@ -342,7 +342,7 @@ class FormInput extends Component<{
   placeholder?: string,
   readOnly?: boolean,
   placeholder?: string,
-    title?: string
+  title?: string
 }> {
   render() {
     return (
@@ -382,7 +382,7 @@ class FormInputDateTime extends Component<{
   render() {
     return (
       <div className="form-group row justify-content-center">
-        <div className="form-group col-md-3 col-8">
+        <div className="form-group col-md-2 col-lg-3 col-8">
           <label>{this.props.label}</label>
           <input
             id={this.props.id}
@@ -396,7 +396,7 @@ class FormInputDateTime extends Component<{
             placeholder={this.props.placeholder}
           />
         </div>
-        <div className="form-group col-md-1 col-4">
+        <div className="form-group col-md-2 col-lg-1 col-4">
           <label>{this.props.label2}</label>
           <input className="form-control" type="time" value={this.props.value2} onChange={this.props.onChange2} />
         </div>

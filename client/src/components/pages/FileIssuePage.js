@@ -9,7 +9,7 @@ export class FileIssuePage extends Component {
   user = new User();
   render() {
     return (
-      <div>
+      <div className="mb-4">
         <FileIssueForm />
       </div>
     );

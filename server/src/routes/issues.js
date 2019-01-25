@@ -206,7 +206,7 @@ app.post('/issues', (req: Request, res: Response) => {
                 }).then(user => mailSender.sendEmail(user.email, "Din sak har blitt registrert!", "Hei " + user.firstName + " " +
                     user.lastName + "!\n\nDin sak '" + req.body.title + "' har nå blitt registrert i systemet, og en av våre fremste ansatte vil så fort" +
                     " som mulig påbegynne saksbehandlingen. Tusen takk for at du melder inn feil, og bidrar til å gjøre Norge et bedre sted!\n\nMed vennlig hilsen\n" +
-                    "Ya boi mr Gayman, Aka young fleinar kokt i fleinsuppe (Dank Kushman aka young dagger dick)\nShoutout til min boi lil thuggers, som er fast as fucc boi"));
+                    "Hverdagshelt AS"));
             }
         });
     } else {

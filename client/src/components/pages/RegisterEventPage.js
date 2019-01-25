@@ -8,7 +8,7 @@ import EventForm from '../../components/forms/EventForm';
 export class RegisterEventPage extends Component {
   render() {
     return (
-      <div>
+      <div className="mb-4">
         <EventForm />
       </div>
     );
