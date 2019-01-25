@@ -114,8 +114,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                 <h4>&nbsp;Bilder</h4>
                                 <div className="flex-container">
                                     {this.images.map(image => {
-                                        console.log(image.imageSource);
-                                        return <img className="issue-image" src={image.imageSource}/>
+                                        return <img className="issue-image" src={image.imageSource} />
                                     })}
                                 </div>
                             </div>
@@ -160,7 +159,10 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                     .catch(error => console.error("Error: ", error));
                 console.log("id client: " + this.issue.issueId)
                 imageService.getAllImage(this.issue.issueId)
-                    .then(data => this.images = data)
+                    .then(data => {
+                        console.log(data.IssuePictures)
+                        this.images = data.IssuePictures
+                    })
                     .catch(error => console.error("Error: ", error))
             })
             .catch(error => console.error("Error: ", error));
