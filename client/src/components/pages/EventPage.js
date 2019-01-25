@@ -117,7 +117,6 @@ export class EventLarge extends Component<{ event: Event }> {
 export class EventSmall extends Component<{ event: Event }> {
 
     textLength = 50;
-    text: string = "apiegy8bs fnmangsm aiosd gnosdgjn mjoaen ksmfia sfbdmawjo srndfmes fgkmvser dvmawrs dgnkvma wrodvm dsdgjn ovsdvj nsdvjnsdg jnovsdv jnsdvj nosdvj"
 
   render() {
       return (
@@ -127,12 +126,12 @@ export class EventSmall extends Component<{ event: Event }> {
               </a>
               <div className="d-flex flex-row issue-flex">
                   <div className="issue-image-normal-container">
-                      <img className="issue-image-normal" src="../../images/Trolltunga.jpg"/>
+                      <img className="issue-image-normal" src={this.props.event.image}/>
                   </div>
                   <div>
                       <div className="card-body">
                           <h4>{this.props.event.title}</h4>
-                        <p id="issue-normal-content">{(this.text).substring(0, 90) + " . . ."}</p>
+                        <p id="issue-normal-content">{(this.props.event.content).substring(0, 90) + " . . ."}</p>
                       </div>
                   </div>
               </div>
