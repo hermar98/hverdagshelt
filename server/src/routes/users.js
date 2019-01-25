@@ -34,7 +34,7 @@ app.get('/users/:id', (req: Request, res: Response) => {
         }
     }
     return User.findOne({where: {userId: Number(req.params.id)}}).then(user => user ?
-        res.send({userId: user.userId, firstName: user.firstName, lastName: user.lastName}) :
+        res.send({userId: user.userId, firstName: user.firstName, lastName: user.lastName, rank: user.rank}) :
         res.sendStatus(404)
     );
 });
