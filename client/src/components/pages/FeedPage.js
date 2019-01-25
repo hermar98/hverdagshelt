@@ -41,7 +41,7 @@ export class FeedPage extends Component {
 
     return (
       <div className="container-fluid">
-        <h2 id="munTitle">Din Side</h2>
+        <h2 id="munTitle">Min Side</h2>
 
         <div className="row page-container">
           <div className="col-lg-6">
