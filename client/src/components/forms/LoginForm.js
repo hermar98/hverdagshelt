@@ -1,16 +1,12 @@
 // @flow
 
-import ReactDOM from 'react-dom';
 import * as React from 'react';
-import { Component } from 'react-simplified';
-import { HashRouter, Route, NavLink } from 'react-router-dom';
-import { Alert, NavBar, Form, Card, Button } from '../../widgets';
-import { Issue } from '../../models/Issue.js';
-import { tokenManager } from '../../tokenManager.js';
-import { history } from '../../index';
-import { User } from '../../models/User';
-import { userService } from '../../services/UserService';
-import { issueService } from '../../services/IssueService.js';
+import {Component} from 'react-simplified';
+import {Button, Card, Form} from '../../widgets';
+import {tokenManager} from '../../tokenManager.js';
+import {history} from '../../index';
+import {User} from '../../models/User';
+import {userService} from '../../services/UserService';
 import {HoverButton} from "../issueViews/issueViews";
 
 export default class Login extends Component {

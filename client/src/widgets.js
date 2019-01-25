@@ -2,11 +2,10 @@
 /* eslint eqeqeq: "off" */
 
 import * as React from 'react';
-import { Component } from 'react-simplified';
-import { NavLink } from 'react-router-dom';
+import {Component} from 'react-simplified';
+import {NavLink} from 'react-router-dom';
 import moment from 'moment';
-import { issueCategoryService } from './services/IssueCategoryService.js';
-import { eventCategoryService } from './services/EventCategoryService.js';
+import {eventCategoryService} from './services/EventCategoryService.js';
 
 /**
  * Renders alert messages using Bootstrap classes.
@@ -342,7 +341,8 @@ class FormInput extends Component<{
   pattern?: string,
   placeholder?: string,
   readOnly?: boolean,
-  placeholder?: string
+  placeholder?: string,
+    title?: string
 }> {
   render() {
     return (
@@ -358,6 +358,7 @@ class FormInput extends Component<{
             pattern={this.props.pattern}
             placeholder={this.props.placeholder}
             readOnly={this.props.readOnly}
+            title={this.props.title}
           />
         </div>
       </div>

@@ -68,6 +68,7 @@ export class UserMenu extends Component {
   toFeed() {
     history.push('/feed');
     this.className = '';
+    this.className2 = 'homefocus';
   }
   toLogout() {
     tokenManager.deleteToken();

@@ -106,38 +106,40 @@ export default class RegisterIssue extends Component {
             required
             placeholder="Skriv innholdet i saken"
           />
-          <div style={{ height: '50vh', width: '50%' }}>
-            <Fragment>
-              {mapApiLoaded && <Search map={mapInstance} mapApi={mapApi} addplace={this.addPlace} />}
-              <GoogleMap
-                bootstrapURLKeys={{
-                  key: 'AIzaSyCVd-3sSATNkNAa5jRe9U6_t8wR5YkH480',
-                  language: 'no',
-                  libraries: ['places', 'geometry']
-                }}
-                defaultCenter={this.center}
-                defaultZoom={5}
-                hoverDistance={30}
-                options={createMapOptions}
-                onClick={event => this.onClick(event)}
-                onChildClick={event => this.onChildClick(event)}
-                onChange={event => this.onChange(event)}
-                yesIWantToUseGoogleMapApiInternals
-                onGoogleApiLoaded={({ map, maps }) => this.apiHasLoaded(map, maps)}
-              >
-                {/* <MyGreatPlace lat={this.center.lat} lng={this.center.lng} text="" /> */}
-                <MyGreatPlace lat={this.lat} lng={this.lng} text="" />
-                {!isEmpty(places) &&
-                  places.map(place => (
-                    <MyGreatPlace
-                      key=""
-                      lat={place.geometry.location.lat()}
-                      lng={place.geometry.location.lng()}
-                      text=""
-                    />
-                  ))}
-              </GoogleMap>
-            </Fragment>
+          <div className="form-group row justify-content-center" style={{ height: '300px' }}>
+            <div className="col-12 col-md-4 justify-content-center">
+              <Fragment>
+                {mapApiLoaded && <Search map={mapInstance} mapApi={mapApi} addplace={this.addPlace} />}
+                <GoogleMap
+                  bootstrapURLKeys={{
+                    key: 'AIzaSyCVd-3sSATNkNAa5jRe9U6_t8wR5YkH480',
+                    language: 'no',
+                    libraries: ['places', 'geometry']
+                  }}
+                  defaultCenter={this.center}
+                  defaultZoom={5}
+                  hoverDistance={30}
+                  options={createMapOptions}
+                  onClick={event => this.onClick(event)}
+                  onChildClick={event => this.onChildClick(event)}
+                  onChange={event => this.onChange(event)}
+                  yesIWantToUseGoogleMapApiInternals
+                  onGoogleApiLoaded={({ map, maps }) => this.apiHasLoaded(map, maps)}
+                >
+                  {/* <MyGreatPlace lat={this.center.lat} lng={this.center.lng} text="" /> */}
+                  <MyGreatPlace lat={this.lat} lng={this.lng} text="" />
+                  {!isEmpty(places) &&
+                    places.map(place => (
+                      <MyGreatPlace
+                        key=""
+                        lat={place.geometry.location.lat()}
+                        lng={place.geometry.location.lng()}
+                        text=""
+                      />
+                    ))}
+                </GoogleMap>
+              </Fragment>
+            </div>
           </div>
           <UploadImageButton
             ref={boy => {
@@ -146,7 +148,7 @@ export default class RegisterIssue extends Component {
           />
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
-              <HoverButton type='submit' onclick={this.save} text="Send Inn" />
+              <HoverButton type="submit" onclick={this.save} text="Send Inn" />
             </div>
           </div>
         </form>
