@@ -21,8 +21,9 @@ export class AdminMenu extends Component {
   user = null;
   municipal = new Municipal();
   munId = localStorage.getItem('munId');
-  className = '';
-  className2 = '';
+  activeProfile = '';
+  activeHome = '';
+  activeAdmCat = '';
 
   mounted() {
     userService
@@ -45,10 +46,13 @@ export class AdminMenu extends Component {
             <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'} to={'/admin'} onClick={this.toAdminHome2}>
               Hverdagshelt
             </NavBar.Brand>
-            <NavBar.Button className2={this.className2} onClick={this.toAdminHome}>
+            <NavBar.Button className={this.activeHome} onClick={this.toAdminHome}>
               Hjem
             </NavBar.Button>
-            <NavBar.Dropdown className={this.className} title={this.user.firstName + ' ' + this.user.lastName}>
+            <NavBar.Button className={this.activeAdmCat} onClick={this.toManageCategories}>
+              Administrer Kategorier
+            </NavBar.Button>
+            <NavBar.Dropdown className={this.activeProfile} title={this.user.firstName + ' ' + this.user.lastName}>
               <DropdownHeader>{this.user.email}</DropdownHeader>
               <DropdownFooter>Admin</DropdownFooter>
               <DropdownDivider />
@@ -63,34 +67,32 @@ export class AdminMenu extends Component {
   }
   toProfile() {
     history.push('/profil');
-    this.className = 'profilefocus';
-    this.className2 = '';
+    this.activeProfile = 'btnfocus';
+    this.activeHome = '';
+    this.activeAdmCat = '';
   }
 
-  toFeed() {
-    history.push('/feed');
-    this.className = '';
-  }
   toLogout() {
     tokenManager.deleteToken();
     window.location.reload();
     history.push('/');
   }
 
-  changeMunicipal() {
-    localStorage.removeItem('munId');
-    history.push('/');
-    this.className2 = '';
-    this.className = 'profilefocus';
-  }
   toAdminHome() {
     history.push('/admin');
-    this.className = '';
-    this.className2 = 'homefocus';
+    this.activeHome = 'btnfocus';
+    this.activeProfile = '';
+    this.activeAdmCat = '';
   }
   toAdminHome2() {
-    this.className = '';
-    this.className2 = 'homefocus';
-    console.log(this.className2);
+    this.activeHome = 'btnfocus';
+    this.activeProfile = '';
+    this.activeAdmCat = '';
+  }
+  toManageCategories() {
+    history.push('/admin/administerKategorier');
+    this.activeAdmCat = 'btnfocus';
+    this.activeHome = '';
+    this.activeProfile = '';
   }
 }

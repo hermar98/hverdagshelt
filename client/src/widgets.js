@@ -2,10 +2,10 @@
 /* eslint eqeqeq: "off" */
 
 import * as React from 'react';
-import {Component} from 'react-simplified';
-import {NavLink} from 'react-router-dom';
+import { Component } from 'react-simplified';
+import { NavLink } from 'react-router-dom';
 import moment from 'moment';
-import {eventCategoryService} from './services/EventCategoryService.js';
+import { eventCategoryService } from './services/EventCategoryService.js';
 
 /**
  * Renders alert messages using Bootstrap classes.
@@ -152,13 +152,13 @@ export class Card extends Component<{ title?: React.Node, children?: React.Node 
   }
 }
 
-class NavBarButton extends Component<{ onClick: () => mixed, className2?: string, children?: React.Node }> {
+class NavBarButton extends Component<{ onClick: () => mixed, className?: string, children?: React.Node }> {
   render() {
     return (
       <form className="form-inline">
         <button
           onClick={this.props.onClick}
-          className={'custom-nav-btn btn btn-outline-light ' + this.props.className2}
+          className={'custom-nav-btn btn btn-outline-light ' + this.props.className}
           data-toggle="collapse"
         >
           {this.props.children}
@@ -342,7 +342,7 @@ class FormInput extends Component<{
   placeholder?: string,
   readOnly?: boolean,
   placeholder?: string,
-    title?: string
+  title?: string
 }> {
   render() {
     return (
