@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
-import {Redirect, NavLink} from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 import { Feedback} from '../../models/Feedback';
-import {tokenManager} from "../../tokenManager";
 import {User} from "../../models/User";
 import {Issue} from "../../models/Issue";
 import {userService} from "../../services/UserService";
@@ -12,7 +11,6 @@ import {feedbackService} from "../../services/FeedbackService";
 import {municipalService} from "../../services/MunicipalService";
 import {SimpleMap} from "../map/map";
 
-let sharedIssues = sharedComponentData({issues: []})
 let sharedFeedback = sharedComponentData({feedback: []})
 
 let formatDate = function (date: Date) {
@@ -48,7 +46,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     categoryName: string = '';
     munName: string = '';
     issueText: string = '';
-    user = null;
+    user: User = new User();
     rank: number = -1;
 
     lat: number = 0
@@ -165,6 +163,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
             .catch(error => console.error("Error: ", error))
         userService.getCurrentUser()
             .then(user => {
+                this.user = user;
                 this.rank = user.rank
             })
             .catch(error => console.error("Error: ", error))
@@ -713,6 +712,7 @@ export class HoverButton extends Component<{onclick: function, text: string}> {
 export class ButtonGroup extends Component<{onclickC: function, onclickT: function, id: number}> {
 
     rank: number = -1
+    user: User = new User()
 
     render() {
         if(this.rank == 3) {
@@ -735,12 +735,18 @@ export class ButtonGroup extends Component<{onclickC: function, onclickT: functi
 
     mounted () {
         userService.getCurrentUser()
-            .then(user => this.rank = user.rank)
+            .then(user => {
+                this.user = user
+                this.rank = user.rank
+            })
             .catch(error => console.error("Error: ", error))
     }
 }
 
 export class ButtonGroupFeedback extends Component<{onclickC: function, onclickT: function, id: number}> {
+
+    user: User = new User()
+
     render() {
         if(this.props.id == this.user.userId) {
             return (
@@ -752,5 +758,13 @@ export class ButtonGroupFeedback extends Component<{onclickC: function, onclickT
         }else{
             return null
         }
+    }
+
+    mounted () {
+        userService.getCurrentUser()
+            .then(user => {
+                this.user = user
+            })
+            .catch(error => console.error("Error: ", error))
     }
 }
