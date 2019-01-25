@@ -28,9 +28,6 @@ body {
         height: auto;
         margin: auto;
     }
-    .feed-container {
-        margin: 0 4% 0 4%;
-    }
 }
 
 @media (max-width: 610px){
@@ -44,9 +41,6 @@ body {
     .issue-image-normal {
         width: 100%;
         height: auto;
-    }
-    .feed-container {
-        margin: 0 2% 0 2%;
     }
 }
 
