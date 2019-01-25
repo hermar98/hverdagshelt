@@ -15,12 +15,14 @@ import { HoverButton } from '../issueViews/issueViews';
 export default class ChangePasswordForm extends Component {
   state = {
     passwordOk: false,
-    passwordError: false
+    passwordError: false,
+    passwordFeil: false
   };
   user = new User();
   currentPassword = '';
   newPassword = '';
   newPasswordRepeated = '';
+  form = null;
 
   mounted() {
     userService
@@ -32,27 +34,33 @@ export default class ChangePasswordForm extends Component {
   }
 
   handleChangePassword(e: Object) {
+    if (!this.form || !this.form.checkValidity()) {
+      return;
+    }
     e.preventDefault();
 
     userService
       .login(this.user.email, this.currentPassword)
       .then(() => {
         if (this.newPassword != this.newPasswordRepeated) {
-          this.setState({ passwordError: true, passwordOk: false });
+          this.setState({ passwordError: true, passwordOk: false, passwordFeil: false });
           console.log('Passordene er ikke like');
         } else {
           this.user.password = this.newPassword;
-          this.setState({ passwordOk: true, passwordError: false });
+          this.setState({ passwordOk: true, passwordError: false, passwordFeil: false });
           userService.updateUser(this.user);
         }
       })
-      .catch(error => console.log('Nåverende passord er feil'));
+      .catch(error => {
+        console.log('Nåverende passord er feil');
+        this.setState({ passwordOk: false, passwordError: false, passwordFeil: true });
+      });
   }
 
   render() {
     return (
       <div>
-        <form className="change-password-form">
+        <form ref={e => (this.form = e)} className="change-password-form">
           <div className="justify-content-center align-items-center row">
             <input
               type="password"
@@ -86,11 +94,12 @@ export default class ChangePasswordForm extends Component {
 
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
-              <HoverButton onclick={this.handleChangePassword} text="Endre passord" />
+              <HoverButton type="submit" onclick={this.handleChangePassword} text="Endre passord" />
             </div>
           </div>
           {this.state.passwordOk ? <Form.Alert type="success" text="Passordet er endret" /> : <div />}
           {this.state.passwordError ? <Form.Alert type="danger" text="Passordene er ikke like" /> : <div />}
+          {this.state.passwordFeil ? <Form.Alert type="danger" text="Feil Passord" /> : <div />}
         </form>
       </div>
     );
