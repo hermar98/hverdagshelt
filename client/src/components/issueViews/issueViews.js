@@ -423,7 +423,10 @@ export class IssueOverviewSmall extends Component<{munId: number, issues: Issue[
                         }
                     }) ) : (
                       <li key={0}>
-                        <p id="noIssues">Denne kommunen har ingen registrerte saker...</p> </li>
+                          <div className="d-flex flex-row justify-content-center">
+                             <p id="noIssues">Ingen saker</p>
+                          </div>
+                        </li>
                     )}
                 </ul>
             </div>
@@ -555,10 +558,11 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
     }
 
     mounted () {
+        console.log(this.props.feedback.userId)
         userService.getUser(this.props.feedback.userId)
             .then(user => {
                 this.user = user
-                console.log(this.user.rank)
+                console.log(this.user)
                 switch(this.user.rank){
                     case 1: this.source = "../../images/private.png"; break;
                     case 2: this.source = "../../images/worker.png"; break;
