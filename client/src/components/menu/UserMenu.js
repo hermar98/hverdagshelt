@@ -22,7 +22,7 @@ export class UserMenu extends Component {
   municipal = new Municipal();
   munId = localStorage.getItem('munId');
   activeProfile = '';
-  activeFeed = '';
+  activeFeed = 'btnfocus';
   activeIssue = '';
 
   mounted() {
