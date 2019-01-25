@@ -110,6 +110,8 @@ ul {
   #munInputForm-Button {
     width: 100%;
     margin-top: 5px;
+    padding: 0.6rem 0.7rem !important;
+    vertical-align: bottom !important;
   }
 
   .autocomplete {
@@ -235,6 +237,10 @@ ul {
   }
   #munInputForm-Form {
     position: relative;
+  }
+  #munInputForm-Button {
+    padding: 0.6rem 1rem !important;
+    vertical-align: bottom !important;
   }
 
   .autocomplete {
