@@ -54,7 +54,7 @@ export default class RegisterIssue extends Component {
     this.setState({ places: [place] });
     this.lat = null;
     this.lng = null;
-    console.log(place.formatted_address); //LATLONG
+    console.log(place.formatted_address);
     this.adress = place.formatted_address;
     let tmp = this.adress.toString().split(/[\s,]+/);
     this.matchMun(tmp);

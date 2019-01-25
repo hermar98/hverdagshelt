@@ -18,13 +18,6 @@ export class IssueView extends Component {
           <div className="issue-overview-left">
             <IssueOverviewSmall issues={this.issues} />
           </div>
-          <div className="issue-options">
-            <div className="buttons row justify-content-center">
-              <HoverButton onclick={console.log('hello')} text="Trykk" />
-              <HoverButton onclick={console.log('hello')} text="Trykk" />
-              <HoverButton onclick={console.log('hello')} text="Trykk" />
-            </div>
-          </div>
         </div>
       </div>
     );
