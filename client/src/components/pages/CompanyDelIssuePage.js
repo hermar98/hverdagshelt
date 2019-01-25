@@ -34,8 +34,8 @@ export class CompanyDelIssuePage extends Component<{munId: number}> {
         } else {
             let munId = 10;
             return (
-                <div id='delMainBox'>
-                    <div id="hello">
+                <div className="d-flex flex-row" id='delMainBox'>
+                    <div className="card" id="hello">
                         <h1>Unassigned Issues</h1>
                         {(sharedIssues.issues).map(function (e, i) {
                             console.log("BOYYYY1 i: " + i);
@@ -49,8 +49,9 @@ export class CompanyDelIssuePage extends Component<{munId: number}> {
                         })
                         }
                     </div>
-                    <div style={{float:"right"}}>
+                    <div>
                         <h1>Assigned Issues</h1>
+                        {console.log(sharedComp.companies)}
                         {(sharedComp.companies).map(function (e, i) {
                             console.log("BOYYYY2 i: " + i);
                             if (e) {
@@ -129,7 +130,7 @@ class CompanyCard extends Component<{user: User, munId: number}> {
             return null;
         } else {
             return (
-                <div style={{height: 'auto', width: '600px', outline: "5px solid black"}}>
+                <div className="card">
                     <div>
                         <h1>{this.curCompany.firstName}</h1>
                         <p>{this.curCompany.email}</p>
