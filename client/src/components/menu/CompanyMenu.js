@@ -19,10 +19,9 @@ import { userService } from '../../services/UserService';
 
 export class CompanyMenu extends Component {
   user = null;
-  municipal = new Municipal();
-  munId = localStorage.getItem('munId');
+
   activeProfile = '';
-  activeMyIssues = '';
+  activeMyIssues = 'btnfocus';
 
   mounted() {
     userService
@@ -30,11 +29,6 @@ export class CompanyMenu extends Component {
       .then(user => {
         this.user = user;
       })
-      .catch((error: Error) => console.log(error));
-
-    municipalService
-      .getMunicipal(this.munId)
-      .then(municipal => (this.municipal = municipal))
       .catch((error: Error) => console.log(error));
   }
   render() {
