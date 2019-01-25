@@ -32,7 +32,6 @@ export class UserMenu extends Component {
         this.user = user;
       })
       .catch((error: Error) => console.log(error));
-
   }
   render() {
     if (this.user) {
@@ -46,7 +45,7 @@ export class UserMenu extends Component {
               Registrer Sak
             </NavBar.Button>
             <NavBar.Button className={this.activeFeed} onClick={this.toFeed}>
-              Min Feed
+              Min Side
             </NavBar.Button>
             <NavBar.Dropdown className={this.activeProfile} title={this.user.firstName + ' ' + this.user.lastName}>
               <DropdownHeader>{this.user.email}</DropdownHeader>
@@ -70,7 +69,7 @@ export class UserMenu extends Component {
   }
 
   toFeed() {
-    history.push('/feed');
+    history.push('/minSide');
     this.activeFeed = 'btnfocus';
     this.activeProfile = '';
     this.activeRegIssue = '';
