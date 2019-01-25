@@ -20,8 +20,10 @@ import { userService } from '../../services/UserService';
 export class MunEmployeeMenu extends Component {
   user = null;
   municipal = new Municipal();
-  className = '';
-  className2 = '';
+  activeProfile = '';
+  activeHome = '';
+  activeRegEvent = '';
+  activeAdmIssues = '';
   mounted() {
     userService
       .getCurrentUser()
@@ -47,12 +49,16 @@ export class MunEmployeeMenu extends Component {
             >
               Hverdagshelt
             </NavBar.Brand>
-            <NavBar.Button className2={this.className2} onClick={this.toMunEmployeeHome}>
+            <NavBar.Button className={this.activeHome} onClick={this.toMunEmployeeHome}>
               Hjem
             </NavBar.Button>
-            <NavBar.Button onClick={this.toRegisterEvent}>Registrer Event</NavBar.Button>
-            <NavBar.Button onClick={this.toManageIssues}>Administrer Saker</NavBar.Button>
-            <NavBar.Dropdown className={this.className} title={this.user.firstName + ' ' + this.user.lastName}>
+            <NavBar.Button className={this.activeRegEvent} onClick={this.toRegisterEvent}>
+              Registrer Event
+            </NavBar.Button>
+            <NavBar.Button className={this.activeAdmIssues} onClick={this.toManageIssues}>
+              Administrer Saker
+            </NavBar.Button>
+            <NavBar.Dropdown className={this.activeProfile} title={this.user.firstName + ' ' + this.user.lastName}>
               <DropdownHeader>{this.user.email}</DropdownHeader>
               <DropdownFooter>Kommuneansatt</DropdownFooter>
               <DropdownDivider />
@@ -67,8 +73,10 @@ export class MunEmployeeMenu extends Component {
   }
   toProfile() {
     history.push('/profil');
-    this.className = 'profilefocus';
-    this.className2 = '';
+    this.activeProfile = 'btnfocus';
+    this.activeHome = '';
+    this.activeRegEvent = '';
+    this.activeAdmIssues = '';
   }
 
   toLogout() {
@@ -79,26 +87,30 @@ export class MunEmployeeMenu extends Component {
 
   toRegisterEvent() {
     history.push('/registrerEvent');
-    this.className = '';
-    this.className2 = '';
-  }
-  changeMunicipal() {
-    localStorage.removeItem('munId');
-    history.push('/');
+    this.activeRegEvent = 'btnfocus';
+    this.activeHome = '';
+    this.activeProfile = '';
+    this.activeAdmIssues = '';
   }
   toMunEmployeeHome() {
     history.push('/kommune/' + this.user.munId);
-    this.className = '';
+    this.activeHome = 'btnfocus';
+    this.activeProfile = '';
+    this.activeRegEvent = '';
+    this.activeAdmIssues = '';
+  }
+  toMunEmployeeHome2() {
+    this.activeHome = 'btnfocus';
+    this.activeProfile = '';
+    this.activeRegEvent = '';
+    this.activeAdmIssues = '';
   }
 
   toManageIssues() {
     history.push('/kommune/' + this.user.munId + '/saker');
-    this.className = '';
-    this.className2 = '';
-  }
-  toMunEmployeeHome2() {
-    this.className = '';
-    this.className2 = 'homefocus';
-    console.log(this.className2);
+    this.activeAdmIssues = 'btnfocus';
+    this.activeHome = '';
+    this.activeProfile = '';
+    this.activeRegEvent = '';
   }
 }

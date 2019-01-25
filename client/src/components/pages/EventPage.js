@@ -47,7 +47,7 @@ export class DisplayEvent2 extends Component<{ event: Event }> {
       <div className="issue-normal" event={this.props.event}>
         <div className="d-flex flex-row issue-flex">
           <div className="p-2">
-            <img className="card-img issue-image" src={this.props.event.image} />
+            <img className="card-img issue-image" src={this.props.event.image} alt="sak bilde"/>
           </div>
           <div className="p-2">
             <h1>{this.props.event.title}</h1>
@@ -91,6 +91,7 @@ export class EventLarge extends Component<{ event: Event }> {
         <img
           className="event-image"
           src="https://www.naf.no/globalassets/tips-rad/vei-trafikk/hull_i_veien_bil2.jpg?width=980&height=550&mode=max&anchor=middlecenter&scale=both&quality=85"
+          alt="hendelse bilde"
         />
         <div className="card-footer">
           <small className="text-muted-left">
@@ -110,12 +111,12 @@ export class EventSmall extends Component<{ event: Event }> {
     return (
       <div className="card">
         <a id="a-hover" href={'#/hendelser/' + this.props.event.eventId}>
-          <img src="../../images/arrowRightTrans.png" />
+          <img src="../../images/arrowRightTrans.png" alt="right arrow" />
         </a>
         <div className="card-body">
           <div className="row">
             <h5 className="card-title">{this.props.event.title}</h5>
-            <img id="event-image-small" src={this.props.event.image} alt={'Bildetekst'} />
+            <img id="event-image-small" src={this.props.event.image} alt="hendelse bilde" />
           </div>
         </div>
         <div>
@@ -152,7 +153,7 @@ export class EventInfo extends Component<{ match: { params: { eventId: number } 
       <div>
         <div className="container my-4">
           <div className="card">
-            <img className="card-img-top" src={this.event.image} />
+            <img className="card-img-top" src={this.event.image} alt="hendelse bilde"/>
             <div className="card-body">
               <div className="row justify-content-between">
               <h2 className="card-title">{this.event.title}</h2>
