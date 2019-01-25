@@ -41,9 +41,9 @@ export class FeedPage extends Component {
 
     return (
       <div className="container-fluid">
-          <h2 id="munTitle">Din feed</h2>
+        <h2 id="munTitle">Din Side</h2>
 
-          <div className="row page-container">
+        <div className="row page-container">
           <div className="col-lg-6">
             <Card title="Feil/mangler">
               <div className="issue-overview-small">
@@ -94,39 +94,47 @@ export class FeedPage extends Component {
                 </div>
               </div>
               <ul className="list-group issue-small-list">
-                {hasMunicipals ? (hasIssues ? (Array.from(
-                  new Set(
-                    sharedIssues.issues
-                      .filter(e => {
-                        return (
-                          e.statusId !== 1 &&
-                          (e.categoryId == this.iCategoryId || this.iCategoryId == 0) &&
-                          (e.munId == this.munId || this.munId == 0)
-                        );
-                      })
-                      .sort((a, b) => {
-                        if (a.createdAt < b.createdAt) {
-                          return 1;
-                        } else if (a.createdAt > b.createdAt) {
-                          return -1;
-                        } else {
-                          return 0;
-                        }
-                      })
-                      .map(e => (
-
-                        <li key={e.issueId} className="list-group-item">
-                          <IssueSmall issue={e} munId={e.munId} />
-                        </li>
-                      ))
-                  )
-                )): (
+                {hasMunicipals ? (
+                  hasIssues ? (
+                    Array.from(
+                      new Set(
+                        sharedIssues.issues
+                          .filter(e => {
+                            return (
+                              e.statusId !== 1 &&
+                              (e.categoryId == this.iCategoryId || this.iCategoryId == 0) &&
+                              (e.munId == this.munId || this.munId == 0)
+                            );
+                          })
+                          .sort((a, b) => {
+                            if (a.createdAt < b.createdAt) {
+                              return 1;
+                            } else if (a.createdAt > b.createdAt) {
+                              return -1;
+                            } else {
+                              return 0;
+                            }
+                          })
+                          .map(e => (
+                            <li key={e.issueId} className="list-group-item">
+                              <IssueSmall issue={e} munId={e.munId} />
+                            </li>
+                          ))
+                      )
+                    )
+                  ) : (
                     <li key={0}>
-                      <p id="noIssues">Denne kommunen har ingen registrerte saker...</p> </li>)) : (
+                      <p id="noIssues">Denne kommunen har ingen registrerte saker...</p>{' '}
+                    </li>
+                  )
+                ) : (
                   <li key={0}>
                     <p id="feedInfo">Du har ikke valgt kommuner enda...</p>
-                    <p id="feedLink" onClick={this.toProfile}>Gå til profilsiden for å velge kommuner du vil følge</p></li>
-                  )}
+                    <p id="feedLink" onClick={this.toProfile}>
+                      Gå til profilsiden for å velge kommuner du vil følge
+                    </p>
+                  </li>
+                )}
               </ul>
             </Card>
           </div>
@@ -162,34 +170,45 @@ export class FeedPage extends Component {
                 </div>
               </div>
               <ul className="list-group issue-small-list">
-                {hasMunicipals ?(hasEvents ? (Array.from(
-                  new Set(
-                    sharedEvents.events
-                      .filter(e => {
-                        return (e.categoryId == this.eCategoryId || this.eCategoryId == 0)
-                          && (new Date(e.timeEnd) > this.date);
-                      })
-                      .sort((a, b) => {
-                        if (a.timeStart > b.timeStart) {
-                          return 1;
-                        } else if (a.timeStart < b.timeStart) {
-                          return -1;
-                        } else {
-                          return 0;
-                        }
-                      })
-                      .map(e => (
-                        <li key={e.eventId}>
-                          <EventSmall event={e} />
-                        </li>
-                      ))
+                {hasMunicipals ? (
+                  hasEvents ? (
+                    Array.from(
+                      new Set(
+                        sharedEvents.events
+                          .filter(e => {
+                            return (
+                              (e.categoryId == this.eCategoryId || this.eCategoryId == 0) &&
+                              new Date(e.timeEnd) > this.date
+                            );
+                          })
+                          .sort((a, b) => {
+                            if (a.timeStart > b.timeStart) {
+                              return 1;
+                            } else if (a.timeStart < b.timeStart) {
+                              return -1;
+                            } else {
+                              return 0;
+                            }
+                          })
+                          .map(e => (
+                            <li key={e.eventId}>
+                              <EventSmall event={e} />
+                            </li>
+                          ))
+                      )
+                    )
+                  ) : (
+                    <li key={0}>
+                      <p id="noEvents">Denne kommunen har ingen registrerte hendelser...</p>{' '}
+                    </li>
                   )
-                )) : (
-                  <li key={0}>
-                    <p id="noEvents">Denne kommunen har ingen registrerte hendelser...</p> </li>)) : (
+                ) : (
                   <li key={0}>
                     <p id="feedInfo">Du har ikke valgt kommuner enda...</p>
-                    <p id="feedLink" onClick={this.toProfile}>Gå til profilsiden for å velge kommuner du vil følge</p></li>
+                    <p id="feedLink" onClick={this.toProfile}>
+                      Gå til profilsiden for å velge kommuner du vil følge
+                    </p>
+                  </li>
                 )}
               </ul>
             </Card>
@@ -204,34 +223,34 @@ export class FeedPage extends Component {
       .getCurrentUser()
       .then(user => {
         this.user = user;
-          //GET all municipals a user has subscribed to
-          userMunicipalService
-              .getUserMunicipals(this.user.userId)
-              .then(muns => {
-                  sharedMunicipals.municipals = muns;
-                  sharedMunicipals.municipals.map(e =>
-                      issueService
-                          .getIssuesByMunicipal(e.munId)
+        //GET all municipals a user has subscribed to
+        userMunicipalService
+          .getUserMunicipals(this.user.userId)
+          .then(muns => {
+            sharedMunicipals.municipals = muns;
+            sharedMunicipals.municipals.map(e =>
+              issueService
+                .getIssuesByMunicipal(e.munId)
 
-                          //GET all Issues registered on the municipals
-                          .then(issues => {
-                              Array.prototype.push.apply(sharedIssues.issues, issues);
-                          })
+                //GET all Issues registered on the municipals
+                .then(issues => {
+                  Array.prototype.push.apply(sharedIssues.issues, issues);
+                })
 
-                        .catch((error: Error) => Alert.danger(error.message))
-                  );
+                .catch((error: Error) => Alert.danger(error.message))
+            );
 
-                  //GET all events registered on the municipals
-                  sharedMunicipals.municipals.map(e =>
-                      eventService
-                          .getEventsByMunicipal(e.munId)
-                          .then(events => {
-                              Array.prototype.push.apply(sharedEvents.events, events);
-                          })
-                          .catch((error: Error) => Alert.danger(error.message))
-                  );
-              })
-              .catch((error: Error) => Alert.danger(error.message));
+            //GET all events registered on the municipals
+            sharedMunicipals.municipals.map(e =>
+              eventService
+                .getEventsByMunicipal(e.munId)
+                .then(events => {
+                  Array.prototype.push.apply(sharedEvents.events, events);
+                })
+                .catch((error: Error) => Alert.danger(error.message))
+            );
+          })
+          .catch((error: Error) => Alert.danger(error.message));
       })
       .catch((error: Error) => console.log(error));
 
@@ -301,7 +320,7 @@ export class FeedPage extends Component {
     }
   }
 
-  toProfile(){
+  toProfile() {
     history.push('/profil');
   }
 }

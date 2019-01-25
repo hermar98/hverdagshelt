@@ -22,7 +22,7 @@ export class ChooseMunicipalPage extends Component {
               <div className="fg-grid">
                 <div className="fg-logo">
                   <div className="justify-content-center row">
-                    <img className="fg-image" src={'../../images/hverdagshelt-logo-black.svg'} />
+                    <img className="fg-image" src={'../../images/hverdagshelt-logo-black.svg'} alt="Hverdagshelt logo" />
                   </div>
                   <div className="justify-content-center row">HverdagsHelt</div>
                 </div>
@@ -38,12 +38,15 @@ export class ChooseMunicipalPage extends Component {
                 </div>
                 <div className="fg-content">
                   <div className="justify-content-center row">
-                    <h5>Information:</h5>
+                    <h5>Informasjon: </h5>
+
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel suscipit metus, eget condimentum
-                      velit. Vestibulum auctor tincidunt lectus. Integer nec dolor quis ligula convallis fringilla vel
-                      ac urna. Nunc vitae risus sagittis, accumsan augue vel, mattis ipsum. Suspendisse dignissim
-                      hendrerit suscipit.
+                      Velkommen til HverdagsHelt, en side for alle hverdagshelter ute i Kommune-Norge.
+                      På denne siden kan du legge inn feil og mangler på infrastruktur som din kommune har
+                      ansvar for, og kommunene kan informere om hendelser som skjer i nær fremtid.
+                      <br/>
+                      <br/>
+                      Kom i gang ved å søke etter en kommune i feltet ovenfor, og bli en hverdagshelt du også!
                     </p>
                   </div>
                 </div>

@@ -21,8 +21,8 @@ export class CompanyMenu extends Component {
   user = null;
   municipal = new Municipal();
   munId = localStorage.getItem('munId');
-  className = '';
-  className2 = '';
+  activeProfile = '';
+  activeMyIssues = '';
 
   mounted() {
     userService
@@ -49,10 +49,10 @@ export class CompanyMenu extends Component {
             >
               Hverdagshelt
             </NavBar.Brand>
-            <NavBar.Button className2={this.className2} onClick={this.toCompanyHome}>
-              Hjem
+            <NavBar.Button className={this.activeMyIssues} onClick={this.toCompanyHome}>
+              Mine Saker
             </NavBar.Button>
-            <NavBar.Dropdown className={this.className} title={this.user.firstName + ' ' + this.user.lastName}>
+            <NavBar.Dropdown className={this.activeProfile} title={this.user.firstName + ' ' + this.user.lastName}>
               <DropdownHeader>{this.user.email}</DropdownHeader>
               <DropdownFooter>Bedrift</DropdownFooter>
               <DropdownDivider />
@@ -67,28 +67,21 @@ export class CompanyMenu extends Component {
   }
   toProfile() {
     history.push('/profil');
-    this.className = 'profilefocus';
-    this.className2 = '';
+    this.activeProfile = 'btnfocus';
+    this.activeMyIssues = '';
   }
   toLogout() {
     tokenManager.deleteToken();
     window.location.reload();
     history.push('/');
   }
-  changeMunicipal() {
-    localStorage.removeItem('munId');
-    history.push('/');
-    this.className2 = '';
-    this.className = '';
-  }
   toCompanyHome() {
     history.push('/saker');
-    this.className = '';
-    this.className2 = 'homefocus';
+    this.activeMyIssues = 'btnfocus';
+    this.activeProfile = '';
   }
   toCompanyHome2() {
-    this.className = '';
-    this.className2 = 'homefocus';
-    console.log(this.className2);
+    this.activeMyIssues = 'btnfocus';
+    this.activeProfile = '';
   }
 }

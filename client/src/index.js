@@ -18,7 +18,7 @@ import { StatisticsPage } from './components/pages/StatisticsPage.js';
 import { TermsOfService } from './components/pages/TermsOfServicePage.js';
 import { AdminPage, AdminEditPage } from './components/pages/AdminPage.js';
 import { AlternativeUpload } from './components/image/AlternativeUpload.js';
-import { AdminHandleCategories } from './components/pages/AdminHandleCategories'
+import { AdminHandleCategories } from './components/pages/AdminHandleCategories';
 import { MunicipalPage } from './components/pages/MunicipalPage';
 import { NotFound } from './components/pages/NotFound';
 import { IssueView } from './components/pages/IssueOverviewPage';
@@ -42,7 +42,6 @@ export const history = createHashHistory(); // Use history.push(...) to programm
 
 const root = document.getElementById('root');
 
-
 if (root)
   ReactDOM.render(
     <HashRouter>
@@ -60,7 +59,7 @@ if (root)
           <Route exact path="/saker/:issueId" component={IssueLarge} />
           <Route exact path="/registrerSak" component={FileIssuePage} />
           <Route exact path="/registrerEvent" component={RegisterEventPage} />
-          <Route exact path="/feed" component={FeedPage} />
+          <Route exact path="/minSide" component={FeedPage} />
           <Route exact path="/kommune/:munId" component={MunicipalPage} />
           <Route exact path="/image" component={AlternativeUpload} />
           <Route exact path="/aktiver/:tokenId" component={ActivateAccountPage} />
