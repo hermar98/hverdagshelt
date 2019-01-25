@@ -22,7 +22,7 @@ export class ChooseMunicipalPage extends Component {
               <div className="fg-grid">
                 <div className="fg-logo">
                   <div className="justify-content-center row">
-                    <img className="fg-image" src={'../../images/hverdagshelt-logo-black.svg'} />
+                    <img className="fg-image" src={'../../images/hverdagshelt-logo-black.svg'} alt="Hverdagshelt logo" />
                   </div>
                   <div className="justify-content-center row">HverdagsHelt</div>
                 </div>

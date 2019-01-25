@@ -1,8 +1,6 @@
-import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 import { imageService } from '../../services/ImageService';
-import { Button } from '../../widgets';
 import { Image } from '../../models/Image';
 import { Issue } from '../../models/Issue';
 import { issueService } from '../../services/IssueService';
@@ -69,7 +67,7 @@ export default class UploadImageButton extends Component {
     let $imagePreview = null;
 
     if (imagePreviewUrl) {
-      $imagePreview = <img src={this.state.imagePreviewUrl} />;
+      $imagePreview = <img src={this.state.imagePreviewUrl} alt="preview image" />;
     } else {
       $imagePreview = <div>Velg ett eller flere bilder:</div>;
     }
@@ -87,7 +85,7 @@ export default class UploadImageButton extends Component {
                     if (e.path) {
                       return (
                         <div key={i} className="image-upload-images">
-                          <img className="image-upload-image" src={e.path} />
+                          <img className="image-upload-image" src={e.path} alt="uploaded image"/>
                         </div>
                       );
                     }
