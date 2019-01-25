@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
-import {Redirect, NavLink} from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 import { Feedback} from '../../models/Feedback';
-import {tokenManager} from "../../tokenManager";
 import {User} from "../../models/User";
 import {Issue} from "../../models/Issue";
 import {userService} from "../../services/UserService";
@@ -12,7 +11,6 @@ import {feedbackService} from "../../services/FeedbackService";
 import {municipalService} from "../../services/MunicipalService";
 import {SimpleMap} from "../map/map";
 
-let sharedIssues = sharedComponentData({issues: []})
 let sharedFeedback = sharedComponentData({feedback: []})
 
 let formatDate = function (date: Date) {
@@ -48,7 +46,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
     categoryName: string = '';
     munName: string = '';
     issueText: string = '';
-    user = null;
+    user: User = new User();
     rank: number = -1;
 
     lat: number = 0
@@ -107,7 +105,6 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                     </div>
                                 </div>
                                 <div className="issue-map-container">
-                                    {console.log(this.lat + " " + this.long)}
                                     <SimpleMap lat={this.lat} lng={this.long}/>
                                 </div>
                             </div>
@@ -165,6 +162,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
             .catch(error => console.error("Error: ", error))
         userService.getCurrentUser()
             .then(user => {
+                this.user = user;
                 this.rank = user.rank
             })
             .catch(error => console.error("Error: ", error))
@@ -181,7 +179,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                             onClick={() => {
                                 this.addFeedbackButton.current.classList.add('show')
                                 this.addFeedbackForm.current.classList.remove('show')
-                                window.scrollTo(0, document.body.scrollHeight);
+                                window.scrollBy(0, 250);
                             }}>
                         <img id="add-image-button" src="../../images/add.png"/>
                     </button>
@@ -520,6 +518,7 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
 
     user = new User()
     feedText: string = ''
+    source: string  = ''
 
     render() {
         return (
@@ -528,7 +527,7 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
                     <div id={"feedback-body " + this.props.feedback.feedbackId} className="card-body" ref={this.bodyRef}>
                         <div className="d-flex flex-row submitter">
                                 <div className="p-2">
-                                    <img className="card-img profile-image" src={this.user.profilePicture}/>
+                                    <img className="card-img profile-image" src={this.source}/>
                                 </div>
                                 <div className="p-2 submitter-info"><h5 className="submitter-name">{this.user.firstName + ' ' + this.user.lastName}</h5><p className="date-small">{formatDate(this.props.feedback.createdAt)}</p></div>
                             <ButtonGroupFeedback onclickC={this.onEdit} onclickT={this.onDelete} id={this.props.feedback.userId} />
@@ -546,6 +545,12 @@ export class IssueFeedback extends Component<{feedback: Feedback, userId: number
         userService.getUser(this.props.feedback.userId)
             .then(user => {
                 this.user = user
+                switch(user.rank){
+                    case 1: this.source = "../../images/private.png"; break;
+                    case 2: this.source = "../../images/contractor.png"; break;
+                    case 3: this.source = "../../images/worker.png"; break;
+                    default: break;
+                }
             })
             .catch(error => console.error("Error", error))
         this.feedText = this.props.feedback.content
@@ -706,6 +711,7 @@ export class HoverButton extends Component<{onclick: function, text: string}> {
 export class ButtonGroup extends Component<{onclickC: function, onclickT: function, id: number}> {
 
     rank: number = -1
+    user: User = new User()
 
     render() {
         if(this.rank == 3) {
@@ -728,12 +734,18 @@ export class ButtonGroup extends Component<{onclickC: function, onclickT: functi
 
     mounted () {
         userService.getCurrentUser()
-            .then(user => this.rank = user.rank)
+            .then(user => {
+                this.user = user
+                this.rank = user.rank
+            })
             .catch(error => console.error("Error: ", error))
     }
 }
 
 export class ButtonGroupFeedback extends Component<{onclickC: function, onclickT: function, id: number}> {
+
+    user: User = new User()
+
     render() {
         if(this.props.id == this.user.userId) {
             return (
@@ -745,5 +757,13 @@ export class ButtonGroupFeedback extends Component<{onclickC: function, onclickT
         }else{
             return null
         }
+    }
+
+    mounted () {
+        userService.getCurrentUser()
+            .then(user => {
+                this.user = user
+            })
+            .catch(error => console.error("Error: ", error))
     }
 }
