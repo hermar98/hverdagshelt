@@ -78,7 +78,7 @@ export class IssueLarge extends Component<{match: {params: {issueId: number, mun
                                 <div className="card-body issue-large-card">
                                     <div className="d-flex flex-row">
                                         <p className="date date-large">{formatDate(this.issue.createdAt)}</p>
-                                        <ButtonGroup onclickC={this.onEdit} onclickT={this.onDelete} id={this.issue.userId} />
+                                        <ButtonGroup onclickC={this.onEdit} onclickT={this.onDelete} id={this.issue.userId} status={this.issue.statusId}/>
                                         <StatusButton status={this.issue.statusId} onclick={() => {
                                             let rank = 0;
                                             userService.getCurrentUser()
@@ -733,20 +733,20 @@ export class HoverButton extends Component<{id?: string, type?:string, onclick: 
     }
 }
 
-export class ButtonGroup extends Component<{onclickC: function, onclickT: function, id: number}> {
+export class ButtonGroup extends Component<{onclickC: function, onclickT: function, id: number, status: number}> {
 
     rank: number = -1
     user: User = new User()
 
     render() {
-        if(this.rank == 3) {
+        if(this.rank == 3 || this.user.userId == this.props.id && this.props.status == 1 ) {
             return (
                 <div className="options">
                     <ImageButton source="../../images/cog.png" onclick={this.props.onclickC}/>
                     <ImageButton source="../../images/trashcan.png" onclick={this.props.onclickT}/>
                 </div>
             )
-        }else if(this.user.userId == this.props.id){
+        }else if(this.user.userId == this.props.id ){
             return (
                 <div className="options">
                     <ImageButton source="../../images/cog.png" onclick={this.props.onclickC}/>
