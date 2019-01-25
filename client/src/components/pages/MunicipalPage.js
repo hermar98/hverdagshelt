@@ -14,7 +14,6 @@ import { issueService } from '../../services/IssueService';
 import { Municipal } from '../../models/Municipal';
 
 export class MunicipalPage extends Component<{ match: { params: { munId: number } } }> {
-  //TODO: FIX select by category and date for events
   issues = [];
   events = [];
   municipal = new Municipal();
@@ -23,9 +22,16 @@ export class MunicipalPage extends Component<{ match: { params: { munId: number 
     const hasEvents = this.events.length != 0;
     return (
       <div className="container-fluid">
-
-
-          <h2 id="munTitle"><img src={ (this.municipal.municipalShield) ? this.municipal.municipalShield : "../images/hverdagshelt-logo-black.svg"} height="75px" alt={this.municipal.name + ' Kommune Skjold'}/>{this.municipal.name} kommune</h2>
+        <h2 id="munTitle">
+          <img
+            src={
+              this.municipal.municipalShield ? this.municipal.municipalShield : '../images/hverdagshelt-logo-black.svg'
+            }
+            height="75px"
+            alt={this.municipal.name + ' Kommune Skjold'}
+          />
+          {this.municipal.name} kommune
+        </h2>
         <div className="row page-container">
           <div className="col-lg-6">
             <Card title="Feil/mangler">
@@ -62,13 +68,16 @@ export class MunicipalPage extends Component<{ match: { params: { munId: number 
                 </div>
               </div>
               <ul className="list-group issue-small-list">
-                {hasEvents ? (this.events.map(e => (
-                  <li key={e.eventId}>
-                    <EventSmall event={e} />
-                  </li>
-                ))) : (
+                {hasEvents ? (
+                  this.events.map(e => (
+                    <li key={e.eventId}>
+                      <EventSmall event={e} />
+                    </li>
+                  ))
+                ) : (
                   <li key={0}>
-                    <p id="noIssues">Denne kommunen har ingen registrerte events...</p> </li>
+                    <p id="noIssues">Denne kommunen har ingen registrerte events...</p>{' '}
+                  </li>
                 )}
               </ul>
             </Card>

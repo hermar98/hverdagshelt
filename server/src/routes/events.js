@@ -28,7 +28,7 @@ app.put('/events/:id', (req: Request, res: Response) => {
   //Flow type checking mixed src: https://github.com/flow-typed/flow-typed/issues/812
   const body = req.body !== null && typeof req.body === 'object' ? req.body : {};
   const { title, content, image, longitude, latitude, timeStart, timeEnd } = body;
-
+  console.log(image);
   let tokenData = tokenManager.verifyToken(req.headers['x-access-token']);
   if (tokenData) {
     if (tokenData.rank === 4 || tokenData.rank === 3) {

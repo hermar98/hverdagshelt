@@ -244,6 +244,13 @@ export class FeedPage extends Component {
       .getCurrentUser()
       .then(user => {
         this.user = user;
+        if (user.rank === 2) {
+            history.push('/bedrift');
+        } else if (user.rank === 3) {
+            history.push('/kommune/' + user.munId);
+        } else if (user.rank === 4) {
+            history.push('/admin');
+        }
         //GET all municipals a user has subscribed to
         userMunicipalService
           .getUserMunicipals(this.user.userId)
@@ -273,7 +280,10 @@ export class FeedPage extends Component {
           })
           .catch((error: Error) => Alert.danger(error.message));
       })
-      .catch((error: Error) => Alert.danger(error));
+      .catch((error: Error) => {
+        console.log(error);
+        history.push('/');
+      });
 
     //GET all issueCategories
     issueCategoryService

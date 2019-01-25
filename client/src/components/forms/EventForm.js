@@ -142,21 +142,17 @@ export default class EventForm extends Component {
             onChange={e => (this.endDate = e.target.value)}
             onChange2={e => (this.endTime = e.target.value)}
           />
-          <div className="form-group row justify-content-center" style={{ height: '300px' }}>
+          <div className="form-group row justify-content-center">
             <div className="col-12 col-md-4 justify-content-center">
               <div className="mapcontainer">{this.renderMap()}</div>
             </div>
           </div>
-          <div className="form-group row mt-4 justify-content-center">
-            <div className="col-12 col-md-4 justify-content-center">
+
           <UploadImageButton
             ref={boy => {
               this.upload = boy;
             }}
           />
-            </div>
-          </div>
-          <Form.FileInput>Legg til bilde (valgfritt) </Form.FileInput>
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
               <HoverButton type="submit" onclick={this.save} text="Registrer Event" />
@@ -211,7 +207,7 @@ export default class EventForm extends Component {
     }
 
     let image = this.upload.uploadEventImage();
-    console.log(image)
+    console.log(image);
     this.event.image = image;
     this.event.longitude = this.lng;
     this.event.latitude = this.lat;
@@ -223,15 +219,12 @@ export default class EventForm extends Component {
 
     // console.log(this.event.image);
 
-    this.upload.uploadEventImage()
-      .then(e => {
-          this.event.image = e
-          eventService
-            .addEvent(this.event)
-            .then(history.push('/kommune/' + this.event.munId))
-            .catch((error: Error) => Alert.danger(error.message));
-        }
-      );
+    eventService
+      .addEvent(this.event)
+      .then(res => (this.event.eventId = res.eventId))
+      .then(this.upload.uploadEventImage(this.event))
+      .then(history.push('/kommune/' + this.event.munId))
+      .catch((error: Error) => Alert.danger(error.message));
   }
 
   mounted() {
@@ -239,14 +232,23 @@ export default class EventForm extends Component {
       .getCurrentUser()
       .then(user => {
         this.user = user;
-        console.log(user.munId);
+        if (user.userId === 1) {
+          history.push('/minSide');
+        } else if (user.userId === 3) {
+          history.push('/kommune/' + user.munId);
+        } else if (user.userId === 4) {
+          history.push('/admin');
+        }
         municipalService
           .getMunicipal(user.munId)
           .then(e =>
             mapService.getLoactionByAdress(e.name).then(d => console.log((this.center = d[0].geometry.location)))
           );
       })
-      .catch((error: Error) => Alert.danger(error.message));
+      .catch((error: Error) => {
+        console.log(error);
+        history.push('/');
+      });
 
     eventCategoryService
       .getCategories()

@@ -1,7 +1,4 @@
-import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { Event } from '../src/models/Event';
-import {User} from "../src/models/User";
 import {Issue} from "../src/models/Issue";
 import {userService} from "../src/services/UserService";
 import {issueService} from "../src/services/IssueService";
@@ -51,25 +48,25 @@ eventArray.push(event);
 
 beforeAll(() => {
   mock
-    .onGet('/secure/users/' + user.userId)
+    .onGet('/users/' + user.userId)
     .reply(200, user)
-    .onGet('/secure/users')
+    .onGet('/users')
     .reply(200, userArray)
-    .onPut('/secure/users/' + user.userId)
+    .onPut('/users/' + user.userId)
     .reply(200)
     .onPost('/register')
     .reply(200, 1)
-    .onGet('/secure/issues')
+    .onGet('/issues')
     .reply(200, issueArray)
-    .onGet('/secure/issues/' + issue.issueId)
+    .onGet('/issues/' + issue.issueId)
     .reply(200, issue)
-    .onPut('secure/issues/' + issue.issueId)
+    .onPut('/issues/' + issue.issueId)
     .reply(200)
-    .onPost('/secure/issues')
+    .onPost('/issues')
     .reply(200, 1)
-    .onDelete('/secure/issues/' + issue.issueId)
+    .onDelete('/issues/' + issue.issueId)
     .reply(200)
-    .onGet('/secure/events')
+    .onGet('/events')
     .reply(200, eventArray);
 });
 

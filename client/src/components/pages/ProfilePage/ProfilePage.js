@@ -47,7 +47,10 @@ export default class ProfilePage extends Component {
       .then(user => {
         this.user = user;
       })
-      .catch((error: Error) => console.log(error));
+      .catch((error: Error) => {
+        console.log(error);
+          history.push('/');
+      });
   }
 
   logout() {
