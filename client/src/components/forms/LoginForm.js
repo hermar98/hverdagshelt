@@ -63,10 +63,13 @@ export default class Login extends Component {
 
   mounted() {
     userService
-      .getToken()
-      .then(token => {
-        console.log(token);
-        history.push('/');
+      .getCurrentUser()
+      .then(user => {
+        if(!user){
+          tokenManager.deleteToken()
+        }
+        console.log(user);
+        history.push('/profil');
       })
       .catch((error: Error) => console.log(error));
   }
@@ -80,10 +83,11 @@ export default class Login extends Component {
       .login(this.email, this.password)
       .then(token => {
         tokenManager.addToken(token);
-        userService.getUser(tokenManager.getUserId())
+        userService.getCurrentUser()
           .then(user =>{
             this.user = user;
             if(this.user.rank === 0){
+              tokenManager.deleteToken();
               history.push('/aktiver/aktiverBruker');
             }else if(this.user.rank === 1){
               window.location.reload();

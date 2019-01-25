@@ -39,12 +39,14 @@ export class FeedPage extends Component {
     const hasIssues = sharedIssues.issues.length != 0;
 
     return (
-      <div>
-        <div className="row">
+      <div className="container-fluid">
+          <h2 id="munTitle">Din feed</h2>
+
+          <div className="row page-container">
           <div className="col-lg-6">
             <Card title="Feil/mangler">
               <div className="issue-overview-small">
-                <div className="d-flex flex-row sort-box card-header justify-content-between">
+                <div className="d-flex flex-row sort-box justify-content-between">
                   <div className="form-group mt-2 ml-1">
                     <select
                       className="form-control"
@@ -91,7 +93,7 @@ export class FeedPage extends Component {
                   </div>
                 </div>
               </div>
-              <ul className="container-fluid">
+              <ul className="list-group issue-small-list">
                 {hasMunicipals ? (hasIssues ? (Array.from(
                   new Set(
                     sharedIssues.issues
@@ -121,7 +123,7 @@ export class FeedPage extends Component {
           </div>
           <div className="col-lg-6">
             <Card title="Events" id="event-cards">
-              <div className="d-flex flex-row sort-box card-header justify-content-between">
+              <div className="d-flex flex-row sort-box justify-content-between">
                 <div className="form-group mt-2 ml-1">
                   <select
                     className="form-control"
@@ -150,7 +152,7 @@ export class FeedPage extends Component {
                   </select>
                 </div>
               </div>
-              <ul className="container-fluid">
+              <ul className="list-group issue-small-list">
                 {hasMunicipals ?(hasEvents ? (Array.from(
                   new Set(
                     sharedEvents.events
@@ -180,46 +182,40 @@ export class FeedPage extends Component {
 
   mounted() {
     userService
-      .getToken()
-      .then(() => {
-        userService
-          .getUser(tokenManager.getUserId())
-          .then(user => {
-            this.user = user;
-          })
-          .catch((error: Error) => console.log(error));
+      .getCurrentUser()
+      .then(user => {
+        this.user = user;
+          //GET all municipals a user has subscribed to
+          userMunicipalService
+              .getUserMunicipals(this.user.userId)
+              .then(muns => {
+                  sharedMunicipals.municipals = muns;
+                  sharedMunicipals.municipals.map(e =>
+                      issueService
+                          .getIssuesByMunicipal(e.munId)
+
+                          //GET all Issues registered on the municipals
+                          .then(issues => {
+                              Array.prototype.push.apply(sharedIssues.issues, issues);
+                              console.log(sharedIssues.issues);
+                          })
+                          .catch((error: Error) => Alert.danger(error.message))
+                  );
+
+                  //GET all events registered on the municipals
+                  sharedMunicipals.municipals.map(e =>
+                      eventService
+                          .getEventsByMunicipal(e.munId)
+                          .then(events => {
+                              Array.prototype.push.apply(sharedEvents.events, events);
+                          })
+                          .catch((error: Error) => Alert.danger(error.message))
+                  );
+              })
+              .then(() => console.log(sharedMunicipals.municipals))
+              .catch((error: Error) => Alert.danger(error.message));
       })
       .catch((error: Error) => console.log(error));
-
-    //GET all municipals a user has subscribed to
-    userMunicipalService
-      .getUserMunicipals(tokenManager.getUserId())
-      .then(muns => {
-        sharedMunicipals.municipals = muns;
-        sharedMunicipals.municipals.map(e =>
-          issueService
-            .getIssuesByMunicipal(e.munId)
-
-            //GET all Issues registered on the municipals
-            .then(issues => {
-              Array.prototype.push.apply(sharedIssues.issues, issues);
-              console.log(sharedIssues.issues);
-            })
-            .catch((error: Error) => Alert.danger(error.message))
-        );
-
-        //GET all events registered on the municipals
-        sharedMunicipals.municipals.map(e =>
-          eventService
-            .getEventsByMunicipal(e.munId)
-            .then(events => {
-              Array.prototype.push.apply(sharedEvents.events, events);
-            })
-            .catch((error: Error) => Alert.danger(error.message))
-        );
-      })
-      .then(() => console.log(sharedMunicipals.municipals))
-      .catch((error: Error) => Alert.danger(error.message));
 
     //GET all issueCategories
     issueCategoryService

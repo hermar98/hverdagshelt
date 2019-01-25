@@ -73,9 +73,10 @@ export class TermsOfService extends Component {
             bli rettet opp, eller at dette nettstedet eller serveren som gjør stedet tilgjengelig, er fri for virus
             eller annet skadelig innhold. Vi er ikke ansvarlig for eller gir ingen garantier med hensyn til bruken av
             materialet på dette nettstedet når det gjelder fullstendighet, riktighet, nøyaktighet, egnethet, nytte,
-            aktualitet, pålitelighet eller annet. I tillegg til det ovennevnte og i den grad det tillates i henhold til
-            gjeldende lov, påtar du (og ikke oss) deg ansvaret for alle kostnader til all nødvendig service, reparasjon
-            eller rettelse.
+            aktualitet, pålitelighet eller annet. Hvis du leser dette betyr det at du har funnet denne sidens easter egg.
+            Vi i Fleinar Inc. setter pris på din observante lesing og ønsker deg en fin dag videre. I tillegg til det ovennevnte
+            og i den grad det tillates i henhold til gjeldende lov, påtar du (og ikke oss) deg ansvaret for alle kostnader til all
+            nødvendig service, reparasjon eller rettelse.
           </p>
 
           <h2 className="TOSH2">Erstatning</h2>

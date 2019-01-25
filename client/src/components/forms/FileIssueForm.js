@@ -11,7 +11,7 @@ import { history } from '../../index';
 import GoogleMap from 'google-map-react';
 import isEmpty from 'lodash.isempty';
 import { tokenManager } from '../../tokenManager';
-import { issueService } from '../../services/IssueService';
+import { userService } from '../../services/UserService';
 import UploadImageButton from '../image/UploadImageButton';
 import { HoverButton } from '../issueViews/issueViews';
 import { createMapOptions, MyGreatPlace, Search } from '../map/map';
@@ -157,35 +157,21 @@ export default class RegisterIssue extends Component {
   save() {
     if (!this.form || !this.form.checkValidity()) return;
 
-    this.issue.userId = tokenManager.getUserId();
+    this.issue.userId = this.user.userId;
     this.issue.munId = this.munId;
     this.issue.latitude = this.lat;
     this.issue.longitude = this.lng;
     this.issue.image = '';
 
     this.upload.printFaenHode(this.issue);
-
-    // issueService
-    // .addIssue(this.issue)
-    // .then(
-    //     id => {
-    //       if(this.upload!=null){
-    //         if(this.upload instanceof UploadImageButton){
-    //             console.log("I DONT SEEEEE WHATS WRONG");
-    //             this.upload.uploadTheImage(id.issueId);
-    //         } else{
-    //           console.log("Fuck this x2: " + id.issueId);
-    //         }
-    //       } else{
-    //           console.log("fak dis sht: " + id.issueId);
-    //       }
-    //     }
-    // )
-    // .then(history.push('/municipal/' + this.munId + '/issues'))
-    // .catch((error: Error) => Alert.danger(error.message));
   }
 
   mounted() {
+    userService
+      .getCurrentUser()
+      .then(user => (this.user = user))
+      .catch((error: Error) => Alert.danger(error.message));
+
     issueCategoryService
       .getCategories()
       .then(issueCategories => (this.categories = issueCategories))

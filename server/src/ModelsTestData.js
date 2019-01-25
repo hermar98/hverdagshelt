@@ -611,7 +611,7 @@ class ModelsTestData {
                     firstName: 'Vegard',
                     lastName: 'Andersson',
                     email: 'test@test.no',
-                    rank: 3,
+                    rank: 4,
                     salt: 'a83f4da094cc247b',
                     hashStr:
                         '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722',
@@ -975,7 +975,10 @@ class ModelsTestData {
     createEventCategory() {
         return EventCategory.bulkCreate([
             {
-                name: 'PARTY'
+              name:'Annet'
+            },
+            {
+                name: 'Party'
             },
             {
                 name: 'Konsert'

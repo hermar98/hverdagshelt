@@ -22,17 +22,13 @@ export class CompanyMenu extends Component {
   municipal = new Municipal();
   munId = localStorage.getItem('munId');
   className = '';
+  className2 = '';
 
   mounted() {
     userService
-      .getToken()
-      .then(() => {
-        userService
-          .getUser(tokenManager.getUserId())
-          .then(user => {
-            this.user = user;
-          })
-          .catch((error: Error) => console.log(error));
+      .getCurrentUser()
+      .then(user => {
+        this.user = user;
       })
       .catch((error: Error) => console.log(error));
 
@@ -46,10 +42,16 @@ export class CompanyMenu extends Component {
       return (
         <div>
           <NavBar>
-            <NavBar.Brand image={'../../images/hverdagshelt-logo-white.svg'} to={'/saker'}>
+            <NavBar.Brand
+              image={'../../images/hverdagshelt-logo-white.svg'}
+              to={'/saker'}
+              onClick={this.toCompanyHome2}
+            >
               Hverdagshelt
             </NavBar.Brand>
-            <NavBar.Button onClick={this.toCompanyHome}>Hjem</NavBar.Button>
+            <NavBar.Button className2={this.className2} onClick={this.toCompanyHome}>
+              Hjem
+            </NavBar.Button>
             <NavBar.Dropdown className={this.className} title={this.user.firstName + ' ' + this.user.lastName}>
               <DropdownHeader>{this.user.email}</DropdownHeader>
               <DropdownFooter>Bedrift</DropdownFooter>
@@ -66,6 +68,7 @@ export class CompanyMenu extends Component {
   toProfile() {
     history.push('/profil');
     this.className = 'profilefocus';
+    this.className2 = '';
   }
   toLogout() {
     tokenManager.deleteToken();
@@ -75,9 +78,16 @@ export class CompanyMenu extends Component {
   changeMunicipal() {
     localStorage.removeItem('munId');
     history.push('/');
+    this.className2 = '';
+    this.className = '';
   }
   toCompanyHome() {
     history.push('/saker');
     this.className = '';
+  }
+  toCompanyHome2() {
+    this.className = '';
+    this.className2 = 'homefocus';
+    console.log(this.className2);
   }
 }

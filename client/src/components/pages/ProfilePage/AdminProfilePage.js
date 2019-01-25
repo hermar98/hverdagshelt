@@ -14,7 +14,7 @@ export class AdminProfilePage extends Component {
 
   mounted() {
     userService
-      .getUser(tokenManager.getUserId())
+      .getCurrentUser()
       .then(rows => {
         this.user = rows;
         this.state.isLoaded = true;
@@ -24,7 +24,7 @@ export class AdminProfilePage extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container-fluid">
         <Card title="Min Profil">
           <hr />
           <p>

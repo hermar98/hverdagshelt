@@ -43,14 +43,9 @@ export default class ProfilePage extends Component {
 
   mounted() {
     userService
-      .getToken()
-      .then(() => {
-        userService
-          .getUser(tokenManager.getUserId())
-          .then(user => {
-            this.user = user;
-          })
-          .catch((error: Error) => console.log(error));
+      .getCurrentUser()
+      .then(user => {
+        this.user = user;
       })
       .catch((error: Error) => console.log(error));
   }

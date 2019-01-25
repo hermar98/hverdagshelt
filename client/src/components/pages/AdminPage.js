@@ -129,18 +129,13 @@ export class AdminPage extends Component {
       })
       .catch((error: Error) => console.log(error));
 
-    userService
-      .getToken()
-      .then(() => {
-        userService
-          .getUser(tokenManager.getUserId())
-          .then(user => {
-            this.userId = user.userId;
-          })
-          .catch((error: Error) => console.log(error));
-      })
-      .catch((error: Error) => console.log(error));
-  }
+            userService
+                .getCurrentUser()
+                .then(user => {
+                    this.userId = user.userId;
+                })
+                .catch((error: Error) => console.log(error));
+    }
 
   getRankName(rank: number): string {
     if (rank === 1) {
@@ -295,7 +290,7 @@ export class AdminEditPage extends Component<{ match: { params: { userId: number
 
   mounted() {
     userService
-      .getUser(this.props.match.params.userId)
+      .getCurrentUser()
       .then(user => (this.user = user))
       .catch((error: Error) => Alert.danger(error.message));
   }

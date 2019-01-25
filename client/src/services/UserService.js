@@ -1,54 +1,77 @@
 //@flow
 import {User} from "../models/User";
 import service from "./Service";
+import {tokenManager} from "../tokenManager";
 
 class UserService {
   getUsers(): Promise<User[]> {
-    let token = localStorage.getItem('token');
-    if (token) token = JSON.parse(token).jwt;
-    return service.get('/secure/users', {
+      let token = tokenManager.getJwt();
+      tokenManager.getNewToken()
+          .then(newToken => tokenManager.updateToken(newToken))
+          .catch((error: Error) => console.log(error));
+
+    return service.get('/users', {
       headers: {'x-access-token': token}
     });
   }
 
   getUser(userId: number): Promise<User> {
-    let token = localStorage.getItem('token');
-    if (token) token = JSON.parse(token).jwt;
-    return service.get('/secure/users/' + userId, {
+      let token = tokenManager.getJwt();
+      tokenManager.getNewToken()
+          .then(newToken => tokenManager.updateToken(newToken))
+          .catch((error: Error) => console.log(error));
+
+    return service.get('/users/' + userId, {
       headers: {'x-access-token': token}
     });
   }
 
+    getCurrentUser(): Promise<User> {
+        let token = tokenManager.getJwt();
+        tokenManager.getNewToken()
+            .then(newToken => tokenManager.updateToken(newToken))
+            .catch((error: Error) => console.log(error));
+
+        return service.get('/token/user', {
+            headers: {'x-access-token': token}
+        });
+    }
+
   updateUser(user: User): Promise<void> {
-    let token = localStorage.getItem('token');
-    if (token) token = JSON.parse(token).jwt;
-    return service.put('/secure/users/' + user.userId, user, {
+      let token = tokenManager.getJwt();
+      tokenManager.getNewToken()
+          .then(newToken => tokenManager.updateToken(newToken))
+          .catch((error: Error) => console.log(error));
+
+    return service.put('/users/' + user.userId, user, {
       headers: {'x-access-token': token}
     });
   }
 
   addUser(user: User): Promise<number> {
-    return service.post('/register', user);
+      let token = tokenManager.getJwt();
+      tokenManager.getNewToken()
+          .then(newToken => tokenManager.updateToken(newToken))
+          .catch((error: Error) => console.log(error));
+
+    return service.post('/register', user, {
+        headers: {'x-access-token': token}
+    });
   }
 
   deleteUser(userId: number): Promise<void> {
-    let token = localStorage.getItem('token');
-    if (token) token = JSON.parse(token).jwt;
-    return service.delete('/secure/users/' + userId, {
+      let token = tokenManager.getJwt();
+      tokenManager.getNewToken()
+          .then(newToken => tokenManager.updateToken(newToken))
+          .catch((error: Error) => console.log(error));
+
+    return service.delete('/users/' + userId, {
       headers: {'x-access-token': token}
     });
   }
 
   login(email: string, password: string): Promise<JSON> {
     return service.post('/login', {email: email, password: password});
-  }
-
-  getToken(): Promise<JSON> {
-    let token = localStorage.getItem('token');
-    if (token) token = JSON.parse(token).jwt;
-    return service.get('/token', {
-      headers: {'x-access-token': token}
-    });
   }
 
   forgotPassword(email: string): Promise<Object> {

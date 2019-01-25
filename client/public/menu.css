@@ -49,6 +49,10 @@
     background-color: white !important;
     color: black !important;
   }
+  .homefocus {
+    background-color: white !important;
+    color: black !important;
+  }
 }
 @media (max-width: 610px) {
   .custom-nav-btn {

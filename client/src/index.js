@@ -18,6 +18,7 @@ import { StatisticsPage } from './components/pages/StatisticsPage.js';
 import { TermsOfService } from './components/pages/TermsOfServicePage.js';
 import { AdminPage, AdminEditPage } from './components/pages/AdminPage.js';
 import { AlternativeUpload } from './components/image/AlternativeUpload.js';
+import { AdminHandleCategories } from './components/pages/AdminHandleCategories'
 import { MunicipalPage } from './components/pages/MunicipalPage';
 import { NotFound } from './components/pages/NotFound';
 import { IssueView } from './components/pages/IssueOverviewPage';
@@ -40,6 +41,8 @@ if (process.env.NODE_ENV !== 'production') {
 export const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after
 
 const root = document.getElementById('root');
+
+
 if (root)
   ReactDOM.render(
     <HashRouter>
@@ -63,12 +66,13 @@ if (root)
           <Route exact path="/aktiver/:tokenId" component={ActivateAccountPage} />
           <Route exact path="/kommune/:munId/saker" component={IssueView} />
           <Route exact path="/saker" component={ContractorView} />
-          <Route exact path="/statistics" component={StatisticsPage} />
+          <Route exact path="/statistikk" component={StatisticsPage} />
           <Route exact path="/admin" component={AdminPage} />
           <Route exact path="/admin/edit/:userId" component={AdminEditPage} />
           <Route exact path="/admin/registrerBruker" component={AdminAddPage} />
-          <Route extact path="/hendelser/:eventId" component={EventInfo} />
-          <Route extact path="/map" component={Map} />
+          <Route exact path="/admin/administerKategorier" component={AdminHandleCategories} />
+          <Route exact path="/hendelser/:eventId" component={EventInfo} />
+          <Route exact path="/map" component={Map} />
           <Route path="" component={NotFound} />
         </Switch>
         <Footer />
