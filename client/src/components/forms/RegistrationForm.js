@@ -1,13 +1,12 @@
 // @flow
 
-import ReactDOM from 'react-dom';
 import * as React from 'react';
-import { Component } from 'react-simplified';
-import { User } from '../../models/User.js';
-import { Alert, NavBar, Form, Card, Button } from '../../widgets';
-import { userService } from '../../services/UserService.js';
-import { history } from '../../index.js';
-import { HoverButton } from '../issueViews/issueViews';
+import {Component} from 'react-simplified';
+import {User} from '../../models/User.js';
+import {Card, Form} from '../../widgets';
+import {userService} from '../../services/UserService.js';
+import {history} from '../../index.js';
+import {HoverButton} from '../issueViews/issueViews';
 
 export default class RegistrationForm extends Component {
   user = new User();
