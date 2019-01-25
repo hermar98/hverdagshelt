@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { Component } from 'react-simplified';
-import { User } from '../../models/User.js';
-import { Alert, NavBar, Form, Card, Button } from '../../widgets';
+import {Component} from 'react-simplified';
+import {User} from '../../models/User.js';
+import {Alert, NavBar, Form, Card, Button} from '../../widgets';
 import RegistrationForm from '../../components/forms/RegistrationForm';
-import { NewMenu } from '../menu/NewMenu';
-import { userService } from '../../services/UserService.js';
-import { municipalService } from '../../services/MunicipalService.js';
-import { ImageButton } from '../issueViews/issueViews.js';
-import {tokenManager} from "../../tokenManager";
+import {userService} from '../../services/UserService.js';
+import {municipalService} from '../../services/MunicipalService.js';
+import {ImageButton} from '../issueViews/issueViews.js';
+import {tokenManager} from '../../tokenManager';
 import {history} from '../../index.js';
+import {HoverButton} from "../issueViews/issueViews";
 
 export class AdminPage extends Component {
     userId = 0;
@@ -22,14 +22,14 @@ export class AdminPage extends Component {
 
     render() {
         return (
-            <div>
-                <NewMenu />
+            <div className="mb-5">
                 <div className="card m-3">
                     <div className="card-body">
                         <h2 className="card-title">Administrer brukere</h2>
-                        <div className="d-flex my-3">
-                            <div className="col-sm-3">
-                                <select className="form-control" onChange={event => this.filterRank = event.target.value}>
+                        <div className="row my-3">
+                            <div className="col-md-3 col-sm-6 col-12 mb-3">
+                                <select className="form-control"
+                                        onChange={event => (this.filterRank = event.target.value)}>
                                     <option value={0}>Alle typer brukere</option>
                                     <option value={1}>Privatperson</option>
                                     <option value={2}>Bedrift</option>
@@ -37,17 +37,26 @@ export class AdminPage extends Component {
                                     <option value={4}>Admin</option>
                                 </select>
                             </div>
-                            <div className="col-sm-3">
-                                <select className="form-control" onChange={event => this.filterMun = event.target.value}>
+                            <div className="col-md-3 col-sm-6 col-12 mb-3">
+                                <select className="form-control"
+                                        onChange={event => (this.filterMun = event.target.value)}>
                                     <option value={0}>Alle kommuner</option>
-                                    {this.municipals.map(mun => (
+                                    {this.municipals.sort(function (a, b) {
+                                        return a.name.localeCompare(b.name);
+                                    }).map(mun => (
                                         <option value={mun.munId}>{mun.name}</option>
                                     ))}
                                 </select>
                             </div>
+                            <div className="col-md-3 col-12">
+                                <Button.Success onClick={() => history.push('/admin/registrerBruker')}>
+                                    + Legg til ny bruker
+                                </Button.Success>
+                            </div>
                         </div>
-                        <table className="table table-bordered">
-                            <thead id="t-head">
+                        <div className="table-responsive">
+                            <table className="table table-bordered">
+                                <thead id="t-head">
                                 <tr>
                                     <th scope="col" onClick={() => this.sort('userId')}>
                                         ID {this.getArrow('userId')}
@@ -69,29 +78,38 @@ export class AdminPage extends Component {
                                     </th>
                                     <th scope="col"/>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                {this.userData.filter(user => {
-                                    return (user.rank == this.filterRank || this.filterRank == 0)
-                                        && (user.munId == this.filterMun || this.filterMun == 0);
-                                }).map(user => (
-                                    <tr key={user.userId}>
-                                        <th scope="row">{user.userId}</th>
-                                        <td>{user.firstName}</td>
-                                        <td>{user.lastName}</td>
-                                        <td>{user.email}</td>
-                                        <td>{user.rankName}</td>
-                                        <td>{user.munName}</td>
-                                        {(user.userId === this.userId) ? (<div/>) : (
-                                            <td>
-                                                <ImageButton source="../../images/cog.png" onclick={() => this.editUser(user)}/>
-                                                <ImageButton source="../../images/trashcan.png" onclick={() => this.deleteUser(user)}/>
-                                            </td>
-                                        )}
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                {this.userData
+                                    .filter(user => {
+                                        return (
+                                            (user.rank == this.filterRank || this.filterRank == 0) &&
+                                            (user.munId == this.filterMun || this.filterMun == 0)
+                                        );
+                                    })
+                                    .map(user => (
+                                        <tr key={user.userId}>
+                                            <th scope="row">{user.userId}</th>
+                                            <td>{user.firstName}</td>
+                                            <td>{user.lastName}</td>
+                                            <td>{user.email}</td>
+                                            <td>{user.rankName}</td>
+                                            <td>{user.munName}</td>
+                                            {user.userId === this.userId ? (
+                                                <td/>
+                                            ) : (
+                                                <td>
+                                                    <ImageButton source="../../images/cog.png"
+                                                                 onclick={() => this.editUser(user)}/>
+                                                    <ImageButton source="../../images/trashcan.png"
+                                                                 onclick={() => this.deleteUser(user)}/>
+                                                </td>
+                                            )}
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -99,34 +117,47 @@ export class AdminPage extends Component {
     }
 
     mounted() {
-        municipalService.getMunicipals()
+        municipalService
+            .getMunicipals()
             .then(municipals => {
                 this.municipals = municipals;
-                userService.getUsers()
-                    .then(users => this.userData = users.map(user => {
-                        return {
-                            userId: user.userId,
-                            firstName: user.firstName,
-                            lastName: user.lastName,
-                            email: user.email,
-                            rank : user.rank,
-                            rankName: this.getRankName(user.rank),
-                            munId: user.munId,
-                            munName: this.getMunicipalName(user.munId)};
-                    })).catch((error: Error) => Alert.danger(error.message));
-            }).catch((error: Error) => console.log(error));
-
-        userService
-            .getToken()
-            .then(() => {
                 userService
-                    .getUser(tokenManager.getUserId())
-                    .then(user => {
-                        this.userId = user.userId;
-                    })
+                    .getUsers()
+                    .then(
+                        users =>
+                            (this.userData = users.map(user => {
+                                return {
+                                    userId: user.userId,
+                                    firstName: user.firstName,
+                                    lastName: user.lastName,
+                                    email: user.email,
+                                    rank: user.rank,
+                                    rankName: this.getRankName(user.rank),
+                                    munId: user.munId,
+                                    munName: this.getMunicipalName(user.munId)
+                                };
+                            }))
+                    )
                     .catch((error: Error) => console.log(error));
             })
             .catch((error: Error) => console.log(error));
+
+        userService
+            .getCurrentUser()
+            .then(user => {
+                this.userId = user.userId;
+                if (user.rank === 1) {
+                    history.push('/minSide');
+                } else if (user.rank === 2) {
+                    history.push('/bedrift');
+                } else if (user.rank === 3) {
+                    history.push('/kommune/' + user.munId);
+                }
+            })
+            .catch((error: Error) => {
+                console.log(error);
+                history.push('/');
+            });
     }
 
     getRankName(rank: number): string {
@@ -161,27 +192,27 @@ export class AdminPage extends Component {
             }
         } else {
             if (field === 'userId') {
-                this.userData.sort(function(a, b) {
+                this.userData.sort(function (a, b) {
                     return a.userId - b.userId;
                 });
             } else if (field === 'firstName') {
-                this.userData.sort(function(a, b) {
+                this.userData.sort(function (a, b) {
                     return a.firstName.localeCompare(b.firstName);
                 });
             } else if (field === 'lastName') {
-                this.userData.sort(function(a, b) {
+                this.userData.sort(function (a, b) {
                     return a.lastName.localeCompare(b.lastName);
                 });
             } else if (field === 'email') {
-                this.userData.sort(function(a, b) {
+                this.userData.sort(function (a, b) {
                     return a.email.localeCompare(b.email);
                 });
             } else if (field === 'rank') {
-                this.userData.sort(function(a, b) {
+                this.userData.sort(function (a, b) {
                     return a.rankName.localeCompare(b.rankName);
                 });
             } else if (field === 'munId') {
-                this.userData.sort(function(a, b) {
+                this.userData.sort(function (a, b) {
                     return a.munName.localeCompare(b.munName);
                 });
             }
@@ -193,9 +224,9 @@ export class AdminPage extends Component {
     getArrow(field: string) {
         if (this.sortDetails.sortBy === field) {
             if (this.sortDetails.order === 'asc') {
-                return <div className="float-right">▲</div>
+                return <div className="float-right">▲</div>;
             } else {
-                return <div className="float-right">▼</div>
+                return <div className="float-right">▼</div>;
             }
         } else {
             return <div/>;
@@ -211,16 +242,18 @@ export class AdminPage extends Component {
             user.rank = 0;
             let index = this.userData.indexOf(user);
             console.log(index);
-            userService.updateUser(user)
+            userService
+                .updateUser(user)
                 .then(() => {
                     this.userData.splice(index, 1);
                     Alert.success('Brukeren med ID ' + user.userId + ' ble slettet fra systemet.');
-                }).catch((error: Error) => Alert.danger(error.message));
+                })
+                .catch((error: Error) => Alert.danger(error.message));
         }
     }
 }
 
-export class AdminEditPage extends Component<{match: {params: {userId: number}}}> {
+export class AdminEditPage extends Component<{ match: { params: { userId: number } } }> {
     user = null;
 
     firstName = '';
@@ -232,16 +265,9 @@ export class AdminEditPage extends Component<{match: {params: {userId: number}}}
 
         return (
             <div>
-                <NewMenu/>
                 <Card title="Rediger bruker">
                     <form ref={e => (this.form = e)} onSubmit={e => e.preventDefault()}>
-                        <Form.Input
-                            type="email"
-                            label="E-post"
-                            required
-                            value={this.user.email}
-                            readOnly
-                        />
+                        <Form.Input type="email" label="E-post" required value={this.user.email} readOnly/>
                         <Form.Input
                             type="text"
                             label="Fornavn"
@@ -275,7 +301,7 @@ export class AdminEditPage extends Component<{match: {params: {userId: number}}}
                         </div>
                         <div className="container h-100">
                             <div className="row h-100 justify-content-center align-items-center">
-                                <Button.Basic onClick={this.save}>Lagre endringer</Button.Basic>
+                                <HoverButton onclick={this.save} text="Lagre Endringer"/>
                             </div>
                         </div>
                     </form>
@@ -285,9 +311,25 @@ export class AdminEditPage extends Component<{match: {params: {userId: number}}}
     }
 
     mounted() {
-        userService.getUser(this.props.match.params.userId)
-            .then(user => this.user = user)
-            .catch((error: Error) => Alert.danger(error.message));
+        userService
+            .getUser(this.props.match.params.userId)
+            .then(user => this.user = user).catch((error: Error) => Alert.danger(error.message));
+
+        userService
+            .getCurrentUser()
+            .then(user => {
+                if (user.rank === 1) {
+                    history.push('/minSide');
+                } else if (user.rank === 2) {
+                    history.push('/bedrift');
+                } else if (user.rank === 3) {
+                    history.push('/kommune/' + user.munId);
+                }
+            })
+            .catch((error : Error) => {
+                console.log(error);
+                history.push('/');
+            })
     }
 
     save() {
@@ -295,10 +337,12 @@ export class AdminEditPage extends Component<{match: {params: {userId: number}}}
             return;
         }
 
-        userService.updateUser(this.user)
+        userService
+            .updateUser(this.user)
             .then(() => {
                 Alert.success('Brukeren med ID ' + this.user.userId + ' ble oppdatert.');
                 history.push('/admin');
-            }).catch((error: Error) => Alert.danger(error.message));
+            })
+            .catch((error: Error) => Alert.danger(error.message));
     }
 }

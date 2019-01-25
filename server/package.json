@@ -11,6 +11,7 @@
     "testURL": "http://localhost"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
     "mysql2": "^1.6.1",

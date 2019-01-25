@@ -1,16 +1,13 @@
 // @flow
 
-import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { HashRouter, Route, NavLink } from 'react-router-dom';
-import { Alert, NavBar, Form, Card, Button } from '../../widgets';
-import { Issue } from '../../models/Issue.js';
+import { Button, Card, Form } from '../../widgets';
 import { tokenManager } from '../../tokenManager.js';
 import { history } from '../../index';
 import { User } from '../../models/User';
 import { userService } from '../../services/UserService';
-import { issueService } from '../../services/IssueService.js';
+import { HoverButton } from '../issueViews/issueViews';
 
 export default class Login extends Component {
   state = {
@@ -19,8 +16,10 @@ export default class Login extends Component {
   email = '';
   password = '';
   form = null;
+  rank = 0;
 
   munId = localStorage.getItem('munId');
+  user = new User();
 
   render() {
     return (
@@ -44,9 +43,7 @@ export default class Login extends Component {
             {this.state.loginError ? <Form.Alert text="Feil e-post og/eller passord" type="danger" /> : <div />}
             <div className="container h-100">
               <div className="row h-100 justify-content-center align-items-center">
-                <Button.Basic type="submit" onClick={this.login}>
-                  Logg inn
-                </Button.Basic>
+                <HoverButton type="submit" onclick={this.login} text="Logg Inn" />
               </div>
             </div>
           </form>
@@ -61,13 +58,22 @@ export default class Login extends Component {
   }
 
   mounted() {
-    userService
-      .getToken()
-      .then(token => {
-        console.log(token);
-        history.push('/');
-      })
-      .catch((error: Error) => console.log(error));
+      userService
+          .getCurrentUser()
+          .then(user => {
+              if (user.rank === 1) {
+                  history.push('/minSide');
+              } else if (user.rank === 2) {
+                  history.push('/bedrift');
+              } else if (user.rank === 3) {
+                  history.push('/kommune/' + user.munId);
+              } else if (user.rank === 4) {
+                  history.push('/admin');
+              }
+          })
+          .catch((error : Error) => {
+              console.log(error);
+          })
   }
 
   login() {
@@ -79,7 +85,28 @@ export default class Login extends Component {
       .login(this.email, this.password)
       .then(token => {
         tokenManager.addToken(token);
-        history.push('/feed');
+        userService
+          .getCurrentUser()
+          .then(user => {
+            this.user = user;
+            if (this.user.rank === 0) {
+              tokenManager.deleteToken();
+              history.push('/aktiver/aktiverBruker');
+            } else if (this.user.rank === 1) {
+              window.location.reload();
+              history.push('/minSide');
+            } else if (this.user.rank === 2) {
+              window.location.reload();
+              history.push('/bedrift');
+            } else if (this.user.rank === 3) {
+              window.location.reload();
+              history.push('/kommune/' + this.user.munId);
+            } else {
+              window.location.reload();
+              history.push('/admin');
+            }
+          })
+          .catch((error: Error) => console.log(error));
       })
       .catch((error: Error) => {
         console.log(error);

@@ -1,21 +1,9 @@
-
-/*@media only screen*/
-/*and (min-device-width: 150px)*/
-/*and (max-device-width: 500px)*/
-/*and (-webkit-min-device-pixel-ratio: 3) {*/
-
-
-
-input {
-  border-radius: 8px;
-}
-
-
 input {
   border: 1px solid transparent;
   background-color: ghostwhite;
   padding: 10px;
   font-size: 16px;
+  border-radius: 8px;
 }
 
 input[type='text'] {
@@ -27,204 +15,286 @@ input[type='submit'] {
   color: #fff;
 }
 
-button {
-  border-radius: 8px;
-}
-
-button {
-  background-color: dodgerblue;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-}
-
-button:hover {
-  cursor: pointer;
-}
-
 ul {
   list-style-type: none;
 }
 
-.logo {
-  max-width: 100%;
-}
+@media (max-width: 574px) {
+  .bg-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    width: 100% !important;
+    display: block;
 
-#event-image-small {
-  margin-left: auto;
-  height: 100px;
-  width: 100px;
-}
+    background-image: url('images/Trolltunga.jpg');
+    background-size: cover;
 
-#event-content {
-  margin-right: auto;
-}
+    -webkit-filter: blur(5px);
+    /*-moz-filter: blur(5px);*/
+    /*-o-filter: blur(5px);*/
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+    transform: scale(1.1);
+  }
 
-.footer {
-  position: relative;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-}
-
-#footerText {
-  color: white;
-  margin-left: 3cm;
-}
-
-#footer {
-  margin-left: 22%;
-}
-
-.bg-image {
-  position: fixed;
-  top:0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -1;
-
-  display: block;
-
-
-  background-image: url('images/Trolltunga.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-
-  -webkit-filter: blur(5px);
-  -moz-filter: blur(5px);
-  -o-filter: blur(5px);
-  -ms-filter: blur(5px);
-  filter: blur(5px);
-  transform: scale(1.1);
-}
-
-.fg{
-    margin-top: 10%;
-    margin-bottom: 90%;
-}
-
-.fg-card{
-    background-color: rgba(255,255,255,0.8);
+  .fg {
+    margin-top: 5%;
+    margin-bottom: 15%;
+  }
+  .fg-card {
+    background-color: rgba(255, 255, 255, 0.8);
     padding-top: 10px;
-    margin:auto;
+    margin: auto;
+    opacity: 1;
+    width: 95%;
+    height: 20%;
+  }
+  .fg-grid {
+    display: grid;
+    grid-template-rows: auto auto auto;
+  }
 
-    width: 50%;
-    opacity:1;
-    min-width:850px;
-}
-.fg-grid {
-  display: grid;
-  grid-template-rows: auto auto auto;
-}
+  .fg-logo {
+    grid-row: 1;
+    opacity: 1;
 
-.fg-logo {
-  grid-row: 1;
-  opacity: 1;
+    color: #000;
+    /*color: #50bbe6;*/
+    font-size: 150%;
+    font-weight: bold;
 
-  color: #000;
-  /*color: #50bbe6;*/
-  font-size: 72px;
-  font-weight: bold;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+  }
+  .fg-image {
+    width: 20%;
+    height: 10%;
+  }
+  .fg-input {
+    grid-row: 2;
+    position: relative;
+  }
+  .munInputForm {
+    position: relative;
+    width: 80%;
+  }
 
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* IE10+/Edge */
-  user-select: none; /* Standard */
-}
-.fg-image {
-  width: 100px;
-  height: 100px;
-}
-.fg-input {
-  grid-row: 2;
-  position: relative;
-}
-.munInputForm {
-  position: relative;
-  width: 80%;
-  max-width: 60%;
-}
-#munInputForm-Input {
+  #munInputForm-Input {
     align-self: center;
     /*height: 8vh;*/
-    width:400px;
-    margin-right:10px;
-}
-#munInputForm-Button{
-    /*float:right;*/
-    /*width:28%;*/
-}
-#munInputForm-Inputautocomplete-list {
-    position: absolute;
-    top:48px;
-        width: 50%;
-    /*max-width: 60%;*/
-    /*position: absolute;*/
-    /*left: 22%;*/
-    /*right:33%;*/
-    /*min-width:233px;*/
-}
-#munInputForm-Form {
-    position:relative;
-}
+    width: 100%;
+    margin-right: 10px;
+  }
 
-.autocomplete{
+  #munInputForm-Inputautocomplete-list {
+    position: absolute;
+    top: 48px;
+    width: 80%;
+    min-width: 100%;
+    z-index: 10;
+  }
+  #munInputForm {
+    position: relative;
+    width: 100% !important;
+  }
+  #munInputForm-Form {
+    position: relative;
+    width: 100%;
+  }
+  #munInputForm-Button {
+    width: 100%;
+    margin-top: 5px;
+    padding: 0.6rem 0.7rem !important;
+    vertical-align: bottom !important;
+  }
+
+  .autocomplete {
     position: absolute;
     top: 50%;
-    left: 40%;
-}
+    left: 30%;
+  }
 
-.autocomplete-items {
-    /*border-radius: 8px;*/
-}
+  .autocomplete-items {
+    min-width: 400px;
+  }
 
-.autocomplete-items{
-    min-width:100%;
-    /*border: 1px solid #d4d4d4;*/
-    /*border-bottom: none;*/
-    /*border-top: none;*/
-    /*z-index: 3;*/
-    /*!*top: 100%;*!*/
-    /*left: 0;*/
-    /*right: 0;*/
-}
-
-.autocomplete-items div{
+  .autocomplete-items div {
     padding: 10px;
     cursor: pointer;
     background-color: #fff;
     border-bottom: 1px solid #d4d4d4;
-}
+  }
 
-.autocomplete-items div:hover {
+  .autocomplete-items div:hover {
     background-color: dodgerblue;
-}
+  }
 
-.autocomplete-active{
+  .autocomplete-active {
     background-color: dodgerblue !important;
     color: black;
+  }
+
+  .fg-content {
+    grid-row: 3;
+    padding: 50px;
+    color: #000;
+    text-align: center;
+  }
+  .fg-content h5 {
+    font-weight: bold;
+  }
+  .fg-content p {
+    font-size: 18px;
+    font-weight: bold;
+  }
+}
+@media (min-width: 574px) {
+  .bg-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    width: 100% !important;
+    display: block;
+
+    background-image: url('images/Trolltunga.jpg');
+    background-size: cover;
+
+    -webkit-filter: blur(5px);
+    /*-moz-filter: blur(5px);*/
+    /*-o-filter: blur(5px);*/
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+    transform: scale(1.1);
+  }
+
+  .fg {
+    margin-top: 5%;
+    margin-bottom: 10%;
+  }
+  .fg-card {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding-top: 10px;
+    margin: auto;
+
+    width: 50%;
+    opacity: 1;
+    min-width: 850px;
+  }
+  .fg-grid {
+    display: grid;
+    grid-template-rows: auto auto auto;
+  }
+
+  .fg-logo {
+    grid-row: 1;
+    opacity: 1;
+
+    color: #000;
+    /*color: #50bbe6;*/
+    font-size: 72px;
+    font-weight: bold;
+
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+  }
+  .fg-image {
+    width: 100px;
+    height: 100px;
+  }
+  .fg-input {
+    grid-row: 2;
+    position: relative;
+  }
+  .munInputForm {
+    position: relative;
+    width: 80%;
+    max-width: 60%;
+  }
+  #munInputForm-Input {
+    align-self: center;
+    /*height: 8vh;*/
+    width: 400px;
+    margin-right: 10px;
+  }
+
+  #munInputForm-Inputautocomplete-list {
+    position: absolute;
+    top: 48px;
+    width: 50%;
+    min-width: 100%;
+    z-index: 10;
+  }
+  #munInputForm-Form {
+    position: relative;
+  }
+  #munInputForm-Button {
+    padding: 0.6rem 1rem !important;
+    vertical-align: bottom !important;
+  }
+
+  .autocomplete {
+    position: absolute;
+    top: 50%;
+    left: 40%;
+  }
+
+  .autocomplete-items {
+    min-width: 400px;
+  }
+
+  .autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    border-bottom: 1px solid #d4d4d4;
+  }
+
+  .autocomplete-items div:hover {
+    background-color: dodgerblue;
+  }
+
+  .autocomplete-active {
+    background-color: dodgerblue !important;
+    color: black;
+  }
+
+  .fg-content {
+    grid-row: 3;
+    padding: 50px;
+    color: #000;
+    text-align: center;
+  }
+  .fg-content h5 {
+    font-weight: bold;
+  }
+  .fg-content p {
+    font-size: 18px;
+    font-weight: bold;
+  }
 }
 
+.resizeMapBox {
+  /* position: absolute; */
+  z-index: 100;
+  /* left: 0; */
+  width: 100%;
+}
 
-.fg-content {
-  grid-row: 3;
-  padding: 50px;
-  color: #000;
-  text-align: center;
-}
-.fg-content h5 {
-  font-weight: bold;
-}
-.fg-content p {
-  font-size: 18px;
-  font-weight: bold;
+.mapcontainer {
+  position: relative;
+  height: 300px;
+  margin: 0 0 50px 0;
 }
 
 /*}*/
-

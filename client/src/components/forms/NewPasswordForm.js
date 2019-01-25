@@ -10,6 +10,7 @@ import { issueService } from '../../services/IssueService.js';
 import { history } from '../../index';
 import { User } from '../../models/User';
 import { userService } from '../../services/UserService';
+import { HoverButton } from "../issueViews/issueViews";
 
 export default class NewPasswordForm extends Component {
   state = {
@@ -19,7 +20,6 @@ export default class NewPasswordForm extends Component {
   password = '2';
   passwordr = '';
   form = null;
-  munId = localStorage.getItem('munId');
 
   render() {
     return (
@@ -43,9 +43,7 @@ export default class NewPasswordForm extends Component {
           />
           <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
-              <Button.Basic type="submit" onClick={this.login}>
-                Bytt Passord
-              </Button.Basic>
+              <HoverButton type="submit" onclick={this.login} text="Bytt Passord"/>
             </div>
             {this.state.passwordError ? <Form.Alert type="danger" text="Sørg for at passordene er like" /> : <div />}
           </div>
@@ -64,12 +62,10 @@ export default class NewPasswordForm extends Component {
     }
 
     userService
-      .newPassword(window.location.hash.slice(8), this.password)
+      .newPassword(window.location.hash.slice(15), this.password)
       .then(token => {
         localStorage.setItem('token', JSON.stringify(token));
-        history.push('/kommune/' + this.munId);
-        console.log('Login ok');
-        console.log(this.password + 'form');
+        history.push('/profil');
       })
       .catch((error: Error) => Alert.danger(error.message));
   }

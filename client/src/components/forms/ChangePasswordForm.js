@@ -24,7 +24,7 @@ export default class ChangePasswordForm extends Component {
 
   mounted() {
     userService
-      .getUser(tokenManager.getUserId())
+      .getCurrentUser()
       .then(rows => {
         this.user = rows;
       })

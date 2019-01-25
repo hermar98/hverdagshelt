@@ -61,8 +61,8 @@ app.post('/forgotPassword', (req: Request, res: Response) => {
         text:
           `Du har fått denne emailen etter din (eller noen andres) forespørsel om resetting av passordet for din bruker.\n\n` +
           `Venligst klikk på denne linken, eller kopier og lim den in til din søker for å fullføre prossesen, helst innen en time etter du fikk den:\n\n` +
-          `http://localhost:3000/#/reset/${token}\n\n` +
-          `Hvis du ikke har forespurt denne passord endringen så bare ignorer denne emailen og din passord vil ikke endres:\n\n`
+          `http://localhost:3000/#/glemtPassord/${token}\n\n` +
+          `Hvis du ikke har forespurt denne passord endringen så bare ignorer denne emailen og ditt passord vil ikke endres\n\n`
       };
 
       console.log('sender mail');

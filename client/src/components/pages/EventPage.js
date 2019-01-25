@@ -5,11 +5,24 @@ import { EventCategory } from '../../models/EventCategory.js';
 import { eventCategoryService } from '../../services/EventCategoryService';
 import { Alert, DisplayEvent } from '../../widgets';
 import { Issue } from '../../models/Issue';
-import { Status } from '../issueViews/issueViews';
+import { User } from '../../models/User';
+import { ImageButton, Status } from '../issueViews/issueViews';
 import moment from 'moment';
-import { IssueMenu } from '../menu/IssueMenu';
 import { eventService } from '../../services/EventService';
 import { Event } from '../../models/Event';
+import { SimpleMap } from '../map/map';
+import { userService } from '../../services/UserService';
+import { history } from '../../index';
+
+let formatDate = function(date: Date) {
+  if (date != null) {
+    let str: string = date;
+    str = str.substring(0, str.length - 8);
+    str = str.replace('T', ' KL. ');
+    return str;
+  }
+  return;
+};
 
 export class EventPage extends Component {
   events = [];
@@ -17,7 +30,6 @@ export class EventPage extends Component {
   render() {
     return (
       <div>
-        <IssueMenu />
         <div className="container col-10 mt-4 h-100">
           <div className="row h-100">
             {this.events.map(e => (
@@ -45,7 +57,7 @@ export class DisplayEvent2 extends Component<{ event: Event }> {
       <div className="issue-normal" event={this.props.event}>
         <div className="d-flex flex-row issue-flex">
           <div className="p-2">
-            <img className="card-img issue-image" src={this.props.event.image} />
+            <img className="card-img issue-image" src={this.props.event.image} alt="sak bilde" />
           </div>
           <div className="p-2">
             <h1>{this.props.event.title}</h1>
@@ -89,6 +101,7 @@ export class EventLarge extends Component<{ event: Event }> {
         <img
           className="event-image"
           src="https://www.naf.no/globalassets/tips-rad/vei-trafikk/hull_i_veien_bil2.jpg?width=980&height=550&mode=max&anchor=middlecenter&scale=both&quality=85"
+          alt="hendelse bilde"
         />
         <div className="card-footer">
           <small className="text-muted-left">
@@ -103,31 +116,29 @@ export class EventLarge extends Component<{ event: Event }> {
 
 export class EventSmall extends Component<{ event: Event }> {
   textLength = 50;
+  text: string =
+    'apiegy8bs fnmangsm aiosd gnosdgjn mjoaen ksmfia sfbdmawjo srndfmes fgkmvser dvmawrs dgnkvma wrodvm dsdgjn ovsdvj nsdvjnsdg jnovsdv jnsdvj nosdvj';
 
   render() {
     return (
-      <div className="card mb-2">
-        <a id="a-hover" href={'#/kommune/' + this.props.event.munId + '/events/' + this.props.event.eventId}>
+      <div className="card event-view">
+        <a id="a-hover" href={'/#/hendelser/' + this.props.event.eventId}>
           <img src="../../images/arrowRightTrans.png" />
         </a>
-        <div className="card-body">
-          <div className="row">
-            <h5 className="card-title">{this.props.event.title}</h5>
-            <img id="event-image-small" src={this.props.event.image} alt={'Bildetekst'} />
+        <div className="d-flex flex-row issue-flex">
+          <div className="issue-image-normal-container">
+            <img className="issue-image-normal" src={this.props.event.image} />
+          </div>
+          <div>
+            <div className="card-body">
+              <h4>{this.props.event.title}</h4>
+              <p id="issue-normal-content">{this.text.substring(0, 90) + ' . . .'}</p>
+            </div>
           </div>
         </div>
-        <div>
-          {this.props.event.content <= this.textLength
-            ? this.props.event.content
-            : this.props.event.content.substring(0, this.textLength) + '...'}
-        </div>
-        <div className="card-footer">
-          <small className="text-muted-left">
-            {'Starter: ' + moment(this.props.event.timeStart).format('DD.MM HH:mm')}
-          </small>
-          <small className="text-muted-right">
-            {'Slutter: ' + moment(this.props.event.timeEnd).format('DD.MM HH:mm')}
-          </small>
+        <div className="card-footer d-flex flex-row justify-content-between">
+          <h6 className="event-time">{'Fra: ' + formatDate(this.props.event.timeStart)}</h6>
+          <h6 className="event-time">{'Til: ' + formatDate(this.props.event.timeEnd)}</h6>
         </div>
       </div>
     );
@@ -139,6 +150,8 @@ export class EventSmall extends Component<{ event: Event }> {
 export class EventInfo extends Component<{ match: { params: { eventId: number } } }> {
   event = null;
   eventCategory = null;
+  user = null;
+  isMunEmployee: boolean = false;
 
   render() {
     if (!this.event) return null;
@@ -146,28 +159,45 @@ export class EventInfo extends Component<{ match: { params: { eventId: number } 
 
     return (
       <div>
-        <NotLoggedInMenu />
         <div className="container my-4">
           <div className="card">
-            <img className="card-img-top" src={this.event.image} />
+            <img className="card-img-top" src={this.event.image} alt="hendelse bilde" />
             <div className="card-body">
-              <h2 className="card-title">{this.event.title}</h2>
+              <div className="row justify-content-between">
+                <h2 className="card-title">{this.event.title}</h2>
+                {this.isMunEmployee ? (
+                  <div>
+                    <ImageButton source="../../images/trashcan.png" onclick={this.delete} />
+                  </div>
+                ) : (
+                  <div />
+                )}
+              </div>
               <p className="card-text">
-                <small>
-                  <b>Kategori: </b>
-                  {this.eventCategory.name}
-                  <br />
-                  <b>Fra: </b>
-                  {moment(this.event.timeStart).format('DD.MM.YYYY HH:mm')}
-                  <br />
-                  <b>Til: </b>
-                  {moment(this.event.timeEnd).format('DD.MM.YYYY HH:mm')}
-                  <br />
-                  <b>Sted (koordinater): </b>
-                  {this.event.latitude + ', ' + this.event.longitude}
-                </small>
+                <div className="row justify-content-between">
+                  <div>
+                    <small>
+                      <b>Kategori: </b>
+                      {this.eventCategory.name}
+                      <br />
+                      <b>Fra: </b>
+                      {moment(this.event.timeStart).format('DD.MM.YYYY HH:mm')}
+                      <br />
+                      <b>Til: </b>
+                      {moment(this.event.timeEnd).format('DD.MM.YYYY HH:mm')}
+                      <br />
+                      <b>Sted (koordinater): </b>
+                      {this.event.latitude + ', ' + this.event.longitude}
+                      <br />
+                    </small>
+                    <br />
+                    <p className="card-text">{this.event.content}</p>
+                  </div>
+                  <div style={{ height: '300px', width: '300px', float: 'right' }}>
+                    <SimpleMap lat={this.event.latitude} lng={this.event.longitude} />
+                  </div>
+                </div>
               </p>
-              <p className="card-text">{this.event.content}</p>
             </div>
           </div>
         </div>
@@ -180,11 +210,31 @@ export class EventInfo extends Component<{ match: { params: { eventId: number } 
       .getEvent(this.props.match.params.eventId)
       .then(event => {
         this.event = event;
+        userService
+          .getCurrentUser()
+          .then(user => {
+            this.user = user;
+            if (this.user.rank === 3 && this.user.munId === this.event.munId) {
+              this.isMunEmployee = true;
+            }
+          })
+          .catch(e => console.log(e));
         eventCategoryService
           .getCategory(event.categoryId)
           .then(eventCategory => (this.eventCategory = eventCategory))
           .catch((error: Error) => Alert.danger(error.message));
       })
       .catch((error: Error) => Alert.danger(error.message));
+  }
+
+  delete() {
+    if (confirm('Are you sure?')) {
+      if (this.user.munId === this.event.munId) {
+        eventService
+          .deleteEvent(this.event.eventId)
+          .then(e => history.push('/kommune/' + this.user.munId))
+          .catch(e => console.log(e));
+      }
+    }
   }
 }

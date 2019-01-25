@@ -1,13 +1,11 @@
-import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component, sharedComponentData } from 'react-simplified';
 import { imageService } from '../../services/ImageService';
-import { Button } from '../../widgets';
 import { Image } from '../../models/Image';
 import { Issue } from '../../models/Issue';
+import { Event } from '../../models/Event';
 import { issueService } from '../../services/IssueService';
-import { issueCategoryService } from '../../services/IssueCategoryService';
-import { IssueNormal } from '../issueViews/issueViews';
+import { eventService } from '../../services/EventService';
 import { history } from '../../index';
 
 let shared = sharedComponentData({ tFiles: [] });
@@ -49,11 +47,29 @@ export default class UploadImageButton extends Component {
       image = {
         imageSource: file.path,
         title: file.name,
-        issueId: issueId
+        issueId: issueId,
+        event: false
       };
-
       imageService.uploadImage(image);
     });
+  }
+
+  uploadEventImage(): Promise<string> {
+    const files = Array.from(shared.tFiles);
+    this.setState({ uploading: true });
+    let urlNew = 'image';
+
+    files.forEach(file => {
+      let image: Image;
+      image = {
+        imageSource: file.path
+      };
+
+      imageService.uploadEventImage(image).then(url => {
+        urlNew = url;
+      });
+    });
+    return urlNew;
   }
 
   printFaenHode(issue: Issue) {
@@ -62,8 +78,27 @@ export default class UploadImageButton extends Component {
       .then(id => {
         this.uploadTheImage(id.issueId);
       })
-      .then(history.push('/municipal/' + this.munId + '/issues'))
+      .then(history.push('/profil/'))
       .catch((error: Error) => Alert.danger(error.message));
+  }
+
+  uploadEventImage(event: Event) {
+    const files = Array.from(shared.tFiles);
+    this.setState({ uploading: true });
+    let path = '';
+    files.forEach(file => {
+      let image: Image;
+      image = {
+        imageSource: file.path,
+        title: file.name,
+        event: true
+      };
+      imageService.uploadImage(image).then(res => {
+        event.image = res;
+        console.log(res);
+        eventService.updateEvent(event);
+      });
+    });
   }
 
   render() {
@@ -71,32 +106,37 @@ export default class UploadImageButton extends Component {
     let $imagePreview = null;
 
     if (imagePreviewUrl) {
-      $imagePreview = <img src={this.state.imagePreviewUrl} />;
+      $imagePreview = <img src={this.state.imagePreviewUrl} alt="upload image" />;
     } else {
-      $imagePreview = <div>Velg et bilde</div>;
+      $imagePreview = <div>Velg ett eller flere bilder (valgfritt):</div>;
     }
 
     return (
-      <div>
-        <div className="imagePreView">{$imagePreview}</div>
-        <ul className="imageList">
-          {Array.from(shared.tFiles).map(function(e, i) {
-            console.log(e);
-            if (e.path) {
-              return (
-                <li key={i} style={{ height: 200, width: 200 }} className="list-group-item normal-list-item">
-                  <img className={'imageView'} src={e.path} />
-                </li>
-              );
-            }
-          })}
-          <li className={'One More Picture'}>
-            <form>
-              <input type="file" onChange={e => this.fileSelectedHandler(e)} />
-            </form>
-          </li>
-        </ul>
-        {/*<button type={"btn"} className="btn" onClick={() => this.postImage(1)}/>*/}
+      <div className="form-group justify-content-center row">
+        <div className="col-12 col-md-4 ">
+          <div className="image-upload-form">
+            <div className="card image-upload-container">
+              <div className="image-upload-text">{$imagePreview}</div>
+              <div className="card image-upload-list">
+                <div className="image-upload-images-text">Ingen bilder opplastet!</div>
+                {Array.from(shared.tFiles).map(function(e, i) {
+                  console.log(e);
+                  if (e.path) {
+                    return (
+                      <div key={i} className="image-upload-images">
+                        <img className="image-upload-image" src={e.path} alt="Upload image" />
+                      </div>
+                    );
+                  }
+                })}
+              </div>
+              <div className="image-upload-button">
+                <input type="file" onChange={e => this.fileSelectedHandler(e)} size="60" />
+              </div>
+              {/*<button type={"btn"} className="btn" onClick={() => this.postImage(1)}/>*/}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

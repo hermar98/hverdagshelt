@@ -36,10 +36,10 @@ describe('User tests', () => {
     ).toEqual([
       {
         userId: 1,
-        firstName: 'Vegard',
-        lastName: 'Andersson',
-        email: 'test@test.no',
-        rank: 3,
+        firstName: 'Privat',
+        lastName: 'Person',
+        email: 'privat@hh.no',
+        rank: 1,
         salt: 'a83f4da094cc247b',
         hashStr:
           '30fed7291ca557c9296862fa62267295708deebf0fa553d17efcf0ea1049965b3175b20cf9b18d18e0249f73cd3e25b9c3ec4413cb35353516731257d2735722'
@@ -97,7 +97,7 @@ describe('Status tests', () => {
     ).toEqual([
       {
         statusId: 1,
-        name: 'Situation Normal, All fucked upp'
+        name: 'Ikke påbegynt'
       }
     ]);
   });
@@ -119,9 +119,9 @@ describe('Issue tests', () => {
     ).toEqual([
       {
         issueId: 1,
-        title: 'Dumme folk ødeleger lømp',
-        latitude: 10.824107,
-        longitude: 60.656877
+        title: ' - ',
+        latitude: 63.424035,
+        longitude: 10.426896
       }
     ]);
   });
@@ -142,7 +142,7 @@ describe('Feedback tests', () => {
     ).toEqual([
       {
         feedbackId: 1,
-        name: 'Dumme folk er dumme',
+        name: 'Test',
         content: 'Vi skal fikse dette!'
       }
     ]);
@@ -166,10 +166,10 @@ describe('Event tests', () => {
     ).toEqual([
       {
         eventId: 1,
-        title: 'party at the house man!',
-        content: 'Det skal være party at the house!',
-        longitude: 60.652168,
-        latitude: 10.822102
+        title: 'Konsert med Bjarne Brøndbo',
+        content: 'Bjarne Brøndbo kommer snart til Østre Toten! Billetter til salgs nå',
+        longitude: 10.815972,
+        latitude:  60.677127
       }
     ]);
   });
@@ -189,7 +189,7 @@ describe('IssueCategory tests', () => {
     ).toEqual([
       {
         categoryId: 1,
-        name: 'Fyllikere på gata som ødeleger lamper'
+        name: 'Vei og gate'
       }
     ]);
   });
@@ -209,7 +209,7 @@ describe('EventCategory', () => {
     ).toEqual([
       {
         categoryId: 1,
-        name: 'PARTY'
+        name: 'Konsert'
       }
     ]);
   });
