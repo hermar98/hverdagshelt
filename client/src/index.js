@@ -28,7 +28,7 @@ import { Map } from './map';
 import { RegisterEventPage } from './components/pages/RegisterEventPage';
 import createHashHistory from 'history/createHashHistory';
 import ProfilePage from './components/pages/ProfilePage/ProfilePage';
-import AdminAddPage from './components/forms/AdminAddPage';
+import AdminAddPage from './components/pages/AdminAddPage';
 
 // Reload application when not in production environment
 

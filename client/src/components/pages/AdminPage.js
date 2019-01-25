@@ -9,7 +9,6 @@ import {ImageButton} from '../issueViews/issueViews.js';
 import {tokenManager} from '../../tokenManager';
 import {history} from '../../index.js';
 import {HoverButton} from "../issueViews/issueViews";
-import {redirectService} from "../../redirectService";
 
 export class AdminPage extends Component {
     userId = 0;
@@ -145,12 +144,20 @@ export class AdminPage extends Component {
 
         userService
             .getCurrentUser()
-            .then(user => this.userId = user.userId)
+            .then(user => {
+                this.userId = user.userId;
+                if (user.rank === 1) {
+                    history.push('/minSide');
+                } else if (user.rank === 2) {
+                    history.push('/bedrift');
+                } else if (user.rank === 3) {
+                    history.push('/kommune/' + user.munId);
+                }
+            })
             .catch((error: Error) => {
                 console.log(error);
+                history.push('/');
             });
-
-        redirectService.redirect(4);
     }
 
     getRankName(rank: number): string {
@@ -308,7 +315,21 @@ export class AdminEditPage extends Component<{ match: { params: { userId: number
             .getUser(this.props.match.params.userId)
             .then(user => this.user = user).catch((error: Error) => Alert.danger(error.message));
 
-        redirectService.redirect(4);
+        userService
+            .getCurrentUser()
+            .then(user => {
+                if (user.rank === 1) {
+                    history.push('/minSide');
+                } else if (user.rank === 2) {
+                    history.push('/bedrift');
+                } else if (user.rank === 3) {
+                    history.push('/kommune/' + user.munId);
+                }
+            })
+            .catch((error : Error) => {
+                console.log(error);
+                history.push('/');
+            })
     }
 
     save() {

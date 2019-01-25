@@ -11,7 +11,6 @@ import {municipalService} from "../../services/MunicipalService";
 import {Municipal} from "../../models/Municipal";
 import {autocomplete, glob} from "../../../public/autocomplete";
 import {HoverButton} from "../issueViews/issueViews";
-import {redirectService} from '../../redirectService.js';
 
 let municipalObjects;
 
@@ -116,6 +115,20 @@ export default class AdminAddPage extends Component {
       })
       .catch(error => console.log(error));
 
-    redirectService.redirect(4);
+    userService
+        .getCurrentUser()
+        .then(user => {
+            if (user.rank === 1) {
+                history.push('/minSide');
+            } else if (user.rank === 2) {
+                history.push('/bedrift');
+            } else if (user.rank === 3) {
+                history.push('/kommune/' + user.munId);
+            }
+        })
+        .catch((error : Error) => {
+            console.log(error);
+            history.push('/');
+        })
   }
 }
