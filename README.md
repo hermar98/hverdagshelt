@@ -61,8 +61,6 @@ npm start
 
 ### Server: run tests and start
 
-Prerequisite: mysql-server installed locally
-
 From the top-level repository folder:
 
 ```sh
