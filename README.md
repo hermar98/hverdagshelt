@@ -2,7 +2,7 @@
 
 The application will reload on source changes.
 
-##Node
+## Node
 
 After installing node you should be able to run these commands in your terminal
 
@@ -14,7 +14,7 @@ $ npm --version
 1.3.21
 ```
 
-###Installing Node in OSX
+### Installing Node in OSX
 
 Install HomeBrew using the following command:
 
@@ -27,12 +27,12 @@ Now run
 brew install node 
 ```
 
-###Installing Node in Windows
+### Installing Node in Windows
 
 Just go on [official Node.js website](http://nodejs.org/) & grab the installer.
 
 
-##Install
+## Install
 
 ```sh
 git clone https://gitlab.stud.idi.ntnu.no/trondjro/hverdagshelt---team-3.git
@@ -40,7 +40,7 @@ cd hverdagshelt---team-3
 npm install
 ```
 
-##Configure the 'env' file
+## Configure the 'env' file
 
 Open the .env file and enter your database information under: 
 
