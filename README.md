@@ -44,7 +44,7 @@ npm install
 
 Open the .env file and enter your database information under: 
 
-- DATA_BASE = hverdgashelt
+- DATA_BASE = hverdagshelt
 - DB_USERNAME = user
 - DB_PASSWORD = password
 - DB_HOST = localhost
