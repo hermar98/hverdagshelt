@@ -44,10 +44,10 @@ npm install
 
 Open the .env file and enter your database information under: 
 
-DATA_BASE = hverdgashelt
-DB_USERNAME = user
-DB_PASSWORD = password
-DB_HOST = localhost
+- DATA_BASE = hverdgashelt
+- DB_USERNAME = user
+- DB_PASSWORD = password
+- DB_HOST = localhost
 
 ### Client: run tests and start
 
